@@ -1,0 +1,266 @@
+﻿using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Keybinds;
+using LostbeltTraveler.Globals.Players;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Globals.Methods
+{
+    public static partial class LostbeltMethods
+    {
+        /// <summary>
+        /// 增加处决计数。
+        /// 仅在需要特殊处理时才使用此方法，例如要求射弹“回收之后”才累计处决进度的场景。
+        /// </summary>
+        /// <param name="proj">当前射弹实例。</param>
+        /// <param name="itemID">武器（或能力）对应的物品 ID。</param>
+        /// <param name="times">增加次数，默认为 1。</param>
+        /// <remarks>
+        /// 执行条件：<br/>
+        /// 必须满足 <see cref="LostbeltPlayer.AddExecutionHit"/> 为 <c>true</c>，否则不执行任何操作。<br/>
+        /// 实际累加逻辑委托给 <see cref="AddExecutionTimeDirectly"/>。
+        /// </remarks>
+        public static void AddExecutionTimeDelayed(this Projectile proj, int itemID, int times = 1)
+        {
+            if (!proj.Lostbelt().AddExecutionHit)
+                return;
+            proj.AddExecutionTimeDirectly(itemID, times);
+        }
+        /// <summary>
+        /// 立刻增加处决计数。
+        /// 主要用于普通命中时增加处决次数的场景
+        /// </summary>
+        /// <param name="proj">当前射弹实例。</param>
+        /// <param name="itemID">武器（或能力）对应的物品 ID。</param>
+        /// <param name="times">增加次数，默认为 1。</param>
+        /// <remarks>
+        /// 执行条件：<br/>
+        /// <list type="bullet">
+        /// <item><description><see cref="LostbeltPlayer.HasExecutionMechanic"/> 必须为 <c>true</c>；</description></item>
+        /// <item><description><see cref="LostbeltPlayer.AddExecutionHit"/> 必须为 <c>false</c>（即未开启“回收后累加”模式）；</description></item>
+        /// </list>
+        /// 条件满足后，调用 <see cref="AddExecutionTimeDirectly"/> 执行实际累加。
+        /// </remarks>
+        public static void AddExecutionTimeImmediate(this Projectile proj, int itemID, int times = 1)
+        {
+            if (!proj.Lostbelt().HasExecutionMechanic)
+                return;
+            if (proj.Lostbelt().AddExecutionHit)
+                return;
+            proj.AddExecutionTimeDirectly(itemID, times);
+        }
+        public static void AddExecutionTimeImmediate<T>(this Projectile proj, int times = 1) where T : ModItem => AddExecutionTimeImmediate(proj, ItemType<T>(), times);
+        /// <summary>
+        /// 直接增加处决计数的核心方法。
+        /// 内部包含手动处决的特殊处理：当即将达到所需次数时播放音效。
+        /// <para>通常不推荐直接使用，请优先使用 <see cref="AddExecutionTimeDirectly"/> 或 <see cref="AddExecutionTimeDelayed"/></para>
+        /// </summary>
+        /// <param name="proj">当前射弹实例。</param>
+        /// <param name="itemID">武器（或能力）对应的物品 ID。</param>
+        /// <param name="times">增加次数，默认为 1。</param>
+        /// <remarks>
+        /// <para>逻辑细节：</para>
+        /// <list type="number">
+        /// <item><description>从 <see cref="LostbeltList.ExecuteRequests"/> 获取该武器完成处决所需的总次数 <c>required</c>；</description></item>
+        /// <item><description>若玩家处于手动处决模式（<see cref="LostbeltPlayer.tacticalExecution"/> 为 <c>true</c>）：<br/>
+        ///     当当前累计次数恰好为 <c>required - 1</c> 时，播放 <see cref="SoundID.Item35"/> 音效（提示即将可处决）；<br/>
+        ///     如果当前累计次数已达到或超过 <c>required</c>，则直接返回，不再增加。</description></item>
+        /// <item><description>最后，将 <c>times</c> 累加到 <see cref="LostbeltPlayer.ExecutionListStored"/> 字典中对应的键上。</description></item>
+        /// </list>
+        /// <para>注意：此方法会直接修改玩家存储的处决进度，调用前请确保 <paramref name="itemID"/> 有效。</para>
+        /// </remarks>
+        public static void AddExecutionTimeDirectly(this Projectile proj, int itemID, int times = 1)
+        {
+            Player owner = Main.player[proj.owner];
+            AddExecutionTimeDirectly(owner, itemID, times);
+        }
+        /// <summary>
+        /// 重载方案，用于直接增加玩家的处决进程
+        /// <br>具体操作应看<see cref="AddExecutionTimeDirectly(Projectile, int, int)"/></br>
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="itemID"></param>
+        /// <param name="times"></param>
+        public static void AddExecutionTimeDirectly(this Player owner, int itemID, int times = 1)
+        {
+            if (owner.Lostbelt().ExecutionListStored.ContainsKey(itemID))
+            {
+                owner.Lostbelt().ExecutionListStored[itemID] += times;
+                if (owner.Lostbelt().ExecutionListStored[itemID] > LostbeltList.ExecuteRequests[itemID])
+                    owner.Lostbelt().ExecutionListStored[itemID] = LostbeltList.ExecuteRequests[itemID];
+            }
+        }
+        public static void InsertExecutorTooltips(this List<TooltipLine> tooltips)
+        {
+
+        }
+        /// <summary>
+        /// 判断玩家当前是否可以对指定武器发起处决。
+        /// 此方法同时处理了手动触发处决与自动处决两种模式。
+        /// <br>Todo：这个方法附带的判定对手持射弹的适配非常垃圾</br>
+        /// </summary>
+        /// <param name="owner">目标玩家。</param>
+        /// <param name="itemID">武器（或处决能力对应物品）的 <see cref="Item.type"/>。</param>
+        /// <returns>
+        /// <c>true</c> 满足处决条件；<c>false</c> 不满足或处于禁止处决的状态。
+        /// </returns>
+        /// <remarks>
+        /// <para>处决条件包括：</para>
+        /// <list type="bullet">
+        /// <item><description>玩家手持的武器必须属于 <see cref="ExecutorDamageClass"/> 伤害类型。</description></item>
+        /// <item><description>根据武器 ID 从 <see cref="LostbeltList.ExecuteRequests"/> 获取所需累计命中次数（executionTime）。</description></item>
+        /// <item><description>累计命中次数记录在 <see cref="LostbeltPlayer.ExecutionListStored"/> 字典中，值达到或超过 executionTime 时满足条件。</description></item>
+        /// </list>
+        /// <para>处决模式分为两种：</para>
+        /// <list type="number">
+        /// <item><description><b>手动处决（<see cref="LostbeltPlayer.tacticalExecution"/> = true）</b>：需要额外检查 <see cref="LostbeltPlayer.tacticalExecutionInputCache"/> > 0，且 <see cref="LostbeltKeybinds.GeneralActionKeybind"/> 未按下。该模式下手动触发。</description></item>
+        /// <item><description><b>普通处决</b>：只要累计命中足够即可自动触发。</description></item>
+        /// </list>
+        /// <para>注意：<see cref="LostbeltPlayer.ExecutionListStored"/> 中若不存在指定 itemID，会通过 <see cref="Dictionary.TryAdd"/> 添加键并初始化为 0，确保后续查询不报错。</para>
+        /// <para><see cref="LostbeltPlayer.tacticalExecutionInputCache"/> 在经过这个方法后不会立刻重置为0，需要在调用这个方法之后手动重置为0 </para>
+        /// </remarks>
+        public static bool CheckExecution(this Player owner, int itemID)
+        {
+            owner.Lostbelt().ExecutionListStored.TryAdd(itemID, 0);
+            LostbeltPlayer usPlayer = owner.Lostbelt();
+            //检查玩家手持的武器
+            Item item = owner.HeldItem;
+            bool hasReforged = ModLoader.HasMod("ExpandedReforge");
+            if (!item.DamageType.CountsAsClass<ExecutorDamageClass>() && !hasReforged)
+                return false;
+            if (!LostbeltList.ExecuteRequests.TryGetValue(itemID, out int executionTime))
+                return false;
+            if (usPlayer.tacticalExecution)
+            {
+                if (usPlayer.tacticalExecutionInputCache == 0)
+                    return false;
+                if (LostbeltKeybinds.GeneralActionKeybind.JustPressed)
+                    return false;
+                //无论啥情况，这里都要直接设置为否
+                if (usPlayer.ExecutionListStored.TryGetValue(itemID, out int value))
+                {
+                    bool canExe = value >= executionTime;
+                    return canExe;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                if (usPlayer.ExecutionListStored.TryGetValue(itemID, out int value))
+                {
+                    return value >= executionTime;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public static bool GetExecutionSrike(this Player player)
+        {
+            return (player.Lostbelt().CanExecutionStrike);
+        }
+        public static bool CheckCurWeaponExecution(this Player player, int itemType)
+        {
+            if (!LostbeltList.ExecuteRequests.TryGetValue(itemType, out int value))
+                return false;
+            if (player.Lostbelt().ExecutionListStored.TryGetValue(itemType, out int value2))
+            {
+                return value == value2;
+            }
+            else
+                return false;
+        }
+        /// <summary>
+        /// <para>移除指定武器的处决进度记录。</para>
+        /// <para>处决进度存储在 <see cref="LostbeltPlayer.ExecutionListStored"/> 字典中，当某武器的累计次数归零时调用此方法可将该项从字典中删除，避免冗余数据。</para>
+        /// <para>由于字典操作复杂度为 O(1)，无需担心频繁增删的性能问题。</para>
+        /// <para>注意：重新添加处决进度会在 <see cref="AddExecutionTimeDirect"/> 等方法中自动处理，无需手动干预。</para>
+        /// </summary>
+        /// <param name="player">目标玩家。</param>
+        /// <param name="itemType">要移除的武器（或能力）对应的物品 ID。</param>
+        public static void RemoveExecutionProgress(this Player player, int itemType)
+        {
+            if (player.Lostbelt().ExecutionListStored.ContainsKey(itemType))
+                player.Lostbelt().ExecutionListStored[itemType] = 0;
+        }
+        /// <summary>
+        /// <para>移除玩家处决位（自动使用玩家手持物品作为键）。</para>
+        /// <para>这是一个重载方法，内部调用 <see cref="RemoveExecutionProgress(Player, int)"/>，并传入 <c>player.HeldItem.type</c>。</para>
+        /// <para><b>潜在风险</b>：若玩家在满足处决条件时突然切换武器，此方法可能会误将原武器的处决进度移除，导致意外重置。调用时请确保当前时机安全（例如处决触发后或武器未变化时）。</para>
+        /// </summary>
+        /// <param name="player">目标玩家。</param>
+        public static void RemoveExecutionProgress(this Player player)
+        {
+            if (player.Lostbelt().ExecutionListStored.ContainsKey(player.HeldItem.type))
+                player.Lostbelt().ExecutionListStored[player.HeldItem.type] = 0;
+
+        }
+        /// <summary>
+        /// 获取该代行者武器的武器类型
+        /// <br>若<see cref="LostbeltList.ExecutorTypes"/>中不存在<paramref name="item"/>，则返回<see langword="false"/>以表不存在该值</br>
+        /// </summary>
+        public static bool GetExecuteTypes(this Item item, out ExecutorWeaponType type)
+        {
+            if (LostbeltList.ExecutorTypes.TryGetValue(item.type, out type))
+                return true;
+            else
+                return false;
+        }
+        /// <summary>
+        /// 比对当前武器是否为你需要的类型
+        /// <br>若<see cref="LostbeltList.ExecutorTypes"/>中不存在<paramref name="item"/>，则返回<see langword="false"/>以表不存在该值</br>
+        /// </summary>
+        public static bool CheckExecuteTypes(this Item item, ExecutorWeaponType tpye)
+        {
+            if (LostbeltList.ExecutorTypes.TryGetValue(item.type, out ExecutorWeaponType executorWeaponType))
+                return tpye == executorWeaponType;
+            else
+                return false;
+        }
+        /// <summary>
+        /// 比对当前武器是否为你需要的类型
+        /// <br>若<see cref="LostbeltList.ExecutorTypes"/>中不存在<paramref name="item"/>，则返回<see langword="false"/>以表不存在该值</br>
+        /// </summary>
+        public static bool CheckExecuteTypes(this int item, ExecutorWeaponType tpye)
+        {
+            if (LostbeltList.ExecutorTypes.TryGetValue(item, out ExecutorWeaponType executorWeaponType))
+                return tpye == executorWeaponType;
+            else
+                return false;
+        }
+
+
+        /// <summary>
+        /// 获取玩家手持的代行者武器的处决进程
+        /// </summary>
+        public static int GetExecuteProgress(this Player player) => GetExecuteProgress(player, player.HeldItem);
+        /// <summary>
+        /// 获取当前代行者武器的处决进程，返回-1为没有这个值，需谨慎使用
+        /// </summary>
+        public static int GetExecuteProgress(this Player player, Item item)
+        {
+            if (!item.IsLegal())
+                return -1;
+            if (!item.DamageType.CountsAsClass<ExecutorDamageClass>())
+                return -1;
+            if (!LostbeltList.ExecuteRequests.ContainsKey(item.type))
+                return -1;
+            return player.Lostbelt().ExecutionListStored[item.type];
+        }
+        /// <summary>
+        /// 查看射弹是否允许处决
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <returns></returns>
+        public static bool CheckExecution(this Projectile projectile)
+        {
+            Player player = Main.player[projectile.owner];
+            return player.GetExecutionSrike() && !projectile.Lostbelt().ExecutionStrike;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+﻿namespace LostbeltTraveler.Items.Vanity.Yards
+{
+    public class RedDragonItem : AccVanityItem
+    {
+        public override string VanityName => "RedDragon";
+        public override VanityData VanityData => new VanityData(
+            Color.Lerp(Color.White, Color.Red, 0.35f),
+            Color.Black,
+            Color.Lerp(Color.Crimson, Color.Red, 0.95f));
+        public override Color ParticleColor1 => Color.Red;
+        public override Color ParticleColor2 => Color.White;
+        public override bool HasFlavorTooltip => false;
+        public override void ExSD()
+        {
+            Item.Lostbelt().CanDrawIcon = false;
+            Item.Lostbelt().CanDrawGhost = true;
+        }
+    }
+
+}

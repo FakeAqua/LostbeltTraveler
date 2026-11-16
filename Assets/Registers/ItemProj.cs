@@ -1,0 +1,58 @@
+﻿using LostbeltTraveler.Items.Weapons.Melee;
+using ReLogic.Content;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Assets.Registers
+{
+    public class Tex2DWithPath
+    {
+        public Asset<Texture2D> Texture { get; }
+        public string Path { get; }
+        public Tex2DWithPath(Asset<Texture2D> texture, string path)
+        {
+            Path = path;
+            Texture = texture;
+        }
+        public Tex2DWithPath(string path)
+        {
+            Path = path;
+            Texture = Request<Texture2D>($"{Path}");
+        }
+        public Texture2D Value => Texture.Value;
+    }
+    internal class LostbeltItemProj : ModSystem
+    {
+        internal static string ItemPath = "LostbeltTraveler/Assets/Texture/Items";
+        internal static string ProjPath = "LostbeltTraveler/Assets/Texture/Projs";
+        internal static string Path_Pets = $"LostbeltTraveler/Assets/Texture/Pets";
+        internal static string WeaponPath = $"{ItemPath}/Weapons";
+        internal static string AccessoriesPath = $"{ItemPath}/Equips";
+        internal static string MaterialsPath = $"{ItemPath}/Materials";
+        internal static Tex2DWithPath Wreach { get; private set; }
+        internal static Tex2DWithPath Item_SpearofDarknessThrown { get; private set; }
+        internal static Tex2DWithPath Item_DialecticsThrown { get; private set; }
+        internal static Tex2DWithPath DualWraithStaffBlade { get; private set; }
+        internal static Tex2DWithPath DualWraithStaff { get; private set; }
+        internal static Tex2DWithPath Cursor_Target { get; private set; }
+        public override void Load()
+        {
+            Wreach = new Tex2DWithPath($"{ItemPath}/{nameof(Wreach)}");
+
+            Item_SpearofDarknessThrown = new Tex2DWithPath($"{WeaponPath}/{nameof(SpearofDarknessThrown)}");
+            Item_DialecticsThrown = new Tex2DWithPath($"{WeaponPath}/{nameof(DialecticsThrown)}");
+            DualWraithStaffBlade = new Tex2DWithPath($"{WeaponPath}/{nameof(DualWraithStaffBlade)}");
+            DualWraithStaff = new Tex2DWithPath($"{WeaponPath}/{nameof(DualWraithStaff)}");
+            Cursor_Target = new Tex2DWithPath($"{ItemPath}/Equips/PreciousTarget");
+        }
+        public override void Unload()
+        {
+            Wreach = null;
+
+            Item_SpearofDarknessThrown = null;
+            Item_DialecticsThrown = null;
+            DualWraithStaffBlade = null;
+            DualWraithStaff = null;
+            Cursor_Target = null;
+        }
+    }
+}

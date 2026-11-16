@@ -1,0 +1,14 @@
+﻿using LostbeltTraveler.Rarity.RarityDrawHandler;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Rarity.RarityShinyMethod
+{
+    public static class RarePetsRarity
+    {
+        public static void DrawItemName(DrawableTooltipLine tooltipLine)
+        {
+            RarityDrawHelper.DrawCustomTooltipLine(tooltipLine, Color.SkyBlue, Color.Black, Color.DeepSkyBlue, 1.2f);
+        }
+
+    }
+}

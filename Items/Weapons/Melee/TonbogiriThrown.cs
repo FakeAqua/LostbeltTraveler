@@ -1,0 +1,65 @@
+﻿using ContinentOfJourney.Items;
+using LostbeltTraveler.Projs.Melee;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Items.Weapons.Melee
+{
+    public class TonbogiriThrown : ThrownSpearClass
+    {
+        public override string Texture => GetInstance<Tonbogiri>().Texture;
+        public float CurrentAttackSpeedBonues = 0f;
+        public static readonly int MaxBubbles = 8;
+        public override void SetStaticDefaults()
+        {
+        }
+        public override void ExSD()
+        {
+            Item.damage = 72;
+            Item.useTime = Item.useAnimation = 20;
+            Item.knockBack = 6f;
+            Item.shootSpeed = 16;
+            Item.rare = ItemRarityID.Cyan;
+            //这里的shoot是为了适配weaponoutlite。实际上我们不会直接shoot这个东西
+            Item.shoot = ProjectileType<TonbogiriThrownProj>();
+            Item.Lostbelt().drawBuffIconAndDetail = true;
+            Item.UseSound = SoundID.Item71;
+        }
+        public override Color MainTooltipColor => Color.SkyBlue;
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            base.ModifyTooltips(tooltips);
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            float attackSpeed = player.GetTotalAttackSpeed<MeleeDamageClass>() * 1.24f;
+            int theCritBonuse = (int)player.GetTotalCritChance<MeleeDamageClass>();
+            theCritBonuse -= 50;
+            if (theCritBonuse < 0)
+                theCritBonuse = 0;
+            int totalBubble = theCritBonuse * (int)attackSpeed;
+            totalBubble = (int)Clamp(totalBubble, 1, MaxBubbles);
+            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
+            proj.Lostbelt().ExtraAI[0] = totalBubble;
+            return false;
+        }
+        private int GetBubblesCount
+        {
+            get
+            {
+                Player player = Main.LocalPlayer;
+                float attackSpeed = player.GetTotalAttackSpeed<MeleeDamageClass>() * 1.24f;
+                int theCritBonuse = (int)player.GetTotalCritChance<MeleeDamageClass>();
+                theCritBonuse -= 50;
+                if (theCritBonuse < 0)
+                    theCritBonuse = 0;
+                int totalBubble = theCritBonuse + (int)attackSpeed;
+                totalBubble = (int)Clamp(totalBubble, 1, MaxBubbles);
+                return totalBubble;
+            }
+        }
+    }
+}

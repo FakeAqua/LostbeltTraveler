@@ -1,0 +1,71 @@
+BambooSong: {
+	DisplayName: Bamboo Song
+	Tooltip: ""
+}
+
+ShatterSongs: {
+	DisplayName: Shatter Songs
+	Tooltip: ""
+}
+
+Corona: {
+	DisplayName: Corona
+	Tooltip:
+		'''
+		Emit seeking streaming flames
+		Press right mouse button to lower the crystal ball to the player's height
+		'''
+}
+
+DragonStaff: {
+	DisplayName: Dragon Staff
+	Tooltip: ""
+}
+
+DragonSword: {
+	DisplayName: Dragon Sword
+	Tooltip: ""
+}
+
+DragonSniper: {
+	DisplayName: Dragon Sniper
+	Tooltip: ""
+}
+
+Fleshtumor: {
+	DisplayName: Fleshtumor
+	Tooltip: Rapidly releases hungry ghosts to attack enemies
+}
+
+PestilenceFlower: {
+	DisplayName: Pestilence Flower
+	Tooltip: Rapidly releases tentacles to attack enemies
+}
+
+TheFinalDawn: {
+	DisplayName: The Final Dawn
+	Tooltip: ""
+}
+
+BrimstoneHeart: {
+	DisplayName: Brimstone Heart
+	Tooltip:
+		'''
+		Halves your life regen speed and disables [ScarletBuff/Terraria/Regeneration] 
+		On activation, sacrifice 150 health and inflict [ScarletDebuff/Terraria/Bleeding] on yourself, but grants an extremely long invincibility duration
+		Fires swift brimstone fireballs that cause lava explosions on hit
+		The lower your health, the higher the damage dealt by the lava explosions
+		Shift + Right-click to toggle item mode, drawing out the heart more safely, but does not provide self-damage or invincibility effects
+		'''
+}
+
+LivingBoomerangMagic: {
+	DisplayName: Pruned Arcanum Living Boomerang
+	Tooltip:
+		'''
+		On use, applies [ScarletBuff/Terraria/ManaRegeneration] to yourself
+		Continuously generates petals and leaves that hunt down enemies
+		Direct hits with the boomerang itself restore mana
+		"A proof that another world truly existed"
+		'''
+}

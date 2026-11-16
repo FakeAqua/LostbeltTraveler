@@ -1,0 +1,514 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.NetCode;
+using LostbeltTraveler.Core.Primitives.Trail;
+using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Globals.Methods;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Projs.Melee
+{
+    /// <summary>
+    /// 我草辩证法代码变成一坨大便了
+    /// </summary>
+    public class DialecticsThrownProj : ThrownSpearProjClass
+    {
+        public override string Texture => ProjPath + GetType().Name;
+        public enum WaveStyle
+        {
+            Sin,
+            Square,
+            Paraline,
+            ParaSquare
+        }
+        public WaveStyle CurWaveStyle = WaveStyle.Sin;
+        public ref float DrawCubeAndBallTimer => ref Projectile.localAI[0];
+        public int SinAttackCounts = 0;
+        public bool IsHit = false;
+        public override void ExSSD() => Projectile.ToTrailSetting(20, 2);
+        public Vector2 MountedTargetPos = Vector2.Zero;
+        public override void ExSD()
+        {
+            Projectile.width = Projectile.height = 50;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.extraUpdates = 5;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 600;
+        }
+        public override void AI()
+        {
+            if (!Projectile.Lostbelt().FirstFrame)
+                SetUpBasiceData();
+            if (Projectile.TooAwayFromOwner())
+                Projectile.Kill();
+            DrawCubeAndBallTimer += 0.025f;
+            switch (CurWaveStyle)
+            {
+                case WaveStyle.Sin:
+                    DrawSinWave();
+                    SinWaveAttack();
+                    break;
+                case WaveStyle.Square:
+                    DrawSquareWave();
+                    SquareWaveAttack();
+                    break;
+                case WaveStyle.Paraline:
+                    DrawParalineWave();
+                    ParalineWaveAttack();
+                    break;
+                case WaveStyle.ParaSquare:
+                    DrawParaSquareWave();
+                    ParaSquareWaveAttack();
+                    break;
+            }
+        }
+
+        private void SetUpBasiceData()
+        {
+            switch (CurWaveStyle)
+            {
+                case WaveStyle.Sin:
+                    Projectile.penetrate = 6;
+                    break;
+                case WaveStyle.Square:
+                    break;
+                case WaveStyle.ParaSquare:
+                    Projectile.penetrate = -1;
+                    Projectile.localNPCHitCooldown = -1;
+                    break;
+                case WaveStyle.Paraline:
+                    Projectile.extraUpdates = 7;
+                    break;
+
+            }
+        }
+
+        /// <summary>
+        /// 平行方波攻击模组
+        /// 沿途滞留追踪敌人的方块零件
+        /// </summary>
+        private void ParaSquareWaveAttack()
+        {
+            if (!Projectile.IsMe())
+                return;
+            if (Timer % 5 == 0)
+            {
+                for (int k = -1; k < 2; k += 2)
+                {
+                    Vector2 vel2 = Projectile.SafeDir().RotatedBy(PiOver4 * k);
+                    Projectile cube = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center + Main.rand.NextVector2Circular(10f, 10f), vel2 * -13, ProjectileType<DialecticsCubeProj>(), Projectile.damage / 3, 1f);
+                    cube.rotation = Projectile.velocity.ToRotation();
+                }
+            }
+
+        }
+        /// <summary>
+        /// 平行波攻击模组
+        /// 刺入敌人，并从下方召唤射弹
+        /// </summary>
+        private void ParalineWaveAttack()
+        {
+            if (Projectile.Lostbelt().GlobalTargetIndex == -1)
+            {
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                return;
+            }
+            //此处，为矛绘制超级冲击波
+            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            Vector2 starVel = dir * Main.rand.NextFloat(12f, 14f);
+            Vector2 starPos = Projectile.Center + Main.rand.NextVector2CircularEdge(10f, 10f);
+            //这里的特效需要进行控制
+            if (Main.rand.NextBool())
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    new StarShape(starPos - dir * 30f, starVel, RandLerpColor(Color.LightBlue, Color.RoyalBlue), 0.8f, 30, false).Spawn();
+                    new StarShape(starPos - dir * 30f, starVel, Color.White, 0.4f, 30, false).Spawn();
+                }
+            }
+            if (!Projectile.IsMe())
+                return;
+            if (Projectile.GetTargetSafe(out NPC target, true))
+            {
+                Projectile.Center = target.Center + MountedTargetPos;
+                if (Projectile.timeLeft % 60 == 0)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Vector2 toSafeDir = (target.Center - Owner.Center).ToSafeNormalize().RotatedBy(ToRadians(4f) * (i < 2).ToDirectionInt());
+                        Vector2 spawnPos = Owner.Center - toSafeDir * Main.rand.NextFloat(1800f, 2400f) + Vector2.UnitY * Main.rand.NextFloat(10f, 160f) * Main.rand.NextBool().ToDirectionInt();
+                        Vector2 vel = (target.Center - spawnPos).ToSafeNormalize() * Main.rand.NextFloat(22f, 28f);
+                        Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), spawnPos, vel, ProjectileType<DialecticsSkyFall>(), (int)(Projectile.damage * 0.50f), 12f, Owner.whoAmI);
+                        proj.rotation = vel.ToRotation();
+                        proj.Lostbelt().GlobalTargetIndex = target.whoAmI;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 矩形波：命中成功时追加标记
+        /// </summary>
+        private void SquareWaveAttack()
+        {
+            if (!IsHit)
+                return;
+            Projectile.velocity *= 0.95f;
+            Projectile.Opacity -= 0.1f;
+            if (Projectile.Opacity == 0f)
+                Projectile.Kill();
+        }
+        /// <summary>
+        /// 正弦波：多穿与伤害递增
+        /// 这里就是什么也没有的，但是为了保证协调仍然做了保留
+        /// </summary>
+        private void SinWaveAttack()
+        {
+
+        }
+        public override bool? CanDamage() => true;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (CurWaveStyle == WaveStyle.Paraline)
+            {
+                Projectile.velocity *= 0f;
+            }
+            else if (CurWaveStyle == WaveStyle.Square)
+            {
+                
+                if (Projectile.CanSpawnChild())
+                {
+                    foreach (var p in Main.ActiveProjectiles)
+                    {
+                        if (p.type == ProjectileType<DialecticsSpiningBlock>() && p.Lostbelt().GlobalTargetIndex == target.whoAmI)
+                            return;
+                    }
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), target.Center, Vector2.Zero, ProjectileType<DialecticsSpiningBlock>(), 0, 0, Owner.whoAmI);
+                    proj.rotation = Projectile.rotation;
+                    proj.scale = 0;
+                    proj.Lostbelt().GlobalTargetIndex = target.whoAmI;
+                }
+                IsHit = true;
+            }
+            else if (CurWaveStyle == WaveStyle.Sin)
+            {
+                modifiers.SourceDamage *= (1 + SinAttackCounts * 0.1f);
+                SinAttackCounts++;
+            }
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Projectile.Lostbelt().GlobalTargetIndex == -1 && CurWaveStyle == WaveStyle.Paraline)
+            {
+                Projectile.Lostbelt().GlobalTargetIndex = target.whoAmI;
+                MountedTargetPos = Projectile.Center - target.Center;
+            }
+            if (CurWaveStyle == WaveStyle.Square)
+            {
+                SoundEngine.PlaySound(LostbeltSoundAssets.Dialectics_Hit with { MaxInstances = 0, Pitch = 0.5f, PitchVariance = 0.2f }, Projectile.Center);
+            }
+            base.OnHitNPC(target, hit, damageDone);
+        }
+        #region 绘制不同的波形轨迹
+        //自变量
+        public float Timer = 0f;
+        //相位值
+        public float Omega = 3f;
+        //波形幅度
+        public float Amp = 20f;
+        /// <summary>
+        /// 平行正弦波
+        /// </summary>
+        private void DrawParalineWave()
+        {
+
+            Timer += 1;
+            if (LostbeltMethods.OutOffScreen(Projectile.Center))
+                return;
+            //这里的特效需要进行控制
+            if (Projectile.Lostbelt().GlobalTargetIndex != -1)
+                return;
+            //特效
+            for (int k = -1; k < 2; k += 2)
+            {
+
+                for (int i = 0; i <= 4; i++)
+                {
+                    Vector2 drawPos = Projectile.Center - Projectile.SafeDir() * 10f;
+                    Vector2 offset = Projectile.SafeDir().RotatedBy(PiOver2);
+                    Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                    Vector2 pos = drawPos + offset * k * (Amp - 6f) + Projectile.SafeDir() * 5f + Projectile.velocity / 4 * i;
+                    Vector2 vel = Projectile.SafeDir() * 2;
+
+                    new HRShinyOrb(pos, vel, drawColor, 30, 0.12f).Spawn();
+                    new HRShinyOrb(pos, vel, Color.White, 30, 0.09f).Spawn();
+
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 平行的矩形波
+        /// </summary>
+        private void DrawParaSquareWave()
+        {
+            if (LostbeltMethods.OutOffScreen(Projectile.Center))
+                return;
+            //轨迹特效
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            Vector2 drawPos = Projectile.Center - Projectile.SafeDir() * 10f;
+            Vector2 offset = Projectile.SafeDir().RotatedBy(PiOver2);
+            Timer += 1;
+            Vector2 vel2 = Projectile.velocity / 3;
+            //孩子们别怕，我带着我的答辩代码来了
+            //画高电平
+            if (Timer < Omega)
+            {
+                for (int k = -1; k < 2; k += 2)
+                {
+                    for (int i = -3; i <= 5; i++)
+                    {
+                        Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                        Vector2 pos = drawPos + offset * k * Amp + Projectile.velocity / 5 * i;
+                        new HRShinyOrb(pos, vel2, drawColor, 40, 0.1f).Spawn();
+                        new HRShinyOrb(pos, vel2, Color.White, 40, 0.05f).Spawn();
+                    }
+                }
+            }
+            //画由高到低的阶梯
+            else if (Timer == Omega)
+            {
+                for (float j = Amp; j >= Amp - 10f; j -= 1f)
+                {
+                    for (int k = -1; k < 2; k += 2)
+                    {
+                        Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                        Vector2 pos = drawPos + offset * k * j + Projectile.velocity / 5;
+                        new HRShinyOrb(pos, vel2, drawColor, 40, 0.1f).Spawn();
+                        new HRShinyOrb(pos, vel2, Color.White, 40, 0.05f).Spawn();
+                    }
+                }
+            }
+            //画低电平
+            else if (Timer > Omega && Timer < Omega * 2f)
+            {
+                for (int k = -1; k < 2; k += 2)
+                {
+                    for (int i = -3; i <= 5; i++)
+                    {
+                        Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                        Vector2 pos = drawPos + offset * k * (Amp - 10f) + Projectile.velocity / 5 * i;
+                        new HRShinyOrb(pos, vel2, drawColor, 40, 0.1f).Spawn();
+                        new HRShinyOrb(pos, vel2, Color.White, 40, 0.05f).Spawn();
+
+                    }
+                }
+            }
+            //画低到高的阶梯
+            else
+            {
+                for (float j = Amp - 10f; j <= Amp; j += 1f)
+                {
+                    for (int k = -1; k < 2; k += 2)
+                    {
+                        Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                        Vector2 pos = drawPos + offset * k * j + Projectile.velocity / 5;
+                        new HRShinyOrb(pos, vel2, drawColor, 40, 0.1f).Spawn();
+                        new HRShinyOrb(pos, vel2, Color.White, 40, 0.05f).Spawn();
+
+                    }
+                }
+                Timer = 0;
+            }
+        }
+        //绘制矩形波
+        private void DrawSquareWave()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            Vector2 offset = Projectile.SafeDir().RotatedBy(PiOver2);
+            Timer += 1f;
+            if (LostbeltMethods.OutOffScreen(Projectile.Center))
+                return;
+            //孩子们，力大砖飞来了！
+            Vector2 drawPos = Projectile.Center - Projectile.SafeDir() * 10f;
+            Vector2 vel = Projectile.velocity / 3;
+            //画高电平
+            if (Timer < Omega)
+            {
+                for (int i = -5; i <= 5; i++)
+                {
+                    Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                    Vector2 pos = drawPos + offset * Amp + Projectile.velocity / 5 * i;
+                    new HRShinyOrb(pos, vel, drawColor, 25, .1f).Spawn();
+                    new HRShinyOrb(pos, vel, Color.White, 25, .07f).Spawn();
+
+                }
+            }
+            //高电平到低电平的阶跃
+            else if (Timer == Omega)
+            {
+                for (float j = Amp; j >= -Amp; j -= 2f)
+                {
+                    Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                    Vector2 pos = drawPos + offset * j;
+                    new HRShinyOrb(pos, vel, drawColor, 25, 0.1f).Spawn();
+                    new HRShinyOrb(pos, vel, Color.White, 25, 0.07f).Spawn();
+                }
+            }
+            //画低电平
+            else if (Timer > Omega && Timer < Omega * 2f)
+            {
+                for (int i = -5; i <= 5; i++)
+                {
+                    Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                    Vector2 pos = drawPos + offset * -Amp + Projectile.velocity / 5 * i;
+                    new HRShinyOrb(pos, vel, drawColor, 25, 0.1f).Spawn();
+                    new HRShinyOrb(pos, vel, Color.White, 25, 0.07f).Spawn();
+
+                }
+            }
+            //低电平到高电平的阶跃
+            else
+            {
+                for (float j = -Amp; j <= +Amp; j += 2f)
+                {
+                    Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                    Vector2 pos = drawPos + offset * j;
+                    new HRShinyOrb(pos, vel, drawColor, 25, 0.1f).Spawn();
+                    new HRShinyOrb(pos, vel, Color.White, 25, 0.07f).Spawn();
+
+                }
+                //记得重置
+                Timer = 0;
+            }
+        }
+        private void DrawSinWave()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            Vector2 speedOffset = Projectile.velocity / 5;
+            Vector2 dir = Projectile.SafeDir();
+            Vector2 mountedPos = Projectile.Center - dir * 10f;
+            Timer += 0.8f;
+            if (LostbeltMethods.OutOffScreen(Projectile.Center))
+                return;
+
+            for (int i = 0; i < 2; i++)
+            {
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                Vector2 spawnPos = mountedPos + dir.RotatedBy(PiOver2) * MathF.Sin(Timer - i * 0.16f) * (25.0f);
+                new HRShinyOrb(spawnPos - speedOffset * i, dir * 1.2f, drawColor, 25, 0.1f).Spawn();
+                new HRShinyOrb(spawnPos - speedOffset * i, dir * 1.2f, Color.White, 25, 0.07f).Spawn();
+            }
+            //第二条line
+            for (int i = 0; i < 5; i++)
+            {
+                Color drawColor = RandLerpColor(Color.MediumBlue, Color.Blue);
+                Vector2 spawnPos = mountedPos + dir.RotatedBy(PiOver2) * MathF.Sin(Timer - i * 0.16f) * (-25.0f);
+                new HRShinyOrb(spawnPos - speedOffset * i, dir * 1.2f, drawColor, 25, 0.1f).Spawn();
+                new HRShinyOrb(spawnPos - speedOffset * i, dir * 1.2f, Color.White, 25, 0.07f).Spawn();
+            }
+        }
+        #endregion
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D star = TextureAssets.Extra[ExtrasID.SharpTears].Value;
+            Projectile.DrawGlowEdge(Color.Blue, rotFix: PiOver4);
+            Projectile.DrawProj(Color.White, 4, rotFix: PiOver4);
+            DrawCubeAndBall(ref lightColor);
+            return false;
+        }
+        public void DrawBack(Color trailColor, float primitiveHeight, float alphaValue = 1f)
+        {
+            Asset<Texture2D> tex = LostbeltModAssets.Trail_ManaStreak.Texture;
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["LaserTextureSize"].SetValue(tex.Size());
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["targetSize"].SetValue(new Vector2(10, tex.Height()));
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * -5.2f);
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uColor"].SetValue(trailColor.ToVector4() * alphaValue);
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uFadeoutLength"].SetValue(1.3f);
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uFadeinLength"].SetValue(0.1f);
+            Projectile.ClearInvaidData(out List<Vector2> validPosition, out List<float> validRot, Projectile.oldPos, Projectile.oldRot);
+            GD.Textures[0] = tex.Value;
+            GD.SamplerStates[0] = SamplerState.PointClamp;
+            LostbeltShaderAssets.TerrarRayLaser.CurrentTechnique.Passes[0].Apply();
+            List<ScarletVertex> list = [];
+            int totalpoints = validPosition.Count;
+            //创建顶点列表
+            for (int i = 0; i < totalpoints - 1; i++)
+            {
+                if (validPosition[i + 1] - validPosition[i] == Vector2.Zero)
+                    continue;
+                float progress = (float)i / (totalpoints - 1);
+                float rot = (validPosition[i + 1] - validPosition[i]).ToRotation();
+                Vector2 posOffset = new Vector2(0, primitiveHeight).RotatedBy(rot);
+                Vector2 oldCenter = validPosition[i] + Projectile.Size / 2 - Main.screenPosition + rot.ToRotationVector2() * 30f;
+                QuickGetClass(ref list, oldCenter, posOffset, progress);
+            }
+            if (list.Count >= 3)
+            {
+                GD.DrawUserPrimitives(PrimitiveType.TriangleStrip, list.ToArray(), 0, list.Count - 2);
+            }
+
+        }
+        public void QuickGetClass(ref List<ScarletVertex> list, Vector2 oldCenter, Vector2 posOffset, float progress)
+        {
+            ScarletVertex upClass = new(oldCenter - posOffset, Color.White, new Vector3(progress, 0, 0f));
+            ScarletVertex downClass = new(oldCenter + posOffset, Color.White, new Vector3(progress, 1, 0f));
+            list.Add(upClass);
+            list.Add(downClass);
+        }
+        public void DrawCubeAndBall(ref Color lightColor)
+        {
+            //此处，结合上方的Timer，让球体与方块绕着射弹本身动起来
+            Vector2 cubePos = GetPos(15f, true, 20f, true);
+            Vector2 cubePos2 = GetPos(-15f, false, 20f, true);
+            Vector2 ballPos = GetPos(15f, false, 20f, false);
+            Vector2 ballPos2 = GetPos(-15f, true, 20f, false);
+            //给这些贴图绘制描边。
+            for (int cubeTime = 0; cubeTime < 8; cubeTime++)
+            {
+                Vector2 posMove = ToRadians(cubeTime * 60f).ToRotationVector2() * 2f;
+                Color drawColor = Color.White with { A = 0 };
+                QuickDrawCube(cubePos + posMove, drawColor);
+                QuickDrawCube(cubePos2 + posMove, drawColor);
+                QuickDrawBall(ballPos + posMove, drawColor);
+                QuickDrawBall(ballPos2 + posMove, drawColor);
+            }
+            QuickDrawCube(cubePos, Color.White);
+            QuickDrawCube(cubePos2, Color.White);
+            QuickDrawBall(ballPos, Color.White);
+            QuickDrawBall(ballPos2, Color.White);
+        }
+        private Vector2 GetPos(float posOffset, bool left, float dirOffset, bool reverseFloating)
+        {
+            Vector2 spearDir = Projectile.rotation.ToRotationVector2();
+            Vector2 circleOffset = spearDir * (MathF.Sin(DrawCubeAndBallTimer) * 5f);
+            return Projectile.Center + spearDir * posOffset + spearDir.RotatedBy(PiOver2 * left.ToDirectionInt()) * dirOffset + circleOffset * reverseFloating.ToDirectionInt() - Main.screenPosition;
+        }
+        private void QuickDrawCube(Vector2 pos, Color color)
+        {
+            float rotSpeed = DrawCubeAndBallTimer * 10f - 24f;
+            Texture2D cube = LostbeltModAssets.Specific_DialectCube.Value;
+            SB.Draw(cube, pos, null, color, ToRadians(rotSpeed), cube.Size() / 2, Projectile.scale * 0.8f, 0, 0);
+        }
+        private void QuickDrawBall(Vector2 pos, Color color)
+        {
+            float rotSpeed = DrawCubeAndBallTimer * 10f - 24f;
+            Texture2D ball = LostbeltModAssets.Specific_DialectBall.Value;
+            SB.Draw(ball, pos, null, color, ToRadians(rotSpeed), ball.Size() / 2, Projectile.scale * 0.8f, 0, 0);
+
+        }
+    }
+}

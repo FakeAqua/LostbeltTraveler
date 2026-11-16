@@ -1,0 +1,124 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Projs.Melee
+{
+    public class CandLanceFire : LostbeltProjs
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Melee;
+        public ref float AttackTimer => ref Projectile.ai[0];
+
+        public ref float RandomValue => ref Projectile.ai[2];
+        public ref float DrawGlowScale => ref Projectile.localAI[0];
+        public float Osci = 0.025f;
+        public float AttackDelay = 4;
+        public bool IsHitTile = false;
+        public float SpawnTime = 0;
+        float RotFix = ToRadians(38);
+        public override void ExSD()
+        {
+            Projectile.width = Projectile.height = 60;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.noEnchantmentVisuals = true;
+            Projectile.timeLeft = 300;
+            Projectile.penetrate = 1;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
+        }
+        private int SpawnBeamCounts = 3;
+        public override void AI()
+        {
+            Lighting.AddLight(Projectile.Center, TorchID.Blue);
+            //本质上控的是火焰方向，不过写在这里也为了方便一些操作
+            IsHitTile = Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height);
+            Projectile.velocity *= !IsHitTile ? 0.92f : 0.724f;
+            DrawGlowScale = Clamp(Math.Abs(MathF.Sin(Osci / 4)) * 1.2f, 1f, 1.2f);
+            if (Projectile.GetTargetSafe(out NPC target, Projectile.Lostbelt().GlobalTargetIndex, false))
+                Projectile.position.X = Lerp(Projectile.position.X + RandomValue, target.position.X, 0.2f);
+            //用粒子点燃
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            IgniteFire();
+            if (Projectile.velocity.Length() > 4f)
+                return;
+            AttackTimer += 1;
+            if (AttackTimer < AttackDelay * (SpawnBeamCounts + 1))
+            {
+                if (AttackTimer % AttackDelay == 0 && Projectile.IsMe())
+                {
+                    //向下方向，生成一个小型的鬼魂粒子
+                    SpawnTime += 1f;
+                    int fireDamage = (int)(Projectile.originalDamage * (SpawnTime / SpawnBeamCounts));
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center + Vector2.UnitY * 5f, Vector2.UnitY.ToRandVelocity(PiOver4) * Main.rand.NextFloat(3f, 4f), ProjectileType<CandLanceBeam>(), fireDamage, 12f, Owner.whoAmI);
+                    SoundEngine.PlaySound(LostbeltSoundAssets.Evolution_Thrown with { Volume = 0.7f, MaxInstances = 0, Pitch = 0.7f }, Projectile.Center);
+                }
+            }
+            else
+            {
+                Projectile.Opacity -= 0.02f;
+                if (Projectile.Opacity == 0)
+                    Projectile.Kill();
+            }
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
+        }
+        public override bool? CanDamage() => false;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.HitDirectionOverride = Projectile.ApplyDirectionOverride(target);
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            //水蜡烛本身也具有范围伤害
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Projectile.GetProjDrawData(out Texture2D projTex, out Vector2 drawPos, out Vector2 ori);
+            //白描边
+            //为其绘制一个发光的环。
+            Texture2D ring = LostbeltModAssets.Particle_RingShiny.Value;
+            Texture2D star = LostbeltModAssets.Particle_KiraStarGlow.Value;
+
+            SB.End();
+            SB.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            SB.Draw(ring, Projectile.Center - Main.screenPosition, null, Color.DeepSkyBlue * Projectile.Opacity, 0, ring.ToOrigin(), 0.13f * DrawGlowScale * Projectile.scale * Projectile.Opacity, SpriteEffects.None, 0);
+            SB.Draw(ring, Projectile.Center - Main.screenPosition, null, Color.White * Projectile.Opacity * 0.85f, 0, ring.ToOrigin(), 0.13f * DrawGlowScale * Projectile.scale * Projectile.Opacity, SpriteEffects.None, 0);
+            SB.End();
+            SB.BeginDefault();
+            for (int i = 0; i < 8; i++)
+                SB.Draw(projTex, drawPos + ToRadians(60f * i).ToRotationVector2() * 2f, null, Color.White with { A = 0 } * Projectile.Opacity, Projectile.rotation + RotFix, ori, Projectile.scale * Projectile.Opacity, 0, 0);
+            SB.Draw(projTex, drawPos, null, Color.White * Projectile.Opacity, Projectile.rotation + RotFix, ori, Projectile.scale * Projectile.Opacity, 0, 0);
+            SB.End();
+            SB.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            SB.Draw(star, Projectile.Center - Main.screenPosition, null, Color.SkyBlue * Projectile.Opacity, 0, star.ToOrigin(), 0.20f * DrawGlowScale * Projectile.scale * Projectile.Opacity, SpriteEffects.None, 0);
+            SB.EndShaderArea();
+
+
+            return false;
+        }
+
+        private void IgniteFire()
+        {
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    Vector2 dir = (Projectile.rotation).ToRotationVector2();
+            //    Vector2 xOffset = dir.RotatedBy(PiOver2) * Main.rand.NextFloat(-4f, 9f);
+            //    Vector2 spawnPos = Projectile.Center - Vector2.UnitY * 30f;
+            //    new Fire(spawnPos.ToRandCirclePos(6f), Vector2.UnitY * -Main.rand.NextFloat(0.1f,3.4f), RandLerpColor(Color.SkyBlue, Color.DeepSkyBlue), 40, dir.ToRotation(), 0.8f * Projectile.Opacity, Main.rand.NextFloat(0.08f, 0.10f) * Projectile.Opacity).Spawn();
+            //}
+            //在底下用一圈圆弧粒子将其盘起来
+            Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(10f, 10f), DustID.UnusedWhiteBluePurple);
+            d.scale *= 1.7f * Projectile.Opacity;
+            d.noGravity = true;
+        }
+    }
+}

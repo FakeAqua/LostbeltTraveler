@@ -1,0 +1,45 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Projs.Ranged;
+using Terraria;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Items.Weapons.Ranged
+{
+    public class BambooRocket : LostbeltWeapon
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Ranged;
+        public override void ExSD()
+        {
+            Item.damage = 26;
+            Item.noMelee = true;
+            Item.autoReuse = true;
+            Item.UseSound = SoundID.Item51;
+            Item.SetUpRarityPrice(ItemRarityID.Green);
+            Item.useTime = Item.useAnimation = 30;
+            Item.shootSpeed = 14f;
+            Item.shoot = ProjectileType<BambooStick>();
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 3f;
+
+        }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-10f, 0);
+        }
+        public override void UseItemFrame(Player player)
+        {
+            player.NoHeldProjUpdateAim();
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.BambooBlock, 50).
+                AddIngredient(ItemID.JungleSpores, 5).
+                AddTile(TileID.Sawmill).
+                Register();
+        }
+    }
+}

@@ -1,0 +1,86 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.ParticleSystem;
+using System;
+using Terraria;
+
+namespace LostbeltTraveler.Globals.Graphics.Particles
+{
+    public class ShinyCrossStar : BaseParticle
+    {
+        public override BlendState UseBlendStateID => BlendState.Additive;
+        public Color InitColor;
+        public float SpinSpeed = 0;
+        private float BeginScale;
+        public bool UseLegacy = true;
+        public ShinyCrossStar(Vector2 position, Vector2 velocity, Color color, int lifetime, float Rot, float opacity, float scale, float spinSpeed = 0f)
+        {
+            Position = position;
+            Velocity = velocity;
+            InitColor = color;
+            Lifetime = lifetime;
+            Rotation = Rot;
+            Opacity = opacity;
+            Scale = BeginScale = scale;
+            SpinSpeed = spinSpeed;
+        }
+        public ShinyCrossStar(Vector2 position, Vector2 velocity, Color color, int lifetime, float Rot, float opacity, float scale, bool useLegacy, float spinSpeed = 0f)
+        {
+            Position = position;
+            Velocity = velocity;
+            InitColor = color;
+            Lifetime = lifetime;
+            Rotation = Rot;
+            Opacity = opacity;
+            Scale = BeginScale = scale;
+            SpinSpeed = spinSpeed;
+            UseLegacy = useLegacy;
+        }
+        public override void OnSpawn()
+        {
+        }
+
+        public override void Update()
+        {
+            Scale *= 0.93f;
+            DrawColor = Color.Lerp(InitColor, InitColor * 0.2f, (float)Math.Pow(LifetimeRatio, 30));
+            Velocity *= 0.95f;
+            Rotation += SpinSpeed;
+            //太小的情况下直接处死粒子就行了
+            if (Scale < BeginScale * 0.05f)
+                Time = Lifetime;
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Texture2D star = LostbeltModAssets.Particle_SharpTear;
+            Tex2DWithPath shinyOrb = LostbeltModAssets.Particle_ShinyOrb;
+            Vector2 drawPos = Position - Main.screenPosition;
+            if (UseLegacy)
+            {
+                Vector2 starScale = new(1.2f, 0.8f);
+                spriteBatch.Draw(star, drawPos, null, DrawColor * Opacity, Rotation, star.Size() / 2, starScale * Scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(star, drawPos, null, DrawColor * Opacity, Rotation + PiOver2, star.Size() / 2, starScale * Scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(shinyOrb.Value, drawPos, null, Color.Lerp(Color.White, DrawColor, 0.5f) * 0.95f * Opacity, 0, shinyOrb.Value.Size() / 2f, Scale * 0.75f, SpriteEffects.None, 0);
+            }
+            else
+                for (float i = 0; i < 1f; i += 0.1f)
+                {
+                    Vector2 starScale = GetScale(i);
+                    float colorAlpha = GetAlphaFade(1 - i);
+                    spriteBatch.Draw(star, drawPos, null, DrawColor * Opacity * colorAlpha, Rotation, star.Size() / 2, starScale * Scale, SpriteEffects.None, 0);
+                    spriteBatch.Draw(star, drawPos, null, DrawColor * Opacity * colorAlpha, Rotation + PiOver2, star.Size() / 2, starScale * Scale, SpriteEffects.None, 0);
+                    spriteBatch.Draw(star, drawPos, null, Color.White * Opacity, Rotation + PiOver2, star.Size() / 2, starScale * Scale * 0.5f, SpriteEffects.None, 0);
+                }
+            //防止过曝
+        }
+        public float GetAlphaFade(float t)
+        {
+            return Lerp(0.5f, 1f, t);
+        }
+        public Vector2 GetScale(float t)
+        {
+            Vector2 starScale = new(1.2f, 0.8f);
+            Vector2 beginScale = new(0.2f, 0.05f);
+            return Vector2.Lerp(beginScale, starScale, t);
+        }
+    }
+}

@@ -1,0 +1,393 @@
+CandLanceThrown: {
+	DisplayName: Candlance Javelin
+	Tooltip:
+		'''
+		Ignit a soulfire lantern on hit
+		The lantern delays, then falls and fires homing soulfire at multiple targets
+		Soulfire has a chance to inflicts[ScarletDebuff/Terraria/Confused]
+		'''
+}
+
+DialecticsThrown: {
+	DisplayName: Dialectics Javelin
+	Tooltip:
+		'''
+		When thrown, alternates between sine wave, square wave, bipolar square wave, and parallel wave patterns
+		Sine wave makes javelin penetrates for 6 times, and its damage increases with each penetration
+		Square wave makes javelin deals 3x damage, marks your target
+		Bipolar square wave makes javelin leaves multiple lingering blocks that home in on your enemy
+		Parallel wave makes javelin stabs into your target, continuously summons additional projectiles
+		'''
+}
+
+FlybackHandThrown: {
+	DisplayName: Flybackhand Javelin
+	Tooltip:
+		'''
+		Grant different buffs based on the in-game time on hit
+		Right-click to throw a Time Crystal. After a short time, press right-click again to teleport back to the crystal's position
+		Upon returning, increase the attack speed and restore 1/2 of the stats the player lost during this process
+		"Time will mend everything...perhaps."
+		'''
+	TimeClockOnCDText: "Time Crystal Cooldown: {0} seconds! "
+}
+
+LightBiteThrown: {
+	DisplayName: Light Bite Javelin
+	Tooltip: Leaves behind weakly homing eclipse stars during flight
+}
+
+SpearofDarknessThrown: {
+	DisplayName: Spear of Darkness Javelin
+	Tooltip:
+		'''
+		Can pass through walls
+		Returns after being thrown for a short time
+		'''
+}
+
+SweetStabThrown: {
+	DisplayName: Sweet Seet Stab Javelin
+	Tooltip:
+		'''
+		Affected by gravilty and penetrates 3 targets
+		Stab in on hitting wall, heal every player that try to pick up
+		'''
+}
+
+WildPointerThrown: {
+	DisplayName: Wild Pointer Javelin
+	Tooltip:
+		'''
+		Has a chance to home in on all valid targets worldwide
+		Valid targets include you and your friends
+		'''
+}
+
+Wreach: {
+	DisplayName: Wreach
+	Tooltip: Debug item, might have different function base on your current mod
+}
+
+DeepToneThrown: {
+	DisplayName: Deep Tone Javelin
+	Tooltip:
+		'''
+		Spawns abyssal energy orbs on hit
+		On attack, release abyssal devourer that hunts down your enemies
+		The devourer deals continuous damage On Hit, and occasionally heals you
+		'''
+}
+
+EvolutionThrown: {
+	DisplayName: Evolution Javelin
+	Tooltip:
+		'''
+		Leaves portals during flight and marks the first enemy hit
+		Portals seek the nearest enemy, fire homing energy bolts, then vanish
+		If a marked enemy exists, all portals target it
+		"They are growing."
+		'''
+}
+
+SpearofEscapeThrown: {
+	DisplayName: Spear of Escape Javelin
+	Tooltip:
+		'''
+		Ignites the rocket, which explodes in mid-air and splits into multiple homing rockets
+		The homing rockets fall downward and prioritize enemies nearest to the cursor
+		"We will not stay in our dangerous cradle forever!"
+		'''
+}
+
+TonbogiriThrown: {
+	DisplayName: Tonbogiri Javelin
+	Tooltip:
+		'''
+		Add toxic bubbles along the path
+		Also add more toxic bubbles on hit
+		Attacks inflict[ScarletDebuff/Terraria/Venom]
+		"Looks a bit familiar"
+		'''
+}
+
+SodomsDisaster: {
+	DisplayName: Eclipse Wraith
+	Tooltip:
+		'''
+		Increases melee critical damage by 30% while being held
+		Penetrates multiple enemies and explodes on all hit targets
+		Calls down celestial fireballs from above to strike all hit enemies
+		'''
+	FlavorTooltips: -Umbral beast, devour the sun. Fire and curse, second sign of doom-
+}
+
+Bamboomerang: {
+	DisplayName: Bamboomerang
+	Tooltip:
+		'''
+		Attempts to attack the next enemy on hit
+		Up to 3 Boomerang can exist at once
+		"Who came up with the idea of making a boomerang out of bamboo?"
+		'''
+}
+
+FierySpear: {
+	DisplayName: Fiery Spear
+	Tooltip:
+		'''
+		Spawns two fireballs home in on your target on hit
+		Fireballs seek nearby enemies if directly hit the walls.
+		'''
+}
+
+BeetleSpear: {
+	DisplayName: Beetle Spear
+	Tooltip: ""
+}
+
+TheMars: {
+	DisplayName: The Mars
+	Tooltip:
+		'''
+		Marks up to 3 nearby hostile units along its path
+		Upon vanishing, launches Tidal Spears at all marked targets
+		Attacks inflict[ScarletDebuff/Terraria/Confused]
+		"The Creation of Alien"
+		'''
+}
+
+GalvanizedHandThrown: {
+	DisplayName: Galvanized Hand Javelin
+	Tooltip:
+		'''
+		Summon high-speed Galvanized Hand from above
+		The main speaar impales the enemy, dealing continuous damage
+		After the main spear hits, all follow-up attacks become precise spears that aim directly at the locked target without homing
+		Press Right Click to dash toward the enemy locked by the main needle, dealing high damage and granting invincibility frames
+		On successful impact, release multiple Meter Needles to chase foes
+		'''
+	TileTextvalue: ""
+}
+
+AzureFrostmark: {
+	DisplayName: Azure Frostmark
+	Tooltip: Spawns a frost energy, disappears after flying a certain distance.
+}
+
+CryoblazeHymn: {
+	DisplayName: Cryoblaze Hymn
+	Tooltip:
+		'''
+		Vanishes after a short time once thrown or hitting an enemy
+		Upon vanishing, creates alternating frost and fire portals that fire frost bolts and fire bolts
+		Directly hit inflicted[ScarletDebuff/Terraria/Oiled]
+		Frost bolts are slower and target multiple separate enemies, inflicted[ScarletDebuff/Terraria/Frostburn2]
+		Fire bolts are faster and deal more damage, prioritizing enemies directly hit by the spear, inflicted[ScarletDebuff/Terraria/OnFire3]
+		"Though vastly different, they sing aloud in the same melody."
+		'''
+}
+
+EclipseWraith: {
+	DisplayName: Eclipse Wraith
+	Tooltip:
+		'''
+		Increases melee critical damage by 30% while being held
+		Penetrates multiple enemies and explodes on all hit targets
+		Calls down celestial fireballs from above to strike all hit enemies
+		'''
+	FlavorTooltips: -Umbral beast, devour the sun. Fire and curse, second sign of doom-
+}
+
+CactusSpear: {
+	DisplayName: Cactus Spear
+	Tooltip:
+		'''
+		Spawns an additional cactus thorn backwards on hit
+		"A cactus is meant to be made into a throwing spear!"
+		'''
+}
+
+ColdSakura: {
+	DisplayName: Cold Sakura
+	Tooltip:
+		'''
+		Quickly throw a sharp, high-speed sakura lance
+		On Hit, a sakura arrow gives chase
+		'''
+}
+
+TerraSpear: {
+	DisplayName: Terra Spear
+	Tooltip:
+		'''
+		Leave multiple Terra Portals along the path, which release seeking Terra Arrows after a certain time
+		On a direct hit with the throw, call in a large number of Terra Lances from off-field for support.
+		"It's not called 'Terra Lance', don't go messing that up, yeah?"
+		'''
+}
+
+AbyssalWorld: {
+	DisplayName: Abyssal World
+	Tooltip: ""
+}
+
+DragonSword: {
+	DisplayName: Dragon Sword
+	Tooltip: ""
+}
+
+EnchantedSwordfish: {
+	DisplayName: Enchanted Swordfish
+	Tooltip: ""
+}
+
+EthrealSwordfish: {
+	DisplayName: Eternal Swordfish
+	Tooltip:
+		'''
+		Time is up, unless the rules are broken, this is an eternal destiny...
+		You already got it? Never mind
+		Condensed the power of the Time
+		...Wait, why does this even exist
+		'''
+}
+
+SamsaraofDawnlightAlter: {
+	DisplayName: Samsaraof Dawnlight Alter
+	Tooltip: ""
+}
+
+FlowerofDance: {
+	DisplayName: Flower of Dance
+	Tooltip:
+		'''
+		Throw four dagger sthat home in after a delay and spawn a flower on hit.
+		Any additional dagger hit will make the flower fires seeking petals
+		'''
+}
+
+HighTechBlade: {
+	DisplayName: High Tech Blade
+	Tooltip: ""
+}
+
+RitualofRepose: {
+	DisplayName: Ritual of Repose
+	Tooltip:
+		'''
+		Throw a cross skyward that descends and bursts
+		Striking all enemies worldwide with lightning and applying[ScarletDebuff/LostbeltTraveler/TheBleachingBuff]
+		"Oh lord, you're dead to me, rest in peace."
+		'''
+}
+
+CopperRapierThrown: {
+	DisplayName: Copper Rapier Thrown
+	Tooltip: ""
+}
+
+GoldRapierThrown: {
+	DisplayName: Gold Rapier Thrown
+	Tooltip: ""
+}
+
+IronRapierThrown: {
+	DisplayName: Iron Rapier Thrown
+	Tooltip: ""
+}
+
+LeadRapierThrown: {
+	DisplayName: Lead Rapier Thrown
+	Tooltip: ""
+}
+
+PlatinumRapierThrown: {
+	DisplayName: Platinum Rapier Thrown
+	Tooltip: ""
+}
+
+SilverRapierThrown: {
+	DisplayName: Silver Rapier Thrown
+	Tooltip: ""
+}
+
+TinRapierThrown: {
+	DisplayName: Tin Rapier Thrown
+	Tooltip: ""
+}
+
+TungstenRapierThrown: {
+	DisplayName: Tungsten Rapier Thrown
+	Tooltip: ""
+}
+
+AmberYoyo: {
+	DisplayName: Amber Yoyo
+	Tooltip: Amber will break through the enemy's formation
+}
+
+AmethystYoyo: {
+	DisplayName: Amethyst Yoyo
+	Tooltip: Amethyst will bring enemies within reach
+}
+
+DiamondYoyo: {
+	DisplayName: Diamond Yoyo
+	Tooltip: Diamond will grant [ScarletBuff/LostbeltTraveler/DiamondYoyoBuff] to gems
+}
+
+EmeraldYoyo: {
+	DisplayName: Emerald Yoyo
+	Tooltip: Emerald will bring you wealth
+}
+
+RubyYoyo: {
+	DisplayName: Ruby Yoyo
+	Tooltip: Ruby will heal your wounds
+}
+
+SapphireYoyo: {
+	DisplayName: Sapphire Yoyo
+	Tooltip: Sapphire will help you pursue victory
+}
+
+TopazYoyo: {
+	DisplayName: Topaz Yoyo
+	Tooltip: Topaz will ignore all obstacles
+}
+
+ShroomiteFork: {
+	DisplayName: Shroomite Fork
+	Tooltip: ""
+}
+
+LuminiteDart: {
+	DisplayName: Luminite Dart
+	Tooltip: ""
+}
+
+PanopticonPestle: {
+	DisplayName: Panopticon Pestle
+	Tooltip: ""
+}
+
+RaceAgainstTime: {
+	DisplayName: Race Against Time
+	Tooltip: ""
+}
+
+Vibrant: {
+	DisplayName: Vibrant
+	Tooltip: ""
+}
+
+GrandGemYoyo: {
+	DisplayName: Supreme Gem Yoyo
+	Tooltip: Contains the power of all gem yoyos
+}
+
+OnyxYoyo: {
+	DisplayName: Onyx Yoyo
+	Tooltip: ""
+}

@@ -1,0 +1,216 @@
+﻿using System;
+using System.IO;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Buffs.GoodBuffs;
+using LostbeltTraveler.Core.ParticleECS;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Graphics.Particles;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Projs.General
+{
+    public class DiverJellyFish : LostbeltProjs
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Typeless;
+        public override string Texture => LostbeltModAssets.InvisAsset.Path;
+        public int TextureType = 0;
+        public override void SetStaticDefaults()
+        {
+            Projectile.ToTrailSetting();
+        }
+        public override void ExSD()
+        {
+            Projectile.tileCollide = false;
+            Projectile.ownerHitCheck = true;
+            Projectile.timeLeft = GetSeconds(15);
+            Projectile.extraUpdates = 1;
+            Projectile.width = Projectile.height = 100;
+            Projectile.SetupImmnuity(15, ImmnuityType.Static);
+            Projectile.penetrate = -1;
+            Projectile.Opacity = 0;
+            Projectile.noEnchantmentVisuals = true;
+        }
+        public bool IsApplyJellyfishBuff
+        {
+            get => Projectile.ai[2] == 1;
+            set => Projectile.ai[2] = value ? 1 : 0;
+        }
+        public override void OnFirstFrame()
+        {
+            TextureType = Main.rand.NextFromList<int>(NPCID.GreenJellyfish, NPCID.BlueJellyfish, NPCID.PinkJellyfish);
+            Projectile.netUpdate = true;
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            TextureType = reader.ReadInt32();
+        }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(TextureType);
+        }
+        public override void ProjAI()
+        {
+            if (Projectile.timeLeft < 50)
+            {
+                Projectile.Opacity = Lerp(Projectile.Opacity, 0, 0.1f / 4f);
+            }
+            else
+            {
+                Projectile.Opacity = Lerp(Projectile.Opacity, 1, 0.1f / 4f);
+                if (Projectile.Opacity >= .98f)
+                {
+                    Projectile.Opacity = 1f;
+                    if (!IsApplyJellyfishBuff)
+                        foreach (var p in Main.ActivePlayers)
+                        {
+                            if (p.Hitbox.Intersects(Projectile.Hitbox) && !p.HasBuff<JellyfishGroupBuff>())
+                            {
+                                p.AddBuff(BuffType<JellyfishGroupBuff>(), GetSeconds(12));
+                                p.Lostbelt().jellyfishGroupIndex = TextureType;
+                                IsApplyJellyfishBuff = true;
+                                Projectile.netUpdate = true;
+                                switch (TextureType)
+                                {
+                                    case NPCID.GreenJellyfish:
+                                        PlayIntersectParticle(Color.LimeGreen, Color.DarkGreen, p.Center);
+                                        break;
+                                    case NPCID.PinkJellyfish:
+                                        PlayIntersectParticle(Color.HotPink, Color.Purple, p.Center);
+                                        break;
+                                    case NPCID.BlueJellyfish:
+                                        PlayIntersectParticle(Color.RoyalBlue, Color.CornflowerBlue, p.Center);
+                                        break;
+
+                                }
+
+                                break;
+                            }
+                        }
+                }
+            }
+            Projectile.velocity *= 0.96f;
+            UpdateParticle();
+            if (Projectile.FinalUpdate())
+            {
+                float osci = (float)(Math.Sin(Main.GlobalTimeWrappedHourly) * 0.1f);
+                Projectile.position.Y += osci;
+            }
+            Projectile.AddFrames(16 * Projectile.MaxUpdates, 4);
+        }
+        public void UpdateParticle()
+        {
+            switch (TextureType)
+            {
+                case NPCID.GreenJellyfish:
+                    ParticleHandler(Color.LimeGreen, Color.DarkGreen);
+                    break;
+                case NPCID.PinkJellyfish:
+                    ParticleHandler(Color.HotPink, Color.Purple);
+                    break;
+                case NPCID.BlueJellyfish:
+                    ParticleHandler(Color.RoyalBlue, Color.CornflowerBlue);
+                    break;
+
+            }
+        }
+        public void PlayIntersectParticle(Color color1, Color color2, Vector2 center)
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                new SmokeParticle(center.ToRandCirclePos(4f), RandVelTwoPi(0.1f, 5f), RandLerpColor(color1, color2), 40, RandRotTwoPi, 0.85f, 0.20f, true).Spawn();
+            }
+            for (int i = 0; i < 16; i++)
+            {
+                ECSParticle.TurbulenceShinyOrb(center.ToRandCirclePos(4), 1.4f, RandLerpColor(color1, color2), 40, 1, Main.rand.NextFloat(.8f, 1.15f) * .4f, RandRotTwoPi, .4f);
+            }
+            ScarletSound(LostbeltSoundAssets.GrabCharge, center);
+        }
+        private void ParticleHandler(Color color1, Color color2)
+        {
+            if (Projectile.FinalUpdateNextBool(6))
+                new StarShape(Projectile.Center.ToRandCirclePos(30), Vector2.UnitY * Main.rand.NextFloat(1f, 3f) * .2f, RandLerpColor(color1, color2), Projectile.scale * 0.5f, 40, true).Spawn();
+            if (Projectile.FinalUpdateNextBool(6))
+                ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePos(30), Vector2.UnitY * Main.rand.NextFloat(1.3f, 4.8f) * .2f, RandLerpColor(color1, color2), 40, 1, Main.rand.NextFloat(.8f, 1.1f) * Projectile.scale * .1f, .65f);
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (!IsApplyJellyfishBuff)
+            {
+                target.AddBuff(BuffType<JellyfishGroupBuff>(), GetSeconds(12));
+                IsApplyJellyfishBuff = true;
+                Projectile.netUpdate = true;
+            }
+            switch (TextureType)
+            {
+                case NPCID.GreenJellyfish:
+                    PlayHitParticle(target.Center, Color.LimeGreen, Color.DarkGreen);
+                    break;
+                case NPCID.PinkJellyfish:
+                    PlayHitParticle(target.Center, Color.HotPink, Color.Purple);
+                    break;
+                case NPCID.BlueJellyfish:
+                    PlayHitParticle(target.Center, Color.RoyalBlue, Color.CornflowerBlue);
+                    break;
+
+            }
+
+        }
+        public void PlayHitParticle(Vector2 center, Color color1, Color color2)
+        {
+            new SmokeParticle(center.ToRandCirclePos(4f), RandVelTwoPi(0.1f, 5f), RandLerpColor(color1, color2), 40, RandRotTwoPi, 0.85f, 0.20f, true).Spawn();
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D jellyfish = TextureAssets.Npc[TextureType].Value;
+            Rectangle frame = jellyfish.Frame(1, 7, 0, Projectile.frame);
+            Vector2 ori = frame.Size() / 2;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            DrawJellyfish(jellyfish, frame, ori, pos);
+            DrawColorfulRing(pos);
+            return false;
+        }
+
+        public void DrawJellyfish(Texture2D jellyfish, Rectangle frame, Vector2 ori, Vector2 pos)
+        {
+            SB.Draw(jellyfish, pos - Vector2.UnitY * 5f, frame, Color.White * Projectile.Opacity, Projectile.rotation, ori, Projectile.scale, 0, 0);
+        }
+        public void DrawColorfulRing(Vector2 pos)
+        {
+            switch (TextureType)
+            {
+                case NPCID.BlueJellyfish:
+                    DrawRing(pos, Color.RoyalBlue, Color.CornflowerBlue);
+                    break;
+                case NPCID.GreenJellyfish:
+                    DrawRing(pos, Color.LimeGreen, Color.DarkGreen);
+                    break;
+                case NPCID.PinkJellyfish:
+                    DrawRing(pos, Color.HotPink, Color.Purple);
+                    break;
+            }
+        }
+        public void DrawRing(Vector2 pos, Color color1, Color color2)
+        {
+            SB.End();
+            SB.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            float scale = Projectile.scale * 0.35f;
+            scale = Projectile.scale * 0.15f;
+            color1 *= Projectile.Opacity;
+            color2 *= Projectile.Opacity;
+            Texture2D ring = LostbeltModAssets.Particle_RingShiny.Value;
+            SB.Draw(ring, pos, null, color1 * 0.45f, Projectile.rotation, ring.ToOrigin(), scale, 0, 0);
+            SB.Draw(ring, pos, null, color1 * 0.45f, Projectile.rotation + PiOver2, ring.ToOrigin(), scale, 0, 0);
+            SB.Draw(ring, pos, null, color2 * .45f, Projectile.rotation + Pi, ring.ToOrigin(), scale, 0, 0);
+            SB.Draw(ring, pos, null, color2 * .45f, Projectile.rotation - PiOver2, ring.ToOrigin(), scale, 0, 0);
+            ring = LostbeltModAssets.Texture_BloomRing.Value;
+            scale = Projectile.scale * 0.41f;
+            SB.Draw(ring, pos, null, color2 * .25f, Projectile.rotation - PiOver2, ring.ToOrigin(), scale, 0, 0);
+            SB.EndShaderArea();
+
+        }
+    }
+}

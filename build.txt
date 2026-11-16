@@ -1,0 +1,4 @@
+displayName = 异闻旅者
+modReferences = ContinentOfJourney
+author = 对立
+version = 1.0

@@ -1,0 +1,97 @@
+﻿using ContinentOfJourney;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Methods;
+using LostbeltTraveler.Items.Useables;
+using LostbeltTraveler.Rarity.RarityDrawHandler;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Items.Armor.Reaper
+{
+
+    [AutoloadEquip(EquipType.Head)]
+    public class ReaperHead : LostbeltArmor
+    {
+        public override void SetStaticDefaults()
+        {
+            LostbeltList.ShinyRarityItemDictionary.Add(Type, ShinyRarityType.ScarletRed);
+        }
+        public float DamageAdd = 0.15f;
+        public int CritAdd = 15;
+        public static int MaidReaperMaxHealCooldown = 10;
+        public static float TlipocaScytheDamage = .15f;
+        public static int TlipocaScytheCrits = 15;
+        public static float TlipocaCritDamage = .15f;
+        public static int TlipocaDefense = 30;
+        public int LifeRegenSpeed = 4;
+        public override int[] ArmorSlots => [Type, ItemType<ReaperBody>(), ItemType<ReaperLegs>()];
+        public override bool SetUpArmorSet => true;
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(DamageAdd.ToPercent(), CritAdd + "%");
+        public int Defense = 50;
+        public override void ExSD()
+        {
+            Item.defense = Defense;
+            Item.Lostbelt().CanDrawGhost = true;
+            Item.Lostbelt().CanDrawIcon = false;
+            Item.SetUpRarityPrice(ItemRarityID.Cyan);
+        }
+        public override void UpdateArmorSetBetter(Player player, string setBonusPath)
+        {
+            if (!DownedBossSystem.downedSunGod)
+            {
+                player.statDefense -= Defense;
+                return;
+            }
+            player.setBonus += "\n" + setBonusPath.ToLangValue();
+            player.Lostbelt().maidReaperArmor = true;
+            player.Lostbelt().lifeRegenPool += LifeRegenSpeed;
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            ModifyTooltipsAdd(tooltips, Mod);
+        }
+        public static void ModifyTooltipsAdd(List<TooltipLine> tooltips, Mod mod)
+        {
+            if (DownedBossSystem.downedSunGod)
+                return;
+            tooltips.ReplaceAllTooltip("");
+            string mechanic = mod.GetLocalizationKey("Weapons.Executor.CrimsonScythe.ConditionMechanic");
+            tooltips.CreateTooltip(mechanic, Color.White, null, "TlipocaScytheCondition");
+        }
+        public override void PostDrawTooltipLine(DrawableTooltipLine line)
+        {
+            ModifyTooltipLine(line);
+        }
+        public static void ModifyTooltipLine(DrawableTooltipLine line)
+        {
+            if (line.Name == "TlipocaScytheCondition" && line.Mod == "LostbeltTraveler")
+            {
+                RarityDrawHelper.DrawCustomTooltipLine(line, Color.Gold, Color.Black);
+            }
+        }
+        public override void UpdateEquip(Player player)
+        {
+            if (!DownedBossSystem.downedSunGod)
+            {
+                player.statDefense -= Defense;
+                return;
+            }
+
+            player.GetDamage<ExecutorDamageClass>() += DamageAdd;
+            player.GetCritChance<ExecutorDamageClass>() += CritAdd;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<FreehandFrame>().
+                DisableDecraft().
+                Register();
+        }
+    }
+}

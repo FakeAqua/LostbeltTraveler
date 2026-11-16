@@ -1,0 +1,81 @@
+﻿using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Assets.Registers
+{
+    public partial class LostbeltModAssets : ModSystem
+    {
+        public static Tex2DWithPath Texture_BloomRing { get; set; }
+        public static Tex2DWithPath Texture_BloomShockwave { get; set; }
+        public static Tex2DWithPath Texture_SoftCircleEdge { get; set; }
+        public static Tex2DWithPath Texture_WhiteCube { get; set; }
+        public static Tex2DWithPath Texture_WhiteCubeBig { get; set; }
+        public static Tex2DWithPath Texture_WhiteCircle { get; set; }
+        public static Tex2DWithPath Texture_Spirite { get; set; }
+        public static Tex2DWithPath Texture_EnergySword { get; set; }
+        public static Tex2DWithPath Texture_RarityGlow { get; set; }
+        public static Tex2DWithPath Texture_StandardGradient { get; set; }
+        public static Tex2DWithPath Texture_SnowCloud { get; set; }
+        public static Tex2DWithPath Texture_SwordSlash { get; set; }
+        public static Tex2DWithPath Texture_SwordSlashWhite { get; set; }
+        public static Tex2DWithPath Texture_SwordSlash1 { get; set; }
+        public static Tex2DWithPath Texture_SwordSlash2 { get; set; }
+        public static Tex2DWithPath Texture_Fog { get; set; }
+        public static Tex2DWithPath Texture_BloodStain { get; set; }
+        public static Tex2DWithPath Texture_RuShiWoWenFlower { get; set; }
+        public static Tex2DWithPath Texture_FireBall { get; set; }
+        public static Tex2DWithPath Texture_FireBallPixel { get; set; }
+        public static Tex2DWithPath Texture_ScreenMask { get; set; }
+        public static Tex2DWithPath Texture_LiliesHoodTrail { get; set; }
+        public void LoadTexture()
+        {
+            Texture_BloomRing = new Tex2DWithPath($"{Path_General}{nameof(Texture_BloomRing)}");
+            Texture_BloomShockwave = new Tex2DWithPath($"{Path_General}{nameof(Texture_BloomShockwave)}");
+            Texture_SoftCircleEdge = new Tex2DWithPath($"{Path_General}{nameof(Texture_SoftCircleEdge)}");
+            Texture_WhiteCube = new Tex2DWithPath($"{Path_General}{nameof(Texture_WhiteCube)}");
+            Texture_WhiteCubeBig = new Tex2DWithPath($"{Path_General}{nameof(Texture_WhiteCubeBig)}");
+            Texture_WhiteCircle = new Tex2DWithPath($"{Path_General}{nameof(Texture_WhiteCircle)}");
+            Texture_Spirite = new Tex2DWithPath($"{Path_General}{nameof(Texture_Spirite)}");
+            Texture_EnergySword = new Tex2DWithPath($"{Path_General}{nameof(Texture_EnergySword)}");
+            Texture_RarityGlow = new Tex2DWithPath($"{Path_General}{nameof(Texture_RarityGlow)}");
+            Texture_StandardGradient = new Tex2DWithPath($"{Path_General}{nameof(Texture_StandardGradient)}");
+            Texture_SnowCloud = new Tex2DWithPath($"{Path_General}{nameof(Texture_SnowCloud)}");
+            Texture_SwordSlash = new Tex2DWithPath($"{Path_General}{nameof(Texture_SwordSlash)}");
+            Texture_SwordSlashWhite = new Tex2DWithPath($"{Path_General}{nameof(Texture_SwordSlashWhite)}");
+            Texture_SwordSlash1 = new Tex2DWithPath($"{Path_General}{nameof(Texture_SwordSlash1)}");
+            Texture_SwordSlash2 = new Tex2DWithPath($"{Path_General}{nameof(Texture_SwordSlash2)}");
+            Texture_Fog = new Tex2DWithPath($"{Path_General}{nameof(Texture_Fog)}");
+            Texture_BloodStain = new Tex2DWithPath($"{Path_General}{nameof(Texture_BloodStain)}");
+            Texture_RuShiWoWenFlower = new Tex2DWithPath($"{Path_General}{nameof(Texture_RuShiWoWenFlower)}");
+            Texture_FireBall = new Tex2DWithPath($"{Path_General}{nameof(Texture_FireBall)}");
+            Texture_FireBallPixel = new Tex2DWithPath($"{Path_General}{nameof(Texture_FireBallPixel)}");
+            Texture_ScreenMask = new Tex2DWithPath($"{Path_General}{nameof(Texture_ScreenMask)}");
+            Texture_LiliesHoodTrail = new Tex2DWithPath($"{Path_General}{nameof(Texture_LiliesHoodTrail)}");
+
+        }
+        public static void UnloadTexture()
+        {
+            Texture_BloomRing = null;
+            Texture_BloomShockwave = null;
+            Texture_SoftCircleEdge = null;
+            Texture_WhiteCube = null;
+            Texture_WhiteCubeBig = null;
+            Texture_WhiteCircle = null;
+            Texture_Spirite = null;
+            Texture_EnergySword = null;
+            Texture_RarityGlow = null;
+            Texture_StandardGradient = null;
+            Texture_SnowCloud = null;
+            Texture_SwordSlash = null;
+            Texture_SwordSlashWhite = null;
+            Texture_SwordSlash1 = null;
+            Texture_SwordSlash2 = null;
+            Texture_Fog = null;
+            Texture_BloodStain = null;
+            Texture_RuShiWoWenFlower = null;
+            Texture_FireBall = null;
+            Texture_FireBallPixel = null;
+            Texture_ScreenMask = null;
+            Texture_LiliesHoodTrail = null;
+        }
+    }
+}

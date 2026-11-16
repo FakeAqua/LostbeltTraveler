@@ -1,0 +1,396 @@
+CorePickaxe: {
+	DisplayName: 地核镐
+	Tooltip:
+		'''
+		一把足够炙热，能够为你熔炼矿物的工具……
+		该功能在多人模式下暂时禁用
+		"地球中心"
+		'''
+}
+
+TerrariaRecipe: {
+	DisplayName: 泰拉瑞亚食谱
+	Tooltip:
+		'''
+		启用时使你依据吃下去的食物种类数量提供生命上限加成
+		每食用5份提供10点生命上限加成
+		右键以开关
+		"这可不是《我的世界》"
+		'''
+	Eaten: 已食用：允许提供生命上限
+	NotEaten: 还没尝过呢！要不要试试看？
+	Active: 当前状态：已启用，可通过按下左Alt查看食物清单
+	FoodList:
+		'''
+		已食用（{2})
+		{0}
+		未食用（{3}）
+		{1}
+		'''
+}
+
+GoldenApple: {
+	DisplayName: 金苹果
+	Tooltip:
+		'''
+		所有属性大幅度提升
+		直接减少承受的伤害
+		同时提供[ScarletBuff/LostbeltTraveler/GoldenAppleBuff]
+		"仅仅巧合"
+		'''
+}
+
+GoldenAppleEnchanted: {
+	DisplayName: 附魔金苹果
+	Tooltip:
+		'''
+		所有属性大幅度提升
+		直接减少承受的伤害
+		同时提供[ScarletBuff/LostbeltTraveler/GoldenAppleBuffEnchanted]
+		"仅仅巧合"
+		'''
+}
+
+GoldenAppleEnchantedFully: {
+	DisplayName: 原版附魔金苹果
+	Tooltip:
+		'''
+		所有属性大幅提升
+		承受的伤害减少99.9%，且总会高速治疗你自己
+		放在背包里生效
+		'''
+}
+
+DescriptionPaper: {
+	DisplayName: 纸条
+	Tooltip:
+		'''
+		异闻旅者对下方部分物品进行了修改以适配代行者流程：
+		[i:FloretProtectorHelmet][i:FloretProtectorChestplate][i:FloretProtectorLegs]护花员套装
+		在击败万籁携生时允许转化
+		[i:MonkBrows][i:MonkShirt][i:MonkPants]武僧盔甲/[i:MonkAltHead][i:MonkAltShirt][i:MonkAltPants]渗透忍者盔甲
+		获得代行者版本
+		同时你可以按下Alt以查看鸣谢名单
+		'''
+	ThanksList:
+		'''
+		[c/CC0340:主开发人员：]
+		家养白毛小孩 - 主编程
+		Inoljw，名字，芙蕾雅 Freya - 贴图画师
+		[c/BAEE1B:支援人员：]
+		樱羽一花，Demon Lilies，世纪小花 Plantare、中学生
+		锯角 Serrat Antler，南鸢北笙，梦山之主，依琳 Yilyn，TIM
+		[c/B19CD9:测试人员：]
+		论时间的涟漪，Woodi Stigma，妩媚の5妹儿，步出夏门行，冰川咲
+		溯月 Shizuku
+		[c/FFC0CB:捐赠人员：]
+		巴雷难破长夜，初镜巡弱杂骸音，曦，丰川祥子，苏利，池堂爱吃糖
+		咕咕叶子，Kagura Kino，银九，林为简，星火，橘对莉，Eosia
+		[c/AACCCC:非常感谢各位让本模组得以顺利落地并推进]
+		'''
+}
+
+PurePrismFate: {
+	DisplayName: 纯净棱镜
+	Tooltip:
+		'''
+		手持时，对着背包内的合成材料按下互动键，即可消耗棱镜进行复制
+		最大同时复制100份，复制一次需消耗3份棱镜
+		“精炼度更高的玛纳结晶体”
+		'''
+}
+
+UnregisteredSpiritOrigin: {
+	DisplayName: 无记名灵基
+	Tooltip:
+		'''
+		手持时，对着背包内的武器/饰品/护甲/宝藏袋按下 互动键 即可消耗灵基进行复制
+		不可复制无记名灵基本身
+		“满溢而出的灵基的残渣”
+		'''
+}
+
+ArcaeaPack: {
+	DisplayName: 韵律源点奖励包
+	Tooltip:
+		'''
+		开启后获得[i:LostbeltTraveler/HikariItem]精致玫瑰和[i:LostbeltTraveler/TairitsuItem]黑色阳伞
+		光和对立的时装变身道具
+		-
+		没有光芒
+		也没有纷争的
+		死亡世界中心，神的祝福降临与你...
+		-
+		'''
+}
+
+CursedGoldenKey: {
+	DisplayName: 诅咒金钥匙
+	Tooltip:
+		'''
+		置于箱子内可将其转化为普通宝箱怪
+		“汇聚了大量灵魂的精华”
+		'''
+}
+
+ProvidenceHolyWater: {
+	DisplayName: 天命圣水
+	Tooltip:
+		'''
+		手持时，对着背包内的魔力药水按下 互动键 以继承该魔力药水的恢复量
+		使用时额外恢复10点魔力值，且不会被消耗
+		"不属于此世的超常之水，能够以零损耗率传导巨量的魔力。"
+		'''
+}
+
+BiomeKeyString: {
+	DisplayName: 宝藏钥匙串
+	Tooltip: 置于一个空箱子内，使该箱子充盈地牢的宝藏
+}
+
+FruitofEternity: {
+	DisplayName: 悠久果实
+	Tooltip:
+		'''
+		使用后提供[ScarletBuff/LostbeltTraveler/FruitofEternityBuff]
+		强化自身{0}防御力，+{1}HP/s生命再生
+		神明类敌人在场时
+		受击时重置速度，以1/{3}的概率随机传送
+		你对神明类敌人造成的伤害减少{2}
+		'''
+	DetailTooltip:
+		'''
+		吃下这果实之人的肉体将会抗拒所有变化，
+		成为等同于不老不死的存在，
+		但这也意味着成为众神永远的奴仆。
+		'''
+}
+
+GaiaStrikerLootBox: {
+	DisplayName: 盖亚宝箱
+	Tooltip:
+		'''
+		使用后为你提供[i:LostbeltTraveler/GaiaStriker][c/FE0000:盖亚重锤]
+		请在空旷场地内使用
+		'''
+}
+
+YogsothothsYardPack: {
+	DisplayName: 犹格索托斯的庭院奖励包
+	Tooltip:
+		'''
+		开启后立刻获得下列物品：
+		[i:LostbeltTraveler/CrimsonScythe][c/DC143C:猩红重镰]
+		[i:LostbeltTraveler/ReaperHead][c/DC143C:前台死神发箍]
+		[i:LostbeltTraveler/ReaperBody][c/DC143C:前台死神上衣]
+		[i:LostbeltTraveler/ReaperLegs][c/DC143C:前台死神下裙]
+		[i:LostbeltTraveler/LeafMaidItem][c/00BFFF:人偶水晶]
+		[i:LostbeltTraveler/RedDragonItem][c/F08080:红龙长角]
+		[i:LostbeltTraveler/CantoneseGirlItem][c/2E8B57:斩灵刀鞘]
+		包括特莉波卡系列物品，小叶子、耶芙娜和霞露零的时装变身道具
+		-
+		“另，员工可攻略。”
+		-
+		'''
+}
+
+AxeCharm: {
+	DisplayName: 板正斧头
+	Tooltip:
+		'''
+		右键以开关代行者武器的手动处决模式
+		对部分武器不生效
+		'''
+	EnableTooltips: 手动处决模式：{0}
+	CritDamageMult: 当前代行者暴击伤害加成：{0}
+}
+
+TheSonBuff: {
+	DisplayName: 圣子后物品强化道具
+	Tooltip:
+		'''
+		右键以开关部分物品是否允许获得圣子后伤害强化
+		可通过手持时查看背包内符合要求的物品
+		'''
+	EnableTooltips: 强化: {0}
+}
+
+CrystallizedLore: {
+	DisplayName: 传承结晶
+	Tooltip:
+		'''
+		对背包内的武器使用会赋予其最高级词缀
+		对饰品使用可赋予其最高级饰品词缀
+		对传承结晶按住 Shift + 右键 可切换饰品词缀的可选项
+		'''
+	DetailTooltip:
+		'''
+		从人类史与玛纳洪流的交错中，
+		产生的高纯度魔力结晶。
+		也可以称之为物质化的英灵素材。
+		'''
+	PrefixLine: 当前选中的饰品词缀：{0}
+}
+
+FreehandFrame: {
+	DisplayName: 随心画框
+	Tooltip: 可用于合成异闻旅者内所有的变身时装物品
+}
+
+RandomNewFolder: {
+	DisplayName: 新建文件夹（1）
+	Tooltip:
+		'''
+		可同时满足多种不同弹药需求的武器的弹药
+		“不要再新建一个文件夹，不重命名然后把所有东西一股脑扔进去了。”
+		'''
+}
+
+SuicideKnife: {
+	DisplayName: 自损八千
+	AltDisplayName: 自损八千，伤敌一万
+	Tooltip:
+		'''
+		使用后对自己造成高额伤害
+		方便自残
+		你可以切换模式，使其同样作用于被挥舞命中的玩家
+		对物品Shift+右键可以切换
+		“饿啊！”
+		'''
+}
+
+LivingReaverShark: {
+	DisplayName: 生命掠夺鲨
+	Tooltip:
+		'''
+		手持时提供[ScarletBuff/Terraria/Regeneration]、[ScarletBuff/Terraria/Ironskin]、[ScarletBuff/Terraria/Swiftness]和[ScarletBuff/Terraria/WellFed3]
+		可开采[i:ContinentOfJourney/FinalOre]最终矿
+		凝聚了生命之神的力量
+		……等会，为什么这能存在？
+		'''
+}
+
+MatterSawtoothShark: {
+	DisplayName: 物质巨齿鲨
+	Tooltip:
+		'''
+		凝聚了物质之神的力量
+		……等会，为什么这能存在？
+		'''
+}
+
+SunWorm: {
+	DisplayName: 日光蚯蚓
+	Tooltip:
+		'''
+		凝聚了太阳之神的力量
+		……等会，为什么这能存在？
+		'''
+}
+
+DarkenRockFish: {
+	DisplayName: 暗影岩石鱼
+	Tooltip:
+		'''
+		凝聚力黑暗之地的力量
+		……等会，为什么这能存在？
+		'''
+}
+
+StarterBag: {
+	DisplayName: 漂流布袋
+	Tooltip: 一个布袋，里面有一点点物品
+}
+
+FishingPaper: {
+	DisplayName: 异闻旅者钓鱼指南
+	Tooltip:
+		'''
+		异闻旅者模组添加了新的渔获，但是因为缺少维基百科
+		因此，这里有一张指引纸条
+		在开始获得异闻旅者添加的特殊渔获之前，你需要先获得并佩戴[i:LostbeltTraveler/BitingClaw]咬合蟹爪
+		特殊渔获列表：
+		[i:LostbeltTraveler/DiverHead][i:LostbeltTraveler/DiverBody][i:LostbeltTraveler/DiverLegs]潜航员护甲，击败[i:EaterMask]世界吞噬者/[i:BrainMask]克苏鲁之脑后，于海洋钓鱼获取
+		[i:LostbeltTraveler/EnchantedSwordfish]附魔剑鱼，困难模式下，于海洋获取
+		[i:LostbeltTraveler/EthrealSwordfish]永恒剑鱼，击败极视钟表后，于沙漠获取
+		[i:LostbeltTraveler/LivingReaverShark]生命掠夺鲨，击败万籁携生后，于丛林获取
+		[i:LostbeltTraveler/MatterSawtoothShark]物质锯齿鲨，击败化物天匠后，于雪原获取
+		[i:LostbeltTraveler/DarkenRockFish]暗影岩石鱼，击败暗影墙后，于地下获取
+		'''
+}
+
+FishingCoinEmerial: {
+	DisplayName: 垂钓者绿宝石币
+	Tooltip:
+		'''
+		可在交易终端处兑换物品
+		“钓鱼佬的最爱”
+		'''
+}
+
+TerrariaRecipeDeactive: {
+	DisplayName: 泰拉瑞亚食谱（关闭）
+	Tooltip:
+		'''
+		启用时使你依据吃下去的食物种类数量提供生命上限加成
+		每食用5份提供10点生命上限加成
+		右键以开关
+		"这可不是《我的世界》"
+		'''
+	Active: 当前状态：已关闭，不提供生命上限加成
+}
+
+InstaSupremeDeath: {
+	DisplayName: 一键至尊结构（世末·永落鲸）
+	Tooltip:
+		'''
+		可一键搭建召唤世末·永落鲸需要的结构
+		“圣子对你的行为表示了肯定。”
+		'''
+}
+
+InstaSupremeLiving: {
+	DisplayName: 一键至尊结构（万籁携生）
+	Tooltip:
+		'''
+		可一键搭建召唤万籁携生需要的结构
+		“圣子对你的行为表示了肯定。”
+		'''
+}
+
+InstaSupremeMatter: {
+	DisplayName: 一键至尊结构（化物天匠）
+	Tooltip:
+		'''
+		可一键搭建召唤化物天匠需要的结构
+		“圣子对你的行为表示了肯定。”
+		“但化物天匠没有。”
+		'''
+}
+
+InstaSupremeNone: {
+	DisplayName: 一键至尊结构（圣甲虫信仰）
+	Tooltip:
+		'''
+		可一键搭建召唤圣甲虫信仰需要的结构
+		“圣子对你的行为表示了肯定。”
+		'''
+}
+
+InstaSupremeSon: {
+	DisplayName: 一键至尊结构（圣子）
+	Tooltip:
+		'''
+		可一键搭建召唤圣子需要的结构
+		“记得在神圣之地使用，别忘了！”
+		'''
+}
+
+InstaSupremeTime: {
+	DisplayName: 一键至尊结构（极视钟表）
+	Tooltip:
+		'''
+		可一键搭建召唤极视钟表需要的结构
+		“圣子对你的行为表示了肯定。”
+		'''
+}

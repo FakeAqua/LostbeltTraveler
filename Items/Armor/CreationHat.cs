@@ -1,0 +1,100 @@
+﻿using ContinentOfJourney.Items.Armor;
+using ContinentOfJourney.Items.Material;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Globals.Handlers;
+using LostbeltTraveler.Globals.Instances.Items;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Items.Armor
+{
+    [AutoloadEquip(EquipType.Head)]
+    public class CreationHat : LostbeltItemClass
+    {
+        public override string AssetPath => AssetHandler.Armors;
+        public override void SetStaticDefaults()
+        {
+            ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
+            ArmorIDs.Head.Sets.IsTallHat[Item.headSlot] = true;
+            LostbeltList.ShinyRarityItemDictionary.Add(Type, ShinyRarityType.Matter);
+        }
+        public int DefenseCount = 110;
+        public int MaxMana = 40;
+        public float ManaDamage = 0.3f;
+        public float ManaCrits = 50;
+        public float ManaCost = 0.3f;
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(DefenseCount, MaxMana, ManaDamage.ToPercent(), ManaCrits, ManaCost.ToPercent());
+        public override void ExSD()
+        {
+            Item.defense = 10;
+            Item.SetUpRarityPrice(ItemRarityID.Purple);
+        }
+        private List<int> Robes =
+            [
+                ItemID.AmethystRobe,
+                ItemID.TopazRobe,
+                ItemID.AmberRobe,
+                ItemID.EmeraldRobe,
+                ItemID.SapphireRobe,
+                ItemID.RubyRobe,
+                ItemID.DiamondRobe,
+                ItemType<OnyxRobe>()
+            ];
+        public static List<int> Staffs =
+            [
+            ItemID.AmethystStaff,
+            ItemID.TopazStaff,
+            ItemID.SapphireStaff,
+            ItemID.EmeraldStaff,
+            ItemID.RubyStaff,
+            ItemID.DiamondStaff,
+            ItemID.AmberStaff,
+            ];
+        public override bool IsArmorSet(Item head, Item body, Item legs)
+        {
+            return Robes.Contains(body.type);
+        }
+        public override void UpdateArmorSet(Player player)
+        {
+            string value = Mod.GetLocalizationKey($"{LocalizationCategory}.{GetType().Name}.SetBonus").ToLangValue();
+            player.setBonus += "\n" + value.ToFormatValue(DefenseCount, MaxMana, ManaDamage.ToPercent(), ManaCost.ToPercent(), $"{(int)ManaCrits}%");
+            player.statDefense += DefenseCount;
+            player.statManaMax2 += MaxMana;
+            player.GetDamage<MagicDamageClass>() += ManaDamage;
+            player.GetCritChance<MagicDamageClass>() += ManaCrits;
+            player.manaCost -= ManaCost;
+            player.Lostbelt().creationHat = true;
+
+        }
+        public override void HoldItem(Player player)
+        {
+
+            player.Lostbelt().drawUseableItemIcon = Type;
+            for (int i = 0; i < player.inventory.Length; i++)
+            {
+                Item item = player.inventory[i];
+                if (item.IsAir || item is null)
+                    continue;
+                if (Robes.Contains(item.type))
+                {
+                    item.Lostbelt().setTintIcon = true;
+                }
+            }
+
+
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddRecipeGroup(LostbeltRecipeGroup.AnyMagicHat, 1).
+                AddIngredient<CubistBar>(10).
+                AddTile(FinalAnvilTile).
+                Register();
+        }
+    }
+}

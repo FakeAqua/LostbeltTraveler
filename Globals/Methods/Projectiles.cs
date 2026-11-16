@@ -1,0 +1,800 @@
+﻿using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Projs;
+using LostbeltTraveler.ReVisual.Class;
+using System;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Globals.Methods
+{
+    public static partial class LostbeltMethods
+    {
+        public static Vector2 PosToCenter(this Projectile proj) => proj.Size / 2 - Main.screenPosition;
+        public static Vector2 ToOrigin(this Texture2D tex) => tex.Size() / 2;
+        public static bool IsMe(this Projectile proj) => proj.owner == Main.myPlayer;
+        public static void GetProjDrawData(this Projectile proj, out Texture2D projTex, out Vector2 drawPos, out Vector2 ori)
+        {
+            projTex = proj.GetTexture();
+            drawPos = proj.Center - Main.screenPosition;
+            ori = projTex.Size() / 2;
+        }
+        /// <summary>
+        /// 轨迹设置，一般情况下默认使用模式2
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <param name="length"></param>
+        /// <param name="mode"></param>
+        public static void ToTrailSetting(this Projectile proj, int length = 4, int mode = 2)
+        {
+            ProjectileID.Sets.TrailingMode[proj.type] = mode;
+            ProjectileID.Sets.TrailCacheLength[proj.type] = length;
+        }
+        /// <summary>
+        /// 将proj的vel转化为单位向量
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <returns></returns>
+        public static Vector2 SafeDir(this Projectile proj) => proj.velocity.ToSafeNormalize();
+        public static Player GetPlayer(this Projectile proj) => Main.player[proj.owner];
+        public static ReVisualPlayer GetReVisualPlayer(this Projectile proj) => proj.GetPlayer().GetModPlayer<ReVisualPlayer>();
+        /// <summary>
+        /// 将proj的rot转化为单位向量
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <returns></returns>
+        public static Vector2 SafeDirByRot(this Projectile proj) => proj.rotation.ToRotationVector2();
+        public static Vector2 SafeDirByRot(this Projectile proj, float rotDegree) => proj.rotation.ToRotationVector2().RotatedBy(ToRadians(rotDegree));
+        public static Texture2D GetTexture(this Projectile proj) => TextureAssets.Projectile[proj.type].Value;
+        /// <summary>
+        /// 获取一个单位，这里优先判定输入的NPC索引
+        /// 如果需要直接忽略npc索引。输入-1
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <param name="target"></param>
+        /// <param name="targetIndex"></param>
+        /// <param name="searchSecondTarget"></param>
+        /// <param name="searchDistance"></param>
+        /// <returns></returns>
+        public static bool GetTargetSafe(this Projectile proj, out NPC target, int targetIndex, bool searchSecondTarget = true, float searchDistance = 600f, bool canPassWall = false)
+        {
+            target = null;
+            if (targetIndex != -1)
+            {
+                target = Main.npc[targetIndex];
+                if (target.CanBeChasedBy(proj) && target != null)
+                    return true;
+                else if (searchSecondTarget)
+                {
+                    target = proj.Center.FindClosestTarget(searchDistance, ignoreTiles: canPassWall);
+                    if (target != null && target.CanBeChasedBy(proj))
+                        return true;
+                }
+            }
+            else if (searchSecondTarget)
+            {
+                target = proj.Center.FindClosestTarget(searchDistance, ignoreTiles: canPassWall);
+                if (target != null && target.CanBeChasedBy(proj))
+                    return true;
+            }
+            return target != null;
+        }
+        /// <summary>
+        /// 获取一个单位，这里优先判定输入的NPC索引
+        /// 直接使用模组内的GlobalTargetIndex
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <param name="target"></param>
+        /// <param name="searchSecondTarget"></param>
+        /// <param name="searchDistance"></param>
+        /// <returns></returns>
+        public static bool GetTargetSafe(this Projectile proj, out NPC target, bool searchSecondTarget = true, float searchDistance = 600f, bool canPassWall = false, bool hitLine = false)
+        {
+            target = null;
+            if (proj.Lostbelt().GlobalTargetIndex != -1)
+            {
+                target = Main.npc[proj.Lostbelt().GlobalTargetIndex];
+                if (target.CanBeChasedBy() && target != null)
+                    return true;
+                else if (searchSecondTarget)
+                {
+                    target = proj.Center.FindClosestTarget(searchDistance, ignoreTiles: canPassWall, hitLine: hitLine);
+                    if (target != null && target.CanBeChasedBy(proj))
+                        return true;
+                }
+            }
+            else if (searchSecondTarget)
+            {
+                target = proj.Center.FindClosestTarget(searchDistance, ignoreTiles: canPassWall, hitLine: hitLine);
+                if (target != null && target.CanBeChasedBy(proj))
+                    return true;
+            }
+            //默认返回否值
+            return false;
+        }
+
+        /// <summary>
+        /// 用于搜索距离射弹最近的npc单位，并返回NPC实例。通常情况下与上方的追踪方法配套
+        /// 这个方法会同时实现穿墙、数组、boss优先度的搜索。不过只能用于射弹。但也足够
+        /// 这里Boss优先度的实现逻辑是如果我们但凡搜索到一个Boss，就把这个Boss临时存储，在返回实例的时候优先使用
+        /// </summary>
+        /// <param name="p">射弹</param>
+        /// <param name="maxDist">最大搜索距离</param>
+        /// <param name="bossFirst">boss优先度，这个还没实现好逻辑，所以填啥都没用（</param>
+        /// <param name="ignoreTiles">穿墙搜索, 默认为</param>
+        /// <param name="arrayFirst">数组优先, 这个将会使射弹优先针对数组内第一个单位,默认为否</param>
+        /// <returns>返回一个NPC实例</returns>
+        public static NPC FindClosestTarget(this Vector2 p, float maxDist, bool bossFirst = false, bool ignoreTiles = true, bool arrayFirst = false, bool hitLine = false)
+        {
+            //bro我真的要遍历整个NPC吗？
+            float distStoraged = maxDist;
+            NPC tryGetBoss = null;
+            NPC acceptableTarget = null;
+            bool alreadyGetBoss = false;
+            foreach (NPC npc in Main.ActiveNPCs)
+            {
+                float exDist = npc.width + npc.height;
+
+                //单位不可被追踪 或者 超出索敌距离则continue
+                if (Vector2.Distance(p, npc.Center) > distStoraged + exDist)
+                    continue;
+
+                if (!npc.active || npc.friendly || npc.lifeMax < 5 || !npc.CanBeChasedBy(p, false))
+                    continue;
+
+                //补: 如果优先搜索Boss单位, 且附近至少有一个。我们直接存储这个Boss单位
+                //已经获取到的会被标记，使其不会再跑一遍搜索.
+                if (npc.boss && bossFirst && !alreadyGetBoss)
+                {
+                    tryGetBoss = npc;
+                    alreadyGetBoss = true;
+                }
+
+                //搜索符合条件的敌人, 准备返回这个NPC实例
+                float curNpcDist = Vector2.Distance(npc.Center, p);
+                bool isCanHit = false;
+                if (hitLine)
+                {
+                    isCanHit = Collision.CanHit(p, 1, 1, npc.Center, npc.width, npc.height);
+                }
+                else
+                {
+                    isCanHit = Collision.CanHit(p, 1, 1, npc.Center, npc.width, npc.height);
+                }
+                bool canHitline = hitLine && (Collision.CanHitLine(npc.Center, 1, 1, p, 1, 1));
+                if (curNpcDist < distStoraged && (ignoreTiles || isCanHit))
+                {
+                    distStoraged = curNpcDist;
+                    acceptableTarget = npc;
+                    if (tryGetBoss != null & bossFirst)
+                        acceptableTarget = tryGetBoss;
+                    //如果是数组优先，直接在这返回实例
+                    if (arrayFirst)
+                        return acceptableTarget;
+                }
+            }
+            //返回这个NPC实例
+            return acceptableTarget;
+        }
+        public static NPC FindClosestTarget(this Projectile p, float maxDist, Vector2 center, bool bossFirst = false, bool ignoreTiles = true, bool arrayFirst = false, bool hitLine = false)
+        {
+            //bro我真的要遍历整个NPC吗？
+            float distStoraged = maxDist;
+            NPC tryGetBoss = null;
+            NPC acceptableTarget = null;
+            bool alreadyGetBoss = false;
+            foreach (NPC npc in Main.ActiveNPCs)
+            {
+                float exDist = npc.width + npc.height;
+
+                //单位不可被追踪 或者 超出索敌距离则continue
+                if (Vector2.Distance(center, npc.Center) > distStoraged + exDist)
+                    continue;
+
+                if (!npc.active || npc.friendly || npc.lifeMax < 5 || !npc.CanBeChasedBy(p.Center, false))
+                    continue;
+
+                //补: 如果优先搜索Boss单位, 且附近至少有一个。我们直接存储这个Boss单位
+                //已经获取到的会被标记，使其不会再跑一遍搜索.
+                if (npc.boss && bossFirst && !alreadyGetBoss)
+                {
+                    tryGetBoss = npc;
+                    alreadyGetBoss = true;
+                }
+
+                //搜索符合条件的敌人, 准备返回这个NPC实例
+                float curNpcDist = Vector2.Distance(npc.Center, center);
+                bool canHitline = hitLine && Collision.CanHitLine(npc.Center, 1, 1, center, 1, 1);
+                if (curNpcDist < distStoraged && (ignoreTiles || canHitline || Collision.CanHit(center, 1, 1, npc.Center, 1, 1)))
+                {
+                    distStoraged = curNpcDist;
+                    acceptableTarget = npc;
+                    if (tryGetBoss != null & bossFirst)
+                        acceptableTarget = tryGetBoss;
+                    //如果是数组优先，直接在这返回实例
+                    if (arrayFirst)
+                        return acceptableTarget;
+                }
+            }
+            //返回这个NPC实例
+            return acceptableTarget;
+        }
+
+        /// <summary>
+        /// 用于跟踪指定地点的方法
+        /// 只会跟踪你传进去的目标
+        /// </summary>
+        /// <param name="proj">射弹</param>
+        /// <param name="target">射弹目标</param>
+        /// <param name="distRequired">最大范围</param>
+        /// <param name="speed">射弹速度</param>
+        /// <param name="inertia">惯性</param>
+        /// <param name="maxAngleChage">角度限制，默认为空. </param>
+        public static void HomingTarget(this Projectile proj, Vector2 target, float distRequired, float speed, float inertia, float? maxAngleChage = null)
+        {
+            if (distRequired > 0 && Vector2.Distance(proj.Center, target) > distRequired)
+                return;
+            //开始追踪target
+            Vector2 home = (target - proj.Center).SafeNormalize(Vector2.UnitY);
+            Vector2 velo = (proj.velocity * inertia + home * speed) / (inertia + 1f);
+            //这里给了一个角度限制
+            if (maxAngleChage.HasValue)
+            {
+                float curAngle = proj.velocity.ToRotation();
+                float tarAngle = velo.ToRotation();
+                float angleDiffer = WrapAngle(tarAngle - curAngle);
+                //转弧度
+                float maxRadians = ToRadians(maxAngleChage.Value);
+                if (Math.Abs(angleDiffer) > maxRadians)
+                {
+                    float clampedAngle = curAngle + Math.Sign(angleDiffer) * maxRadians;
+                    float setSpeed = velo.Length();
+                    velo = new Vector2((float)Math.Cos(clampedAngle), (float)Math.Sin(clampedAngle)) * setSpeed;
+                }
+            }
+            //设定速度
+            proj.velocity = velo;
+        }
+        /// <summary>
+        /// 预制发光边缘
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <param name="color"></param>
+        /// <param name="drawTime"></param>
+        /// <param name="posMove"></param>
+        /// <param name="rotFix"></param>
+        public static void DrawGlowEdge(this Projectile proj, Color color, int drawTime = 8, float posMove = 2f, float rotFix = 0f, Vector2? drawPosOffset = null)
+        {
+            Vector2 offset = drawPosOffset ?? Vector2.Zero;
+            //绘制发光边缘
+            for (int i = 0; i < drawTime; i++)
+            {
+                Main.spriteBatch.Draw(proj.GetTexture(), proj.Center - Main.screenPosition + ToRadians(i * 360f / drawTime).ToRotationVector2() * posMove - offset, null, color with { A = 0 }, proj.rotation + rotFix, proj.GetTexture().Size() / 2, proj.scale, 0, 0f);
+            }
+        }
+        /// <summary>
+        /// 预制发光边缘
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <param name="color"></param>
+        /// <param name="drawTime"></param>
+        /// <param name="posMove"></param>
+        /// <param name="rotFix"></param>
+        public static void DrawGlowEdge(this Projectile proj, Texture2D tex, Color color, int drawTime = 8, float posMove = 2f, float rotFix = 0f, Vector2? drawPosOffset = null)
+        {
+            Vector2 offset = drawPosOffset ?? Vector2.Zero;
+            //绘制发光边缘
+            for (int i = 0; i < drawTime; i++)
+            {
+                Main.spriteBatch.Draw(tex, proj.Center - Main.screenPosition + ToRadians(i * 60f).ToRotationVector2() * posMove - offset, null, color with { A = 0 }, proj.rotation + rotFix, tex.Size() / 2, proj.scale, 0, 0f);
+            }
+        }
+
+        /// <summary>
+        /// 预制射弹绘制
+        /// </summary>
+        /// <param name="proj"></param>
+
+        public static void DrawProj(this Projectile proj, Color color, int drawTime = 4, float offset = 0.7f, float rotFix = 0, bool useOldPos = false, Vector2? drawPosOffset = null)
+        {
+            Texture2D tex = proj.GetTexture();
+            Vector2 orig = tex.Size() / 2;
+            Vector2 offsetValue = drawPosOffset ?? Vector2.Zero;
+            Vector2 drawPos = proj.Center - Main.screenPosition - offsetValue;
+            int drawLength = drawTime > proj.oldPos.Length ? proj.oldPos.Length : drawTime;
+            for (int i = drawLength - 1; i >= 0; i--)
+            {
+                if (proj.oldPos[i] == Vector2.Zero)
+                    continue;
+                Vector2 trailingDrawPos = useOldPos ? proj.oldPos[i] + proj.PosToCenter() : drawPos - proj.velocity * i * offset;
+                float faded = 1 - i / (float)drawLength;
+                //平方放缩
+                faded = MathF.Pow(faded, 2);
+                Color trailColor = color * faded;
+                Main.spriteBatch.Draw(tex, trailingDrawPos, null, trailColor, proj.oldRot[i] + rotFix, orig, proj.scale, 0, 0);
+            }
+        }
+        public static void DrawProj(this Projectile proj, Texture2D tex, Color color, int drawTime = 4, float offset = 0.7f, float rotFix = 0, bool useOldPos = false, Vector2? drawPosOffset = null)
+        {
+            Vector2 orig = tex.Size() / 2;
+            Vector2 offsetValue = drawPosOffset ?? Vector2.Zero;
+            Vector2 drawPos = proj.Center - Main.screenPosition - offsetValue;
+            int drawLength = drawTime > proj.oldPos.Length ? proj.oldPos.Length : drawTime;
+            for (int i = drawLength - 1; i >= 0; i--)
+            {
+                if (proj.oldPos[i] == Vector2.Zero)
+                    continue;
+                Vector2 trailingDrawPos = useOldPos ? proj.oldPos[i] + proj.PosToCenter() : drawPos - proj.velocity * i * offset;
+                float faded = 1 - i / (float)drawLength;
+                //平方放缩
+                faded = MathF.Pow(faded, 2);
+                Color trailColor = color * faded;
+                Main.spriteBatch.Draw(tex, trailingDrawPos, null, trailColor, proj.oldRot[i] + rotFix, orig, proj.scale, 0, 0);
+            }
+        }
+
+        public static void DrawProjWithSpriteDirection(this Projectile proj, Color color, int drawTime = 4, float offset = 0.7f, float rotFix = 0, bool useOldPos = false, Vector2? drawPosOffset = null)
+        {
+            SpriteEffects se = proj.spriteDirection < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            float rotSe = proj.spriteDirection < 0 ? PiOver2 : 0;
+            Texture2D tex = proj.GetTexture();
+            Vector2 orig = tex.Size() / 2;
+            Vector2 offsetValue = drawPosOffset ?? Vector2.Zero;
+            Vector2 drawPos = proj.Center - Main.screenPosition - offsetValue;
+            int drawLength = drawTime > proj.oldPos.Length ? proj.oldPos.Length : drawTime;
+            for (int i = drawLength - 1; i >= 0; i--)
+            {
+                if (proj.oldPos[i] == Vector2.Zero)
+                    continue;
+                Vector2 trailingDrawPos = useOldPos ? proj.oldPos[i] + proj.PosToCenter() : drawPos - proj.velocity * i * offset;
+                float faded = 1 - i / (float)drawLength;
+                //平方放缩
+                faded = MathF.Pow(faded, 2);
+                Color trailColor = color * faded;
+                Main.spriteBatch.Draw(tex, trailingDrawPos, null, trailColor, proj.oldRot[i] + rotFix + rotSe, orig, proj.scale, se, 0);
+            }
+        }
+
+        /// <summary>
+        /// 将TargetIndex转化为NPC。这里直接调用的模组内部的GlobalTargetIndex字段
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <returns></returns>
+        public static NPC ToHJScarletNPC(this Projectile proj)
+        {
+            if (proj.Lostbelt().GlobalTargetIndex == -1)
+                return null;
+            return Main.npc[proj.Lostbelt().GlobalTargetIndex];
+        }
+        public static void ExpandHitboxBy(this Projectile projectile, int width, int height)
+        {
+            projectile.position = projectile.Center;
+            projectile.width = width;
+            projectile.height = height;
+            projectile.position -= projectile.Size * 0.5f;
+        }
+        public static void ExpandHitboxBy(this Projectile projectile, int newSize)
+        {
+            projectile.ExpandHitboxBy(newSize, newSize);
+        }
+        public static void ExpandHitboxBy(this Projectile projectile, float expandRatio)
+        {
+            projectile.ExpandHitboxBy((int)((float)projectile.width * expandRatio), (int)((float)projectile.height * expandRatio));
+        }
+        public static bool TooAwayFromOwner(this Projectile proj, float distance = 1800f)
+        {
+            Player owner = Main.player[proj.owner];
+            return Vector2.Distance(owner.MountedCenter, proj.Center) > distance;
+        }
+        /// <summary>
+        /// 用于预判性的精确瞄准，对于一些不需要追踪的射弹来说很有帮助，
+        /// </summary>
+        /// <param name="startingPosition"></param>
+        /// <param name="targetPosition"></param>
+        /// <param name="targetVelocity"></param>
+        /// <param name="shootSpeed"></param>
+        /// <param name="iterations"></param>
+        /// <returns></returns>
+        public static Vector2 PredictAimToTarget(Vector2 startingPosition, Vector2 targetPosition, Vector2 targetVelocity, float shootSpeed, int iterations = 4)
+        {
+            float previousTimeToReachDestination = 0f;
+            Vector2 currentTargetPosition = targetPosition;
+            for (int i = 0; i < iterations; i++)
+            {
+                float timeToReachDestination = Vector2.Distance(startingPosition, currentTargetPosition) / shootSpeed;
+                currentTargetPosition += targetVelocity * (timeToReachDestination - previousTimeToReachDestination);
+                previousTimeToReachDestination = timeToReachDestination;
+            }
+            return (currentTargetPosition - startingPosition).SafeNormalize(Vector2.UnitY) * shootSpeed;
+        }
+        public static Vector2 BetterRotatedBy(this Vector2 spinningpoint, double radians, Vector2 center = default, float Xmult = 1f, float Ymult = 1f)
+        {
+            float num = (float)Math.Cos(radians);
+            float num2 = (float)Math.Sin(radians);
+            Vector2 vector = spinningpoint - center;
+            Vector2 result = center;
+            result.X += (vector.X * num - vector.Y * num2) * Xmult;
+            result.Y += (vector.X * num2 + vector.Y * num) * Ymult;
+            return result;
+        }
+        public static void SetUpHeldProj(this Projectile proj, int eu = 0)
+        {
+            proj.ignoreWater = true;
+            proj.tileCollide = false;
+            proj.usesLocalNPCImmunity = true;
+            proj.penetrate = -1;
+            proj.extraUpdates = eu;
+            proj.noEnchantmentVisuals = true;
+            proj.timeLeft = 10000;
+        }
+        public static void SetupImmnuity(this Projectile proj, int hitCooldown, ImmnuityType isLocal = ImmnuityType.Local)
+        {
+            switch (isLocal)
+            {
+                case ImmnuityType.Local:
+                    proj.usesLocalNPCImmunity = true;
+                    proj.localNPCHitCooldown = hitCooldown;
+                    break;
+                case ImmnuityType.Static:
+                    proj.usesIDStaticNPCImmunity = true;
+                    proj.idStaticNPCHitCooldown = hitCooldown;
+                    break;
+                default:
+                    break;
+            }
+        }
+        public static void SetupImmnuity(this Projectile proj, int hitCooldown, int penetrates, bool stopDealingDamage = false, ImmnuityType isLocal = ImmnuityType.Local)
+        {
+            switch (isLocal)
+            {
+                case ImmnuityType.Local:
+                    proj.usesLocalNPCImmunity = true;
+                    proj.localNPCHitCooldown = hitCooldown;
+                    break;
+                case ImmnuityType.Static:
+                    proj.usesIDStaticNPCImmunity = true;
+                    proj.idStaticNPCHitCooldown = hitCooldown;
+                    break;
+                default:
+                    break;
+            }
+            proj.penetrate = penetrates;
+            proj.stopsDealingDamageAfterPenetrateHits = stopDealingDamage;
+        }
+        public static Vector2 GetNormalVector2(this Vector2 beginPos, Vector2 endPos, Vector2? normalvalue = null) => (endPos - beginPos).ToSafeNormalize(normalvalue);
+
+        public static bool IsLegal(this NPC target) => target != null && target.CanBeChasedBy();
+        public static bool IntersectOwnerByDistance(this Projectile proj, float dist = 70f)
+        {
+            return (proj.Center - Main.player[proj.owner].Center).LengthSquared() < dist * dist;
+        }
+        public static float SpeedAffectRotation(this Projectile proj, float xMult = 3f, float yMult = 3f) => Math.Abs(proj.velocity.X) / xMult + Math.Abs(proj.velocity.Y) / yMult;
+        public static void AffactedByGrav(this Projectile proj, float velMult = 0.96f, float yMult = 1f, float yAdd = 0.11f, float maxGravSpeed = 30f)
+        {
+            proj.velocity *= velMult;
+            proj.velocity.Y *= yMult;
+            if (proj.velocity.Y < maxGravSpeed)
+                proj.velocity.Y += yAdd;
+        }
+        public static bool MeetMaxUpdatesFrame(this Projectile proj, float timer, float maxFrame) => timer > proj.MaxUpdates * maxFrame;
+        public static bool FinalUpdateNextBool(this Projectile proj, int boolValue = 2) => proj.numUpdates == 0 && Main.rand.NextBool(boolValue);
+        public static bool FinalUpdate(this Projectile proj) => proj.numUpdates == 0;
+        public static bool IsOutScreen(this Projectile proj, float mult = 1f) => OutOffScreen(proj.Center, mult);
+        public static void BounceOnTile(this Projectile proj, Vector2 oldVelocity, float xMult = 1f, float yMult = 1f)
+        {
+            if (proj.velocity.X != oldVelocity.X)
+                proj.velocity.X = -oldVelocity.X * xMult;
+            if (proj.velocity.Y != oldVelocity.Y)
+                proj.velocity.Y = -oldVelocity.Y * yMult;
+        }
+        public static void AddFrames(this Projectile proj, int frameCounts = 3, int totalFrames = 8)
+        {
+            proj.frameCounter += 1;
+            if (proj.frameCounter > frameCounts)
+            {
+                proj.frame++;
+                proj.frameCounter = 0;
+            }
+            if (proj.frame >= totalFrames)
+            {
+                proj.frame = 0;
+            }
+        }
+        public static void KillCertainProj(this Player player, int type, bool extraCondition = true, bool force = false)
+        {
+            foreach (var proj in Main.ActiveProjectiles)
+            {
+                if (proj.type != type)
+                    continue;
+                if (proj.owner != player.whoAmI)
+                    continue;
+                if (!proj.friendly)
+                    continue;
+                if (!extraCondition)
+                    continue;
+                if (force)
+                    proj.active = false;
+                else
+                    proj.Kill();
+            }
+        }
+        /// <summary>
+        /// 我草这个神人方法
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="type"></param>
+        /// <param name="extraCondition"></param>
+        public static void KillCertainProj(this Player player, int[] type, bool extraCondition = true)
+        {
+            foreach (var proj in Main.ActiveProjectiles)
+            {
+                if (proj.owner != player.whoAmI)
+                    continue;
+                if (!proj.friendly)
+                    continue;
+                if (!extraCondition)
+                    continue;
+                for (int i = 0; i < type.Length; i++)
+                {
+                    if (type[i] == proj.type)
+                        proj.Kill();
+                }
+            }
+        }
+        public static bool MinionAntiClump(this Projectile proj, float pushForce = 0.05f)
+        {
+            for (int k = 0; k < Main.maxProjectiles; k++)
+            {
+                Projectile otherProj = Main.projectile[k];
+                if (!otherProj.active || otherProj.owner != proj.owner || k == proj.whoAmI)
+                    continue;
+
+                bool sameProjType = otherProj.type == proj.type;
+                float taxicabDist = Math.Abs(proj.position.X - otherProj.position.X) + Math.Abs(proj.position.Y - otherProj.position.Y);
+                if (sameProjType && taxicabDist < proj.width)
+                {
+                    if (proj.position.X < otherProj.position.X)
+                        proj.velocity.X -= pushForce;
+                    else
+                        proj.velocity.X += pushForce;
+
+                    if (proj.position.Y < otherProj.position.Y)
+                        proj.velocity.Y -= pushForce;
+                    else
+                        proj.velocity.Y += pushForce;
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static void MinionAntiClump(this Projectile proj, Vector2 pushDir, float pushForce = 0.05f, float randomAngleRange = .05f)
+        {
+            for (int k = 0; k < Main.maxProjectiles; k++)
+            {
+                Projectile otherProj = Main.projectile[k];
+                if (!otherProj.active || otherProj.owner != proj.owner || !otherProj.minion || k == proj.whoAmI)
+                    continue;
+
+                bool sameProjType = otherProj.type == proj.type;
+                float taxicabDist = Math.Abs(proj.position.X - otherProj.position.X) + Math.Abs(proj.position.Y - otherProj.position.Y);
+                if (sameProjType && taxicabDist < proj.width)
+                {
+                    proj.velocity += pushDir * pushForce;
+                }
+            }
+        }
+        /// <summary>
+        /// 用于手持弹幕，获取斜45°近战武器的挥舞
+        /// </summary>
+        public static void GetProjDrawInfo_Melee(this Projectile proj, out Texture2D texture, out Vector2 drawPosition, out float drawRotation, out Vector2 rotationPoint, out SpriteEffects flipSprite)
+        {
+            texture = TextureAssets.Projectile[proj.type].Value;
+            drawPosition = proj.Center - Main.screenPosition;
+            drawRotation = proj.rotation + (proj.spriteDirection == -1 ? PiOver2 + PiOver4 : PiOver4);
+            rotationPoint = proj.spriteDirection == -1 ? new Vector2(texture.Width, texture.Height) : new Vector2(0, texture.Height);
+            flipSprite = proj.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        }
+        public static void FastDraw(this SpriteBatch sb, Texture2D tex, Vector2 pos, Color c, float rotation, Vector2 origin, float scale, SpriteEffects se, int wtfisthis = 0)
+        {
+            sb.Draw(tex, pos, null, c, rotation, origin, scale, se, wtfisthis);
+        }
+        public static void FastDraw(this SpriteBatch sb, Texture2D tex, Vector2 pos, Color c, float rotation, Vector2 origin, Vector2 scale, SpriteEffects se, int wtfisthis = 0)
+        {
+            sb.Draw(tex, pos, null, c, rotation, origin, scale, se, wtfisthis);
+        }
+        public static void FastDraw(this SpriteBatch sb, Texture2D tex, Vector2 pos, Color c, float rotation, Vector2 origin, float scale)
+        {
+            sb.Draw(tex, pos, null, c, rotation, origin, scale, 0,0);
+        }
+        public static void FastDraw(this SpriteBatch sb, Texture2D tex, Vector2 pos, Color c, float rotation, Vector2 origin, Vector2 scale)
+        {
+            sb.Draw(tex, pos, null, c, rotation, origin, scale, 0, 0);
+        }
+        public static Vector2 SwapVector2Data(this Vector2 vec) => new Vector2(vec.Y, vec.X);
+        public static int GetHorizonDirection(this Projectile proj) => (proj.velocity.X > 0).ToDirectionInt();
+        public static void FastDrawCube(this SpriteBatch sb, Vector2 pos, float scale = 1)
+        {
+            Texture2D cube = LostbeltModAssets.Texture_WhiteCube.Value;
+            sb.Draw(cube, pos - Main.screenPosition, null, Color.White, 0, cube.Size() / 2f, scale, 0, 0);
+        }
+        public static void DrawTrailFast(this Projectile proj, Color beginColor, Color endColor, int addColorNum, float targetScale, float targetOpacity, float rotFixer = 0)
+        {
+            Texture2D tex = proj.GetTexture();
+            int length = proj.oldPos.Length;
+            for (int i = length - 1; i >= 0; i--)
+            {
+                float ratios = (1f - i / (float)length);
+                Vector2 pos = proj.oldPos[i] - Main.screenPosition + proj.Size / 2f;
+                float scale = Lerp(targetScale, 1f, ratios);
+                float opa = Lerp(targetOpacity, 1f, ratios);
+                Vector2 sharpScale = new Vector2(1f);
+                Color c = Color.Lerp(endColor, beginColor, ratios).ToAddColor((byte)addColorNum);
+                Main.spriteBatch.FastDraw(tex, pos, c * opa, proj.oldRot[i] + rotFixer, tex.Size() / 2f, proj.scale * scale, 0);
+            }
+
+        }
+        /// <summary>
+        /// 快速设置宠物静态默认值的辅助函数
+        /// </summary>
+        /// <param name="type">宠物ID</param>
+        /// <param name="frameCount">竖直帧总数</param>
+        /// <param name="isLightPet">是否为发光宠物</param>
+        public static void PetStaticDefaultsCommon(int type, int frameCount, bool isLightPet = false)
+        {
+            Main.projFrames[type] = frameCount;
+            Main.projPet[type] = true;
+        }
+
+        /// <summary>
+        /// 快速设置宠物默认值的辅助函数
+        /// </summary>
+        /// <param name="projectile">宠物弹幕实例</param>
+        /// <param name="width">宽</param>
+        /// <param name="height">高</param>
+        public static void PetDefaultsCommon(Projectile projectile, int width, int height)
+        {
+            projectile.netImportant = true;
+            projectile.aiStyle = -1;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 18000;
+            projectile.tileCollide = false;
+            projectile.width = width;
+            projectile.height = height;
+        }
+
+        /// <summary>
+        /// 宠物buff常规检查
+        /// </summary>
+        /// <param name="projectile">宠物弹幕实例</param>
+        /// <param name="buffType">宠物Buff的ID</param>
+        public static bool PetCommonBuffCheck(Projectile projectile, int buffType)
+        {
+            Player player = Main.player[projectile.owner];
+            if (!player.dead && player.HasBuff(buffType))
+            {
+                projectile.timeLeft = 2;
+                return false;
+            }
+            return true;
+        }
+        public static void TrySuccessParry(this NPC target, Player Owner, float parryPower)
+        {
+        }
+        public static int ApplyDirectionOverride(this Projectile proj, NPC target) => (Main.player[proj.owner].Center.X < target.Center.X).ToDirectionInt();
+        #region 隐形爆炸生成
+        /// <summary>
+        /// 不可见爆炸射弹的生成参数
+        /// <br>所有字段均有合理默认值，调用时只需指定需要的部分</br>
+        /// </summary>
+        public record InvisBoomOptions
+        {
+            /// <summary>
+            /// 伤害类型
+            /// </summary>
+            public DamageClass DamageClass { get; init; } = DamageClass.Generic;
+
+            ///<summary>
+            ///伤害倍率
+            ///</summary>
+            public float DamageRatio { get; init; } = 1f;
+
+            /// <summary>
+            /// 爆炸的时长
+            /// </summary>
+            public int LifeTime { get; init; } = 40;
+
+            /// <summary>
+            /// 局部无敌帧
+            /// </summary>
+            public int HitCooldown { get; init; } = 40;
+
+            /// <summary>
+            /// 碰撞体积的边长
+            /// </summary>
+            public int Resize { get; init; } = 100;
+
+            /// <summary>
+            /// 命中次数（穿透次数），默认-1
+            /// </summary>
+            public int HitTime { get; init; } = -1;
+
+            /// <summary>
+            /// 命中时附加的Buff，如果为-1，表述没有
+            /// </summary>
+            public int BuffID { get; init; } = -1;
+
+            /// <summary>
+            /// Buff持续时间，如果为-1，表述不存在
+            /// </summary>
+            public int BuffTime { get; init; } = -1;
+
+            /// <summary>
+            /// 最大更新
+            /// </summary>
+            public int MaxUpdates { get; init; } = -1;
+
+            /// <summary>
+            /// 要挂载的目标
+            /// 默认为null
+            /// </summary>
+            public NPC TargetMounted { get; init; } = null;
+        }
+        /// <summary>
+        /// 快速生成一个不可见的爆炸射弹
+        /// <br>这个传参太多了，我比较建议指定部分参数传入进去</br>
+        /// <br>或者使用重载方案</br>
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <returns></returns>
+        public static Projectile SpawnInvisBoom(this Projectile proj, DamageClass damageClass, float damageRatios = 1,
+            int lifeTime = 40, int hitCD = 40, int resize = 100, int hitTime = -1, int buffID = -1, int buffTime = -1, int maxUpdates = -1, NPC targetMounted = null)
+        {
+            Projectile boom = Projectile.NewProjectileDirect(proj.GetSource_FromThis(), proj.Center, Vector2.Zero, ProjectileType<InvisBoom>(), (int)(proj.damage * damageRatios), 0, proj.owner);
+            boom.ExpandHitboxBy(resize);
+            if (maxUpdates > 0)
+                boom.MaxUpdates = maxUpdates;
+            if (proj.ModProjectile is InvisBoom boom1)
+            {
+                boom1.SetUpBoom(buffID, buffTime, lifeTime, hitCD, hitTime, damageClass, targetMounted);
+            }
+            return boom;
+        }
+        /// <summary>
+        /// 快速生成一个不可见的爆炸射弹。
+        /// <br>通过 <see cref="InvisBoomOptions"/> 指定参数，未指定的部分使用默认值。</br>
+        /// </summary>
+        public static Projectile SpawnInvisBoom(this Projectile proj, InvisBoomOptions options)
+        {
+            Projectile boom = Projectile.NewProjectileDirect(
+                proj.GetSource_FromThis(),
+                proj.Center,
+                Vector2.Zero,
+                ProjectileType<InvisBoom>(),
+                (int)(proj.damage * options.DamageRatio),
+                0,
+                proj.owner);
+
+            boom.ExpandHitboxBy(options.Resize);
+
+            if (options.MaxUpdates > 0)
+                boom.MaxUpdates = options.MaxUpdates;
+
+            if (boom.ModProjectile is InvisBoom boomMod)
+            {
+                boomMod.SetUpBoom(
+                    options.BuffID,
+                    options.BuffTime,
+                    options.LifeTime,
+                    options.HitCooldown,
+                    options.HitTime,
+                    options.DamageClass,
+                    options.TargetMounted);
+            }
+
+            return boom;
+        }
+        #endregion
+    }
+}

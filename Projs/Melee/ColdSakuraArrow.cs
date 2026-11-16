@@ -1,0 +1,168 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.ParticleECS;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Globals.Methods;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Projs.Melee
+{
+    public class ColdSakuraArrow : LostbeltFriendlyProj
+    {
+        public override string Texture => LostbeltModAssets.InvisAsset.Path;
+        public override EnumDamageClass Category => EnumDamageClass.Melee;
+        public ref float Timer => ref Projectile.ai[0];
+        public ref float AttackCounter => ref Projectile.ai[1];
+        public int CurTargetIndex
+        {
+            get => (int)Projectile.ai[2];
+            set => Projectile.ai[2] = value;
+        }
+        public List<NPC> TargetList = [];
+        public int TotalTrailCounts = 104;
+        public enum Style
+        {
+            Slowdown,
+            ShootLaser
+        }
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.NoMeleeSpeedVelocityScaling[Type] = true;
+            Projectile.ToTrailSetting(14, 2);
+        }
+        public override void ExSD()
+        {
+            Projectile.height = 6;
+            Projectile.width = 6;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.friendly = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = 5;
+            Projectile.extraUpdates = 10;
+            Projectile.DamageType = DamageClass.MeleeNoSpeed;
+            Projectile.timeLeft = 700;
+            Projectile.friendly = true;
+        }
+        public override bool? CanDamage()
+        {
+            return true;
+        }
+        public override void AI()
+        {
+            if (!Projectile.Lostbelt().FirstFrame)
+            {
+                new LightningGlow(Projectile.Center, Projectile.velocity.ToSafeNormalize() * 0.1f, Color.DeepPink, 80, 0.48f).Spawn();
+                new LightningGlow(Projectile.Center, Projectile.velocity.ToSafeNormalize() * 0.1f, Color.HotPink, 80, 0.42f).Spawn();
+                new LightningGlow(Projectile.Center, Projectile.velocity.RotatedBy(PiOver2).ToSafeNormalize() * 0.1f, Color.DeepPink, 80, 0.48f).Spawn();
+                new LightningGlow(Projectile.Center, Projectile.velocity.RotatedBy(PiOver2).ToSafeNormalize() * 0.1f, Color.HotPink, 80, 0.42f).Spawn();
+                ScarletSound(LostbeltSoundAssets.Misc_KnifeToss, Projectile.Center, .75f, 0, variantType: 2);
+                SpawnFlower();
+            }
+            Timer++;
+            if (Timer > Projectile.MaxUpdates * 5f)
+                Timer = Projectile.MaxUpdates * 5f;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            if (Projectile.GetTargetSafe(out NPC target, canPassWall: true))
+            {
+                Projectile.HomingTarget(target.Center, -1, 12f, 20f);
+            }
+
+            if (LostbeltMethods.OutOffScreen(Projectile.Center))
+                return;
+            ECSParticle.StarShape(Projectile.Center, Projectile.velocity.ToSafeNormalize() * .1f, Color.HotPink, 35, 1f, .840f, glowMult: 0f);
+            if (Main.rand.NextBool())
+            {
+                ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePosEdge(5f), Projectile.velocity.ToRandVelocity(ToRadians(15), 1), RandLerpColor(Color.HotPink, Color.DeepPink), 40, 1f, .46f, .2f);
+            }
+        }
+        public void SpawnFlower()
+        {
+            for (int i = 0; i < 21; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center.ToRandCirclePos(2), DustID.WitherLightning, RandVelTwoPi(2f));
+                d.rotation = RandRotTwoPi;
+                d.velocity = Projectile.velocity.ToRandVelocity(0, 4f) + RandVelTwoPi(2f);
+                d.scale = 0.8f;
+                d.noGravity = true;
+            }
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.HitDirectionOverride = Projectile.ApplyDirectionOverride(target);
+        }
+
+
+        public override bool? CanHitNPC(NPC target)
+        {
+            NPC target2 = Main.npc[Projectile.Lostbelt().GlobalTargetIndex];
+            if (target2.IsLegal() && target.Equals(target2))
+                return null;
+            return false;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            SpawnFlower();
+            if (AttackCounter > 3f)
+            {
+                new LightningGlow(Projectile.Center, Projectile.velocity.ToSafeNormalize() * 0.1f, Color.DeepPink, 80, 0.48f).Spawn();
+                new LightningGlow(Projectile.Center, Projectile.velocity.ToSafeNormalize() * 0.1f, Color.HotPink, 80, 0.42f).Spawn();
+                new LightningGlow(Projectile.Center, Projectile.velocity.RotatedBy(PiOver2).ToSafeNormalize() * 0.1f, Color.DeepPink, 80, 0.48f).Spawn();
+                new LightningGlow(Projectile.Center, Projectile.velocity.RotatedBy(PiOver2).ToSafeNormalize() * 0.1f, Color.HotPink, 80, 0.42f).Spawn();
+
+                Projectile.Kill();
+                return;
+            }
+            if (!TargetList.Contains(target))
+                TargetList.Add(target);
+            //每一次发起攻击都要重置一遍计时器，计时器也会控制candamage
+            //因为我们不想让寒霜弹在同一个目标上多次造成伤害
+            //Timer *= 0;
+                ScarletSound(LostbeltSoundAssets.Misc_KnifeToss, Projectile.Center, .75f, 0, variantType: 2);
+            float searchDistance = 1000f;
+            List<NPC> legalTargetList = [];
+            foreach (var tar in Main.ActiveNPCs)
+            {
+                bool legalTar = tar != target && tar.CanBeChasedBy();
+                float distPerTar = Vector2.Distance(tar.Center, Projectile.Center);
+                //别穿墙搜
+                if (legalTar && distPerTar < searchDistance && !TargetList.Contains(tar))
+                {
+                    searchDistance = distPerTar;
+                    legalTargetList.Add(tar);
+                }
+            }
+            //没有可用单位时立刻处死寒霜弹，不用考虑别的
+            if (legalTargetList.Count <= 0)
+            {
+                new LightningGlow(Projectile.Center, Projectile.velocity.ToSafeNormalize() * 0.1f, Color.DeepPink, 80, 0.48f).Spawn();
+                new LightningGlow(Projectile.Center, Projectile.velocity.ToSafeNormalize() * 0.1f, Color.HotPink, 80, 0.42f).Spawn();
+                new LightningGlow(Projectile.Center, Projectile.velocity.RotatedBy(PiOver2).ToSafeNormalize() * 0.1f, Color.DeepPink, 80, 0.48f).Spawn();
+                new LightningGlow(Projectile.Center, Projectile.velocity.RotatedBy(PiOver2).ToSafeNormalize() * 0.1f, Color.HotPink, 80, 0.42f).Spawn();
+
+
+                Projectile.Kill();
+                return;
+            }
+            //将链表进行逆向操作，方便索引遍历
+            legalTargetList.Reverse();
+            //随机选择距离最近的其中两个单位，如果有可能的话。
+            int maxIndex = Math.Min(legalTargetList.Count, 2);
+            NPC targetThatHit = legalTargetList[Main.rand.Next(0, maxIndex)];
+            Projectile.Lostbelt().GlobalTargetIndex = targetThatHit.whoAmI;
+            //最后将当前敌对单位扔到全局的index里面
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Projs.Melee;
+using Terraria;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Items.Weapons.Melee
+{
+    public class Bamboomerang : LostbeltWeapon
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Melee;
+        public override void ExSD()
+        {
+            Item.width = Item.height = 46;
+            Item.rare = ItemRarityID.Green;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.value = 500;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
+            Item.damage = 26;
+            Item.knockBack = 3f;
+            Item.shoot = ProjectileType<BamboomerangProj>();
+            Item.shootSpeed = 16f;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.UseSound = SoundID.Item1;
+        }
+        public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] < 3;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.WoodenBoomerang).
+                AddIngredient(ItemID.BambooBlock, 20).
+                AddIngredient(ItemID.JungleSpores, 5).
+                AddTile(TileID.Sawmill).
+                Register();
+        }
+    }
+}

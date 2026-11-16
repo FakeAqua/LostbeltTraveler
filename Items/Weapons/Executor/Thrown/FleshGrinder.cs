@@ -1,0 +1,34 @@
+﻿using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Projs.Executor.Thrown;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
+{
+    public class FleshGrinder : ExecutorWeaponClass
+    {
+        public override float ExecutionStrikeDamageMult => 1f;
+        public override int ExecutionProgress => 20;
+        public override ExecutorWeaponType ExecutorWeaponType => ExecutorWeaponType.Throw;
+        public override void ExSD()
+        {
+            Item.width = Item.height = 66;
+            Item.damage = 25;
+            Item.knockBack = 5f;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
+            Item.shootSpeed = 16f;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.shoot = ProjectileType<FleshGrinderProj>();
+            Item.UseSound = SoundID.Item1;
+            Item.useTime = Item.useAnimation = 22;
+            Item.SetUpRarityPrice(ItemRarityID.Green);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.CrimtaneBar, 14).
+                AddTile(TileID.Anvils).
+                Register();
+        }
+    }
+}

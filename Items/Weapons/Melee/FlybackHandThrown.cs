@@ -1,0 +1,61 @@
+﻿using ContinentOfJourney.Items;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Projs.Melee;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Items.Weapons.Melee
+{
+    public class FlybackHandThrown : ThrownSpearClass
+    {
+        public override string Texture => GetInstance<FlybackHand>().Texture;
+        public override bool HasLegendary => true;
+        public override void SetStaticDefaults()
+        {
+            LostbeltList.ShinyRarityItemDictionary.Add(Type, ShinyRarityType.Eternity);
+        }
+        public override void ExSD()
+        {
+            Item.damage = 400;
+            Item.useTime = Item.useAnimation = 20;
+            Item.shoot = ProjectileType<FlybackHandThrownProj>();
+            Item.SetUpRarityPrice(ItemRarityID.Purple);
+            Item.UseSound = LostbeltSoundAssets.Misc_KnifeExpired with { MaxInstances = 0, Volume = 1.5f, Pitch = 0.3f, PitchVariance = 0.1f };
+            Item.shootSpeed = 26f;
+        }
+        public override bool AltFunctionUse(Player player) => true;
+        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
+        {
+            return base.PreDrawTooltipLine(line, ref yOffset);
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            Item.useTime = Item.useAnimation = player.Lostbelt().flybackhandBuffTime > 0 ? 10 + (int)(10f * (1f - (float)player.Lostbelt().flybackhandBuffTime / player.Lostbelt().flybackhandBuffTimeCurrent)) : 20;
+        }
+        public override Color MainTooltipColor => Color.Yellow;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+
+            if (player.altFunctionUse == 2)
+            {
+                if (!player.HasProj<FlybackHandClockMounted>(out int projID))
+                    Projectile.NewProjectileDirect(source, position, velocity, projID, 0, 0, player.whoAmI);
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
+                proj.rotation = velocity.ToRotation();
+            }
+            return false;
+        }
+    }
+}

@@ -1,0 +1,432 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Configs;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Database.IDSets;
+using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Globals.Database.Localization;
+using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Players;
+using LostbeltTraveler.Items.Armor.Monk;
+using LostbeltTraveler.Items.Armor.Shinobi;
+using LostbeltTraveler.Rarity.RarityDrawHandler;
+using LostbeltTraveler.Rarity.RarityShiny;
+using ReLogic.Graphics;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.UI.Chat;
+
+namespace LostbeltTraveler.Globals.Instances.Items
+{
+    public partial class LostbeltGlobalItems : GlobalItem
+    {
+        public IReadOnlyList<TooltipLine> CacheTooltipLine;
+        public bool drawBuffIconAndDetail = false;
+        public bool drawBuffIcon = false;
+        public string OwnerName = string.Empty;
+        public override void SetDefaults(Item entity)
+        {
+            switch (entity.type)
+            {
+                case ItemID.NightsEdge:
+                case ItemID.TrueNightsEdge:
+                    entity.Lostbelt().drawBuffIconAndDetail = true;
+                    break;
+
+            }
+        }
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            switch (item.type)
+            {
+                case ItemID.NightsEdge:
+                case ItemID.TrueNightsEdge:
+                    tooltips.CreateTooltipDirect(
+                        ScarletTextSets.GenericText.CombineModName(
+                            ScarletTextSets.GenericText.ApplyDoT.ToFormatValue("[ScarletDebuff/LostbeltTraveler/ForeverNightBuff]")),
+                        Color.LightGray, Mod, "ApplyDoTName");
+                    break;
+            }
+            ItemOwnerName(item, ref tooltips);
+
+            if (LostbeltPlayer.AllWeaponSwapValue.Contains(item.type))
+            {
+                string pre = ScarletTextSets.GenericText.ModNamePrefix;
+                string value = pre + "\n" + ScarletTextSets.GenericText.SwitchTooltip;
+                tooltips.CreateTooltipDirect(value, Color.Lerp(Color.LawnGreen, Color.LightGreen, 0.5f));
+            }
+
+            if (LocalPlayer.Lostbelt().terraRecipe)
+            {
+                //表单里有这个内容我们才写这个东西。没有则写另一条
+                string itemName = string.Empty;
+                if (item.type > VanillaMaxItem)
+                {
+                    if (item.ModItem is not null)
+                        itemName = item.ModItem.FullName;
+                }
+                else
+                {
+                    itemName = ItemID.Search.GetName(item.type);
+                }
+                if (LostbeltList.LegalFoodListName.Contains(itemName))
+                {
+                    string path = Mod.GetLocalizationKey($"Items.Useable.TerrariaRecipe.");
+                    List<string> list = LocalPlayer.Lostbelt().terrariaRecipeEatenList;
+                    if (list.Contains(itemName))
+                        tooltips.CreateTooltipDirect((path + "Eaten").ToLangValue(), Color.GreenYellow);
+                    else
+                        tooltips.CreateTooltipDirect((path + "NotEaten").ToLangValue(), Color.SkyBlue);
+                }
+            }
+            ExecutorMonkShinobi(item, ref tooltips);
+            ExecutorWeaponExecuteTypes(item, ref tooltips);
+            //标记物品未完成
+            if (item.Lostbelt().NotFinished)
+            {
+                tooltips.CreateTooltip(Mod.GetLocalizationKey("NotFinished"), Color.IndianRed);
+            }
+            //无主之地系列的武器，红字文本。
+            if (item.Lostbelt().borderlandWeapon)
+            {
+                string path = Mod.GetLocalizationKey($"Weapons.Executor.{item.ModItem.Name}.FlavorTooltip");
+                int index = tooltips.FindLineIndex("Tooltip0");
+                tooltips.CreateTooltip(path, Color.Lerp(Color.DarkRed, Color.Crimson, 0.82f), LineName: "BorderlandRedLineName", index: index);
+            }
+            if (item.type == ItemID.PocketMirror)
+            {
+                int index = tooltips.FindLineIndexLast("Tooltip");
+                string path = Mod.GetLocalizationKey($"Database.PocketMirrorModiflication");
+                tooltips.CreateTooltip(path, LineName: "PocketMirrorModiflication", color: Color.SkyBlue, index: index + 2, args: Main.LocalPlayer.Lostbelt().pocketMirror.ToString());
+            }
+            ModifyParryShieldTooltip(item, tooltips);
+            InsertIconInTooltipLine(item, tooltips);
+            CacheTooltipLine = tooltips;
+        }
+        public void ItemOwnerName(Item item, ref List<TooltipLine> tooltips)
+        {
+            if (ItemBelongTo != EnumItemOwner.None)
+            {
+                string keyPath = Language.GetTextValue(ScarletTextSets.DatabasePrefix + ".ItemBelongTo." + ItemBelongTo);
+                Color color = Color.White;
+                switch (ItemBelongTo)
+                {
+                    case EnumItemOwner.Developer:
+                        color = Color.Red;
+                        break;
+                    case EnumItemOwner.Supporter:
+                        color = Color.Lime;
+                        break;
+                    case EnumItemOwner.Donator:
+                        color = Color.Pink;
+                        break;
+                }
+                string value = "<" + keyPath.ToLangValue() + "·" + item.Lostbelt().OwnerName + ">";
+                tooltips.CreateTooltipDirect(value, color, LineName: item.Lostbelt().ItemBelongTo + "Name");
+            }
+
+        }
+        public void ExecutorMonkShinobi(Item item, ref List<TooltipLine> tooltips)
+        {
+            //因为各种原因导致的史山
+            if (LocalPlayer.Lostbelt().monkExecutor)
+            {
+                if (item.type == ItemID.MonkStaffT1)
+                {
+                    string path = Mod.GetLocalizationKey($"Items.Armor.{nameof(MonkHead)}.SleepyOctBuff").ToLangValue();
+                    string path2 = Mod.GetLocalizationKey($"Items.Armor.{nameof(ShinobiHead)}.WeaponBuff").ToLangValue();
+                    tooltips.CreateTooltipDirect(path2, Color.Bisque, null, "ShinobiBuffTitle");
+                    tooltips.CreateTooltipDirect(path, Color.GreenYellow, null, "ShinobiBuff", -1, "20%", "15%", "20%");
+                }
+                if (item.type == ItemID.MonkStaffT3)
+                {
+                    string path = Mod.GetLocalizationKey($"Items.Armor.{nameof(MonkHead)}.DragonFuryBuff").ToLangValue();
+                    string path2 = Mod.GetLocalizationKey($"Items.Armor.{nameof(ShinobiHead)}.WeaponBuff").ToLangValue();
+                    tooltips.CreateTooltipDirect(path2, Color.Bisque, null, "ShinobiBuffTitle");
+                    tooltips.CreateTooltipDirect(path, Color.Thistle, null, "ShinobiBuff", -1, "35%", "15%", "200%");
+                }
+            }
+        }
+        public void ExecutorWeaponExecuteTypes(Item item, ref List<TooltipLine> tooltips)
+        {
+            //强制自动处决/手动处决的字段
+            if (item.DamageType.CountsAsClass<ExecutorDamageClass>())
+            {
+                if (ScarletItemIDSets.ForceToAutomaticExecute[item.type])
+                {
+                    int index = tooltips.FindLineIndex("ExecutorWeaponTypeName", Mod.Name);
+                    string path = Mod.GetLocalizationKey($"ExecutorDamageClass.ForceAutomaticExecution").ToLangValue();
+                    TooltipLine line = new TooltipLine(Mod, "ForceAutomaticExecution", path)
+                    {
+                        OverrideColor = Color.Pink
+                    };
+                    tooltips.Insert(index + 1, line);
+                }
+                else if (ScarletItemIDSets.ForceToTacticalExecute[item.type])
+                {
+                    int index = tooltips.FindLineIndex("ExecutorWeaponTypeName", Mod.Name);
+                    string path = Mod.GetLocalizationKey($"ExecutorDamageClass.ForceTacticalExecution").ToLangValue();
+                    TooltipLine line = new TooltipLine(Mod, "ForceTacticalExecutionLine", path)
+                    {
+                        OverrideColor = Color.Pink
+                    };
+                    tooltips.Insert(index + 1, line);
+                }
+            }
+        }
+        #region 插入图片，但是在Tooltip内
+        //匹配的正则表达式
+        private static Regex MatchingBuffIcon = new Regex(@"\[(ScarletBuff|ScarletDebuff)\/([^\]]+)\]");
+        //匹配中间具体Buff的来源和名称的正则表达式
+        private static Regex MatchingSpecificBuff = new Regex(@"([^\/]+)\/([^\/]+)");
+        //要绘制的Buff列表
+        //话说我们为什么要写这么长一串？
+        public List<(float, int, string, Texture2D, string, string, string, int)> buffs = new();
+        public List<string> add = new();
+        public void GlobalIconInsert(Item item, List<TooltipLine> tooltips)
+        {
+            //先画出buff转化的提示文本
+            if (drawBuffIconAndDetail)
+                tooltips.CreateTooltip(ScarletTextSets.GeneralText_BuffShow, ScarletTextSets.GeneralText_BuffShowColor);
+            buffs.Clear();
+            //遍历tooltip行，我们开始找匹配的正则表达式
+            for (int i = 0; i < tooltips.Count; i++)
+            {
+                string[] subLines = tooltips[i].Text.Split('\n');
+                bool modified = false;
+                for (int sub = 0; sub < subLines.Length; sub++)
+                {
+                    Texture2D texture = null;
+                    string name = string.Empty;
+                    string descrip = string.Empty;
+                    float length = 0;
+                    string color = string.Empty;
+                    string subText = subLines[sub];
+                    while (MatchingBuffIcon.Match(subText).Success)
+                    {
+                        subText = MatchingBuffIcon.Replace(subText, match =>
+                        {
+                            return MatchingSpecificBuff.Replace(match.Groups[2].Value, keys =>
+                            {
+                                color = match.Groups[1].Value switch
+                                {
+                                    "ScarletBuff" => "EE90EE",
+                                    "ScarletDebuff" => "AAEEFF",
+                                    _ => "FFFFFF"
+                                };
+                                //获取文本长度，方便定位buff的贴图绘制位置
+                                length = ChatManager.GetStringSize(FontAssets.MouseText.Value, subText.Substring(0, match.Index), Vector2.One).X;
+                                //判断一遍原版的buff和mod的buff，两者的buffIcon获取区别很大
+                                if (keys.Groups[1].Value == "Terraria")
+                                {
+                                    if (BuffID.Search.TryGetId(keys.Groups[2].Value, out int buffID))
+                                    {
+                                        texture = TextureAssets.Buff[buffID].Value;
+                                        name = Lang.GetBuffName(buffID);
+                                        descrip = Lang.GetBuffDescription(buffID);
+                                        buffs.Add((length, i, color, texture, name, descrip, tooltips[i].Name, sub));
+                                    }
+                                }
+                                else
+                                {
+                                    if (ModLoader.TryGetMod(keys.Groups[1].Value, out Mod mod))
+                                    {
+                                        if (mod.TryFind(keys.Groups[2].Value, out ModBuff modBuff))
+                                        {
+                                            //为啥我们要request啊？有没有别的方案？
+                                            texture = Request<Texture2D>(modBuff.Texture).Value;
+                                            name = modBuff.DisplayName.Value;
+                                            descrip = modBuff.Description.Value;
+                                            buffs.Add((length, i, color, texture, name, descrip, tooltips[i].Name, sub));
+                                        }
+                                    }
+                                }
+                                modified = true;
+                                return $"{GetDebuffPlaceholder(texture)}[c/{color}:{name}]";
+                            });
+                        }, 1);
+                    }
+                    subLines[sub] = subText;
+                }
+                if (modified)
+                    tooltips[i].Text = string.Join("\n", subLines);
+            }
+            //用于写入具体的buffTooltip
+            if (Main.keyState.PressingAlt() && buffs.Count != 0 && drawBuffIconAndDetail)
+            {
+                if (tooltips.Count < 2)
+                    return;
+                tooltips.RemoveRange(1, tooltips.Count - 1);
+                for (int j = 0; j < buffs.Count; j++)
+                {
+                    Texture2D texture = buffs[j].Item4;
+                    //终于差不多了……加tooltip
+                    if (add.Contains(buffs[j].Item5))
+                    {
+                        buffs.Remove(buffs[j]);
+                        continue;
+                    }
+                    else
+                        add.Add(buffs[j].Item5);
+
+                    TooltipLine buffTextNameLine = new TooltipLine(Mod, "ScarletBuffIconName" + j, $"{GetDebuffPlaceholder(texture)}[c/{buffs[j].Item3}:{buffs[j].Item5}]");
+                    TooltipLine buffTextDescripLine = new TooltipLine(Mod, "ScarletBuffDescripName" + j, $"{buffs[j].Item6}");
+                    tooltips.Add(buffTextNameLine);
+                    tooltips.Add(buffTextDescripLine);
+                    buffs[j] = (0, tooltips.Count, buffs[j].Item3, buffs[j].Item4, buffs[j].Item5, buffs[j].Item6, buffTextNameLine.Name, 0);
+                }
+            }
+        }
+        public string GetDebuffPlaceholder(Texture2D texture)
+        {
+            //计算图标在渲染时应占据的宽度
+            //此时我们不知道最终的行高，但可以基于当前字体计算一个近似比例
+            DynamicSpriteFont currentFont = FontAssets.MouseText.Value;
+            Vector2 currentScale = Vector2.One;
+            //近似行高，用于计算图标宽度
+            float approximateLineHeight = currentFont.MeasureString("M").Y * currentScale.Y;
+            //图标宽高比
+            float iconAspectRatio = (32 + 2) / (float)32;
+            if (texture != null)
+            {
+                iconAspectRatio = (texture.Width + 2) / (float)texture.Height;
+            }
+            //图标应占据的像素宽度
+            float targetWidth = approximateLineHeight * iconAspectRatio;
+            //测量单个空格的宽度
+            float spaceWidth = ChatManager.GetStringSize(currentFont, " ", currentScale).X;
+            //计算所需空格数量
+            int spacesNeeded = (int)Math.Ceiling(targetWidth / spaceWidth);
+            //构建占位空格字符串
+            string placeholder = new string(' ', spacesNeeded);
+            return placeholder;
+
+        }
+        public void InsertIconInTooltipLine(Item item, List<TooltipLine> tooltips)
+        {
+            //是否绘制buffIcon要在物品的sd里面专门打个标记
+            //主要是为了略过大部分并不需要画这个东西的鬼玩意，避免每次tooltip跑过来都得清一遍无用内存
+            if (drawBuffIconAndDetail || drawBuffIcon)
+                GlobalIconInsert(item, tooltips);
+        }
+        public override void PostDrawTooltip(Item item, ReadOnlyCollection<DrawableTooltipLine> lines)
+        {
+            if (!(drawBuffIcon || drawBuffIconAndDetail))
+                return;
+            Dictionary<string, int> nameCounter = new();
+            for (int i = 0; i < lines.Count; i++)
+            {
+                DrawableTooltipLine line = lines[i];
+                foreach (var buf in buffs)
+                {
+                    if (buf.Item7 != lines[i].Name)
+                        continue;
+
+                    if (buf.Item7 == line.Name)
+                    {
+                        DynamicSpriteFont font = line.Font ?? FontAssets.MouseText.Value;
+                        Vector2 textScale = line.BaseScale;
+                        if (textScale == Vector2.Zero)
+                            textScale = Vector2.One;
+                        float lineHeight = font.MeasureString("M").Y * textScale.Y;
+                        Texture2D icon = buf.Item4;
+                        float iconScale = lineHeight / icon.Height;
+                        float scaledHeight = icon.Height * iconScale;
+
+                        float x = line.X + buf.Item1 + iconScale * 2f;
+                        float y = line.Y + (lineHeight + buf.Item8 * lineHeight - scaledHeight) - iconScale * 4f;
+                        Main.spriteBatch.Draw(buf.Item4, new Vector2(x, y), null, Color.White, 0, Vector2.Zero, iconScale * 1f, 0, 0);
+                    }
+                }
+            }
+            add.Clear();
+        }
+        #endregion
+        public Dictionary<int, ShinyRarityType> VanillaRarityModiflication = new()
+        {
+            { ItemID.StardustBreastplate, ShinyRarityType.StardustFancy},
+            { ItemID.StardustHelmet, ShinyRarityType.StardustFancy},
+            { ItemID.StardustLeggings, ShinyRarityType.StardustFancy},
+            { ItemID.StardustCellStaff, ShinyRarityType.StardustFancy},
+            { ItemID.StardustDragonStaff, ShinyRarityType.StardustFancy},
+            { ItemID.FragmentStardust, ShinyRarityType.StardustFancy},
+            { ItemID.WingsStardust, ShinyRarityType.StardustFancy},
+
+            { ItemID.NebulaBreastplate, ShinyRarityType.Nebula },
+            { ItemID.NebulaHelmet, ShinyRarityType.Nebula },
+            { ItemID.NebulaLeggings, ShinyRarityType.Nebula },
+            { ItemID.NebulaArcanum, ShinyRarityType.Nebula },
+            { ItemID.NebulaBlaze, ShinyRarityType.Nebula },
+            { ItemID.WingsNebula, ShinyRarityType.Nebula },
+            { ItemID.FragmentNebula, ShinyRarityType.Nebula },
+
+            { ItemID.VortexBreastplate, ShinyRarityType.VortexFance},
+            { ItemID.VortexHelmet, ShinyRarityType.VortexFance},
+            { ItemID.VortexLeggings, ShinyRarityType.VortexFance},
+            { ItemID.VortexBeater, ShinyRarityType.VortexFance},
+            { ItemID.Phantasm, ShinyRarityType.VortexFance},
+            { ItemID.WingsVortex, ShinyRarityType.VortexFance},
+            { ItemID.FragmentVortex, ShinyRarityType.VortexFance },
+
+            { ItemID.SolarFlareBreastplate, ShinyRarityType.Solar},
+            { ItemID.SolarFlareHelmet, ShinyRarityType.Solar},
+            { ItemID.SolarFlareLeggings, ShinyRarityType.Solar},
+            { ItemID.DayBreak, ShinyRarityType.Solar},
+            { ItemID.SolarEruption, ShinyRarityType.Solar},
+            { ItemID.WingsSolar, ShinyRarityType.Solar},
+            { ItemID.FragmentSolar, ShinyRarityType.Solar},
+
+        };
+        public override void PostDrawTooltipLine(Item item, DrawableTooltipLine line)
+        {
+            if (LocalPlayer.Lostbelt().cycleMadnessCrit > 0 && LocalPlayer.Lostbelt().cycleMadnessLevel > 0)
+            {
+                if (line.Mod == "Terraria" && line.Name == "CritChance")
+                {
+                    RarityDrawHelper.DrawCustomTooltipLine(line, Color.White, Color.White, Color.Black, 1f);
+                }
+            }
+            if (!LostbeltConfigClient.Instance.SpecialRarity)
+                return;
+            if (line.Name == item.Lostbelt().ItemBelongTo + "Name" && line.Mod == Mod.Name)
+            {
+                if (item.Lostbelt().ItemBelongTo == EnumItemOwner.Donator)
+                    RareItemRarity.DrawFlavorTooltipName(line, RareItemRarity.RareType.Donator);
+                if (item.Lostbelt().ItemBelongTo == EnumItemOwner.Developer)
+                    RareItemRarity.DrawFlavorTooltipName(line, RareItemRarity.RareType.Developer);
+                if (item.Lostbelt().ItemBelongTo == EnumItemOwner.Supporter)
+                    RareItemRarity.DrawFlavorTooltipName(line, RareItemRarity.RareType.Support);
+            }
+            if (!item.IsBestPrefix())
+                return;
+            if (line.IsItemName())
+            {
+                if (VanillaRarityModiflication.TryGetValue(item.type, out ShinyRarityType value2))
+                {
+                    RarityDrawHelper.UpdateItemNameParticle(line, value2);
+                    RarityDrawHelper.UpdateItemNameDraw(line, value2);
+                }
+
+                if (LostbeltList.ShinyRarityItemDictionary.TryGetValue(item.type, out ShinyRarityType value))
+                {
+                    RarityDrawHelper.UpdateItemNameParticle(line, value);
+                    RarityDrawHelper.UpdateItemNameDraw(line, value);
+                }
+            }
+            if (line.Mod == Mod.Name && line.Name == "FlavorTooltipsName")
+            {
+                if (LostbeltList.ShinyRarityItemDictionary.TryGetValue(item.type, out ShinyRarityType value))
+                {
+                    RarityDrawHelper.UpdateFlavorNameDraw(line, value);
+                }
+            }
+
+        }
+    }
+}

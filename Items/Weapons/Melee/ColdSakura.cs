@@ -1,0 +1,73 @@
+﻿using ContinentOfJourney.Items.Material;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Projs.Melee;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Items.Weapons.Melee
+{
+    public class ColdSakura : ThrownSpearClass
+    {
+        public override bool NotHomewardJourneySpear => true;
+        public override bool HasLegendary => true;
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.BonusAttackSpeedMultiplier[Type] = 0.33f;
+            LostbeltList.ShinyRarityItemDictionary.Add(Type, ShinyRarityType.Sakura);
+        }
+        public override void ExSD()
+        {
+            Item.damage = 190;
+            Item.knockBack = 2f;
+            Item.useTime = 10;
+            Item.useAnimation = 10;
+            Item.useStyle = ItemUseStyleID.Rapier;
+            Item.SetUpRarityPrice(ItemRarityID.Red);
+            Item.shoot = ProjectileType<ColdSakuraProj>();
+            Item.UseSound = LostbeltSoundAssets.Misc_KnifeToss with {Volume=.6f, MaxInstances = 0, Pitch = 0.5f,PitchVariance=.1f, Variants = [1] };
+            Item.shootSpeed = 16f;
+        }
+        public override void HoldItem(Player player)
+        {
+            base.HoldItem(player);
+        }
+        public override Color MainTooltipColor => Color.LightPink;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            //生成位置会在玩家的后方且有一定的偏移
+            //为适配这一攻击模组，冷樱的hitbox会被有意增大
+            Vector2 vel = velocity;
+            Vector2 mouseVec = player.ToMouseVector2();
+            Vector2 spawnPos = player.Center - mouseVec.ToRandVelocity(ToRadians(30f), 80f, 86f) - mouseVec * Main.rand.NextFloat(40f, 60f);
+            //这里只会取水平分量的速度
+            Projectile proj = Projectile.NewProjectileDirect(source, spawnPos, vel, Item.shoot, damage, knockback, player.whoAmI);
+            return false;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.LunarBar, 15).
+                AddIngredient<EssenceofMatter>(5).
+                AddTile(TileID.LunarCraftingStation).
+                Register();
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            base.ModifyTooltips(tooltips);
+        }
+        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
+        {
+            //if (line.Name == "ItemName" && line.Mod == "Terraria")
+            //{
+            //    SakuraRarity.DrawRarity(line);
+            //    return false;
+            //}
+            return base.PreDrawTooltipLine(line, ref yOffset);
+        }
+    }
+}

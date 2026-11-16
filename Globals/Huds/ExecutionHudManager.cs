@@ -1,0 +1,211 @@
+﻿using System.Collections.Generic;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Configs;
+using LostbeltTraveler.Globals.Database.IDSets;
+using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Methods;
+using LostbeltTraveler.Globals.Players;
+using ReLogic.Graphics;
+using Terraria;
+using Terraria.Graphics.Effects;
+using Terraria.ModLoader;
+using Terraria.UI;
+using Terraria.UI.Chat;
+
+namespace LostbeltTraveler.Globals.Huds
+{
+    public class ExecutionHudManager : ModSystem
+    {
+        public static float GeneralOpactiy = 0;
+        public static float GeneralOffset = 0;
+        public static bool DrawFadeOut;
+        public static bool DrawFadeIn;
+        public static int StopCounter = 0;
+        /// <summary>
+        /// Shorthand.
+        /// </summary>
+        public Player LocalPlayer => Main.LocalPlayer;
+        public LostbeltPlayer ModPlayer => LocalPlayer.Lostbelt();
+        public static bool FadeInCounter = false;
+        public static float GeneralOpacity = 0;
+        public static Vector2 TargetSize = new Vector2(600, 600);
+        /// <summary>
+        /// 仅仅用于计时
+        /// </summary>
+        public static int CurExecutionCounter = -1;
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+            LoadInit();
+
+        }
+        public static void DrawExecutorHud(On_FilterManager.orig_EndCapture orig, FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
+
+        {
+            orig(self,finalTexture,screenTarget1,screenTarget2,clearColor);
+            if (Main.dedServ || Main.gameMenu)
+                return;
+            LostbeltConfigClient config = LostbeltConfigClient.Instance;
+            if (!config.DrawExecutionCounter)
+                return;
+
+            Player localPlayer = Main.LocalPlayer;
+            //if (ScarletItemIDSets.NoGeneralExecutionProgressDraw[localPlayer.HeldItem.type])
+            //    return;
+
+            if (GeneralOpacity <= 0f && !localPlayer.Lostbelt().Executor_DrawFadeIn)
+                return;
+            if (localPlayer.dead)
+                return;
+            SpriteBatch SB = Main.spriteBatch;
+            Vector2 pos = localPlayer.Center + new Vector2(0, 50) - Main.screenPosition;
+            pos.Y += localPlayer.gfxOffY;
+            Texture2D t2d = LostbeltModAssets.Hud_ExecutorCounter.Value;
+
+            SB.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            //Texture2D t2d2 = TextureAssets.MagicPixel.Value;
+            //SB.Draw(t2d2, pos, null, Color.Black* .4f* GeneralOpacity, 0f, t2d2.ToOrigin(), new Vector2(161.5f * .95f,.040f), SpriteEffects.None, 0f);
+            SB.Draw(t2d, pos, null, Color.Red * GeneralOpacity, 0f, t2d.ToOrigin(), 1.2f, SpriteEffects.None, 0f);
+            DrawNumberWithEffect(SB, pos, CurExecutionCounter, GeneralOpacity);
+
+            SB.End();
+
+        }
+        public static void DrawNumberWithEffect(SpriteBatch sb, Vector2 basePos, int number, float opa)
+        {
+            string numStr = number.ToString();
+            DynamicSpriteFont font = LostbeltModAssets.Font_MGR.Value;
+            Vector2 scale = new Vector2(.6f);
+            float offsetX = GetNumberOffsetX(number);
+            Vector2 size = ChatManager.GetStringSize(font, numStr, scale);
+            Vector2 textPos = basePos - new Vector2(offsetX, 0);
+
+            Color shadowColor1 = Color.Lerp(Color.Red, Color.Black, 0.95f) * (opa * 0.248f);
+
+            Color shadowColor2 = Color.Black * opa;
+            Color mainColor = Color.White * opa;
+            for (int i = 0; i < 8; i++)
+            {
+                Vector2 offset = (TwoPi * i / 8f).ToRotationVector2() * 1.2f;
+
+                //第一层阴影
+                Vector2 pos1 = textPos + offset + new Vector2(3.5f, 3.5f);
+                ChatManager.DrawColorCodedString(sb, font, numStr, pos1, shadowColor1, 0f, size * 0.5f, scale);
+
+                //第二层阴影
+                Vector2 pos2 = textPos + offset;
+                ChatManager.DrawColorCodedString(sb, font, numStr, pos2, shadowColor2, 0f, size * 0.5f, scale);
+            }
+            //中心白色文字
+            ChatManager.DrawColorCodedString(sb, font, numStr, textPos, mainColor, 0f, size * 0.5f, scale);
+        }
+        public static float GetNumberOffsetX(int number)
+        {
+            if (number < 10)
+                return 5f;
+            if (number < 100)
+                return 7.30f;
+            if (number < 1000)
+                return 15f;
+            if (number < 10000)
+                return 21f;
+            return 21f;
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+        }
+        public override void OnWorldLoad()
+        {
+            LoadInit();
+        }
+        public static void LoadInit()
+        {
+            GeneralOpactiy = 0;
+        }
+        public override void UpdateUI(GameTime gameTime)
+        {
+            LostbeltConfigClient config = LostbeltConfigClient.Instance;
+            if (Main.dedServ)
+                return;
+            if (!config.DrawExecutionCounter)
+                return;
+            Player localPlayer = Main.LocalPlayer;
+            Item heldItem = localPlayer.HeldItem;
+            bool hasReforged = ModLoader.HasMod("ExpandedReforge");
+            bool isExectuorWeapon = heldItem.DamageType.CountsAsClass<ExecutorDamageClass>();
+            isExectuorWeapon = LostbeltList.ExecuteRequests.ContainsKey(heldItem.type) && !ScarletItemIDSets.NoGeneralExecutionProgressDraw[heldItem.type];
+            if (isExectuorWeapon)
+            {
+                if (!ModPlayer.Executor_DrawFadeIn)
+                {
+                    ModPlayer.Executor_DrawFadeOut = false;
+                    ModPlayer.Executor_DrawFadeIn = true;
+                }
+            }
+            else
+            {
+                if (!ModPlayer.Executor_DrawFadeOut)
+                {
+                    ModPlayer.Executor_DrawFadeOut = true;
+                    ModPlayer.Executor_DrawFadeIn = false;
+                }
+            }
+            if (ModPlayer.Executor_DrawFadeOut)
+            {
+                GeneralOpacity = Lerp(GeneralOpacity, 0, 0.12f);
+                GeneralOffset = Lerp(GeneralOffset, -5f, 0.2f);
+                if (GeneralOpacity <= .02f)
+                {
+                    GeneralOpacity = 0f;
+                    GeneralOffset = 0f;
+                    ModPlayer.Executor_DrawFadeOut = false;
+                }
+            }
+            else if (ModPlayer.Executor_DrawFadeIn)
+            {
+                GeneralOpacity = Lerp(GeneralOpacity, 1f, 0.2f);
+                GeneralOffset = Lerp(GeneralOffset, 0f, 0.2f);
+                if (GeneralOpacity >= 0.98f)
+                {
+                    GeneralOpacity = 1f;
+                    GeneralOffset = 0f;
+                }
+            }
+            //可见度为0的时候停止下方的更新
+            if (GeneralOpacity <= 0f && !ModPlayer.Executor_DrawFadeIn)
+                return;
+
+            //发射的一瞬间会从字典移除掉对应的值
+            //如果最开始的值就不存在，设置为0
+            if (ModPlayer.ExecutionListStored.TryGetValue(heldItem.type, out int num))
+            {
+                CurExecutionCounter = num;
+            }
+            else
+                CurExecutionCounter = 0;
+        }
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        {
+            if (Main.dedServ)
+                return;
+            if (!LostbeltConfigClient.Instance.DrawExecutionCounter)
+                return;
+            if (LocalPlayer.HeldItem.DamageType != ExecutorDamageClass.Instance)
+                return;
+            int mouseIndex = layers.FindIndex(layer => layer.Name == "Vanilla: Mouse Text");
+            if (mouseIndex != -1)
+            {
+                layers.Insert(mouseIndex, new LegacyGameInterfaceLayer("Lostbelt: ExecutorBar", delegate ()
+                {
+                    //Main.spriteBatch.Draw(ExecutionTarget2D, new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), null, Color.White, 0, ExecutionTarget2D.Size() / 2, 1f, 0, 0f);
+                    return true;
+                }, InterfaceScaleType.UI));
+            }
+        }
+    }
+}

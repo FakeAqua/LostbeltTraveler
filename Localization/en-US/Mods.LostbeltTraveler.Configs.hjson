@@ -1,0 +1,153 @@
+LostbeltConfigClient: {
+	DisplayName: Lostbelt Journey Client Config
+
+	SpecialRarity: {
+		Label: Special Rarity
+		Tooltip:
+			'''
+			Allow the mod to draw special rarity for certain items
+			Disabled by default
+			'''
+	}
+
+	MaxParticleCounts: {
+		Label: Limited Mod Particles
+		Tooltip:
+			'''
+			Limited the particles that provided by Lostbelt Journey
+			10000 at max by default
+			'''
+	}
+
+	DrawIcon: {
+		Label: Draw Corner Icon
+		Tooltip:
+			'''
+			Draw a cornor icon for all items from Lostbelt Journey
+			Enable by default
+			'''
+	}
+
+	PerformanceMode: {
+		Label: Performance Mode
+		Tooltip:
+			'''
+			Reduce some visual effect for certain items
+			Enable it if you suffering from lags, and reported to author
+			Disable by default
+			'''
+	}
+
+	DrawExecutionCounter: {
+		Label: Display Execution Progress Bar
+		Tooltip:
+			'''
+			Enables to display Execution Progress Bar under the player
+			Enable by default
+			'''
+	}
+
+	ScreenShakeStrength: {
+		Label: Screen Shake Strength
+		Tooltip:
+			'''
+			Allows you to adjust the strength of screen shake
+			Range is (0 - 10)x
+			Default is 1x
+			'''
+	}
+
+	SimpleImmersiveInventory: {
+		Label: Simple Immersive Inventory
+		Tooltip:
+			'''
+			Adds a simplified version of an effect similar to the Minecraft mod "Immersive Inventory"
+			Applies to all items, automatically disabled if the mod "Immersive Inventory" is enabled, overriding this setting
+			Enabled by default
+			'''
+	}
+
+	TraditionalExecutionTooltipShowcase: {
+		Label: Old Executor Execution Strike Tooltip Display
+		Tooltip:
+			'''
+			Changes the Execution Strike tooltip of Executor weapons to the old version, which displays details when holding Left Alt
+			Disabled by default
+			'''
+	}
+
+	ModSFXVolume: {
+		Label: Mod Sound Effect Volume Adjustment
+		Tooltip:
+			'''
+			If you find the mod content a bit too loud, you can adjust this option independently to lower the volume without affecting the base game
+			Currently only partially supported, with more content to be gradually added in the future
+			Default is 1, which means 100% volume
+			'''
+	}
+
+	ScreenDarkStrength: {
+		Label: Screen Darkening Effect
+		Tooltip:
+			'''
+			Allows you to adjust the screen darkening intensity for some mod items
+			Range is 0 to 1, i.e. 0% to 100%
+			Default is 1
+			'''
+	}
+
+	TextboxSize: {
+		Label: Textbox Size Adjustment
+		Tooltip:
+			'''
+			Allows you to adjust the size of extra textboxes for items in the mod
+			If you encounter an issue where the textbox is too large, you can adjust this setting
+			Default is 1, which means 100%
+			'''
+	}
+
+	UseDefaultFont: {
+		Label: Use Default Font
+		Tooltip: ""
+	}
+
+	DrawItemNameRarity: {
+		Label: Draw Item Name Rarity
+		Tooltip: ""
+	}
+}
+
+LostbeltConfigServer: {
+	DisplayName: Lostbelt Journey Server Configs
+
+	CrossModSupport: {
+		Label: Cross-Mod Support
+		Tooltip:
+			'''
+			When enabled, Lostbelt Journey will provide cross-mod support for some other mods, making their content fit into the progression of Homeward Journey and Lostbelt Journey
+			Disabled by default
+			'''
+	}
+
+	LostbeltJourneyTestAI: {
+		Label: Lostbelt Journey Boss Rework
+		Tooltip:
+			'''
+			When enabled, Lostbelt Journey will rework some existing bosses with brand-new AI, along with some new sprites and new events
+			This feature greatly affects game progression and is also one of the core parts of this mod's story
+			If you need to consider partial compatibility, you may consider disabling this option
+			[c/AA00AA:Currently won't do anything]
+			Enabled by default
+			'''
+	}
+
+	ModWeaponDamageMult: {
+		Label: Mod Weapon Damage Multiplier
+		Tooltip:
+			'''
+			Allows you to adjust the damage multiplier of weapons in the mod, that is, weapon strength
+			Range is 0 to 10 times. If you think the weapons in the mod are too strong, you may consider this option
+			Default is 1x
+			'''
+	}
+}

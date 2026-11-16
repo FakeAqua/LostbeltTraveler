@@ -1,0 +1,57 @@
+﻿using ContinentOfJourney.Projectiles.Meelee;
+using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.ReVisual.Class;
+using System;
+using Terraria;
+
+namespace LostbeltTraveler.ReVisual.Projs
+{
+    public class ReBloodthirstProj : ReVisualProjClass
+    {
+        public float Timer = 0;
+        public float SpinDirection = 0;
+
+        public override int ApplyProj => ProjectileType<Bloodthirst>();
+        public override int TotalListCount => 6;
+        public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
+        {
+            return proj.IsMe() && vp.reVisualBloodthirst;
+        }
+        public override bool PreKill(Projectile projectile, int timeLeft)
+        {
+            return base.PreKill(projectile, timeLeft);
+        }
+        public override void RevisualUpdate(Projectile proj)
+        {
+            AddListOnNeed(proj);
+            Timer++;
+            if (SpinDirection == 0)
+                proj.rotation = proj.velocity.ToRotation();
+            if (Timer == 30f)
+                SpinDirection = Math.Sign(proj.velocity.X);
+            if (Main.rand.NextBool())
+                new ShinyOrbParticle(proj.Center.ToRandCirclePosEdge(8f), proj.velocity.ToRandVelocity(ToRadians(5f), 2f), RandLerpColor(Color.Crimson, Color.Red), 40, 0.4f).Spawn();
+        }
+        public override void PreDrawRevisual(Projectile proj, ref Color lightColor)
+        {
+            if (PosList.Count < 1 && RotList.Count < 1)
+                return;
+            Texture2D tex = proj.GetTexture();
+            Vector2 drawPos = proj.Center - Main.screenPosition;
+            for (int i = 0; i < PosList.Count; i++)
+            {
+                if (PosList[i] == Vector2.Zero)
+                    continue;
+                float rads = 1f - i / (float)PosList.Count;
+                float colorRads = 0.9f * proj.Opacity * (1 - rads);
+                Color drawColor2 = Color.Lerp(Color.DarkGray, Color.White, rads).ToAddColor(150) * colorRads;
+                SB.Draw(tex, PosList[i] - Main.screenPosition, null, drawColor2, RotList[i] + PiOver4, tex.ToOrigin(), proj.scale * (1f - rads) * 0.99f, 0, 0);
+            }
+            float speedRot = proj.rotation;
+            for (int i = 0; i < 8; i++)
+                SB.Draw(tex, drawPos + ToRadians(60f * i).ToRotationVector2() * 2f, null, Color.White.ToAddColor(0), speedRot + PiOver4, tex.ToOrigin(), proj.scale, 0, 0);
+            SB.Draw(tex, drawPos, null, lightColor, speedRot + PiOver4, tex.ToOrigin(), proj.scale, 0, 0);
+        }
+    }
+
+}

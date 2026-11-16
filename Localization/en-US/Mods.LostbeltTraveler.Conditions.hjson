@@ -1,0 +1,15 @@
+Drop: {
+	ExampleSoul: Mods.LostbeltTraveler.Conditions.Drop.ExampleSoul
+	SnowBiome: Mods.LostbeltTraveler.Conditions.Drop.SnowBiome
+	UnderworldBiome: Mods.LostbeltTraveler.Conditions.Drop.UnderworldBiome
+	FullCowboy: Mods.LostbeltTraveler.Conditions.Drop.FullCowboy
+	PostSupremeCondition: Mods.LostbeltTraveler.Conditions.Drop.PostSupremeCondition
+}
+
+Crafting: {
+	IsDownSlimeGodAndInEclipse: Post-Slime God and During Eclipse
+	HasFuckingCalamityMod: Mods.LostbeltTraveler.Conditions.Crafting.HasFuckingCalamityMod
+	NoFuckingCalamityMod: Mods.LostbeltTraveler.Conditions.Crafting.NoFuckingCalamityMod
+	InSingleplayer: ""
+	InMultiplayer: ""
+}

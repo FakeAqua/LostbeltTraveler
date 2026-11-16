@@ -1,0 +1,42 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.ParticleSystem;
+using Terraria;
+
+namespace LostbeltTraveler.Globals.Graphics.Particles
+{
+    public class LightningGlow : BaseParticle
+    {
+        public override BlendState UseBlendStateID => BlendState.Additive;
+        private float BeginScale;
+        private Color TargetColor;
+        private float Offset;
+        public LightningGlow(Vector2 position, Vector2 vel, Color color, int lifeTime, float scale)
+        {
+            Position = position;
+            Velocity = vel;
+            DrawColor = Color.Transparent;
+            TargetColor = color;
+            Lifetime = lifeTime;
+            Scale = BeginScale = scale;
+        }
+        public override void Update()
+        {
+            if (LifetimeRatio < 0.15f)
+                DrawColor = Color.Lerp(DrawColor, TargetColor, 0.35f);
+            else
+                DrawColor = Color.Lerp(DrawColor, Color.Transparent, 0.25f);
+            Offset = Main.rand.NextFloat(-1.1f, 1.2f);
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Vector2 drawPos = Position - Main.screenPosition;
+            Texture2D tex = LostbeltModAssets.Particle_SharpTear;
+            Vector2 drawScale = new Vector2(0.5f, 3.5f);
+            for (int i = 0; i < 6; i++)
+            {
+                Vector2 offsetVec = Velocity.ToSafeNormalize() * i * 1.4f;
+                spriteBatch.Draw(tex, drawPos + offsetVec, null, DrawColor, Velocity.ToRotation() + PiOver2, tex.ToOrigin(), Scale * drawScale, 0, 0);
+            }
+        }
+    }
+}

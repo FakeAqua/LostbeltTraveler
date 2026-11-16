@@ -1,0 +1,58 @@
+BambooRocket: {
+	DisplayName: 火箭竹
+	Tooltip: 发射会追踪的竹
+}
+
+TerraFlamethrower: {
+	DisplayName: 泰拉喷火器
+	Tooltip:
+		'''
+		使你的敌人沐浴于璀璨夺目的泰拉之光
+		按下右键投掷燃素手雷，命中敌人时爆炸，造成[ScarletDebuff/LostbeltTraveler/TerraFlamethrowerBuff]
+		不消耗凝胶
+		'''
+}
+
+BlazingSun: {
+	DisplayName: 烈阳
+	Tooltip:
+		'''
+		快速连续射出烈火箭矢，并召唤两个微缩太阳为你而战
+		所有的攻击都可穿墙
+		'''
+}
+
+PandorasBurger: {
+	DisplayName: 潘多拉的汉堡包
+	Tooltip:
+		'''
+		使用时随机发射三种不同的射弹
+		会从你启用的所有模组中的武器内随机选择
+		"什么？"
+		'''
+}
+
+Duskfall: {
+	DisplayName: 日落时分
+	Tooltip:
+		'''
+		投掷追踪的着魔飞斧
+		经过圆环后命中时施加[ScarletDebuff/ContinentOfJourney/SolarBurntBuff]
+		'''
+}
+
+PropellerRapierRanged: {
+	DisplayName: 风暴螺旋桨
+	Tooltip:
+		'''
+		命中后持续释放小型龙卷风
+		经过圆环时生成一个追杀敌人的大型龙卷风
+		大型龙卷风命中时造成[ScarletDebuff/LostbeltTraveler/TheBleachingBuff]
+		“另一个世界真实的存在过的证明”
+		'''
+}
+
+RadiantBlazeDawn: {
+	DisplayName: 辉炎之晓
+	Tooltip: 允许穿墙，并施加[ScarletDebuff/LostbeltTraveler/ForeverNightBuff]
+}

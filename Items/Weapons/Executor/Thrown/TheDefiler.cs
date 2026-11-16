@@ -1,0 +1,33 @@
+﻿using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Projs.Executor.Thrown;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
+{
+    public class TheDefiler : ExecutorWeaponClass
+    {
+        public override float ExecutionStrikeDamageMult => 1f;
+        public override ExecutorWeaponType ExecutorWeaponType => ExecutorWeaponType.Throw;
+        public override int ExecutionProgress => 20;
+        public override void ExSD()
+        {
+            Item.width = Item.height = 66;
+            Item.damage = 20;
+            Item.knockBack = 5f;
+            Item.shootSpeed = 16f;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.UseSound = SoundID.Item1;
+            Item.shoot = ProjectileType<TheDefilerProj>();
+            Item.useTime = Item.useAnimation = 28;
+            Item.SetUpRarityPrice(ItemRarityID.Green);
+            Item.SetUpNoUseGraphicItem();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.DemoniteBar, 14).
+                AddTile(TileID.Anvils).
+                Register();
+        }
+    }
+}

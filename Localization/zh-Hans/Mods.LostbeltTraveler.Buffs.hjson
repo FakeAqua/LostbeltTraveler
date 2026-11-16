@@ -1,0 +1,293 @@
+HoneyRegenAlt: {
+	DisplayName: 甜蜜恢复
+	Description: 加速生命恢复速度
+}
+
+BlackKeyExecutionBuff: {
+	DisplayName: 概念增强
+	Description:
+		'''
+		全面强化身体素质
+		增加{0}点代行者护甲穿透
+		减少{1}来犯伤害的伤害，触发时移除这个效果
+		'''
+}
+
+WhaleBuff: {
+	DisplayName: 小小鲸鱼
+	Description: 一头已经死去的鲸鱼幼崽，祂还不足以接过死神的衣钵
+}
+
+NoneBuff: {
+	DisplayName: _
+	Description: _真的存在大和小的区别吗？但无论怎么样，祂现在追随着你
+}
+
+ShadowBuff: {
+	DisplayName: 微缩化暗影墙
+	Description: 他会注视着你，永远
+}
+
+SquidBuff: {
+	DisplayName: 小小鱿鱼
+	Description: 他在海底汉堡店兼职暑假工
+}
+
+WatcherBuff: {
+	DisplayName: 极视幼表
+	Description: 时间的无数同僚中最为幼小的一只
+}
+
+HerbBagBuff: {
+	DisplayName: 护林草药
+	Description: 草药的力量似乎注入了你的体内
+}
+
+GoldenAppleBuff: {
+	DisplayName: 金苹果
+	Description: 你的牙口居然没事吗？
+}
+
+GoldenAppleBuffEnchanted: {
+	DisplayName: 附魔金苹果
+	Description:
+		'''
+		加速生命再生，强化防御能力
+		...你牙口居然这么好吗？
+		'''
+}
+
+DragonSummonBuff: {
+	// DisplayName: Dragon Summon Buff
+	// Description: Mods.LostbeltTraveler.Buffs.DragonSummonBuff.Description
+}
+
+CrimsonCharmBuff: {
+	DisplayName: 治疗过饱和
+	Description: 治疗效率大幅度削减……或许你应该停一下？
+}
+
+TerraFlamethrowerBuff: {
+	DisplayName: 泰拉燃素
+	Description:
+		'''
+		泰拉喷火器命中时使目标滴落等量于其伤害的泰拉精华
+		泰拉精华不会对该目标本身造成伤害
+		'''
+}
+
+BoneSlapBuff: {
+	// DisplayName: Bone Slap Buff
+	// Description: Mods.LostbeltTraveler.Buffs.BoneSlapBuff.Description
+}
+
+StarofHopeBuff: {
+	DisplayName: 希望之星
+	Description: 这是一段充满了爱与希望的故事
+}
+
+StreamingProtocalBuff: {
+	// DisplayName: Streaming Protocal Buff
+	// Description: Mods.LostbeltTraveler.Buffs.StreamingProtocalBuff.Description
+}
+
+TearEyeBuff: {
+	DisplayName: 克苏鲁的眼泪
+	Description:
+		'''
+		增加伤害减免
+		增加幅度为5%/10%/15%，与流程进度相关
+		'''
+}
+
+DragonMinionBuff: {
+	// DisplayName: Dragon Minion Buff
+	// Description: Mods.LostbeltTraveler.Buffs.DragonMinionBuff.Description
+}
+
+FruitofEternityBuff: {
+	DisplayName: 悠久果实
+	Description:
+		'''
+		吃下这果实之人的肉体将会抗拒所有变化，
+		成为等同于不老不死的存在，
+		但这也意味着成为众神永远的奴仆。
+		'''
+}
+
+DracoBuff: {
+	DisplayName: 黑泥圣杯
+	Description: 人乃是服从欲望的存在。余乃是品尝欲望的存在
+}
+
+SonBuff: {
+	DisplayName: 圣子伙伴
+	Description: 可是我觉得这很神圣啊
+}
+
+GrassPoison: {
+	// DisplayName: Grass Poison
+	// Description: Mods.LostbeltTraveler.Buffs.GrassPoison.Description
+}
+
+AbsoluteZeroBuff: {
+	DisplayName: 绝对零度
+	Description:
+		'''
+		极寒冻结了生者的脉搏，连时间都开始迟疑……
+		大幅度降低移动速度，减少防御力与生命值
+		'''
+}
+
+TheBleachingBuff: {
+	DisplayName: 人理漂白
+	Description:
+		'''
+		灵魂正在褪去，只留下一层外皮……
+		清空防御力，减少造成的伤害与生命值
+		'''
+}
+
+SaintChurchBuff: {
+	DisplayName: 不死的巴卢
+	Description:
+		'''
+		月之巴卢就算陷入死亡深渊，也会浮上、苏醒
+		然后厌恶拒绝自身教诲的达恩，规定了它们死后也不会复活的命运
+		也无法修复自身的损伤
+		'''
+}
+
+LifeWormBuff: {
+	DisplayName: 小小万籁携生
+	Description: 茁壮地成长
+}
+
+CycleMadnessBuff: {
+	DisplayName: 暴击星周转
+	Description: 正在获得暴击星
+}
+
+AntiKnockbackBuff: {
+	DisplayName: 防击退
+	Description: 不再受到击退的影响
+}
+
+DiamondYoyoBuff: {
+	DisplayName: 钻石星尘
+	Description: 闪耀发光，吸引炫目的宝石
+}
+
+ForeverNightBuff: {
+	DisplayName: 长夜漫漫
+	Description: 正在损失生命值
+}
+
+JellyfishGroupBuff: {
+	DisplayName: 水母集群
+	Description:
+		'''
+		来自一群小水母的祝福
+		蓝色水母会增加{0}伤害，{1}暴击概率和{2}护甲穿透
+		粉色水母会{3}防御，{4}伤害减免和{5}生命恢复速度
+		绿色水母会为你提供无限制的飞行时间，并强化机动
+		'''
+	Blue: 蓝色形态
+	Pink: 粉色形态
+	Green: 绿色形态
+}
+
+ParrySpin: {
+	// DisplayName: Parry Spin
+	// Description: Mods.LostbeltTraveler.Buffs.ParrySpin.Description
+}
+
+CobaltParryBuff: {
+	// DisplayName: Cobalt Parry Buff
+	// Description: Mods.LostbeltTraveler.Buffs.CobaltParryBuff.Description
+}
+
+EoCParryBuff: {
+	// DisplayName: Eo C Parry Buff
+	// Description: Mods.LostbeltTraveler.Buffs.EoCParryBuff.Description
+}
+
+FrozenParryBuff: {
+	// DisplayName: Frozen Parry Buff
+	// Description: Mods.LostbeltTraveler.Buffs.FrozenParryBuff.Description
+}
+
+HuntressParryBuff: {
+	// DisplayName: Huntress Parry Buff
+	// Description: Mods.LostbeltTraveler.Buffs.HuntressParryBuff.Description
+}
+
+ObsidianParryBuff: {
+	// DisplayName: Obsidian Parry Buff
+	// Description: Mods.LostbeltTraveler.Buffs.ObsidianParryBuff.Description
+}
+
+PaladinsParryBuff: {
+	// DisplayName: Paladins Parry Buff
+	// Description: Mods.LostbeltTraveler.Buffs.PaladinsParryBuff.Description
+}
+
+SergantParryBuff: {
+	// DisplayName: Sergant Parry Buff
+	// Description: Mods.LostbeltTraveler.Buffs.SergantParryBuff.Description
+}
+
+SquireParryBuff: {
+	// DisplayName: Squire Parry Buff
+	// Description: Mods.LostbeltTraveler.Buffs.SquireParryBuff.Description
+}
+
+DiverBuff: {
+	DisplayName: 小小深潜者
+	Description: 来自异世的小旅者
+}
+
+ArcBowBuff: {
+	DisplayName: 肉体强化
+	Description:
+		'''
+		短暂强化你的肉体
+		减少25%来犯伤害的伤害，触发时移除这个效果
+		'''
+}
+
+RocketCharmBuff: {
+	DisplayName: 进攻强化
+	Description:
+		'''
+		以投影强化你的进攻力
+		额外增加{0}点代行者护甲穿透
+		'''
+}
+
+CursedHeavy: {
+	DisplayName: 诅咒
+	Description:
+		'''
+		持续损失生命值，且允许堆叠
+		最大可堆叠至10层
+		'''
+}
+
+DeathTimer: {
+	DisplayName: 恐怖
+	Description:
+		'''
+		额外承受伤害20%的伤害
+		以一定概率停止行动3秒，触发后移除效果
+		'''
+}
+
+CursedHeavyUpgrade: {
+	DisplayName: 咒厄
+	Description:
+		'''
+		持续损失生命值，且允许堆叠
+		最大可堆叠至10层
+		'''
+}

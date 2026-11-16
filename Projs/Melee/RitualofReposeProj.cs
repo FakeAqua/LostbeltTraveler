@@ -1,0 +1,300 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.ParticleECS;
+using LostbeltTraveler.Core.PixelatedRender;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Handlers;
+using LostbeltTraveler.Globals.Methods;
+using LostbeltTraveler.Items.Weapons.Melee;
+using System;
+using System.Collections.Generic;
+using Terraria;
+
+namespace LostbeltTraveler.Projs.Melee
+{
+    public class RitualofReposeProj : LostbeltProjs, IPixelatedRenderer
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Melee;
+        public override string Texture => GetInstance<RitualofRepose>().Texture;
+        public bool BeginDisapper = false;
+        public bool BeginAppear = false;
+        public bool JustStartAttacked = false;
+        public bool JustPressedRightClick = false;
+        public float AppearRatios = 0;
+        public float ReadyAttackFrame = 2000;
+        public enum State
+        {
+            Idle,
+            Shoot
+        }
+        public ref float IdleTimer => ref Projectile.ai[2];
+        public State AttackState
+        {
+            get => (State)Projectile.ai[1];
+            set => Projectile.ai[1] = (float)value;
+        }
+        public ref float Timer => ref Projectile.ai[0];
+        public override void SetStaticDefaults()
+        {
+            Projectile.ToTrailSetting(16);
+        }
+        public override void ExSD()
+        {
+            Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+            Projectile.ignoreWater = true;
+            Projectile.width = Projectile.height = 16;
+            Projectile.extraUpdates = 3;
+            Projectile.SetupImmnuity(30);
+        }
+        public override void OnFirstFrame()
+        {
+            base.OnFirstFrame();
+        }
+        public override void ProjAI()
+        {
+            switch (AttackState)
+            {
+                case State.Idle:
+                    DoIdle();
+                    break;
+                case State.Shoot:
+                    DoShoot();
+                    break;
+            }
+        }
+        public bool StopAllDrawing = false;
+
+        public void DoShoot()
+        {
+            Owner.itemTime = Owner.itemAnimation = 2;
+            Owner.ControlPlayerArm((Projectile.Center - Owner.Center).ToRotation(), 1);
+            if ((Projectile.Center - Owner.Center).LengthSquared() > 1900f * 1900f)
+            {
+                if (!StopAllDrawing)
+                {
+                    ScarletSound(LostbeltSoundAssets.Moonlight_Ding, Owner.Center, 0.15f);
+                    StopAllDrawing = true;
+                }
+                if (Projectile.timeLeft < 65 * Projectile.MaxUpdates)
+                {
+                    float xPos = Owner.MountedCenter.X + Owner.direction * 200f;
+                    float yPos = Owner.MountedCenter.Y - 1200f;
+                    Vector2 mountedPos = new(xPos, yPos);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), mountedPos, Vector2.Zero, ProjectileType<RitualofReposeRest>(), Projectile.originalDamage, Projectile.knockBack, Owner.whoAmI);
+                    proj.ai[2] = JustPressedRightClick.ToInt();
+                    ((RitualofReposeRest)proj.ModProjectile).TargetPos = new Vector2(Owner.MountedCenter.X + Owner.direction * 200, Owner.MountedCenter.Y);
+                    Projectile.Kill();
+                    return;
+                }
+            }
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            if (Projectile.IsOutScreen())
+                return;
+            if (Main.rand.NextBool(9))
+                ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePosEdge(28), Projectile.velocity / 8f, RandLerpColor(Color.Gold, Color.LightGoldenrodYellow), 45, 1, Projectile.scale * Main.rand.NextFloat(.7f, 1.1f) * .42f, 0);
+            if (Main.rand.NextBool(7))
+                ECSParticle.LightntingGlow(Projectile.Center.ToRandCirclePosEdge(8), Projectile.velocity / 8f, RandLerpColor(Color.Gold, Color.LightGoldenrodYellow), 45, 1, Projectile.scale * Main.rand.NextFloat(.7f, 1.1f) * .6f);
+        }
+        public float Osci = 0;
+        public void DoIdle()
+        {
+
+            //渐变出现
+            if (!BeginAppear && !BeginDisapper)
+            {
+                if (AppearRatios == 0)
+                    ScarletSound(LostbeltSoundAssets.Misc_ManaClearUse, Projectile.Center, .45f);
+                Projectile.timeLeft = 10;
+                if (Projectile.FinalUpdate())
+                    AppearRatios += .1f;
+                if (AppearRatios > 1f)
+                {
+                    BeginAppear = true;
+                    AppearRatios = 1f;
+                }
+            }
+            //渐变死亡
+            if (BeginDisapper)
+            {
+                if (AppearRatios >= 0)
+                {
+                    Projectile.timeLeft = 10;
+                    if (Projectile.FinalUpdate())
+                        AppearRatios -= 0.05f;
+                }
+                else
+                {
+                    IdleTimer--;
+                    if (IdleTimer <= 0)
+                    {
+                        Projectile.Kill();
+                    }
+                }
+            }
+            //只有完全出现的时候，才开始更新玩家的状态
+            if (BeginAppear)
+            {
+                if (Owner.CanUseHoldout(ItemType<RitualofRepose>()))
+                {
+                    IdleTimer = GetSeconds(5) * Projectile.MaxUpdates;
+                    Projectile.timeLeft = 10;
+                    BeginDisapper = false;
+                }
+                else
+                {
+                    BeginAppear = false;
+                    BeginDisapper = true;
+                    ScarletSound(LostbeltSoundAssets.Misc_ManaClearUse, Projectile.Center, volume: .65f, pitch: -.4f);
+                    //IdleTimer--;
+                    //if (IdleTimer <= 0)
+                    //{
+                    //    //死亡的时候给一个特效
+                    //    BeginAppear = false;
+                    //    BeginDisapper = true;
+                    //}
+                }
+            }
+            //挂载
+            Osci += ToRadians(0.5f);
+            float yMult = (30f * MathF.Sin(Osci) / 9f) + 30f;
+            float xPos = Owner.MountedCenter.X - 40f * Owner.direction;
+            float yPos = Owner.MountedCenter.Y - yMult;
+            Vector2 mountedPos = new(xPos, yPos);
+            Projectile.Center = Vector2.Lerp(Projectile.Center, mountedPos, .1f);
+            //计算锤子需要的朝向。
+            //这里会依据玩家是否按下左键来使朝向取反，即按住左键的时候，锤头朝向指针，其他情况下，锤柄朝向玩家
+            float angleToWhat = ToRadians(-105f);
+            if (Owner.direction > 0)
+                angleToWhat = ToRadians(-75f);
+            //最后使用lerp来让锤子朝向得到修改。
+            Projectile.rotation = Projectile.rotation.AngleLerp(angleToWhat, 0.18f);
+
+            //下方为粒子特效
+            if (Main.rand.NextBool(6))
+                ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePos(45 * Projectile.scale, 110 * Projectile.scale), Vector2.UnitX.RotatedBy(Projectile.rotation) * Main.rand.NextFloat(.2f, 1f) * 4f, RandLerpColor(Color.White, Color.Gold), Main.rand.Next(10, 46), 1, Main.rand.NextFloat(.65f, 1.1f) * .15f, 0f);
+
+            //待一切尘埃落定，我们会给这个世界献上带来安息
+            if (Owner.CanUseHoldout(ItemType<RitualofRepose>()) && !Owner.IsInInventory() && !JustStartAttacked && AppearRatios >= 1f && !Owner.mouseInterface)
+            {
+                if (Owner.JustPressLeftClick())
+                {
+                    JustStartAttacked = true;
+                    InitAttack();
+                    return;
+                }
+            }
+            if (JustStartAttacked)
+            {
+                //更新动画进程，这里控制的，其实是手臂的动画
+                Projectile.MaxUpdates = 4;
+                Projectile.timeLeft = GetSeconds(2) * Projectile.MaxUpdates;
+                //准备完毕，向上。
+                AttackState = State.Shoot;
+                //占用玩家攻击
+                Owner.ChangeDir(LockDirection);
+                Owner.ControlPlayerArm(ArmRotation);
+                ChargeReady();
+            }
+        }
+
+        public void ChargeReady()
+        {
+            Projectile.velocity = Projectile.rotation.ToRotationVector2() * 21f;
+            ScarletSound(LostbeltSoundAssets.TheSevenStar_Swing, Projectile.Center, volume: .35f);
+        }
+
+        public AnimationStruct Helper = new AnimationStruct(2);
+        public int AttackSpeed => Owner.ApplyWeaponAttackSpeed(GetInstance<RitualofRepose>().Item, GetInstance<RitualofRepose>().Item.useTime * Projectile.MaxUpdates, 5 * Projectile.MaxUpdates);
+        public float TargetRotation = 0;
+        public float ArmRotation = 0;
+        public int LockDirection = 0;
+        public void InitAttack()
+        {
+            Helper.MaxProgress[0] = (int)(AttackSpeed * .75f);
+            Helper.MaxProgress[1] = (int)(AttackSpeed * .25f);
+            LockDirection = Owner.direction;
+            Owner.ChangeDir(LockDirection);
+            TargetRotation = 0;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+        }
+        public BlendState BlendState => BlendState.Additive;
+        public ScarletDrawLayer LayerToRenderTo => ScarletDrawLayer.BeforeDusts;
+        public void RenderPixelated(SpriteBatch spriteBatch)
+        {
+            LostbeltMethods.EnterShaderAreaPixel(BlendState.Additive);
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
+            int length = Projectile.oldPos.Length;
+            Texture2D trailTex = LostbeltModAssets.Particle_OpticalLineGlow.Value;
+            Rectangle curSrc = trailTex.Bounds;
+            curSrc.Width = (int)(curSrc.Width * 0.8f);
+            Vector2 cutSrcOri = new Vector2(curSrc.Width / 2f, curSrc.Height / 2f);
+            Vector2 sharpScale = new Vector2(0.7f, 0.60f);
+            float glowSpreadMult = Clamp(Math.Abs(MathF.Sin((float)Main.timeForVisualEffects / 100f)), 0.35f, 1f);
+            float generalGlow = AppearRatios;
+            for (int i = length - 1; i >= 0; i--)
+            {
+                float ratios = 1f - i / (float)length;
+                Vector2 pos = Projectile.Center - Main.screenPosition;
+                Color trailColor = Color.Lerp(Color.LightGoldenrodYellow, Color.DarkGoldenrod, ratios).ToAddColor(100);
+                float scale = Lerp(.44f, 1f, ratios);
+                float opacity = Lerp(.51f, .7f, ratios);
+                Vector2 sharpPos = pos - new Vector2(15, 2).RotatedBy(Projectile.rotation);
+                float trailRot = Projectile.rotation;
+                SB.Draw(trailTex, sharpPos, curSrc, trailColor * opacity * glowSpreadMult * generalGlow, trailRot, cutSrcOri, sharpScale * scale, 0, 0);
+            }
+            //十字光晕
+            Texture2D glow = LostbeltModAssets.Particle_CrossGlow.Value;
+            Vector2 glowPos = drawPos + Projectile.rotation.ToRotationVector2() * 25f * Projectile.scale;
+            Vector2 glowScale = Projectile.scale * .48f * new Vector2(.75f, 1.35f);
+
+            SB.FastDraw(glow, glowPos, Color.DarkGoldenrod * .65f * generalGlow, Projectile.rotation, glow.Size() / 2f, glowScale, 0);
+            SB.FastDraw(glow, glowPos, Color.Gold * .35f * generalGlow, Projectile.rotation, glow.Size() / 2f, glowScale * .98f, 0);
+            SB.FastDraw(glow, glowPos, Color.White * .45f * generalGlow, Projectile.rotation, glow.Size() / 2f, glowScale * .95f, 0);
+
+            //环状光晕
+            glow = LostbeltModAssets.Particle_RingShiny.Value;
+            glowScale = Projectile.scale * .16f * Vector2.One;
+
+            SB.FastDraw(glow, glowPos, Color.DarkGoldenrod * .45f * generalGlow, Projectile.rotation, glow.Size() / 2f, glowScale, 0);
+            SB.FastDraw(glow, glowPos, Color.Gold * .4f * generalGlow, Projectile.rotation + Pi, glow.Size() / 2f, glowScale * .98f, 0);
+            SB.FastDraw(glow, glowPos, Color.White * .5f * generalGlow, Projectile.rotation + PiOver2, glow.Size() / 2f, glowScale * .95f, 0);
+            LostbeltMethods.EndShaderAreaPixel();
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (!Projectile.Lostbelt().FirstFrame || StopAllDrawing)
+                return false;
+            PixelatedRenderManager.BeginDrawProj = true;
+            Projectile.GetProjDrawData(out Texture2D projTex, out Vector2 drawPos, out Vector2 ori);
+            SB.End();
+            SB.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            GD.Textures[0] = projTex;
+            GD.SamplerStates[0] = SamplerState.PointClamp;
+            GD.Textures[1] = LostbeltModAssets.Noise_Misc.Value;
+            GD.SamplerStates[1] = SamplerState.PointClamp;
+            //应用这个shader，我们正式开始画这把“喷火器”
+            Effect shader = LostbeltShaderAssets.EdgeMeltsShader;
+            shader.Parameters["progress"].SetValue((1 - AppearRatios));
+            shader.Parameters["InPutTextureSize"].SetValue(projTex.Size());
+            shader.Parameters["EdgeColor"].SetValue(Color.Gold.ToVector4());
+            shader.Parameters["EdgeWidth"].SetValue(.01f);
+            shader.CurrentTechnique.Passes[0].Apply();
+
+            float rotFixer = PiOver4;
+            float spearRotation = Projectile.rotation + rotFixer;
+            SB.FastDraw(projTex, drawPos, Color.White, spearRotation, ori, Projectile.scale, SpriteEffects.None);
+            SB.EndShaderArea();
+            return false;
+        }
+    }
+}

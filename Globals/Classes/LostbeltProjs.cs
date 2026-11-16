@@ -1,0 +1,137 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Configs;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Executor;
+using Terraria;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Globals.Classes
+{
+    public abstract class LostbeltEnemyProj : ModProjectile, ILocalizedModType
+    {
+        public Player Owner => Main.player[Projectile.owner];
+        public static string ProjPath => $"LostbeltTraveler/Assets/Texture/Projs/NPCs/";
+        public override string Texture => ProjPath + GetType().Name;
+        public new string LocalizationCategory => $"Projs.Enemy";
+        public bool PerformanceMode = LostbeltConfigClient.Instance.PerformanceMode;
+        public virtual Vector2 TileHitbox => Vector2.Zero;
+        public override void SetDefaults()
+        {
+            Projectile.friendly = false;
+            Projectile.hostile = true;
+            ExSD();
+        }
+        public virtual void OnFirstFrame() { }
+        public override void AI()
+        {
+            if (!Projectile.Lostbelt().FirstFrame)
+                OnFirstFrame();
+            ProjAI();
+        }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            if (!TileHitbox.Equals(Vector2.Zero))
+            {
+                width = (int)TileHitbox.X;
+                height = (int)TileHitbox.Y;
+            }
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
+        }
+        public SpriteBatch SB { get => Main.spriteBatch; }
+        public GraphicsDevice GD { get => Main.graphics.GraphicsDevice; }
+        public virtual void ProjAI() { }
+        public virtual void ExSD() { }
+    }
+
+    public abstract class LostbeltProjs : ModProjectile, ILocalizedModType
+    {
+        public Player Owner => Main.player[Projectile.owner];
+        public virtual EnumDamageClass Category => EnumDamageClass.Typeless;
+        public static string ProjPath => $"LostbeltTraveler/Assets/Texture/Projs/";
+        public override string Texture => ProjPath + GetType().Name;
+        public new string LocalizationCategory => $"Projs.Friendly.{Category}";
+        public bool PerformanceMode = LostbeltConfigClient.Instance.PerformanceMode;
+        public virtual Vector2 TileHitbox => Vector2.Zero;
+        public override void SetDefaults()
+        {
+            Projectile.friendly = true;
+            Projectile.DamageType = SetDamageClass;
+            ExSD();
+        }
+        public virtual void OnFirstFrame() { }
+        public override void AI()
+        {
+            if (!Projectile.Lostbelt().FirstFrame)
+                OnFirstFrame();
+            ProjAI();
+        }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            if (!TileHitbox.Equals(Vector2.Zero))
+            {
+                width = (int)TileHitbox.X;
+                height = (int)TileHitbox.Y;
+            }
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
+        }
+        public SpriteBatch SB { get => Main.spriteBatch; }
+        public GraphicsDevice GD { get => Main.graphics.GraphicsDevice; }
+        public virtual void ProjAI() { }
+
+        public virtual void ExSD() { }
+        public DamageClass SetDamageClass
+        {
+            get
+            {
+                return Category switch
+                {
+                    EnumDamageClass.Melee => DamageClass.Melee,
+                    EnumDamageClass.Ranged => DamageClass.Ranged,
+                    EnumDamageClass.Magic => DamageClass.Magic,
+                    EnumDamageClass.Summon => DamageClass.Summon,
+                    EnumDamageClass.Executor => ExecutorDamageClass.Instance,
+                    _ => DamageClass.Generic,
+                };
+            }
+        }
+    }
+    public abstract class LostbeltFriendlyProj : ModProjectile, ILocalizedModType
+    {
+        public Player Owner => Main.player[Projectile.owner];
+        public virtual EnumDamageClass Category { get; }
+        public new string LocalizationCategory => $"Projs.Friendly.{Category}";
+        public static string ProjPath => $"LostbeltTraveler/Assets/Texture/Projs/Proj_";
+        public override void SetDefaults()
+        {
+            Projectile.friendly = true;
+            Projectile.DamageType = SetDamageClass;
+            ExSD();
+        }
+        public virtual void OnFirstFrame() { }
+        public virtual void ProjAI() { }
+        public override void AI()
+        {
+            if (!Projectile.Lostbelt().FirstFrame)
+                OnFirstFrame();
+            ProjAI();
+        }
+        private DamageClass SetDamageClass
+        {
+            get
+            {
+                return Category switch
+                {
+                    EnumDamageClass.Melee => DamageClass.Melee,
+                    EnumDamageClass.Ranged => DamageClass.Ranged,
+                    EnumDamageClass.Magic => DamageClass.Magic,
+                    EnumDamageClass.Summon => DamageClass.Summon,
+                    EnumDamageClass.Executor => ExecutorDamageClass.Instance,
+                    _ => DamageClass.Generic,
+                };
+            }
+        }
+        public virtual void ExSD() { }
+        public SpriteBatch SB { get => Main.spriteBatch; }
+        public GraphicsDevice GD { get => Main.graphics.GraphicsDevice; }
+    }
+}

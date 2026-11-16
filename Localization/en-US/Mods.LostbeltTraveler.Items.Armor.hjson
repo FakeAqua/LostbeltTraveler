@@ -1,0 +1,453 @@
+CreationHat: {
+	DisplayName: Creation Alchemist's Hat
+	Tooltip: Pairing it with a robe may yield unexpected results…
+	SetBonus:
+		'''
+		+{0} defense and + {1} max mana
+		{2} increased magic damage, {4} increased magic critical strike chance
+		Reduces mana cost by {3}, allows all magic attacks to deal critical strike damage
+		Excess critical strike chance is converted to your magic critical strike damage bonus at a 1:2 ratio
+		'''
+	BonusDetail: ""
+}
+
+RedDragonKnightBody: {
+	DisplayName: Red Dragon Knight Body Armor
+	Tooltip: "{0} increased damage"
+}
+
+RedDragonKnightHead: {
+	DisplayName: Red Dragon Knight Helmet
+	Tooltip:
+		'''
+		{0} increased executor damage
+		{1} increased executor critcal strike chance
+		'''
+	SetBouns:
+		'''
+		{0} increased executor critical strike damage
+		While attacking with an executor weapon, adds {2} Execution Progress to all executor weapons every {1} seconds
+		'''
+}
+
+RedDragonKnightLegs: {
+	DisplayName: Red Dragon Knight Leggings
+	Tooltip: "{0} increased movement speed"
+}
+
+RuneWizardExecutor: {
+	HelmetTooltip: 12% increased executor critcal strike chance
+	ChestplateTooltip: 20% increased exectuor damage
+	SetBonus: Spawns rune magic on attacks
+}
+
+CowboyExecutor: {
+	HelmetTooltip: 5% increased executor damage
+	ChestplateTooltip: 5% increased executor critcal strike chance
+	LegsTooltip: 15% increased movement speed
+	SetBonus: On hit, adds a revolver attack, deals 40 damage, affected by executor class
+}
+
+MaidExecutor: {
+	HelmetTooltip: ""
+	ChestplateTooltip: ""
+	LegsTooltip: ""
+	SetBonus: ""
+}
+
+RaincoatExecutor: {
+	HelmetTooltip: 5% increased executor critcal strike chance
+	ChestplateTooltip: 5% increased executor damage
+	SetBonus:
+		'''
+		Projectiles coming from directly above have their damage reduced by 35% upon touching the hat
+		Such projectiles also don't cause knockback or strong debuffs
+		'''
+}
+
+FloretProtectorExecutor: {
+	HelmetTooltip: 30% increased executor damage and critcal strike chance
+	ChestplateTooltip:
+		'''
+		10% increased executor damage
+		Granted immnuity to knockback
+		'''
+	LegsTooltip:
+		'''
+		5% increased executor damage and critcal strike chance
+		20% increased movement speed
+		'''
+	SetBonus:
+		'''
+		+100 max health
+		Always has multiple herbs floating around you from time to time
+		Pick them up when nearby, and gain different effects based on the herb picked up
+		Gain the Forest Herb for 5 seconds on first pickup, subsequent pickups do not refresh this duration
+		Picking up herbs while already having the Forest Herb buff will Heal you for a certain amount
+		Hold Left Alt to view detailed herb effects
+		'''
+	BuffDetail:
+		'''
+		[i:Daybloom]Daybloom:
+		+30 defense, +4 HP/s health regeneration, makes you glow
+		When already under Forest Herb buff: +10 defense, +2 HP/s health regeneration
+		[i:Moonglow]Moonglow:
+		12% increased damage reduction, reduces damage from behind by 65%, lowers enemy aggro
+		When already under Forest Herb buff: 8% increased damage reduction, reduces damage from behind by 25%
+		[i:Deathweed]Deathweed:
+		20% increased executor damage and critical strike chance, greatly increases enemy aggro
+		When already under Forest Herb buff: increases executor damage and critical strike chance by 10%
+		[i:Fireblossom]Fireblossom:
+		35% increased executor damage and critical strike chance while in lava
+		When already under Forest Herb buff: 15% increased executor damage and critical strike chance
+		[i:Waterleaf]Waterleaf:
+		+50 luck, nearly all right-clickable loot bags/crates grant you coins
+		When already under Forest Herb buff: +25 luck
+		[i:Blinkroot]Blinkroot:
+		50% increased mining speed, grants all effects related to mining
+		When already under Forest Herb buff: increases mining speed by 30%
+		[i:Shiverthorn]Shiverthorn:
+		Has a 1/4 chance to deal an extra 1.15x damage on hit
+		When already under Forest Herb buff: has a 1/4 chance to deal an extra 1.10x damage on hit
+		'''
+}
+
+FishCostumeExecutor: {
+	HelmetTooltip: 5% increased executor damage
+	ChestplateTooltip: Allows you breath in the water
+	LegsTooltip: 10% increased movement speed
+	SetBonus:
+		'''
+		Allows you to swim freely in air as if it were water
+		Stores up to one Small Fish Dash when Execution Strike hits an enemy
+		Press the Interact key to release it when needed
+		Submerging in lava will continuously drain life, regardless of any lava immunity items
+		'''
+}
+
+ShinobiBody: {
+	DisplayName: Shinobi Infiltrator's Torso Executor
+	Tooltip: "{0} increased executor critcal strike chance"
+}
+
+ShinobiHead: {
+	DisplayName: Shinobi Infiltrator's Helmet Executor
+	Tooltip: "{0} increased executor damage"
+	SetBonus:
+		'''
+		+{0} max sentry
+		Enhances Sleepy Octopus and Sky Dragon's Fury, and greatly improves Lightning Aura's effectiveness
+		Causes Sleepy Octopus, Sky Dragon's Fury, and Lightning Aura to deal only executor damage, benefiting from executor damage bonuses
+		Increases damage of all Lightning Aura canes by 500%
+		'''
+	WeaponBuff: Enhanced by armor:
+}
+
+ShinobiLegs: {
+	DisplayName: Shinobi Infiltrator's Pants Executor
+	Tooltip:
+		'''
+		{0} executor armor penetration
+		{1} increased movement speed
+		'''
+}
+
+MonkBody: {
+	DisplayName: Monk's Shirt Executor
+	Tooltip: "{0} increased executor critcal strike chance"
+}
+
+MonkHead: {
+	DisplayName: Monk's Bushy Brow Bald Cap Executor
+	Tooltip: "{0} increased executor damage"
+	SetBonus:
+		'''
+		+{0} max sentry
+		Enhances Sleepy Octopus and Sky Dragon's Fury, and greatly improves Lightning Aura's effectiveness
+		Causes Sleepy Octopus, Sky Dragon's Fury, and Lightning Aura to deal only executor damage, benefiting from executor damage bonuses
+		Increases damage of all Lightning Aura canes by 200%
+		'''
+	SleepyOctBuff:
+		'''
+		Increases damage by {0}, critical strike chance by {1}
+		Increases weapon size by {2}, significantly raises attack frequency
+		Continuously releases seeking magic orbs while swinging
+		Press the Interact key to swing the weapon and provide Heal to you and your teammates
+		Upon completing the interaction, continuously Heal yourself until near full health
+		Taking damage interrupts all healing effects	
+		'''
+	DragonFuryBuff:
+		'''
+		Increases damage by {0}, critical strike chance by {1}
+		Increases weapon size by {2}, significantly raises attack frequency
+		Calls down lightning on multiple nearby enemies while swinging
+		Press the Interact key to swing the weapon and provide Heal to you and your teammates
+		Upon completing the interaction, continuously Heal yourself until near full health
+		Taking damage interrupts all healing effects
+		'''
+}
+
+MonkLegs: {
+	DisplayName: Monk's Pants Executor
+	Tooltip:
+		'''
+		{0} executor armor penetration
+		{1} increased movement speed
+		'''
+}
+
+DiverBody: {
+	DisplayName: Diver's Chestplate
+	Tooltip: Increases executor critical strike damage by {0}
+}
+
+DiverHead: {
+	DisplayName: Diver's Mask
+	Tooltip: Increases executor damage by {0}
+	SetBonus: Generates jellyfish that linger in the air along your movement trail
+}
+
+DiverLegs: {
+	DisplayName: Diver's Leggings
+	Tooltip: Increases critical strike chance by {0}
+}
+
+ReaperBody: {
+	DisplayName: Front Desk Reaper Dress
+	Tooltip: Increases executor critical strike damage by {0}
+}
+
+ReaperHead: {
+	DisplayName: Front Desk Reaper Headband
+	Tooltip:
+		'''
+		Increases executor damage by {0}, executor critical strike chance by {0}
+		Enemies are more likely to target you
+		'''
+	SetBonus:
+		'''
+		+2 HP/s health regeneration
+		Press the Interact key to drain an enemy's health by consuming the current weapon's Execution Progress
+		The health drained is determined by the enemy's current HP and the ratio of current Execution Progress to the required Execution count
+		The more health drained, the longer the cooldown of this ability; maximum drain is 5% of the enemy's current HP
+		This ability takes lower priority than manual Execution Strike
+		'''
+}
+
+ReaperLegs: {
+	DisplayName: Front Desk Reaper Bottom
+	Tooltip:
+		'''
+		Increases movement speed by {0}
+		Enemies are more likely to target you
+		'''
+}
+
+AdamantiteHeadExecutor: {
+	DisplayName: Adamantite Hood
+	Tooltip: Increases executor damage by {0}, executor critical strike chance by {1}
+	SetBonus:
+		'''
+		Increases executor critical strike damage by {0}
+		Strikes up to {2} nearby enemies with Adamantite Lightning every {1} seconds
+		Each lightning deals {3} damage, benefits from executor damage bonuses, with a 1/{4} chance to critically strike
+		'''
+}
+
+ChlorophyteHeadExecutor: {
+	DisplayName: Chlorophyte Wing Helm
+	Tooltip:
+		'''
+		Increases executor damage by {0}, executor critical strike chance by {1}
+		Increases executor critical strike damage by {2}
+		'''
+	SetBonus:
+		'''
+		Summons powerful leaf crystals to shoot nearby enemies
+		Leaf crystals fire at a higher rate with unlimited piercing, dealing {0} damage, benefiting from executor damage bonuses
+		Crystal rays restore a certain amount of flight time on the first hit against an enemy
+		'''
+}
+
+CobaltHeadExecutor: {
+	DisplayName: Cobalt Skullcap
+	Tooltip: Increases executor damage by {0}
+	SetBonus: Increases executor critical strike damage by {0}
+}
+
+HallowedHeadExecutor: {
+	DisplayName: Hallowed War Visor
+	Tooltip:
+		'''
+		Increases executor damage by {0}, executor critical strike chance by {1}
+		Increases executor critical strike damage by {2}
+		'''
+	SetBonus: Become immune after striking an enemy
+}
+
+MythrilHeadExecutor: {
+	DisplayName: Mythril Face Guard
+	Tooltip:
+		'''
+		Increases executor critical strike chance by {0}
+		Increases executor critical strike damage by {1}
+		'''
+	SetBonus: Increases executor critical strike chance by {0}
+}
+
+OrichalcumHeadExecutor: {
+	DisplayName: Orichalcum War Helm
+	Tooltip:
+		'''
+		Increases executor critical strike damage by {0}
+		Increases movement speed by {1}
+		'''
+	SetBonus: Petal petals will fall on targets, dealing extra damage
+}
+
+PalladiumHeadExecutor: {
+	DisplayName: Palladium Gorget
+	Tooltip:
+		'''
+		Increases damage by {0}
+		{1} health regeneration speed
+		'''
+	SetBonus: Greatly increases health regeneration after striking an enemy
+}
+
+TitaniumHeadExecutor: {
+	DisplayName: Titanium Crown Helm
+	Tooltip:
+		'''
+		Increases executor damage by {0}, executor critical strike chance by {1}
+		Increases executor critical strike damage by {2}
+		'''
+	SetBonus:
+		'''
+		On attack, rapidly fires multiple seeking titanium shards
+		Titanium shards have a base damage of {0}, benefiting from executor damage bonuses
+		'''
+}
+
+DragonHunterBody: {
+	DisplayName: Dragon Hunter Heavy Armor
+	Tooltip: Increases executor critical strike chance by {0}
+}
+
+DragonHunterHead: {
+	DisplayName: Dragon Hunter Helmet
+	Tooltip: Increases executor damage by {0}
+	SetBonus:
+		'''
+		Increases melee attack speed by {0}, increases critical strike chance of ranged weapons by {1}
+		Increases maximum mana by {2}, reduces mana cost by {3}
+		Resets max minion cap and max sentry cap to {4}
+		Increases critical strike damage of all weapons by {5}
+		All non-executor class weapons will only deal executor damage
+		Damage and critical strike chance of non-executor class weapons only benefit from executor class bonuses
+		'''
+}
+
+DragonHunterLegs: {
+	DisplayName: Dragon Hunter Greaves
+	Tooltip: Increases movement speed by {0}
+}
+
+SaintChurchHead: {
+	DisplayName: Saint Church Head
+	Tooltip:
+		'''
+		{0} increased executor damage, {1} increased executor critical strike chance
+		{2} increased executor critial strike damage
+		'''
+	SetBonus:
+		'''
+		On fatal damage, enter[ScarletBuff/LostbeltTraveler/SaintChurchBuff] and revive with {1} health
+		Healing potions and health regen disabled, +{0} aggro
+		On another fatal damage, chance to revive with {2} health, unlimited triggers
+		Each revive grants stackable {3} damage and {4} critical strike chance to your team
+		'''
+}
+
+SaintChurchLegs: {
+	DisplayName: Saint Church Legs
+	Tooltip:
+		'''
+		{0} increased executor damage
+		{1} increased movement speed
+		{2} run acceleration
+		'''
+}
+
+SaintChurchBody: {
+	DisplayName: Saint Church Body
+	Tooltip:
+		'''
+		{0} increased executor critical strike damage
+		{1} increased executor critical strike chance
+		'''
+}
+
+GunWitchBody: {
+	DisplayName: Gun Witch Body
+	Tooltip: ""
+}
+
+GunWitchHead: {
+	DisplayName: Gun Witch Head
+	Tooltip: ""
+	SetBonus: ""
+}
+
+GunWitchLegs: {
+	DisplayName: Gun Witch Legs
+	Tooltip: ""
+}
+
+GlowMushroomBody: {
+	DisplayName: Glowing Mushroom Coat
+	Tooltip:
+		'''
+		{0} increased damage
+		Grants[ScarletBuff/Terraria/Shine]
+		'''
+}
+
+GlowMushroomHead: {
+	DisplayName: Glowing Mushroom Hat
+	Tooltip:
+		'''
+		{0} increased executor critical strike chance
+		Grants[ScarletBuff/Terraria/NightOwl]
+		'''
+	SetBonus:
+		'''
+		Projectiles coming from directly above have their damage reduced by 25% upon touching the hat
+		Such projectiles also don't cause knockback or strong debuffs
+		'''
+}
+
+GlowMushroomLegs: {
+	DisplayName: Glowing Mushroom Pants
+	Tooltip: "{0} increased movement speed"
+}
+
+WesternBoyBody: {
+	DisplayName: Wild Cowboy Coat
+	Tooltip: "{0} increased critical strike chance"
+}
+
+WesternBoyHead: {
+	DisplayName: Wild Cowboy Hat
+	Tooltip: "{0} increased executor damage"
+	SetBonus:
+		'''
+		On hit, adds a revolver attack
+		Revolver deals 40 damage, affected by executor class
+		'''
+}
+
+WesternBoyLegs: {
+	DisplayName: Wild Cowboy Legs
+	Tooltip: "{0} increased movement speed"
+}

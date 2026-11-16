@@ -1,0 +1,15 @@
+Drop: {
+	// ExampleSoul: Mods.LostbeltTraveler.Conditions.Drop.ExampleSoul
+	// SnowBiome: Mods.LostbeltTraveler.Conditions.Drop.SnowBiome
+	// UnderworldBiome: Mods.LostbeltTraveler.Conditions.Drop.UnderworldBiome
+	FullCowboy: ����ȫ��ţ�л���
+	// PostSupremeCondition: Mods.LostbeltTraveler.Conditions.Drop.PostSupremeCondition
+}
+
+Crafting: {
+	IsDownSlimeGodAndInEclipse: 击败史莱姆之神后，日食期间
+	// HasFuckingCalamityMod: Mods.LostbeltTraveler.Conditions.Crafting.HasFuckingCalamityMod
+	// NoFuckingCalamityMod: Mods.LostbeltTraveler.Conditions.Crafting.NoFuckingCalamityMod
+	InSingleplayer: 单人模式下
+	InMultiplayer: 多人模式下
+}

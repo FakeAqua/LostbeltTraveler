@@ -1,0 +1,172 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Projs.Executor;
+using LostbeltTraveler.Projs.Executor.Assistance;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Globals.Instances.Projs
+{
+    public partial class LostbeltGlobalProjs : GlobalProjectile
+    {
+        public override bool InstancePerEntity => true;
+        public int GlobalTargetIndex = -1;
+        public bool FirstFrame = false;
+        public bool IsHitOnEnablFocusMechanicProj = false;
+        public bool ReducedByRaincoat = false;
+        /// <summary>
+        /// 射弹是否正在启用专注攻击的字段
+        /// </summary>
+        public bool ExecutionStrike = false;
+        public bool ExecutionStrikeManual = false;
+        /// <summary>
+        /// 当前射弹是否允许使用专注机制，标记用
+        /// </summary>
+        public bool HasExecutionMechanic = false;
+        /// <summary>
+        /// 启用了专注机制的射弹是否命中了一次NPC
+        /// </summary>
+        public bool AddExecutionHit = false;
+        public bool DefenderBuff = false;
+        public float[] ExtraAI = new float[10];
+        public NPC CurStoredTarget = null;
+
+
+        public override void AI(Projectile projectile)
+        {
+            Player Owner = Main.player[projectile.owner];
+            if (Owner.whoAmI == Main.myPlayer)
+            {
+                SpawnGreenSleepyBubble(Owner, projectile);
+                SpawnSkyDragonLightning(Owner, projectile);
+            }
+            if (!FirstFrame)
+            {
+                FirstFrameEffect(projectile);
+                FirstFrame = true;
+            }
+
+        }
+        public void SpawnGreenSleepyBubble(Player Owner, Projectile projectile)
+        {
+            if (Owner.Lostbelt().monkExecutor && projectile.type == ProjectileID.MonkStaffT1)
+            {
+                projectile.frameCounter++;
+                if (projectile.frameCounter % 3 == 0)
+                {
+                    Vector2 pos = projectile.Center.ToRandCirclePos(1f) + projectile.rotation.ToRotationVector2() * 40f * projectile.scale;
+                    if (Collision.SolidCollision(pos, 120, 120))
+                        pos = projectile.Center;
+                    Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), pos, projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(4f, 9f), ProjectileType<MonkStaffBubble>(), projectile.damage / 3, 3f, Owner.whoAmI);
+                    SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing with { MaxInstances = 0 }, projectile.Center.ToRandCirclePos(1f));
+                }
+            }
+        }
+        public void SpawnSkyDragonLightning(Player Owner, Projectile projectile)
+        {
+            if (Owner.Lostbelt().monkExecutor && projectile.type == ProjectileID.MonkStaffT3)
+            {
+                projectile.frameCounter++;
+                if (projectile.frameCounter % 10 == 0)
+                {
+                    float searchDist = 1100f;
+                    List<NPC> availableTarget = [];
+                    foreach (NPC needTar in Main.ActiveNPCs)
+                    {
+                        if (availableTarget.Count > 3)
+                            break;
+                        bool legalTarget = needTar.CanBeChasedBy();
+                        float distPerTar = Vector2.Distance(needTar.Center, projectile.Center);
+                        if (legalTarget && distPerTar < searchDist)
+                        {
+                            availableTarget.Add(needTar);
+                        }
+                    }
+                    if (availableTarget.Count == 0)
+                    {
+                        return;
+                    }
+                    ScarletSound(LostbeltSoundAssets.Lightning_Strike, projectile.Center, 0.4f, 1, 0.35f);
+                    for (int i = 0; i < availableTarget.Count; i++)
+                    {
+                        NPC target = availableTarget[i];
+                        if (!target.IsLegal())
+                            continue;
+                        Vector2 pos = Owner.Center - Vector2.UnitY * Main.rand.NextFloat(800f, 900f) + Vector2.UnitX * Main.rand.NextFloat(0f, 20f) * Main.rand.NextBool().ToDirectionInt();
+                        Vector2 vel = (target.Center - pos).ToSafeNormalize() * Main.rand.NextFloat(4f, 9f);
+                        Projectile proj = Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), pos, vel, ProjectileType<MonkStaffLightning>(), projectile.damage / 2, 3f, Owner.whoAmI);
+                        ((MonkStaffLightning)proj.ModProjectile).CurTarget = target;
+                        pos = projectile.Center + (target.Center - Owner.Center).ToSafeNormalize() * 50f * projectile.scale;
+                        new CrossGlow(pos, Color.DeepSkyBlue, 30, 1, 0.12f).Spawn();
+                        new CrossGlow(pos, Color.White, 30, 1, 0.08f).Spawn();
+                        for (int j = 0; j < 8; j++)
+                        {
+                            Vector2 vel2 = (target.Center - Owner.Center).ToRandVelocity(ToRadians(30f), 1.2f, 8.8f);
+                            new SmokeParticle(pos.ToRandCirclePos(10f), RandVelTwoPi(-3.8f, 2.6f) + vel2 - vel2 * Main.rand.NextFloat(0.1f, 1.2f), RandLerpColor(Color.DeepSkyBlue, Color.RoyalBlue), 40, RandRotTwoPi, 1f, 0.35f).SpawnToPriorityNonPreMult();
+                        }
+                        for (int j = 0; j < 4; j++)
+                        {
+                            Vector2 vel2 = (target.Center - Owner.Center).ToRandVelocity(ToRadians(30f), 1.2f, 9.8f);
+                            Vector2 pos2 = pos.ToRandCirclePos(12f) + vel2 * 0.32f;
+                            new StarShape(pos2, vel2, RandLerpColor(Color.DeepSkyBlue, Color.RoyalBlue), 0.8f, 40).Spawn();
+                        }
+                        for (int j = 0; j < 6; j++)
+                        {
+                            Vector2 pos2 = pos.ToRandCirclePos(6f);
+                            new ShinyCrossStar(pos2, RandVelTwoPi(1.2f, 4f), RandLerpColor(Color.RoyalBlue, Color.DeepSkyBlue), 40, 0, 1, 0.75f, false).Spawn();
+                        }
+                        for (int j = 0; j < 6; j++)
+                        {
+                            Vector2 pos2 = pos.ToRandCirclePos(6f);
+                            Vector2 vel2 = (target.Center - Owner.Center).ToRandVelocity(ToRadians(30f), 1.2f, 9.8f);
+                            new ShinyCrossStar(pos2, vel2, RandLerpColor(Color.RoyalBlue, Color.DeepSkyBlue), 40, 0, 1, 0.75f, false).Spawn();
+                        }
+                    }
+                }
+            }
+        }
+        public override void OnKill(Projectile projectile, int timeLeft)
+        {
+            Player owner = Main.player[projectile.owner];
+            if (owner.whoAmI == Main.myPlayer)
+            {
+            }
+        }
+
+        private void FirstFrameEffect(Projectile projectile)
+        {
+            Player Owner = Main.player[projectile.owner];
+            if (Owner.whoAmI != Main.myPlayer)
+                return;
+            if (Owner.HasProj<DesertKnifeMark>() && projectile.DamageType.CountsAsClass<ExecutorDamageClass>() && projectile.penetrate > 1)
+            {
+                projectile.penetrate += 2;
+            }
+
+            ModifyPreciousTargets(Owner, projectile);
+            if (Owner.Lostbelt().monkExecutor && projectile.type == ProjectileID.MonkStaffT1)
+            {
+                projectile.scale *= 1.2f;
+                projectile.usesLocalNPCImmunity = true;
+
+            }
+            if (Owner.Lostbelt().monkExecutor && projectile.type == ProjectileID.MonkStaffT3)
+            {
+
+                projectile.scale *= 2f;
+            }
+            if (Owner.Lostbelt().monkExecutor && projectile.type == ProjectileID.MonkStaffT3_Alt)
+            {
+                projectile.usesLocalNPCImmunity = true;
+            }
+        }
+
+        private void ModifyPreciousTargets(Player owner, Projectile projectile)
+        {
+        }
+    }
+}

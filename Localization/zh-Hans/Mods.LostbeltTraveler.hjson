@@ -1,0 +1,118 @@
+SwitchWeaponTooltip: 异闻旅者：手持该物品，按下 互动键 以切换形态
+SwitchWeaponVisual: 异闻旅者：手持该武器，按下鼠标中键以更改视觉效果
+SwitchWeaponConditionTooltip: 转化前置条件：击败<{0}>
+NotFinished: 未完成
+
+SwitchWeaponConditionList: {
+	DownedGolem: 石巨人
+	DownedLifeGods: 万籁携生
+	DownedEvilBoss: 任意邪恶Boss
+	DownedPlantera: 世纪之花
+}
+
+ItemBelongTo: {
+	Donator: 捐赠者物品
+	Developer: 开发者物品
+	Supporter: 支援者物品
+}
+
+SwitchWeapon: {
+	Tooltip:
+		'''
+		异闻旅者：
+		手持该物品，按下 互动键 以切换形态
+		'''
+	Visual:
+		'''
+		异闻旅者：
+		手持该武器，按下 互动键 以更改视觉效果
+		'''
+	AllFix: 同样应用于: {0}
+}
+
+CrossModSupport.Calamity: 灾厄联动适配
+
+Keybinds: {
+	GeneralActionKeybind.DisplayName: 互动键
+	GenerialSkillKeybind.DisplayName: 技能键
+	ParryActionKeybind.DisplayName: 格挡键(目前没有作用)
+	// DashKeybind.DisplayName: Dash Keybind
+}
+
+ExecutorDamageClass: {
+	ExecutionProgress: 命中{0}次以发起处决，按住Alt查看
+	ExecutionDescriptionName: 处决执行时
+	ExecutionProgressRevampedMode: 处决进程：{0} / {1}
+	ForceTacticalExecution: 处决攻击需按下 互动键 执行
+	ForceAutomaticExecution: 处决攻击自动执行
+	CompanionWeapon: 伴生
+	DisplayName: 代行者伤害
+
+	WeaponType: {
+		Throw: 投掷品
+		ColdSteel: 冷兵器
+		Firearm: 热武器
+		Caster: 魔术载体
+		Assistance: 支援道具
+		Misc: 特殊
+	}
+
+	Prefixs: {
+		Alterego.DisplayName: 他人格
+		Digital.DisplayName: 电子
+		Evolutional.DisplayName: 变革
+		Fake.DisplayName: 赝品
+		Foreigner.DisplayName: 降临
+		Mysterious.DisplayName: 神秘
+		Phantasmic.DisplayName: 空想
+		ExecutionDamageLine: "{0}%处决伤害"
+		CritDamageLine: "{0}暴击伤害"
+		DefenseReduceValue: "{0}防御力"
+	}
+}
+
+DamageClasses.ExecutorDamageClass.DisplayName: 代行者伤害
+
+Projs: {
+	Enemy.SuicideKnifeInvisProj.DisplayName: ...自杀
+
+	ParryShields: {
+		// AnkhParryShield.DisplayName: Ankh Parry Shield
+		// CobaltParryShield.DisplayName: Cobalt Parry Shield
+		// EoCParryShield.DisplayName: Eo C Parry Shield
+		// FrozenParryShield.DisplayName: Frozen Parry Shield
+		// HeroParryShield.DisplayName: Hero Parry Shield
+		// HuntresssBucklerParryShield.DisplayName: Huntresss Buckler Parry Shield
+		// ObsidianParryShield.DisplayName: Obsidian Parry Shield
+		// SergeantUnitedParryShield.DisplayName: Sergeant United Parry Shield
+		// SquiresParryShield.DisplayName: Squires Parry Shield
+		// PaladinsParryShield.DisplayName: Paladins Parry Shield
+	}
+}
+
+Items: {
+	TechBlade: {
+		// DisplayName: Tech Blade
+		// Tooltip: ""
+	}
+
+	TechSniper: {
+		// DisplayName: Tech Sniper
+		// Tooltip: ""
+	}
+
+	TechCannon: {
+		// DisplayName: Tech Cannon
+		// Tooltip: ""
+	}
+}
+
+Projectiles: {
+	// TechBladeHeldProj.DisplayName: Tech Blade Held Proj
+	// TechBladeLaser.DisplayName: Tech Blade Laser
+}
+
+NPCs: {
+	// DyradEyeBoss.DisplayName: Dyrad Eye Boss
+	// ExecutorCelestialTower.DisplayName: Executor Celestial Tower
+}

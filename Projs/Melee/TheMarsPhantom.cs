@@ -1,0 +1,137 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Graphics.Particles;
+using System;
+using Terraria;
+using Terraria.Audio;
+
+namespace LostbeltTraveler.Projs.Melee
+{
+    public class TheMarsPhantom : LostbeltFriendlyProj
+    {
+        public override string Texture => ProjPath + GetType().Name;
+        public override EnumDamageClass Category => EnumDamageClass.Melee;
+        public ref float Timer => ref Projectile.ai[0];
+        public NPC CurrentTargetHit = null;
+        public enum Style
+        {
+            Shoot,
+            Fade
+        }
+        public Style AttackType
+        {
+            get => (Style)Projectile.ai[1];
+            set => Projectile.ai[1] = (float)value;
+        }
+        public int TotalShootTime = 0;
+        public int MaxHitTime = 3;
+        public override void ExSD()
+        {
+            Projectile.extraUpdates = 3;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 600;
+            Projectile.Opacity = 0f;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.noEnchantmentVisuals = true;
+            Projectile.penetrate = -1;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
+        }
+        public override void AI()
+        {
+            if (!Projectile.Lostbelt().FirstFrame)
+                InitParticle();
+            Projectile.Opacity = Clamp(Projectile.Opacity, 0, 1);
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            GeneralParticle();
+
+            if (AttackType == Style.Shoot)
+            {
+                Projectile.Opacity = Lerp(Projectile.Opacity, 1f, 0.4f);
+                //注意这里：这里会一直锁住追踪目标
+                if (Projectile.GetTargetSafe(out NPC target, false))
+                    Projectile.HomingTarget(target.Center, -1, 11f, 20f, 10);
+                //否则，直接处死他，模拟波涌剑气行为
+                else
+                {
+                    AttackType = Style.Fade;
+                    //直接将当前剑气标记为超过3次命中次数，避免后续生成
+                    TotalShootTime = 9;
+                }
+            }
+            else
+            {
+                Projectile.Opacity -= 0.05f;
+                if (Projectile.Opacity <= 0f)
+                    Projectile.Kill();
+            }
+        }
+        public void InitParticle()
+        {
+            //存储射弹的原始伤害
+            Projectile.originalDamage = Projectile.damage;
+            Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.UnitX) * Projectile.scale;
+            for (float i = 0; i < 18f; i++)
+            {
+                Vector2 dir2 = ToRadians(360f / 18f * i).ToRotationVector2() * Projectile.scale;
+                dir2.X /= 3.6f;
+                dir2 = dir2.RotatedBy(Projectile.velocity.ToRotation());
+                Vector2 pos = Projectile.Center + dir * 12f + dir2 * 18f;
+                ShinyOrbParticle shinyOrbParticle = new ShinyOrbParticle(pos, dir2 * 1f, RandLerpColor(Color.DeepSkyBlue, Color.White), 40, 0.3f * (3.5f - Math.Abs(8f - i) / 2f));
+                shinyOrbParticle.Spawn();
+            }
+        }
+        public void GeneralParticle()
+        {
+            Color fireColor = RandLerpColor(Color.DeepSkyBlue, Color.White);
+            Vector2 firePos = Projectile.Center + Main.rand.NextVector2CircularEdge(3f, 3f);
+            new StarShape(firePos, -Projectile.SafeDirByRot() * 1.2f, fireColor * Projectile.Opacity, 0.6f, 30).Spawn();
+            int i = 0;
+            while (i < 2)
+            {
+                Color orbColor = RandLerpColor(Color.DeepSkyBlue, Color.White) * Projectile.Opacity;
+                Vector2 orbPos = Projectile.Center + Main.rand.NextVector2CircularEdge(2f, 2f);
+                new TurbulenceShinyCube(orbPos, -Projectile.velocity / 8f, orbColor, 20, 0f, Projectile.Opacity, 0.24f, randPosMoveValue: 4).Spawn();
+                i++;
+            }
+
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.HitDirectionOverride = Projectile.ApplyDirectionOverride(target);
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+
+            //如果已经生成了超过3个幻影投矛，做掉下方所有的ai
+            SoundEngine.PlaySound(LostbeltSoundAssets.TheMars_Hit with { MaxInstances = 1, PitchVariance = 0.2f }, Projectile.Center);
+            //此处需要做一个额外的处理，如果命中的敌对单位不是我们需要的单位，则不要生成后续的射弹
+            //尽管如此，他仍然可以进行多穿
+            //在这里直接干掉射弹的伤害
+            Projectile.damage *= 0;
+            //只有在这里正式执行消失逻辑
+            Timer = 0;
+            AttackType = Style.Fade;
+            if (TotalShootTime >= MaxHitTime)
+                return;
+            //随机取当前射弹结束的位置+
+            int damage = Projectile.originalDamage;
+            if (TotalShootTime >= 1)
+                damage = (int)(Projectile.originalDamage * (1f - ((TotalShootTime - 1) / (float)MaxHitTime)));
+            Vector2 projPos = target.Center + Vector2.UnitY.RotatedByRandom(TwoPi) * Main.rand.Next(150, 200);
+            Vector2 vel = (target.Center - projPos).SafeNormalize(Vector2.UnitX) * Main.rand.NextFloat(3f, 6f);
+            Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), projPos, vel, Type, damage, Projectile.knockBack, Owner.whoAmI);
+            ((TheMarsPhantom)proj.ModProjectile).TotalShootTime = TotalShootTime + 1;
+            proj.Lostbelt().GlobalTargetIndex = target.whoAmI;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Projectile.DrawProj(Color.White * Projectile.Opacity, rotFix: PiOver4);
+            return false;
+        }
+    }
+}

@@ -1,0 +1,395 @@
+CandLanceThrown: {
+	DisplayName: 滴蜡枪-投掷
+	Tooltip:
+		'''
+		不受重力影响，并在命中时升起魂火灯
+		魂火灯会延迟落下追踪多个目标的魂火射弹
+		所有的攻击都会施加[ScarletDebuff/Terraria/Confused]
+		'''
+}
+
+DialecticsThrown: {
+	DisplayName: 辩证法-投掷
+	Tooltip:
+		'''
+		投掷时以正弦波、方波、双极性方波和平行波的方式交替轮换
+		正弦波使矛穿透6次，且每次穿透时伤害递增
+		方波使矛造成武器面板的3倍伤害，并标记这名敌人
+		双极性方波使矛沿途滞留多个延迟追踪距离最近敌人的方块零件
+		平行波使矛刺入敌人，并从场外召唤追击
+		'''
+}
+
+FlybackHandThrown: {
+	DisplayName: 归零针-投掷
+	Tooltip:
+		'''
+		命中时，依据游戏内时间给予玩家不同增益
+		右键投掷一块时钟水晶，在一定时间后再次按下右键时将传送回水晶位置
+		返程后强化武器投掷速度，并为玩家回复在此过程中损失状态的1/2
+		“时间将会修复一切，也许吧。”
+		'''
+	TimeClockOnCDText: 时钟水晶剩余CD：{0}秒！
+}
+
+LightBiteThrown: {
+	DisplayName: 蚀光矛-投掷
+	Tooltip: 沿途滞留黑蚀之星
+}
+
+SpearofDarknessThrown: {
+	DisplayName: 黑暗之矛-投掷
+	Tooltip: 准许穿墙，掷出一定时间后回击
+}
+
+SweetStabThrown: {
+	DisplayName: 甜美一刺-投掷
+	Tooltip:
+		'''
+		撞击墙体后刺入，滞留在场上
+		接触到任意玩家时，会为该名玩家提供治疗
+		'''
+}
+
+WildPointerThrown: {
+	DisplayName: 野指针-投掷
+	Tooltip:
+		'''
+		一定概率追踪世界范围内所有可用目标
+		可用目标范围包括友方单位
+		'''
+}
+
+Wreach: {
+	DisplayName: 绯色小扳手
+	Tooltip:
+		'''
+		调试道具，可能根据实际版本不同有不同的功能
+		不过你是怎么看到这个小玩意的？
+		[ScarletBuff/LostbeltTraveler/TheBleachingBuff]减益
+		[ScarletBuff/LostbeltTraveler/AbsoluteZeroBuff]减益
+		[ScarletBuff/ContinentOfJourney/DivineFireBuff]减益
+		'''
+}
+
+DeepToneThrown: {
+	DisplayName: 低吼-投掷
+	Tooltip:
+		'''
+		命中时，追加深海能量球
+		攻击时释放深海吞噬者，追杀你的敌人
+		吞噬者在命中时会持续造成伤害，并偶尔为你提供治疗
+		'''
+}
+
+EvolutionThrown: {
+	DisplayName: 进化-投掷
+	Tooltip:
+		'''
+		飞行过程中滞留传送门，并标记第一个命中的敌人
+		传送门会搜索距离最近的敌人，并在发射追踪能量箭矢后消失
+		如果有被标记的敌人，所有的传送门都会向标记的单位发起攻击
+		"他们在生长。"
+		'''
+}
+
+SpearofEscapeThrown: {
+	DisplayName: 逃逸速度-投掷
+	Tooltip:
+		'''
+		点燃火箭，并在空中爆炸，分裂出多个追踪火箭
+		追踪火箭将会下落并优先搜索距离指针最近的敌人
+		右键则直接向指针位置发射火箭，但不会在自爆时分裂
+		"我们永远不会活在危险的摇篮里！"
+		'''
+}
+
+TonbogiriThrown: {
+	DisplayName: 御手秆-投掷
+	Tooltip:
+		'''
+		沿途追加毒性气泡
+		消失时也会追加更多的毒性气泡
+		所有的攻击都会施加[ScarletDebuff/Terraria/Venom]
+		“我知道这有点眼熟”
+		'''
+}
+
+SodomsDisaster: {
+	DisplayName: 蚀日兽影
+	Tooltip:
+		'''
+		手持时增加30%近战暴击伤害
+		穿透多个单位，且对被命中的所有单位造成一次爆炸
+		同时，从天上降下天灾火球攻击被命中的敌人
+		'''
+	FlavorTooltips: -漆黑兽影，吞天噬日，炎唤来兽，兽唤来咒，此乃末日预兆之二-
+}
+
+Bamboomerang: {
+	DisplayName: 回旋竹
+	Tooltip:
+		'''
+		命中时会尝试继续攻击下一个敌人
+		场上最多存在三把回旋竹
+		"谁想出来的把竹子做成回旋镖的主意？"
+		'''
+}
+
+FierySpear: {
+	DisplayName: 炽焰巨矛
+	Tooltip: 消失时生成追击敌人的火球
+}
+
+BeetleSpear: {
+	// DisplayName: Beetle Spear
+	// Tooltip: ""
+}
+
+TheMars: {
+	DisplayName: 玛尔斯
+	Tooltip:
+		'''
+		沿途检索可被标记的最大三名敌对单位
+		消失时，向被标记的所有敌对单位追击潮汐之矛
+		攻击总会施加[ScarletDebuff/Terraria/Confused]
+		"外星的造物"
+		'''
+}
+
+GalvanizedHandThrown: {
+	DisplayName: 电表镀针-投掷
+	Tooltip:
+		'''
+		召唤超高速镀针从天而降
+		主镀针刺入敌人体内，造成持续伤害
+		主镀针命中后，后续攻击将变为高精度幻影镀针，直接瞄准被锁定目标
+		按下右键可冲向被主镀针锁定的敌人，造成高额伤害并获得无敌帧
+		撞击成功后释放多枚电表指针追击敌人
+		'''
+	TileTextvalue: 冲刺路径存在阻挡
+}
+
+AzureFrostmark: {
+	DisplayName: 湛蓝霜痕
+	Tooltip: 生成寒霜球，在飞行一段距离后消失
+}
+
+CryoblazeHymn: {
+	DisplayName: 冰火颂歌
+	Tooltip:
+		'''
+		消失时交叉生成寒霜传送门与火焰传送门，从中释多枚放寒霜弹与火焰弹
+		直接命中时，施加[ScarletDebuff/Terraria/Oiled]
+		寒霜弹速度较慢，伤害较低，攻击多名不同的敌人，施加[ScarletDebuff/Terraria/Frostburn2]
+		火焰弹速度较快，伤害较高，优先攻击被矛命中的敌人，施加[ScarletDebuff/Terraria/OnFire3]
+		"纵使迥然不同，也以同样的旋律高声颂歌"
+		'''
+}
+
+EclipseWraith: {
+	DisplayName: 蚀日兽影
+	Tooltip:
+		'''
+		手持时增加30%近战暴击伤害
+		命中时爆炸并降下天灾火球
+		'''
+	FlavorTooltips: -漆黑兽影，吞天噬日，炎唤来兽，兽唤来咒，此乃末日预兆之二-
+}
+
+CactusSpear: {
+	DisplayName: 仙人掌矛
+	Tooltip: '''"仙人掌就应该做成一把投矛！"'''
+}
+
+ColdSakura: {
+	DisplayName: 冷樱
+	Tooltip: 命中时生成凌厉高速的樱花之矢
+}
+
+TerraSpear: {
+	DisplayName: 泰拉投枪
+	Tooltip:
+		'''
+		沿途滞留多个泰拉传送门，一定时间后释放追踪的泰拉之箭
+		掷出直接命中时从场外呼叫大量长枪进行支援
+		"它不叫泰拉长枪，别搞砸了。"
+		'''
+}
+
+AbyssalWorld: {
+	DisplayName: 时限残片
+	Tooltip: '''"不要被那些乍看之下美妙的东西所迷惑，触手可及不意味着立刻得到。"'''
+}
+
+DragonSword: {
+	// DisplayName: Dragon Sword
+	// Tooltip: ""
+}
+
+EnchantedSwordfish: {
+	DisplayName: 附魔剑鱼
+	Tooltip:
+		'''
+		桑百颗够吗？
+		他的眼睛怎么散发着诡异的红光？
+		'''
+}
+
+EthrealSwordfish: {
+	DisplayName: 永恒剑鱼
+	Tooltip:
+		'''
+		时间到了，除非打破规则，不然这是一场永恒的宿命……
+		什么你已经获得了？那算了。
+		凝聚了时间之神的力量
+		……等会，为什么这能存在？
+		'''
+}
+
+SamsaraofDawnlightAlter: {
+	// DisplayName: Samsaraof Dawnlight Alter
+	// Tooltip: ""
+}
+
+FlowerofDance: {
+	DisplayName: 花之舞
+	Tooltip:
+		'''
+		掷出四把投刀，一定时间后追踪附近的敌人
+		在命中时生成一朵小花，并在投刀命中时让小花发射追踪的花瓣
+		'''
+}
+
+HighTechBlade: {
+	DisplayName: 高频红刃
+	Tooltip:
+		'''
+		手持时使你免疫击退
+		斩切敌人，无视敌方防御力
+		'''
+}
+
+RitualofRepose: {
+	DisplayName: 安息仪式
+	Tooltip:
+		'''
+		向天空抛掷十字架，一定时间后从你面前降下并迸裂
+		迸裂时将会对世界范围内所有敌人进行闪电打击，并施加[ScarletDebuff/LostbeltTraveler/TheBleachingBuff]
+		“主啊，对我来说你已经死了，安息吧。”
+		'''
+}
+
+CopperRapierThrown: {
+	DisplayName: 铜刺刀-投掷
+	Tooltip: ""
+}
+
+GoldRapierThrown: {
+	DisplayName: 金刺刀-投掷
+	Tooltip: ""
+}
+
+IronRapierThrown: {
+	DisplayName: 铁刺刀-投掷
+	Tooltip: ""
+}
+
+LeadRapierThrown: {
+	DisplayName: 铅刺刀-投掷
+	Tooltip: ""
+}
+
+PlatinumRapierThrown: {
+	DisplayName: 铂金刺刀-投掷
+	Tooltip: ""
+}
+
+SilverRapierThrown: {
+	DisplayName: 银刺刀-投掷
+	Tooltip: ""
+}
+
+TinRapierThrown: {
+	DisplayName: 锡刺刀-投掷
+	Tooltip: ""
+}
+
+TungstenRapierThrown: {
+	DisplayName: 钨刺刀-投掷
+	Tooltip: ""
+}
+
+AmberYoyo: {
+	DisplayName: 琥珀悠悠球
+	Tooltip: 琥珀将突破敌人的阵型
+}
+
+AmethystYoyo: {
+	DisplayName: 紫水晶悠悠球
+	Tooltip: 紫水晶将使敌人触手可及
+}
+
+DiamondYoyo: {
+	DisplayName: 钻石悠悠球
+	Tooltip: 钻石将为宝石提供[ScarletBuff/LostbeltTraveler/DiamondYoyoBuff]
+}
+
+EmeraldYoyo: {
+	DisplayName: 绿宝石悠悠球
+	Tooltip: 绿宝石将为你带来财富
+}
+
+RubyYoyo: {
+	DisplayName: 红玉悠悠球
+	Tooltip: 红玉将治愈你身上的伤口
+}
+
+SapphireYoyo: {
+	DisplayName: 蓝宝石悠悠球
+	Tooltip: 蓝宝石将助你乘胜追击
+}
+
+TopazYoyo: {
+	DisplayName: 黄玉悠悠球
+	Tooltip: 黄玉将无视一切阻碍
+}
+
+ShroomiteFork: {
+	DisplayName: 蘑菇餐叉
+	Tooltip:
+		'''
+		命中时追加斩切
+		不攻击时，伤害、暴击率、穿透与斩切次数线性提升
+		'''
+}
+
+LuminiteDart: {
+	DisplayName: 夜明飞镖
+	Tooltip: 追杀敌人
+}
+
+PanopticonPestle: {
+	DisplayName: 全景秆
+	Tooltip: 命中时从身旁释放追杀敌人的光辉
+}
+
+RaceAgainstTime: {
+	DisplayName: 争分夺秒
+	Tooltip: “再快点，再快点再快点！”
+}
+
+Vibrant: {
+	DisplayName: 生机盎然
+	Tooltip: 释放通天藤蔓缠绕敌人
+}
+
+GrandGemYoyo: {
+	DisplayName: 至臻宝石悠悠球
+	Tooltip: 蕴含了所有宝石悠悠球的精华
+}
+
+OnyxYoyo: {
+	DisplayName: 玛瑙悠悠球
+	Tooltip: 玛瑙将粉碎敌人
+}

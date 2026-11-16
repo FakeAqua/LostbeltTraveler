@@ -1,0 +1,186 @@
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.Primitives.Trail;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Executor;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Projs.Executor.Thrown
+{
+    public class BinaryStarsArrow : LostbeltProjs
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Executor;
+
+        private enum DoType
+        {
+            IsHomingToTarget,
+            IsArcRotating
+        };
+        private DoType AttackType
+        {
+            get => (DoType)Projectile.ai[2];
+            set => Projectile.ai[2] = (float)value;
+        }
+        public enum Flip
+        {
+            None,
+            DoFlip
+        }
+        private ref float Accele => ref Projectile.ai[1];
+        private bool CanSpawnDust
+        {
+            get => Projectile.Lostbelt().ExtraAI[1] == 1f;
+            set => Projectile.Lostbelt().ExtraAI[1] = value ? 1f : 0f;
+        }
+        private bool IsHit = false;
+        private ref float Progress => ref Projectile.localAI[2];
+        private Vector2 InitCenter;
+        public override string Texture => LostbeltModAssets.InvisAsset.Path;
+        public override void SetStaticDefaults()
+        {
+            Projectile.ToTrailSetting(22, 2);
+        }
+        public override void SetDefaults()
+        {
+            Projectile.height = 8;
+            Projectile.width = 8;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.friendly = true;
+            Projectile.DamageType = ExecutorDamageClass.Instance;
+            Projectile.SetupImmnuity(10);
+            Projectile.penetrate = 1;
+            Projectile.extraUpdates = 2;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
+            Projectile.timeLeft = 500;
+        }
+        private float DrawScale = 1f;
+        public override void AI()
+        {
+            //初始化
+            if (Accele is 0)
+            {
+                InitCenter = Projectile.Center;
+                Progress = 45f;
+            }
+            Accele += 1;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            switch (AttackType)
+            {
+                case DoType.IsArcRotating:
+                    DoArcRotating();
+                    break;
+                case DoType.IsHomingToTarget:
+                    DoHomingToTarget();
+                    break;
+            }
+        }
+        private void DrawDust(Vector2 targetCenter)
+        {
+            if (!CanSpawnDust)
+                return;
+            float lengthRatio = Clamp(Vector2.Distance(Projectile.Center, InitCenter) / Vector2.Distance(InitCenter, targetCenter), 0f, 2f);
+            int d = Main.rand.NextFloat(0f, 2f - lengthRatio) < 0.5f ? DustID.CorruptSpray : DustID.WitherLightning;
+            float dScale = Main.rand.NextFloat(0f, 2f - lengthRatio) < 0.5f ? 0.65f : 0.75f;
+            Dust newDust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4), d, (Projectile.velocity * 0.30f).RotatedBy(Main.rand.NextFloat(-PiOver4 / 6, PiOver4 / 6)), 0, default, 1);
+            newDust.noGravity = true;
+            newDust.scale *= dScale;
+            newDust.color = Color.Purple;
+        }
+
+        private void DoArcRotating()
+        {
+            float progress = Progress / 45f;
+            DrawScale = Clamp(EaseOutCubic(progress), 0f, 1f);
+            Projectile.velocity *= 0.89f;
+            Progress--;
+            if (Progress < -5f)
+                Projectile.Kill();
+        }
+
+        //PixelatedRenderManager.BeginDrawProj = true;
+        private void DoHomingToTarget()
+        {
+            //重新搜索一次单位
+            if (!Projectile.GetTargetSafe(out NPC target, true, 3600, canPassWall: true))
+            {
+                Projectile.extraUpdates = 2;
+                return;
+            }
+            if (Main.rand.NextBool(3))
+                DrawDust(target.Center);
+            float maxAccele = Clamp(Accele / 2f, 0f, 8f);
+            Projectile.extraUpdates = 4;
+            //这里的惯性有意降的非常低
+            Projectile.HomingTarget(target.Center, 3600f, 24f + maxAccele, 10f);
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.DefenseEffectiveness *= 0f;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            //首次命中时开始转角拐弯
+            if (!IsHit)
+            {
+                IsHit = true;
+                AttackType = DoType.IsArcRotating;
+                Projectile.netUpdate = true;
+                DrawDust(target.Center);
+            }
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            SB.EnterShaderArea();
+            DrawNebulaTrail(Color.MediumPurple, 14f);
+            DrawNebulaTrail(Color.LightPink with { A = 50 }, 12.2f);
+            DrawNebulaTrail(Color.White with { A = 100 }, 10.8f);
+            SB.EnterShaderArea();
+            if (Projectile.oldPos.Length > 12)
+            {
+                for (int k = 0; k < 12; k += 3)
+                {
+                    Vector2 dir = Projectile.oldPos[k] - Projectile.oldPos[k + 1];
+                    DrawStar(Projectile.oldPos[k] + Projectile.Size / 2 - Main.screenPosition, dir.ToRotation(), Color.Lerp(BinaryStarsProj.TrailColor, Color.Purple, (float)k / 16));
+                }
+            }
+            SB.EndShaderArea();
+
+            return false;
+        }
+
+        public void DrawStar(Vector2 drawPos, float rot, Color starColor)
+        {
+            Texture2D sharpTears = LostbeltModAssets.Particle_HRStar.Value;
+            Vector2 targetSize = 0.36f * Projectile.scale * new Vector2(1.2f, 0.25f) * DrawScale;
+            SB.Draw(sharpTears, drawPos, null, starColor, rot, sharpTears.Size() / 2, targetSize, SpriteEffects.None, 0);
+            SB.Draw(sharpTears, drawPos, null, Color.White with { A = 150 }, rot, sharpTears.Size() / 2, targetSize * 0.5f, SpriteEffects.None, 0);
+        }
+        public void DrawNebulaTrail(Color trailColor, float height)
+        {
+            float laserLength = 50;
+            Effect shader = LostbeltShaderAssets.TerrarRayLaser;
+            shader.Parameters["LaserTextureSize"].SetValue(LostbeltModAssets.Trail_ManaStreak.Value.Size());
+            shader.Parameters["targetSize"].SetValue(new Vector2(laserLength, LostbeltModAssets.Trail_ManaStreak.Value.Height));
+            shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * -50);
+            shader.Parameters["uColor"].SetValue(trailColor.ToVector4() * DrawScale);
+            shader.Parameters["uFadeoutLength"].SetValue(0.1f);
+            shader.Parameters["uFadeinLength"].SetValue(0.05f);
+            shader.CurrentTechnique.Passes[0].Apply();
+            DrawSetting sets = new(LostbeltModAssets.Trail_ManaStreak.Value);
+            List<TrailDrawDate> date = [];
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                if (Projectile.oldPos[i] == Vector2.Zero)
+                    continue;
+                Vector2 listPos = Projectile.oldPos[i] + Projectile.Size / 2 + Projectile.SafeDir() * 10f;
+                float ratios = i / (float)Projectile.oldPos.Length;
+                date.Add(new(listPos, Color.White, new(0, height * DrawScale * Clamp((1 - ratios), 0, 1f)), Projectile.oldRot[i]));
+            }
+            TrailRender.DrawTrail(date.ToArray(), sets);
+        }
+    }
+}

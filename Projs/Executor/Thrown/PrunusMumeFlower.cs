@@ -1,0 +1,153 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.ParticleECS;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Projs.Executor.Thrown
+{
+    public class PrunusMumeFlower : LostbeltProjs
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Executor;
+        public ref float OriginalRotation => ref Projectile.localAI[0];
+        public ref float Timer => ref Projectile.ai[0];
+        public override void SetStaticDefaults()
+        {
+            Projectile.ToTrailSetting(16);
+        }
+        public override void ExSD()
+        {
+            Projectile.width = Projectile.height = 16;
+            Projectile.extraUpdates = 2;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.timeLeft = 300;
+            Projectile.SetupImmnuity(-1);
+            Projectile.penetrate = 1;
+        }
+        public bool Reverse = false;
+        public override void OnFirstFrame()
+        {
+            if (Projectile.Lostbelt().ExecutionStrike)
+                Projectile.timeLeft = GetSeconds(31);
+            OriginalRotation = Projectile.rotation;
+        }
+        public void ExecutionFlowerAI()
+        {
+            Projectile.rotation += .02f;
+            Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.MountedCenter - Vector2.UnitY * 130f, 0.2f);
+            if (Projectile.MeetMaxUpdatesFrame(Timer, 60))
+            {
+                Timer = 0;
+                if (!Projectile.IsMe())
+                    return;
+                SoundEngine.PlaySound(SoundID.Item109 with { MaxInstances = 0, Pitch = 0.2f, PitchVariance = 0.1f });
+                for (int i = 0; i < 8; i++)
+                {
+                    float rad = ToRadians(360f / 8 * i) + Projectile.rotation;
+                    float speed = i % 2 == 0 ? 1.5f : 3f;
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, rad.ToRotationVector2() * speed * 2f, ProjectileType<PrunusMumePetal>(), Projectile.damage, 1f, Owner.whoAmI);
+                    ((PrunusMumePetal)proj.ModProjectile).AttackStyle = PrunusMumePetal.Style.ExecutionStrike;
+                    proj.extraUpdates = 2;
+                    proj.timeLeft = 180;
+                    proj.ai[2] = Reverse.ToDirectionInt();
+                }
+                Reverse = !Reverse;
+            }
+        }
+        public void NormalAttackAI()
+        {
+            Projectile.rotation = Projectile.SpeedAffectRotation(1, 1) + OriginalRotation;
+            if (Timer < 60f)
+                return;
+            Timer = 0f;
+            if (Projectile.IsMe())
+            {
+                SoundEngine.PlaySound(LostbeltSoundAssets.Blunt_Swing with { Variants = [1], MaxInstances = 0, Pitch = 0.3f, PitchVariance = .1f, Volume = 0.5f });
+                for (int i = 0; i < 5; i++)
+                {
+                    float rad = ToRadians(360f / 5 * i) + Projectile.rotation;
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, rad.ToRotationVector2() * 3f, ProjectileType<PrunusMumePetal>(), Projectile.damage, 1f, Owner.whoAmI);
+                    ((PrunusMumePetal)proj.ModProjectile).AttackStyle = PrunusMumePetal.Style.NormalStrike;
+                    proj.extraUpdates = 1;
+                    proj.timeLeft = 100;
+                }
+                Projectile.Kill();
+            }
+        }
+
+        public override void ProjAI()
+        {
+            Projectile.velocity *= 0.95f;
+            Timer++;
+            DrawParticle();
+            if (Projectile.Lostbelt().ExecutionStrike)
+            {
+                ExecutionFlowerAI();
+            }
+            else
+            {
+                NormalAttackAI();
+            }
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
+        }
+
+        public override bool ShouldUpdatePosition()
+        {
+            return !Projectile.Lostbelt().ExecutionStrike;
+        }
+        public void DrawParticle()
+        {
+            if (Projectile.Lostbelt().ExecutionStrike)
+            {
+                if (Main.rand.NextBool(4))
+                {
+                    ECSParticle.SnowCloud(Projectile.Center.ToRandCirclePos(30f), Vector2.UnitY * -Main.rand.NextFloat(0.1f, 1.5f), RandLerpColor(Color.IndianRed, Color.HotPink), 40, 0, 0.73f, 0.1f * 0.5f);
+                }
+                if (Main.rand.NextBool(8))
+                {
+                    ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePos(30), -Vector2.UnitY * 1.5f, RandLerpColor(Color.IndianRed, Color.DarkRed), 40, 1, .105f * Main.rand.NextFloat(.75f, .95f), .65f);
+                }
+
+                return;
+            }
+            if (Projectile.velocity.Length() > Main.rand.NextFloat())
+            {
+                if (Main.rand.NextBool())
+                {
+                    ECSParticle.SnowCloud(Projectile.Center.ToRandCirclePos(15f), Projectile.velocity / 4f, RandLerpColor(Color.IndianRed, Color.HotPink), 40, 0, 0.73f, 0.1f * 0.5f);
+                }
+            }
+            else
+            {
+                if (Main.rand.NextBool(4))
+                {
+                    ECSParticle.SnowCloud(Projectile.Center.ToRandCirclePos(15f), Projectile.SafeDir() * Main.rand.NextFloat(0.1f, 1.5f), RandLerpColor(Color.IndianRed, Color.HotPink), 40, 0, 0.73f, 0.1f * 0.5f);
+                }
+                if (Main.rand.NextBool(8))
+                {
+                    ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePos(15), Projectile.SafeDir() * 1.5f, RandLerpColor(Color.IndianRed, Color.DarkRed), 40, 1, .105f * Main.rand.NextFloat(.75f, .95f), .65f);
+                }
+
+            }
+
+        }
+        public override bool? CanDamage()
+        {
+            return false;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            float rad = Timer / 60f;
+            Color glowColor = Color.Lerp(Color.Transparent, Color.White, rad);
+            Projectile.DrawGlowEdge(glowColor);
+            Projectile.DrawProj(Color.White);
+            return false;
+        }
+    }
+}

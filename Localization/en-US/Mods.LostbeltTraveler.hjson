@@ -1,0 +1,118 @@
+SwitchWeaponTooltip: Lostbelt Journey: Press Intersect while holding the weapon to switch
+SwitchWeaponVisual: Lostbelt Journey: Press Intersect while holding the weapon to change its visual effect
+SwitchWeaponConditionTooltip: Switch condition: Defeated<{0}>
+NotFinished: -Not Finished-
+
+SwitchWeaponConditionList: {
+	DownedGolem: Golem
+	DownedLifeGods: The Lifebringer
+	DownedEvilBoss: Any Evil Boss
+	DownedPlantera: Plantera
+}
+
+ItemBelongTo: {
+	Donator: Donator Item
+	Developer: Developer Item
+	Supporter: Supporter Item
+}
+
+SwitchWeapon: {
+	Tooltip:
+		'''
+		Lostbelt Journey:
+		Press Intersect key while holding the weapon to switch
+		'''
+	Visual:
+		'''
+		Lostbelt Journey:
+		Press Intersect key while holding the weapon to change its visual effect
+		'''
+	AllFix: Also can apply to: {0}
+}
+
+CrossModSupport.Calamity: ""
+
+Keybinds: {
+	GeneralActionKeybind.DisplayName: Interact Key
+	GenerialSkillKeybind.DisplayName: Skill Key
+	ParryActionKeybind.DisplayName: Parry Key (Currently no effect)
+	DashKeybind.DisplayName: Dash Keybind
+}
+
+ExecutorDamageClass: {
+	ExecutionProgress: Strike your enemy for {0} times to Execute. Press Left Alt for details
+	ExecutionDescriptionName: Execution Strike
+	ExecutionProgressRevampedMode: Execution Progress: {0} / {1}
+	ForceTacticalExecution: Press Interact key to trigger Execution Strike
+	ForceAutomaticExecution: Execution Strike is always automatic
+	CompanionWeapon: Companion
+	DisplayName: Executor Damage
+
+	WeaponType: {
+		Throw: Thrownable
+		ColdSteel: Cold Steel
+		Firearm: Firearm
+		Caster: Cast
+		Assistance: Assistance
+		Misc: Misc
+	}
+
+	Prefixs: {
+		Alterego.DisplayName: Alterego
+		Digital.DisplayName: Digital
+		Evolutional.DisplayName: Evolutional
+		Fake.DisplayName: Fake
+		Foreigner.DisplayName: Foreigner
+		Mysterious.DisplayName: Mysterious
+		Phantasmic.DisplayName: Phantasmic
+		ExecutionDamageLine: "{0}% Execution Damage"
+		CritDamageLine: "{0}Critical Strike Damage"
+		DefenseReduceValue: "{0} Defense"
+	}
+}
+
+DamageClasses.ExecutorDamageClass.DisplayName: Executor Damage Class
+
+Projs: {
+	Enemy.SuicideKnifeInvisProj.DisplayName: Suicide Knife Invis Proj
+
+	ParryShields: {
+		AnkhParryShield.DisplayName: Ankh Parry Shield
+		CobaltParryShield.DisplayName: Cobalt Parry Shield
+		EoCParryShield.DisplayName: Eo C Parry Shield
+		FrozenParryShield.DisplayName: Frozen Parry Shield
+		HeroParryShield.DisplayName: Hero Parry Shield
+		HuntresssBucklerParryShield.DisplayName: Huntresss Buckler Parry Shield
+		ObsidianParryShield.DisplayName: Obsidian Parry Shield
+		SergeantUnitedParryShield.DisplayName: Sergeant United Parry Shield
+		SquiresParryShield.DisplayName: Squires Parry Shield
+		PaladinsParryShield.DisplayName: Paladins Parry Shield
+	}
+}
+
+Items: {
+	TechBlade: {
+		DisplayName: Tech Blade
+		Tooltip: ""
+	}
+
+	TechSniper: {
+		DisplayName: Tech Sniper
+		Tooltip: ""
+	}
+
+	TechCannon: {
+		DisplayName: Tech Cannon
+		Tooltip: ""
+	}
+}
+
+Projectiles: {
+	TechBladeHeldProj.DisplayName: Tech Blade Held Proj
+	TechBladeLaser.DisplayName: Tech Blade Laser
+}
+
+NPCs: {
+	DyradEyeBoss.DisplayName: Dyrad Eye Boss
+	ExecutorCelestialTower.DisplayName: Executor Celestial Tower
+}

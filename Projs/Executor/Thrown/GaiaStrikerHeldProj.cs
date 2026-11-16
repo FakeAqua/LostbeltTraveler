@@ -1,0 +1,480 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.ParticleECS;
+using LostbeltTraveler.Core.ScreenEffect;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Graphics.Metaballs;
+using LostbeltTraveler.Globals.Handlers;
+using LostbeltTraveler.Globals.Keybinds;
+using LostbeltTraveler.Items.Weapons.Executor.Thrown;
+using System;
+using Terraria;
+using Terraria.Audio;
+
+namespace LostbeltTraveler.Projs.Executor.Thrown
+{
+    public class GaiaStrikerHeldProj : LostbeltProjs
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Executor;
+        public enum State
+        {
+            JustBegin,
+            InStaff
+        }
+        public ref float Timer => ref Projectile.ai[0];
+        public State AttackState
+        {
+            get => (State)Projectile.ai[1];
+            set => Projectile.ai[1] = (float)value;
+        }
+        public ref float Oscillation => ref Projectile.ai[2];
+        public float AngleLerpValue = 0;
+        public AnimationStruct Helper = new AnimationStruct(4);
+        public bool PlaySound = false;
+        public int StoredLifeTime = 0;
+        public float RightClickHoldingTime = 0;
+        public enum DeadType
+        {
+            AnomarlyDead,
+            TurnIntoMinionDead,
+            TacticalDead,
+            MinionAutoDead
+        }
+        /// <summary>
+        /// 盖亚重锤如果被处死时的类型
+        /// <br>处死模式为<see cref="DeadType.AnomarlyDead"/>时为重击情况下丢失目标的非正常死亡，用于盖亚锤复原自身</br>
+        /// <br>处死模式为<see cref="DeadType.TurnIntoMinionDead"/>时为玩家选择切换为仆从模式引起的死亡，此时生成的飞弹由射线仆从刚生成时接管</br>
+        /// <br>处死模式为<see cref="DeadType.TacticalDead"/>时为玩家手动发起的主动死亡，此时生成的飞弹会具有更多的治疗</br>
+        /// <br>处死模式为<see cref="DeadType.MinionAutoDead"/>时为自然死亡，此时生成的飞弹会有较少的全量治疗</br>
+        /// </summary>
+
+        public DeadType GaiaStrikeDeadType = DeadType.MinionAutoDead;
+
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.ToTrailSetting();
+        }
+        public override void ExSD()
+        {
+            Projectile.width = Projectile.height = 8;
+            Projectile.SetUpHeldProj();
+            Projectile.noEnchantmentVisuals = true;
+        }
+        public override bool? CanDamage() => false;
+        public override void OnFirstFrame()
+        {
+            //刚生成的时候总会重设为这个。
+            GaiaStrikeDeadType = DeadType.MinionAutoDead;
+            StoredLifeTime = Projectile.timeLeft;
+            Helper.MaxProgress[0] = 30 * Projectile.MaxUpdates;
+            Helper.MaxProgress[1] = 25 * Projectile.MaxUpdates;
+            Helper.MaxProgress[2] = 30 * Projectile.MaxUpdates;
+            Helper.MaxProgress[3] = 25 * Projectile.MaxUpdates;
+        }
+        public override void OnKill(int timeLeft)
+        {
+            switch (GaiaStrikeDeadType)
+            {
+                //极端情况下如果是非正常死亡，会刷新自己
+                //但是，这种情况实际上，极其罕见。
+                case DeadType.AnomarlyDead:
+                    RefreshProjStatement(Type);
+                    break;
+                case DeadType.TurnIntoMinionDead:
+                    RefreshProjStatement(ProjectileType<GaiaStrikerMountedProj>());
+                    break;
+                case DeadType.TacticalDead:
+                    ForceDeadOrNormalDead(3);
+                    break;
+                case DeadType.MinionAutoDead:
+                    ForceDeadOrNormalDead(4);
+                    break;
+            }
+        }
+
+        public void RefreshProjStatement(int v)
+        {
+            Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, v, Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+            proj.originalDamage = Projectile.originalDamage;
+            //发起转化之后会减去一秒的使用时间
+            int applyDeadTime = StoredLifeTime - GetSeconds(1);
+            if (applyDeadTime <= 50)
+                applyDeadTime = 50;
+            proj.timeLeft = applyDeadTime;
+
+        }
+        public void ForceDeadOrNormalDead(int mode)
+        {
+            //爆开
+            for (int i = 0; i < 36; i++)
+            {
+                Vector2 pos = Projectile.Center.ToRandCirclePos(3.6f);
+                Vector2 vel = RandVelTwoPi(0.9f, 6.4f);
+                BloodyMetaball.SpawnParticle(pos, vel, 0.35f, RandRotTwoPi, true);
+            }
+            for (int i = 0; i < 36; i++)
+            {
+                Vector2 pos = Projectile.Center.ToRandCirclePos(3.6f);
+                Vector2 vel = RandVelTwoPi(0.9f, 9.4f);
+                BloodyMetaball.SpawnParticle(pos, vel * 2.7f, 0.75f, vel.ToRotation(), false);
+                BloodyMetaball.SpawnParticle(pos, vel * 2.7f, 0.15f, RandRotTwoPi, true);
+            }
+            for (int i = 0; i < GaiaStriker.BloodBulletCount; i++)
+            {
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center.ToRandCirclePos(6), RandVelTwoPi(6f, 10f), ProjectileType<GaiaStrikerBloodyBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+                proj.ai[2] = mode;
+                proj.Lostbelt().HasExecutionMechanic = false;
+            }
+            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, easeOut: EaseInOutExpo);
+            ECSParticle.CrossGlow(Projectile.Center, Color.Red, 40, 1, 0.30f, .4f, BlendState.Additive);
+            ECSParticle.CrossGlow(Projectile.Center, Color.DarkRed, 40, 1, 0.30f, .4f, BlendState.Additive);
+            ScreenShakeSystem.AddScreenShakes(Projectile.Center, 60, 80, Projectile.rotation, 0.15f, easingFunc: EaseOutBack);
+            ScarletSound(LostbeltSoundAssets.Gaia_Toss, Projectile.Center, .75f, 0, -.64f, .1f, 2);
+            ScarletSound(LostbeltSoundAssets.Gaia_Explosion, Projectile.Center, .477f, 0, -.4f, .1f);
+            if (mode == 3)
+                Projectile.AddExecutionTimeDelayed(ItemType<GaiaStriker>(), 6);
+        }
+        public override void ProjAI()
+        {
+            if (Projectile.timeLeft < 20)
+            {
+                GaiaStrikeDeadType = DeadType.MinionAutoDead;
+                Projectile.Kill();
+                return;
+            }
+
+            if (Owner.controlUseTile && Owner.HeldItem.type == ItemType<GaiaStriker>())
+            {
+                Projectile.timeLeft = StoredLifeTime;
+                RightClickHoldingTime++;
+                if (RightClickHoldingTime % 20 == 0 && RightClickHoldingTime != 0)
+                {
+                    SoundEngine.PlaySound(LostbeltSoundAssets.Gaia_Charge with { MaxInstances = 1, Pitch = 0.1f * RightClickHoldingTime / 20, Volume = .67f }, Projectile.Center);
+                    for (int i = 0; i < 36; i++)
+                        ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(0), RandVelTwoPi(.7f, 21f), RandLerpColor(Color.Red, Color.DarkRed), 40, 1, 0.25f, Main.rand.NextFloat(0.9f, 1.1f) * 0.40f, Main.rand.NextBool(), BlendState.NonPremultiplied);
+                    for (int i = 0; i < 18; i++)
+                        ECSParticle.BloodDrop(Projectile.Center.ToRandCirclePosEdge(10, 50), -Vector2.UnitY.RotateRandom(PiOver4) * Main.rand.NextFloat(4f, 18f), RandLerpColor(Color.DarkRed, Color.Black), 60, 1, 0.10f * Main.rand.NextFloat(.9f, 1.2f), 1, true, BlendState.AlphaBlend);
+                }
+            }
+            else
+            {
+                if (RightClickHoldingTime > 0)
+                    RightClickHoldingTime--;
+            }
+            if (RightClickHoldingTime > GetSeconds(1))
+            {
+                //爆开
+                GaiaStrikeDeadType = DeadType.TacticalDead;
+                Projectile.Kill();
+                return;
+            }
+            switch (AttackState)
+            {
+                case State.JustBegin:
+                    DoJustBegin();
+                    break;
+                case State.InStaff:
+                    DoInStaff();
+                    break;
+            }
+        }
+        public void DoJustBegin()
+        {
+            if (!Helper.IsDone[0])
+            {
+                if (Helper.OnAnimationBegin(0))
+                {
+                    float angleToWhat = ToRadians(-105f);
+                    if (Owner.direction < 0)
+                        angleToWhat = ToRadians(-65f);
+                    Projectile.spriteDirection = Owner.direction;
+                    Projectile.rotation = angleToWhat;
+                    CreateBloodyExplosion();
+                    Projectile.Center = Owner.MountedCenter - Vector2.UnitX * Owner.direction * 100f;
+                }
+
+                if (Main.rand.NextBool(3))
+                {
+                    for (int i = 0; i < 2; i++)
+                        BloodyMetaball.SpawnParticle(Projectile.Center.ToRandCirclePos(26) - Vector2.UnitX * 45f * Owner.direction, Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(-12f, 13f), 0.8f, Projectile.rotation, false);
+                }
+                Helper.UpdateAniState(0);
+            }
+            else if (!Helper.IsDone[1])
+            {
+                Helper.UpdateAniState(1);
+                if (Helper.GetAniProgress(1) > 0.40f && !PlaySound)
+                {
+                    SoundEngine.PlaySound(LostbeltSoundAssets.Gaia_Charge with { MaxInstances = 0, Pitch = 0.5f, Volume = .65f }, Projectile.Center);
+                    SoundEngine.PlaySound(LostbeltSoundAssets.Gaia_Smash with { MaxInstances = 0, Pitch = -0.5f, Volume = .45f }, Projectile.Center);
+                    PlaySound = true;
+                    for (int i = 0; i < 64; i++)
+                    {
+                        Vector2 pos = Projectile.Center.ToRandCirclePos(40, 60) - Vector2.UnitX * 25f * Owner.direction;
+                        Vector2 dir = Projectile.rotation.ToRotationVector2();
+                        ECSParticle.SmokeParticle(pos, dir * Main.rand.NextFloat(-16f, 17f), RandLerpColor(Color.Red, Color.Black), Main.rand.Next(30, 48), RandRotTwoPi, 0.98f, Main.rand.NextFloat(.75f, 1.1f) * .4f * Projectile.scale, Main.rand.NextBool(), BlendState.NonPremultiplied);
+                    }
+                }
+            }
+            else
+            {
+                AttackState = State.InStaff;
+                Projectile.netUpdate = true;
+            }
+            DoFadingParticle();
+            DoIdle();
+        }
+        public void DoInStaff()
+        {
+            //只有手持武器的情况下才允许发起这个切换
+            if (Owner.IsHolding<GaiaStriker>() && LostbeltKeybinds.GeneralActionKeybind.JustPressed)
+            {
+                GaiaStrikeDeadType = DeadType.TurnIntoMinionDead;
+                Projectile.Kill();
+                return;
+            }
+
+            //使用物品，且手持的物品真的是一把武器，我们才让其准备发起攻击
+            if (Owner.controlUseItem && Owner.HeldItem.IsWeapon())
+            {
+                HandleStaffCondition();
+                StoredLifeTime = Projectile.timeLeft;
+                AngleLerpValue = Lerp(AngleLerpValue, 1f, 0.10f);
+            }
+            else
+            {
+                DoIdle();
+                //记得自然减少攻击冷却
+                if (Timer > 0)
+                    Timer--;
+                AngleLerpValue = Lerp(AngleLerpValue, 0, 0.10f);
+            }
+            //位置修正
+            Projectile.position.Y += Owner.gfxOffY;
+        }
+        /// <summary>
+        /// 玩家下达指令时，仆从转为法杖的初始化状态
+        /// </summary>
+        public void HandleMinionToStaffBegin()
+        {
+            Projectile.extraUpdates = 0;
+            //重新设定锤子状态
+            float angleToWhat = ToRadians(-105f);
+            if (Owner.direction < 0)
+                angleToWhat = ToRadians(-65f);
+            Projectile.spriteDirection = Owner.direction;
+            Projectile.rotation = (angleToWhat);
+            CreateBloodyExplosion();
+            //让渐变出现的特效确保出现在玩家后方
+            Projectile.Center = Owner.MountedCenter - Vector2.UnitX * Owner.direction * 100f;
+        }
+        public void CreateBloodyExplosion()
+        {
+            //爆开
+            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, easeOut: EaseInOutExpo);
+            for (int i = 0; i < 36; i++)
+            {
+                Vector2 pos = Projectile.Center.ToRandCirclePos(3.6f);
+                Vector2 vel = RandVelTwoPi(0.9f, 6.4f);
+                BloodyMetaball.SpawnParticle(pos, vel, 0.35f, RandRotTwoPi, true);
+            }
+            for (int i = 0; i < 36; i++)
+            {
+                Vector2 pos = Projectile.Center.ToRandCirclePos(3.6f);
+                Vector2 vel = RandVelTwoPi(0.9f, 9.4f);
+                BloodyMetaball.SpawnParticle(pos, vel * 2.7f, 0.75f, vel.ToRotation(), false);
+                BloodyMetaball.SpawnParticle(pos, vel * 2.7f, 0.15f, RandRotTwoPi, true);
+            }
+            for (int i = 0; i < GaiaStriker.BloodBulletCount; i++)
+            {
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center.ToRandCirclePos(6), RandVelTwoPi(6f, 10f), ProjectileType<GaiaStrikerBloodyBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+                proj.ai[2] = 1;
+                proj.Lostbelt().HasExecutionMechanic = Main.rand.NextBool();
+            }
+            ECSParticle.CrossGlow(Projectile.Center, Color.Red, 40, 1, 0.30f, .4f, BlendState.Additive);
+            ECSParticle.CrossGlow(Projectile.Center, Color.DarkRed, 40, 1, 0.30f, .4f, BlendState.Additive);
+            ScreenShakeSystem.AddScreenShakes(Projectile.Center, 60, 80, Projectile.rotation, 0.15f, easingFunc: EaseOutBack);
+            SoundEngine.PlaySound(LostbeltSoundAssets.Gaia_Explosion with { MaxInstances = 0, Pitch = -0.4f, Volume = .477f }, Projectile.Center);
+            SoundEngine.PlaySound(LostbeltSoundAssets.Gaia_Toss with { MaxInstances = 0, Pitch = -0.64f, Volume = .577f }, Projectile.Center);
+        }
+
+
+        public void HandleStaffCondition()
+        {
+            DoStaffModeIdle();
+            //发射射线的起始位置实际上靠前，为了确保锤子的角度正确，需要重新设定一下点位
+            Vector2 firePos = Projectile.Center + Projectile.rotation.ToRotationVector2() * Projectile.scale * 60f;
+            float tarRot = Projectile.Center.GetNormalVector2(Main.MouseWorld).ToRotation();
+            Projectile.rotation = Projectile.rotation.AngleLerp(tarRot, AngleLerpValue);
+            Projectile.spriteDirection = Projectile.direction = (Owner.LocalMouseWorld().X > Owner.Center.X).ToDirectionInt();
+            Owner.ChangeDir(Projectile.direction);
+            int count = 35;
+            //使用状态下让锤子挂载玩家手上，同时我们开始占用玩家的手持
+            if (Owner.IsHolding<GaiaStriker>())
+            {
+                Owner.itemTime = Owner.itemAnimation = 2;
+                Owner.ControlPlayerArm(Projectile.rotation, -1);
+                count = 20;
+            }
+            //递增计时器
+            Timer++;
+            int dmg = Owner.IsHolding<GaiaStriker>() ? Projectile.originalDamage : Projectile.originalDamage / 2;
+            if (Timer > count * Projectile.MaxUpdates)
+            {
+                Vector2 dir = tarRot.ToRotationVector2();
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), firePos, dir * 6f, ProjectileType<GaiaStrikerBeam>(), dmg, Projectile.knockBack, Projectile.owner);
+                //增加的恢复时间会刚刚好大于攻击频率
+                //这里是特意的
+                Projectile.timeLeft += 22;
+                Timer = 0;
+                SoundEngine.PlaySound(LostbeltSoundAssets.Gaia_Staff with { MaxInstances = 0, Pitch = .5f, PitchVariance = 0.1f, Volume = .45f }, Projectile.Center);
+                SoundEngine.PlaySound(LostbeltSoundAssets.Blunt_Swing with { MaxInstances = 0, Pitch = -.5f, Volume = .45f }, Projectile.Center);
+            }
+
+        }
+
+        public void DoStaffModeIdle()
+        {
+            //锤子应当朝向的位置
+            Oscillation += ToRadians(1.5f);
+            float anchorPosX = Owner.MountedCenter.X - Owner.direction * 0;
+            float anchorPosY = Owner.MountedCenter.Y - (30f * MathF.Sin(Oscillation) / 9f);
+            float lerp = AngleLerpValue;
+            if (!Owner.IsHolding<GaiaStriker>())
+            {
+                anchorPosY -= 100f;
+                anchorPosX -= 60 * Owner.direction;
+                lerp /= 5f;
+            }
+            //递增的值越大，锤子的摆动幅度越大
+            //基本的挂机状态，此处使用了正弦曲线来让锤子常规上下偏移
+            Vector2 anchorPos = new Vector2(anchorPosX, anchorPosY);
+            //实际更新位置
+            Projectile.Center = Vector2.Lerp(Projectile.Center, anchorPos, lerp);
+
+        }
+
+        public void DoFadingParticle(float mult = 1f)
+        {
+            if (Main.rand.NextBool(4))
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Vector2 dir = Projectile.rotation.ToRotationVector2();
+                    BloodyMetaball.SpawnParticle(Projectile.Center.ToRandCirclePos(30) - dir.RotatedBy(PiOver2) * -5f * mult * Owner.direction, Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(-12f, 13f), 0.8f, Projectile.rotation, false);
+                }
+            }
+            if (Main.rand.NextBool())
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector2 dir = Projectile.rotation.ToRotationVector2();
+                    Vector2 pos = Projectile.Center.ToRandCirclePos(30) - dir.RotatedBy(PiOver2) * -5f * mult * Owner.direction;
+                    ECSParticle.SmokeParticle(pos, dir * Main.rand.NextFloat(-16f, 17f), RandLerpColor(Color.Red, Color.Black), Main.rand.Next(30, 48), RandRotTwoPi, 0.78f, Main.rand.NextFloat(.75f, 1.1f) * .3f * Projectile.scale, Main.rand.NextBool(), BlendState.NonPremultiplied);
+                }
+            }
+            if (Main.rand.NextBool() && !PlaySound)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Vector2 dir = Projectile.rotation.ToRotationVector2();
+                    Vector2 pos = Projectile.Center.ToRandCirclePos(40, 100) - dir * 60f * mult - dir.RotatedBy(PiOver2) * Owner.direction * -5f;
+                    ECSParticle.BloodDrop(pos, dir.RotatedByRandom(ToRadians(15)) * Main.rand.NextFloat(17, 21f), RandLerpColor(Color.DarkRed, Color.Black), 120, 1f, Main.rand.NextFloat(.75f, 1.1f) * .15f, 1, true, BlendState.AlphaBlend);
+                }
+            }
+        }
+        /// <summary>
+        /// 正常情况下在背后时的挂载
+        /// </summary>
+        public void DoIdle()
+        {
+            //悬挂在玩家后方不会使仆从死亡
+            Projectile.timeLeft = StoredLifeTime;
+            //锤子应当朝向的位置
+            Projectile.velocity *= .01f;
+            Oscillation += ToRadians(2.5f);
+            float anchorPosX = Owner.MountedCenter.X - Owner.direction * (130f);
+            float anchorPosY = Owner.MountedCenter.Y - (60f * MathF.Sin(Oscillation) / 9f);
+            //递增的值越大，锤子的摆动幅度越大
+            //基本的挂机状态，此处使用了正弦曲线来让锤子常规上下偏移
+            Vector2 anchorPos = new Vector2(anchorPosX, anchorPosY);
+            //实际更新位置
+            Projectile.Center = Vector2.Lerp(Projectile.Center, anchorPos, 0.15f);
+            //计算锤子需要的朝向。
+            //这里会依据玩家是否按下左键来使朝向取反，即按住左键的时候，锤头朝向指针，其他情况下，锤柄朝向玩家
+            float angleToWhat = ToRadians(-105f);
+            if (Owner.direction < 0)
+                angleToWhat = ToRadians(-65f);
+            Projectile.spriteDirection = Owner.direction;
+            //最后使用lerp来让锤子朝向得到修改。
+            Projectile.rotation = Projectile.rotation.AngleLerp(angleToWhat, 0.18f);
+        }
+        public int FrameCount = 0;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (!Helper.IsDone[0])
+            {
+                return false;
+            }
+            Texture2D tex = Projectile.GetTexture();
+            Vector2 ori = tex.ToOrigin();
+            float rotFixer = Projectile.spriteDirection > 0 ? PiOver4 : -PiOver4 + Pi;
+            SpriteEffects se = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 offsetPos = new Vector2(0, 0);
+            Vector2 posBase = Projectile.Center - Main.screenPosition + offsetPos.RotatedBy(Projectile.rotation);
+            int length = Projectile.oldPos.Length;
+            if (Helper.IsDone[1])
+            {
+                for (int i = length - 1; i > 0; i--)
+                {
+                    Vector2 pos = Projectile.oldPos[i] + Projectile.PosToCenter() + offsetPos.RotatedBy(Projectile.rotation);
+                    float rot = Projectile.oldRot[i];
+                    float ratios = (1 - (float)i / length);
+                    int aValue = (int)(Lerp(10, 255, EaseInCubic(ratios)));
+                    Color c = Color.Lerp(Color.Red, Color.White, ratios) with { A = (byte)aValue } * ratios;
+                    SB.Draw(tex, pos, null, c, rot + rotFixer, ori, Projectile.scale, se, 0);
+                }
+            }
+
+            Color edgeDrawColor = Color.Red.ToAddColor();
+            float easedProgress = Helper.GetAniProgress(1);
+            for (int i = 0; i < 16; i++)
+                SB.Draw(tex, posBase + (TwoPi / 16f * i).ToRotationVector2() * 2f, null, edgeDrawColor * EaseInBack(easedProgress), Projectile.rotation + rotFixer, ori, Projectile.scale, se, 0);
+            ApplyMeltShaderProjDraw(tex, posBase, rotFixer, ori, se, easedProgress);
+            SB.EnterShaderArea(BlendState.NonPremultiplied);
+            Texture2D glow = LostbeltModAssets.Particle_RingShiny.Value;
+            Vector2 glowPos = Projectile.Center + Projectile.rotation.ToRotationVector2() * 50f * Projectile.scale - Main.screenPosition;
+            float pro = EaseOutBack(AngleLerpValue);
+            float scale = Projectile.scale * 0.25f * pro;
+            Vector2 glowOri = glow.Size() / 2;
+            float glowRot = Projectile.rotation;
+            SB.Draw(glow, glowPos, null, Color.DarkRed * pro, glowRot, glowOri, scale, 0, 0);
+            SB.EndShaderArea();
+            return false;
+        }
+        public void ApplyMeltShaderProjDraw(Texture2D tex, Vector2 posBase, float rotFixer, Vector2 ori, SpriteEffects se, float progress)
+        {
+            SB.End();
+            SB.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            GD.Textures[0] = tex;
+            GD.SamplerStates[0] = SamplerState.PointClamp;
+            GD.Textures[1] = LostbeltModAssets.Noise_Misc.Value;
+            GD.SamplerStates[1] = SamplerState.PointClamp;
+            Effect shader = LostbeltShaderAssets.EdgeMeltsShader;
+            shader.Parameters["progress"].SetValue((1 - EaseOutCubic(progress)));
+            shader.Parameters["InPutTextureSize"].SetValue(tex.Size());
+            shader.Parameters["EdgeColor"].SetValue(Color.Red.ToVector4());
+            shader.Parameters["EdgeWidth"].SetValue(.01f);
+            shader.CurrentTechnique.Passes[0].Apply();
+
+            Color mainColor = Color.Lerp(Color.White, Color.DarkRed, 0.14f);
+            Color targetColor = Color.Lerp(Color.Black, Color.White, 0.30f);
+            Color boxColor = Color.Lerp(targetColor, mainColor, EaseOutBack(AngleLerpValue));
+            SB.Draw(tex, posBase, null, boxColor with { A = 255 }, Projectile.rotation + rotFixer, ori, Projectile.scale, se, 0);
+            SB.EndShaderArea();
+        }
+
+    }
+}

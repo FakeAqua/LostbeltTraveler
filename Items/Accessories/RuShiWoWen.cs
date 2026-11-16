@@ -1,0 +1,139 @@
+using System.Collections.Generic;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Globals.Handlers;
+using LostbeltTraveler.Globals.Methods;
+using LostbeltTraveler.Globals.Methods.Textbox;
+using LostbeltTraveler.Globals.Players;
+using Terraria;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Items.Accessories
+{
+    public class RuShiWoWen : LostbeltItemClass
+    {
+        public override string AssetPath => AssetHandler.Equips;
+        public static int Cooldown = 30;
+        public static int MinMinionSelected()
+        {
+            return (int)(LostbeltList.SummonWeaponList.Count * .1f);
+        }
+
+        public override void SetStaticDefaults()
+        {
+            LostbeltList.ShinyRarityItemDictionary.Add(Type, ShinyRarityType.Donator);
+        }
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(Cooldown, LostbeltList.SummonWeaponList.Count - MinMinionSelected());
+        public override void ExSD()
+        {
+            Item.accessory = true;
+            Item.SetUpRarityPrice(ItemRarityID.Red);
+            Item.Lostbelt().ItemBelongTo = EnumItemOwner.Donator;
+            Item.Lostbelt().OwnerName = "丰川祥子";
+        }
+        public override bool ConsumeItem(Player player) => false;
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            if (!hideVisual)
+            {
+                player.Lostbelt().powerLilyVanity = true;
+            }
+            player.Lostbelt().powerLily = true;
+        }
+        public override void UpdateVanity(Player player)
+        {
+            player.Lostbelt().powerLilyVanity = true;
+        }
+        public IReadOnlyList<TooltipLine> CacheTooltip;
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            LostbeltPlayer modPlayer = Main.LocalPlayer.Lostbelt();
+            if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt))
+            {
+                //获取表单与对应的名字。
+                List<string> foodList = new(modPlayer.ruShiWoWenBanMinionNameList);
+                //直接遍历一个表单
+                //这里表单是严格11对应的，理论来说不会出现问题，大概
+                string combineValue = null;
+                string supply = "\n";
+                int line = 1;
+                if (foodList.Count != 0)
+                    combineValue = $"{line}-";
+                else
+                {
+                    combineValue = string.Empty;
+                    supply = string.Empty;
+                }
+                for (int i = 0; i < foodList.Count; i++)
+                {
+
+                    string perInstance = $"[i:{foodList[i]}]";
+                    //将其放进这个列表里合并起来
+                    combineValue += $"{perInstance}";
+                    //如果i每次都%8==0,新开一行
+                    if ((i + 1) % 10 == 0)
+                    {
+                        //过一个判定看这个值是不是超过了列表数
+                        //这样就不会新开一个什么都没有的行，因为写法上的问题
+                        if (i + 1 < foodList.Count)
+                        {
+                            line++;
+                            combineValue += $"\n{line}-";
+                        }
+                    }
+                }
+                //最后使用replace的插值字符串。
+                tooltips.ReplaceAllTooltip(this.GetLocalizationKey($"BanMinionList"), null, supply + combineValue, foodList.Count);
+
+            }
+            CacheTooltip = tooltips;
+        }
+        public override void HoldItem(Player player)
+        {
+            player.Lostbelt().drawUseableItemIcon = Type;
+            for (int i = 0; i < player.inventory.Length; i++)
+            {
+                Item item = player.inventory[i];
+                if (item.IsAir || item is null)
+                    continue;
+                if (LostbeltList.SummonWeaponList.Contains(item.type))
+                {
+                    if (item.type < VanillaMaxItem)
+                    {
+                        if (!player.Lostbelt().ruShiWoWenBanMinionNameList.Contains(item.type.ToString()))
+                            item.Lostbelt().setTintIcon = true;
+                    }
+                    else
+                    {
+                        if (!player.Lostbelt().ruShiWoWenBanMinionNameList.Contains(item.ModItem.FullName))
+                            item.Lostbelt().setTintIcon = true;
+
+                    }
+                }
+            }
+        }
+        public override void PostDrawTooltipLine(DrawableTooltipLine line)
+        {
+            if (line.IsItemName())
+            {
+                TextboxManager.FirstLineY = line.Y;
+            }
+            //var setlist = new List<TextboxSettings>();
+            string text = this.GetLocalizationKey("FlavorTooltips").ToLangValue();
+            TextboxSettings sets = new TextboxSettings
+            (
+                hasTitle: false,
+                backgroundColor: Color.White * .24f,
+                backgroundEdgeColor: Color.White,
+                textColor: Color.White,
+                textEdgeColor: Color.Black,
+                mainText: text
+            );
+            TextboxMethods.DrawTextboxTooltipWithBackground(line, CacheTooltip, ref sets);
+        }
+    }
+}

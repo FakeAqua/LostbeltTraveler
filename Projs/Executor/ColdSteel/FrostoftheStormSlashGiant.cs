@@ -1,0 +1,237 @@
+﻿using ContinentOfJourney.NPCs.Boss_WorldsEndEverlastingFallingWhale;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Buffs.Debuffs;
+using LostbeltTraveler.Core.ParticleECS;
+using LostbeltTraveler.Core.PixelatedRender;
+using LostbeltTraveler.Core.Primitives.Trail;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Methods;
+using System.Collections.Generic;
+using Terraria;
+
+namespace LostbeltTraveler.Projs.Executor.ColdSteel
+{
+    public class FrostoftheStormSlashGiant : LostbeltProjs, IPixelatedRenderer
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Executor;
+        public ScarletDrawLayer LayerToRenderTo => ScarletDrawLayer.BeforeDusts;
+        public BlendState BlendState => BlendState.Additive;
+        public override string Texture => LostbeltModAssets.InvisAsset.Path;
+        public List<Vector2> CenterPosList = [];
+        private Vector2 TopLeftPoint = new Vector2(-600, 0);
+        private Vector2 TopRightPoint = new Vector2(50, -100);
+        private Vector2 BottomLeftPoint = new Vector2(50, 100);
+        private Vector2 BottomRightPoint = new Vector2(-600, 0);
+        public float RandOffset1;
+        public float RandOffset2;
+        public float RandOffset3;
+        public float RandOffset4;
+        public bool PostFirstFrame = false;
+        public override void ExSD()
+        {
+            Projectile.width = 800;
+            Projectile.height = 800;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 5;
+            Projectile.timeLeft = 120;
+            Projectile.noEnchantmentVisuals = true;
+            Projectile.extraUpdates = 2;
+            Projectile.Opacity = 0f;
+        }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            for (int i = 0; i < CenterPosList.Count; i++)
+            {
+                Rectangle ProjHitbox = Utils.CenteredRectangle(CenterPosList[i] + Projectile.Center - (Projectile.velocity + Projectile.SafeDir() * 200f), new Vector2(50, 50));
+
+                if (targetHitbox.Intersects(ProjHitbox))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public override void AI()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            SetFirstFrame();
+            Projectile.Opacity = Lerp(Projectile.Opacity, 1f, 0.22f);
+            if (Projectile.IsOutScreen())
+                return;
+            for (int i = 0; i < 4; i++)
+            {
+                int index = Main.rand.Next(10, CenterPosList.Count - 10);
+                Vector2 pos = CenterPosList[index] + Projectile.Center - Projectile.SafeDir() * 30f;
+                ECSParticle.SnowCloud(pos, Projectile.velocity * Main.rand.NextFloat(.4f), RandLerpColor(Color.LightSkyBlue, Color.Gray), 45, RandRotTwoPi, 0.45f, Main.rand.NextFloat(.9f, 1.3f) * 0.270f);
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                int index = Main.rand.Next(3, CenterPosList.Count - 3);
+                Vector2 pos = CenterPosList[index] + Projectile.Center;
+                float scale = Main.rand.NextFloat(.52f, .82f) * .2f;
+                int lifeTime = Main.rand.Next(30, 60);
+                ECSParticle.HRShinyOrb(pos, Projectile.velocity * .8f, RandLerpColor(Color.RoyalBlue, Color.LightBlue), lifeTime, 1, scale, glowMult: .65f);
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                int index = Main.rand.Next(3, CenterPosList.Count - 3);
+                Vector2 pos = CenterPosList[index] + Projectile.Center;
+                ECSParticle.ShinyCrossStarECS(pos, Projectile.velocity / 2f, RandLerpColor(Color.RoyalBlue, Color.LightBlue), 40, 1, 1.180f, 0.2f);
+            }
+
+        }
+        public int WhaleHitTime = 0;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (target.type == NPCType<WorldsEndEverlastingFallingWhale>())
+            {
+                modifiers.SourceDamage *= Clamp((1 - .20f * WhaleHitTime), 0.05f, 1f);
+                WhaleHitTime++;
+            }
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffType<AbsoluteZeroBuff>(), GetSeconds(1));
+            if (!target.CanBeChasedBy() || LostbeltMethods.OutOffScreen(target.Center))
+                return;
+            for (int i = 0; i < 30; i++)
+            {
+                Vector2 pos = target.Center + Main.rand.NextVector2CircularEdge(10f, 10f);
+                Vector2 vel = Main.rand.NextFloat(TwoPi).ToRotationVector2() * Main.rand.NextFloat(0.2f, 17.4f);
+                float scale = Main.rand.NextFloat(0.4f, 0.9f) * .2f;
+                ECSParticle.HRShinyOrb(pos, vel, RandLerpColor(Color.RoyalBlue, Color.LightBlue), 45, 1, scale, glowMult: .75f);
+
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                Color Firecolor = RandLerpColor(Color.White, Color.RoyalBlue);
+                Vector2 spawnPos = target.Center + RandVelTwoPi(10f, 30f);
+                Vector2 vel = (target.Center - spawnPos).ToSafeNormalize() * Main.rand.NextFloat(1f, 20f);
+                ECSParticle.SnowCloud(spawnPos, vel, Firecolor, 40, RandRotTwoPi, 0.25f, .28f);
+            }
+        }
+        public void SetFirstFrame()
+        {
+            if (PostFirstFrame)
+                return;
+            PostFirstFrame = true;
+            RandOffset1 = Main.rand.NextFloat(0, 10);
+            RandOffset2 = Main.rand.NextFloat(0, 10);
+            RandOffset3 = Main.rand.NextFloat(0, 10);
+            RandOffset4 = Main.rand.NextFloat(0, 10);
+            float maxPoints = 50;
+            float xMult = 5f;
+            float yMult = 3.5f;
+
+
+            if (Projectile.ai[2] > 0)
+            {
+                maxPoints = 70;
+                xMult = 7.5f;
+                yMult = 4.5f;
+            }
+            float heldscale = Owner.HeldItem.scale;
+            xMult *= heldscale;
+            yMult *= heldscale;
+            for (int i = 0; i < maxPoints; i++)
+            {
+                float progress = i / maxPoints;
+                Vector2 finalPos = Vector2.CatmullRom(TopLeftPoint, TopRightPoint, BottomLeftPoint, BottomRightPoint, progress);
+                finalPos.X *= xMult;
+                finalPos.Y *= yMult;
+                CenterPosList.Add(finalPos.RotatedBy(Projectile.rotation));
+            }
+        }
+        public void RenderPixelated(SpriteBatch sb)
+        {
+            LostbeltMethods.EnterShaderAreaPixel(BlendState.Additive);
+            Texture2D tex = LostbeltModAssets.Texture_StandardGradient.Value;
+            Effect e = LostbeltShaderAssets.AlphaFade;
+            e.Parameters["uFadeoutLeftLength"].SetValue(0.1f);
+            e.Parameters["uFadeinRigtLength"].SetValue(0.1f);
+            e.Parameters["uFadeinTopLength"].SetValue(0);
+            e.Parameters["uFadeinBottomLength"].SetValue(0.4f);
+            e.Parameters["UVMult"].SetValue(new Vector2(1f, 1f));
+            e.CurrentTechnique.Passes[0].Apply();
+            Color setColor = Color.Lerp(Color.RoyalBlue, Color.WhiteSmoke, 0.7f);
+            DrawBaseWave(tex, Color.LightSkyBlue * 0.30f, 18f);
+            DrawBaseWave(tex, Color.SkyBlue * 0.40f, 15f);
+            DrawBaseWave(tex, Color.DarkBlue * .50f, 12f);
+            DrawBaseWave(tex, Color.RoyalBlue * .50f, 6f);
+            DrawBaseWave(tex, setColor * .90f, 1.5f);
+            Texture2D texture2 = LostbeltModAssets.Noise_Aura.Value;
+            Vector4 vector4 = new(0.2f, 0.2f, 0.05f, 0.6f);
+            LostbeltMethods.ApplyAlphaCut(vector4, new(0, -Main.GlobalTimeWrappedHourly * 0.79f + RandOffset1), new Vector2(5f, 0.07f), Color.LightSkyBlue);
+            DrawBaseWave(texture2, Color.LightSkyBlue, 10f);
+
+            texture2 = LostbeltModAssets.Noise_Misc.Value;
+            LostbeltMethods.ApplyAlphaCut(vector4, new(0, -Main.GlobalTimeWrappedHourly * 0.15f + RandOffset2), new Vector2(5f, 0.1f), Color.LightBlue);
+            DrawBaseWave(texture2, Color.LightBlue * 0.82f, 10f);
+
+            texture2 = LostbeltModAssets.Noise_Aura.Value;
+            setColor = Color.Lerp(Color.LightSkyBlue, Color.WhiteSmoke, 0.70f);
+            LostbeltMethods.ApplyAlphaCut(vector4, new(0, -Main.GlobalTimeWrappedHourly * 0.15f + RandOffset3), new Vector2(2f, 0.205f), Color.White);
+            DrawBaseWave(texture2, setColor, 20f);
+            DrawBaseWave(texture2, Color.RoyalBlue * 0.5f, 20f);
+
+
+            setColor = Color.Lerp(Color.RoyalBlue, Color.WhiteSmoke, 0.28f);
+            LostbeltMethods.ApplyAlphaCut(vector4, new(0, -Main.GlobalTimeWrappedHourly * 0.35f + RandOffset4), new Vector2(1.5f, 0.31f), setColor);
+            DrawBaseWave(texture2, setColor, 20f);
+
+            LostbeltMethods.EndShaderAreaPixel();
+
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (!PostFirstFrame)
+                return false;
+            if (Projectile.IsOutScreen())
+                return false;
+
+            for (int i = 0; i < CenterPosList.Count; i++)
+            {
+                //Rectangle ProjHitbox = Utils.CenteredRectangle(CenterPosList[i] + Projectile.Center - (Projectile.velocity + Projectile.SafeDir() * 200f), new Vector2(50, 50));
+                //Vector2 topLeft = ProjHitbox.TopLeft() ;
+                //Vector2 bottomRight = ProjHitbox.BottomRight() ;
+                //Utils.DrawLine(Main.spriteBatch, topLeft, new Vector2(bottomRight.X, topLeft.Y), Color.Black);
+                //Utils.DrawLine(Main.spriteBatch, new Vector2(bottomRight.X, topLeft.Y), bottomRight, Color.Black);
+                //Utils.DrawLine(Main.spriteBatch, bottomRight, new Vector2(topLeft.X, bottomRight.Y), Color.Black);
+                //Utils.DrawLine(Main.spriteBatch, new Vector2(topLeft.X, bottomRight.Y), topLeft, Color.Black);
+            }
+            PixelatedRenderManager.BeginDrawProj = true;
+            return false;
+        }
+        private List<ScarletVertex> _cacheVertex = new List<ScarletVertex>();
+        public void DrawBaseWave(Texture2D tex, Color color, float v)
+        {
+
+            //连续多次的创建顶点列表可能会遇到性能上的问题
+            //这里最好缓存一下。
+            _cacheVertex.Clear();
+            float heldscale = Owner.HeldItem.scale;
+            Vector2 projVel = Projectile.velocity.SafeNormalize(Vector2.UnitX) * (42 + Projectile.ai[2] * 13f);
+            for (int i = 0; i < CenterPosList.Count; i++)
+            {
+                float progress = (float)i / CenterPosList.Count;
+                Vector2 pos = Projectile.Center - Main.screenPosition - Projectile.SafeDir() * 200;
+                Vector2 posHead = CenterPosList[i] + pos;
+                Vector2 posSrc = CenterPosList[i] + pos - projVel * v * Projectile.Opacity * heldscale;
+                _cacheVertex.Add(new ScarletVertex(posHead, color, new Vector3(progress, 0, 0)));
+                _cacheVertex.Add(new ScarletVertex(posSrc, color, new Vector3(progress, 1, 0)));
+            }
+            if (_cacheVertex.Count < 3)
+                return;
+            GD.Textures[0] = tex;
+            GD.SamplerStates[0] = SamplerState.PointWrap;
+            GD.DrawUserPrimitives(PrimitiveType.TriangleStrip, _cacheVertex.ToArray(), 0, _cacheVertex.Count - 2);
+        }
+    }
+}

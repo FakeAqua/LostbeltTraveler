@@ -1,0 +1,362 @@
+﻿using ContinentOfJourney.Items;
+using ContinentOfJourney.Items.Accessories;
+using ContinentOfJourney.Items.Material;
+using ContinentOfJourney.Items.Mounts.Rudders;
+using ContinentOfJourney.Items.Placables.FishingCrate;
+using ContinentOfJourney.Tiles;
+using LostbeltTraveler.Items.Accessories;
+using LostbeltTraveler.Items.Materials;
+using LostbeltTraveler.Items.Useables;
+using LostbeltTraveler.Items.Weapons.Executor.Assistance;
+using LostbeltTraveler.Items.Weapons.Executor.Thrown;
+using LostbeltTraveler.Items.Weapons.Melee;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Globals.Instances.Items
+{
+    public partial class LostbeltGlobalItems : GlobalItem
+    {
+        public void GlobalAccessoriesRecipe()
+        {
+            Recipe.Create(ItemID.FinWings).
+                AddIngredient<ChargeFeatherFish>().
+                AddIngredient(ItemID.SoulofFlight, 5).
+                DisableDecraft().
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+
+            Recipe.Create(ItemID.WarriorEmblem).
+                AddIngredient<EmblemExecutor>().
+                DisableDecraft().
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+
+            Recipe.Create(ItemID.ManaFlower).
+                AddIngredient<ArtificalManaStar>().
+                AddIngredient(ItemID.NaturesGift).
+                AddTile(TileID.TinkerersWorkbench).
+                DisableDecraft().
+                Register();
+
+            Recipe.Create(ItemID.DestroyerEmblem).
+                AddIngredient(ItemID.Amber, 15).
+                AddIngredient<DisasterEssence>(50).
+                AddIngredient(ItemID.LihzahrdBrick, 25).
+                DisableDecraft().
+                AddTile(TileID.MythrilAnvil).
+                Register();
+
+            Recipe.Create(ItemID.CobaltShield).
+                AddRecipeGroup(LostbeltRecipeGroup.AnyCobaltBar, 10).
+                DisableDecraft().
+                AddTile(TileID.Anvils).
+                Register();
+
+            Recipe.Create(ItemID.CrossNecklace).
+                AddRecipeGroup(LostbeltRecipeGroup.AnyGoldBar, 16).
+                AddIngredient(ItemID.BrokenBatWing).
+                DisableDecraft().
+                AddTile(TileID.MythrilAnvil).
+                Register();
+
+            Recipe.Create(ItemID.MedicatedBandage).
+                AddIngredient<BambooShield>().
+                AddIngredient(ItemID.AdhesiveBandage).
+                AddTile(TileID.TinkerersWorkbench).
+                DisableDecraft().
+                Register();
+
+
+            Recipe.Create(ItemID.PocketMirror).
+                AddIngredient(ItemID.MagicMirror).
+                AddRecipeGroup(LostbeltRecipeGroup.AnyGoldBar, 10).
+                DisableDecraft().
+                AddTile(TileID.TinkerersWorkbench).
+                Register();
+
+            Recipe.Create(ItemID.AvengerEmblem).
+                AddIngredient<EmblemExecutor>().
+                AddIngredient(ItemID.SoulofFright, 5).
+                AddIngredient(ItemID.SoulofMight, 5).
+                AddIngredient(ItemID.SoulofSight, 5).
+                AddTile(TileID.MythrilAnvil).
+                DisableDecraft().
+                Register();
+
+            Recipe.Create(ItemID.SunStone).
+                AddIngredient(ItemID.LihzahrdBrick, 25).
+                AddIngredient<DisasterEssence>(50).
+                DisableDecraft().
+                AddTile(TileID.MythrilAnvil).
+                Register();
+
+        }
+        public void EmerialCoinRecipe()
+        {
+            Recipe.Create(ItemID.AnkhCharm).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.FireGauntlet).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.LavaWaders).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.LavaproofTackleBag).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.HorseshoeBundle).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.CelestialStone).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.Shellphone).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.GreedyRing).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.FrozenShield).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.FrostsparkBoots).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.SniperScope).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.CharmofMyths).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.PutridScent).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemID.FleshKnuckles).
+                AddIngredient<FishingCoinEmerial>(50).
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            Recipe.Create(ItemType<AnglerCoin>(), 100).
+                AddIngredient<FishingCoinEmerial>().
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+
+            Recipe.Create(ItemType<AnglerGoldCoin>(), 50).
+                AddIngredient<FishingCoinEmerial>().
+                DisableDecraft().
+                AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                Register();
+            int[] earlyHardmodeBags =
+                [
+                ItemID.EyeOfCthulhuBossBag,
+                ItemID.KingSlimeBossBag,
+                ItemID.EaterOfWorldsBossBag,
+                ItemID.QueenSlimeBossBag,
+                ItemID.DeerclopsBossBag,
+                ItemID.QueenBeeBossBag,
+                ItemID.SkeletronBossBag,
+                ItemID.WallOfFleshBossBag,
+                ItemID.BrainOfCthulhuBossBag
+                ];
+            for (int i = 0; i < earlyHardmodeBags.Length; i++)
+            {
+                Recipe.Create(earlyHardmodeBags[i]).
+                    AddIngredient<FishingCoinEmerial>(150).
+                    DisableDecraft().
+                    AddTile(TileType<FishmenFreeMarketTradingSystem>()).
+                    Register();
+            }
+        }
+        public void GlobalMaterialRecipes()
+        {
+            Recipe.Create(ItemType<FinalBar>()).
+                AddIngredient<CrownofSilveryLight>(15).
+                DisableDecraft().
+                AddTile(FinalAnvilTile).
+                Register();
+
+
+
+        }
+        public void GlobalWeaponRecipes()
+        {
+            Recipe.Create(ItemID.Spear).
+                AddRecipeGroup(LostbeltRecipeGroup.AnyCopperBar, 12).
+                DisableDecraft().
+                AddTile(TileID.Anvils).
+                Register();
+
+
+            Recipe.Create(ItemID.NorthPole).
+                AddIngredient<AzureFrostmark>().
+                AddIngredient(ItemID.Ectoplasm, 50).
+                AddTile(TileID.Autohammer).
+                DisableDecraft().
+                Register();
+
+
+            Recipe.Create(ItemID.Amarok).
+                AddIngredient(ItemID.HelFire).
+                AddIngredient(ItemID.FrostCore).
+                DisableDecraft().
+                Register();
+
+
+            Recipe.Create(ItemType<MoltenKnife>()).
+                AddIngredient<NetherStar>().
+                AddTile(TileID.DemonAltar).
+                DisableDecraft().
+                Register();
+
+
+        }
+        public void GlobalMiscRecipes()
+        {
+            Recipe.Create(ItemID.Autohammer).
+                AddIngredient(ItemID.ChlorophyteWarhammer).
+                AddIngredient(ItemID.GlowingMushroom, 100).
+                AddIngredient(ItemID.Ectoplasm, 30).
+                DisableDecraft().
+                AddTile(TileID.CrystalBall).
+                Register();
+            Recipe.Create(ItemID.GuideVoodooDoll).
+                AddIngredient(ItemID.GuideVoodooFish).
+                Register();
+
+            //墓们
+            Recipe.Create(ItemID.Tombstone).
+                AddIngredient(ItemID.StoneBlock, 50).
+                AddTile(TileID.HeavyWorkBench).
+                DisableDecraft().
+                Register();
+            for (int i = ItemID.Headstone; i <= ItemID.Obelisk; i++)
+            {
+                Recipe.Create(i).
+                    AddIngredient(ItemID.StoneBlock, 50).
+                    AddTile(TileID.HeavyWorkBench).
+                    DisableDecraft().
+                    Register();
+            }
+            for (int i = ItemID.RichGravestone1; i <= ItemID.RichGravestone5; i++)
+            {
+                Recipe.Create(i).
+                    AddIngredient(ItemID.StoneBlock, 50).
+                    AddTile(TileID.HeavyWorkBench).
+                    DisableDecraft().
+                    Register();
+            }
+            Recipe.Create(ItemID.GoldenKey).
+                AddRecipeGroup(LostbeltRecipeGroup.AnyGoldBar, 10).
+                AddIngredient(ItemID.Bone, 30).
+                DisableDecraft().
+                AddTile(TileID.Anvils).
+                Register();
+
+            Recipe.Create(ItemID.ObsidianSwordfish).
+                AddIngredient(ItemID.HotlineFishingHook).
+                AddIngredient(ItemID.HellButterfly, 300).
+                DisableDecraft().
+                AddTile(TileID.MythrilAnvil).
+                Register();
+
+        }
+        public void FargoMutantCrossMod()
+        {
+
+            if (!ModLoader.TryGetMod("Fargowiltas", out Mod fargoWiltas))
+                return;
+            Recipe.Create(ItemType<AzureFrostmark>()).
+                AddRecipeGroup(LostbeltRecipeGroup.AnyIceCrate, 5).
+                DisableDecraft().
+                AddTile(TileID.Solidifier).
+                Register();
+            Recipe.Create(ItemType<DungeonBreaker>()).
+                AddRecipeGroup(LostbeltRecipeGroup.AnyDungeonCrate, 5).
+                DisableDecraft().
+                AddTile(TileID.Solidifier).
+                Register();
+
+            //旅人宝匣添加的特殊掉落
+
+            //影子镐
+            Recipe.Create(ItemType<ShadowPickaxe>()).
+                AddRecipeGroup(LostbeltRecipeGroup.AnyDarkCrate, 5).
+                DisableDecraft().
+                AddTile(TileID.Solidifier).
+                Register();
+            //马赛克法杖
+            Recipe.Create(ItemType<MosaicStaff>()).
+                AddIngredient<ShadowCrate>(5).
+                DisableDecraft().
+                AddTile(TileID.Solidifier).
+                Register();
+            //河流法杖
+            Recipe.Create(ItemType<RiverStaff>()).
+                AddIngredient<DistortedCrate>(5).
+                DisableDecraft().
+                AddTile(TileID.Solidifier).
+                Register();
+            //船舵（们）
+            int[] anchor = [ItemType<ClockworkRudder>(), ItemType<DangerousRudder>(), ItemType<FlourishRudder>(), ItemType<HotRudder>(), ItemType<LunarRudder>(), ItemType<NoRudder>(), ItemType<TriangularRudder>(), ItemType<WoodenRudder>()];
+            for (int i = 0; i < anchor.Length; i++)
+            {
+                Recipe.Create(anchor[i]).
+                    AddIngredient<CubistCrate>(5).
+                    DisableDecraft().
+                    AddTile(TileID.Solidifier).
+                    Register();
+            }
+            //叶绿复合弓
+            Recipe.Create(ItemType<ChlorophyteCompositeBow>()).
+                AddRecipeGroup(LostbeltRecipeGroup.AnyLivingCrate, 5).
+                DisableDecraft().
+                AddTile(TileID.Solidifier).
+                Register();
+            //时转
+            Recipe.Create(ItemType<TimeTurner>()).
+                AddIngredient<CountdownCrate>(5).
+                DisableDecraft().
+                AddTile(TileID.Solidifier).
+                Register();
+        }
+        public override void AddRecipes()
+        {
+            GlobalAccessoriesRecipe();
+            GlobalMaterialRecipes();
+            GlobalWeaponRecipes();
+            GlobalMiscRecipes();
+            FargoMutantCrossMod();
+            EmerialCoinRecipe();
+        }
+    }
+}

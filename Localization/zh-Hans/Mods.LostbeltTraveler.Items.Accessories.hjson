@@ -1,0 +1,937 @@
+SouloftheTidalMark: {
+	DisplayName: 澪标之魂
+	Tooltip:
+		'''
+		延长受伤后的无敌帧时间
+		你的生命值永远不会低于{0}点，但仍然会受到致死的伤害
+		攻击时对敌人和自身同时施加[ScarletDebuff/LostbeltTraveler/CursedHeavy]
+		按下 技能键 以吸收附近敌人所有的[ScarletDebuff/LostbeltTraveler/CursedHeavy]给予自身
+		每拥有一层[ScarletDebuff/LostbeltTraveler/CursedHeavy]，增加自身{1}的伤害减免与{2}的暴击伤害
+		“送上的话语乃是……从不，不行，决不！”
+		'''
+}
+
+HeartoftheCrystal: {
+	DisplayName: 水晶之心
+	Tooltip:
+		'''
+		所有的魔法武器不再消耗任何魔力
+		增加15%魔法暴击概率
+		使你造成的魔法伤害乘算降低20%
+		'''
+}
+
+HeartoftheMountain: {
+	DisplayName: 山之心
+	Tooltip:
+		'''
+		所有的魔法武器不再消耗任何魔力
+		增加50%魔法暴击概率
+		增加300最大魔力上限
+		使你造成的魔法伤害10.0x
+		'''
+}
+
+SteadyBreath: {
+	DisplayName: 屏息静神
+	Tooltip:
+		'''
+		增加{0}远程伤害与{1}远程暴击概率
+		在光标位置召唤一枚准星，准星瞄准的敌人会额外受到{2}的伤害
+		并会对没有造成暴击的远程攻击以{3}的独立概率设置为暴击伤害
+		可通过饰品可见性以开关准星可见与否
+		'''
+}
+
+PreciousTarget: {
+	DisplayName: 精确瞄准
+	Tooltip:
+		'''
+		增加{0}远程伤害与{1}远程暴击概率
+		在光标位置召唤一枚准星，准星瞄准的敌人会额外受到{2}的伤害
+		并会对没有造成暴击的远程攻击以{3}的独立概率设置为暴击伤害
+		可通过饰品可见性以开关准星可见与否
+		'''
+}
+
+ExecutorsSwordMarkPlus: {
+	DisplayName: 处刑者剑章 A++
+	Tooltip:
+		'''
+		承受伤害时为你叠加{0}次手持武器的处决进程
+		在执行处决后，追加当前手持武器{0}次处决进程。但清空其余武器的处决进程
+		若手持了魔术载体类武器，则追加该手持武器发起处决要求的处决进程的1/{1}
+		在执行处决后，直到手动切换武器前，获得如下效果：
+		当前生命值为50%以上时，增加{2}代行者暴击伤害
+		当前生命值为100%时，增加{2}代行者暴击伤害
+		'''
+}
+
+ExecutorsSwordMark: {
+	DisplayName: 处刑者剑章 A+
+	Tooltip:
+		'''
+		承受伤害时为你叠加{0}次手持武器的处决进程
+		在执行处决后，追加当前手持武器{0}次处决进程。但清空其余武器的处决进程
+		若手持了魔术载体类武器，则追加该手持武器发起处决要求的处决进程的1/{1}
+		在执行处决后，直到手动切换武器前，获得如下效果：
+		当前生命值为50%以上时，增加{2}代行者暴击伤害
+		当前生命值为100%时，增加{2}代行者暴击伤害
+		'''
+}
+
+CrimsonRune: {
+	DisplayName: 猩红护符
+	Tooltip:
+		'''
+		大幅度增加生命再生速度
+		缩短25%治疗药水的冷却时间
+		'''
+}
+
+SacarbWings: {
+	DisplayName: 圣甲虫之翼
+	Tooltip:
+		'''
+		可飞行或缓降，拥有无限飞行时间
+		使你[ScarletBuff/LostbeltTraveler/AntiKnockbackBuff]，免疫[ScarletDebuff/ContinentOfJourney/IcarusBuff]，[ScarletDebuff/ContinentOfJourney/PlagueBuff]，[ScarletDebuff/ContinentOfJourney/MonarchButterflyBuff]和[ScarletDebuff/ContinentOfJourney/DivineFireBuff]
+		所有的攻击都会造成[ScarletDebuff/LostbeltTraveler/TheBleachingBuff]
+		延长受伤后的无敌帧时间
+		'''
+}
+
+ShadowCast: {
+	DisplayName: 死灵之心
+	Tooltip:
+		'''
+		双击上/下/左/右方向键执行死灵冲刺，可以穿过敌人和弹幕
+		横穿敌人时为敌人施加特殊的侵染效果
+		被侵染的敌人会承受强力且带有传染性的持续伤害
+		侵染效果不会被敌人免疫
+		'''
+}
+
+LifeBalloon: {
+	DisplayName: 繁茂气球
+	Tooltip:
+		'''
+		增加{0}最大生命上限，{1}生命恢复速度
+		可让持有者十五连跳
+		增加跳跃高度，消除掉落伤害
+		受到伤害后释放蜜蜂并将使用者浸入蜂蜜中
+		允许朝四个方向冲刺
+		向下冲刺时可以践踏敌人
+		'''
+}
+
+Desterrennacht: {
+	DisplayName: 星月夜
+	Tooltip:
+		'''
+		大幅度延长受伤后的无敌帧时间
+		你的生命值永远不会低于{0}点，但仍然会受到致死的伤害
+		攻击时对敌人和自身同时施加[ScarletDebuff/LostbeltTraveler/CursedHeavyUpgrade]
+		并以{1}概率对敌人额外施加[ScarletDebuff/LostbeltTraveler/DeathTimer]
+		按下 技能键 以吸收附近敌人所有的[ScarletDebuff/LostbeltTraveler/CursedHeavyUpgrade]给予自身
+		每拥有一层[ScarletDebuff/LostbeltTraveler/CursedHeavyUpgrade]，增加自身{2}的伤害减免与{3}的暴击伤害
+		“来自夏日星之硕花，化作一滴疯狂，现请再次将星辰带去永眠之座吧。”
+		'''
+}
+
+ManaSavingsJar: {
+	DisplayName: 魔力储蓄罐
+	Tooltip:
+		'''
+		提供魔力上限，随魔力水晶使用次数增加而降低
+		最大提供150点魔力上限
+		'''
+}
+
+CycleMadness: {
+	DisplayName: 轮回疯狂
+	Tooltip:
+		'''
+		清空武器的暴击概率
+		造成任意伤害时，总会生成暴击星
+		每次拾取暴击星增加{0}的暴击概率，最大增加至{2}
+		拾取暴击星时总会刷新上述效果{1}秒
+		'''
+}
+
+EmblemVanguard: {
+	DisplayName: 先锋徽章
+	Tooltip:
+		'''
+		允许免疫击退
+		按下 技能键 为自己提供长达{0}秒的无敌时间
+		在无敌时间结束后，进入约{1}秒的冷却
+		'''
+}
+
+EmblemExecutor: {
+	DisplayName: 刽子手徽章
+	Tooltip: 增加15%代行者伤害
+}
+
+LoveRing: {
+	DisplayName: 爱心指环
+	Tooltip:
+		'''
+		降低40%商店的价格
+		对于异性NPC，进一步降低5%商店价格
+		附近存在异性玩家时，提升其10%攻击速度与移动速度
+		'''
+}
+
+ExecutorBadge: {
+	DisplayName: 执行者徽章
+	Tooltip:
+		'''
+		代行者伤害提高20%
+		代行者暴击概率提高5%
+		"■会■执行者"
+		'''
+}
+
+AxeofPerun: {
+	DisplayName: 佩伦之斧
+	Tooltip:
+		'''
+		增加{0}代行者暴击概率
+		增加{1}代行者暴击伤害
+		'''
+}
+
+ConceptualBlackKey: {
+	DisplayName: 概念黑键
+	Tooltip:
+		'''
+		增加{0}代行者伤害，暴击概率，{1}暴击伤害
+		增加{2}点代行者护甲穿透
+		处决攻击时提供[ScarletBuff/LostbeltTraveler/BlackKeyExecutionBuff]{3}秒
+		重复触发处决攻击不会刷新持续时间
+		延长受伤后的无敌帧时间
+		自身被伤害时，回复{4}点生命值
+		“代行赞美主”
+		'''
+}
+
+ArcBow: {
+	DisplayName: 拱形弓弩
+	Tooltip:
+		'''
+		自身被伤害时，回复{0}点生命值
+		处决攻击时提供[ScarletBuff/LostbeltTraveler/ArcBowBuff]{1}秒
+		重复触发处决攻击不会刷新持续时间
+		'''
+}
+
+MachineGunTalisman: {
+	DisplayName: 机枪护身符
+	Tooltip:
+		'''
+		自身被伤害时，回复{0}点生命值
+		处决攻击时提供[ScarletBuff/LostbeltTraveler/ArcBowBuff]{1}秒
+		重复触发处决攻击不会刷新持续时间
+		'''
+}
+
+RocketCharm: {
+	DisplayName: 火箭挂饰
+	Tooltip:
+		'''
+		增加{0}点代行者护甲穿透
+		处决攻击时提供[ScarletBuff/LostbeltTraveler/RocketCharmBuff]{1}秒
+		重复触发处决攻击不会刷新持续时间
+		'''
+}
+
+MiniatureBayonet: {
+	DisplayName: 微缩刺刀
+	Tooltip:
+		'''
+		增加{0}代行者暴击概率
+		增加{1}代行者暴击伤害
+		'''
+}
+
+ArtificalManaStar: {
+	DisplayName: 人工仿造魔力星
+	Tooltip:
+		'''
+		魔法武器的魔力值消耗-1
+		需要时自动使用魔力药水
+		魔力药水的恢复效率减少15%
+		'''
+}
+
+MayaBall: {
+	DisplayName: 蓝色弹珠
+	Tooltip:
+		'''
+		你承受的击退力放大5倍
+		受击时，承受的击退力量将与敌人的防击退系数成反比
+		若敌人完全防击退，你也不会受到击退的影响
+		“这个操作的容错只有两帧！！”
+		'''
+}
+
+HeartoftheRuinFrost: {
+	DisplayName: 霜封的王国之心
+	Tooltip:
+		'''
+		+{0} 最大生命上限
+		免疫击退和岩浆
+		免疫[ScarletDebuff/Terraria/Frozen]、[ScarletDebuff/Terraria/Frostburn]、[ScarletDebuff/Terraria/Frostburn2]和[ScarletDebuff/Terraria/Chilled]
+		允许玩家冲入敌人和水下呼吸
+		获得冰冻护盾所有效果
+		冲入敌人时施加[ScarletDebuff/LostbeltTraveler/AbsoluteZeroBuff]
+		“那曾经繁华一时的异界王国如今崩毁沉寂于暴雪之中”
+		'''
+}
+
+ExecutorsSwordMarkSmall: {
+	DisplayName: 处刑者剑章
+	Tooltip:
+		'''
+		承受伤害时为你叠加{0}次手持武器的处决进程
+		在执行处决后，追加当前手持武器{0}次处决进程。但清空其余武器的处决进程
+		若手持了魔术载体类武器，则追加该手持武器发起处决要求的处决进程的1/{1}
+		在执行处决后，直到手动切换武器前，获得如下效果：
+		当前生命值为50%以上时，增加{2}代行者暴击伤害
+		当前生命值为100%时，增加{2}代行者暴击伤害
+		'''
+}
+
+HeartoftheDistantArk: {
+	DisplayName: 遥远的方舟之心
+	Tooltip:
+		'''
+		+{0} 最大生命上限
+		免疫击退与岩浆
+		允许玩家冲入敌人和水下呼吸
+		“水没都市，我们没能及时登上那艘方舟”
+		'''
+}
+
+PinballPurgatory: {
+	DisplayName: 弹球炼狱
+	Tooltip:
+		'''
+		你承受的击退力放大5倍
+		受击时，承受的击退力量将与敌人的防击退系数成反比
+		若敌人完全防击退，你也不会受到击退的影响
+		同时根据受击时的弹珠类型选择四种不同的效果
+		“把你发配到弹球炼狱，在四种不同颜色的弹球之间叮呤咣啷开奖”
+		'''
+	DetailTooltip:
+		'''
+		白色弹珠什么都不做
+		蓝色弹珠允许你在较短的时间内四向冲刺
+		粉色弹珠允许你在较长的时间内四向冲刺
+		橙色弹珠允许你受伤时降下炼狱火球
+		'''
+}
+
+SlimeGodShield: {
+	DisplayName: 日光大盾
+	Tooltip:
+		'''
+		允许你冲入敌人，并在冲入敌人时升起一个太阳
+		太阳将在短暂时刻后对世界范围内的所有敌人造成一次伤害
+		免疫击退、伊卡洛斯和所有火系减益
+		'''
+}
+
+GreedyMask: {
+	DisplayName: 嗜血面具
+	Tooltip:
+		'''
+		+2 HP/s 生命恢复速度，生命恢复基础再生速率1.5x
+		将所有治疗药水的治疗量重设定为依据玩家生命上限的治疗百分比
+		使用治疗药水不再造成[ScarletDebuff/Terraria/PotionSickness]，但造成[ScarletBuff/LostbeltTraveler/CrimsonCharmBuff]{1}秒
+		在没有[ScarletBuff/LostbeltTraveler/CrimsonCharmBuff]时，治疗药水必定恢复100%的生命
+		在[ScarletBuff/LostbeltTraveler/CrimsonCharmBuff]期间再次使用治疗药水，会减少{0}治疗量，直至{2}点
+		“难以想象为了活下去竟如此疯狂”
+		'''
+}
+
+BitingClaw: {
+	DisplayName: 咬合蟹爪
+	Tooltip:
+		'''
+		增加{0}渔力
+		佩戴后，添加由异闻旅者模组提供的特殊渔获
+		'''
+}
+
+PassionfruitJar: {
+	DisplayName: 百香果酱瓶
+	Tooltip:
+		'''
+		佩戴后，在游戏结束之时会播报特殊音乐
+		在时装栏内可生效
+		'''
+}
+
+SpaceHorror: {
+	DisplayName: 宇宙恐慌
+	Tooltip:
+		'''
+		清空武器的暴击概率
+		造成任意伤害时，总会生成暴击星
+		每次拾取暴击星增加{0}的暴击概率，最大增加至{2}
+		拾取暴击星时总会刷新上述效果{1}秒
+		'''
+}
+
+RuShiWoWen: {
+	DisplayName: 如是我闻
+	Tooltip:
+		'''
+		首次装备时立刻清除已召唤的仆从
+		每{0}秒清除已召唤的仆从，并从全部仆从种类中随机召唤1名仆从直至仆从上限
+		同批次召唤的全部仆从，面板伤害取本批次中面板伤害最低的仆从的原始数值，受召唤伤害加成
+		手持该饰品，对着背包内的仆从召唤杖按下互动键以禁用对应的仆从生成
+		至多禁用{1}种仆从，对着该饰品按下互动键则可以移除最后一个加入列表的仆从
+		按住左Alt以查看禁用列表
+		'''
+	BanMinionList: 召唤物禁用列表({1}){0}
+	FlavorTooltips:
+		'''
+		南无如来，应供
+		正遍知，明行足
+		善逝，世间解
+		无上士，调御丈夫;
+		天人师，佛，世尊
+		'''
+}
+
+EmblemFirearm: {
+	DisplayName: 热武器硬币
+	Tooltip:
+		'''
+		手持代行者的热武器时获得效果
+		增加{1}代行者暴击概率
+		手持对应武器时间越长，代行者的暴击伤害更高，最高{0}
+		切换武器时立刻重置
+		'''
+}
+
+EmblemColdSteel: {
+	DisplayName: 冷兵器硬币
+	Tooltip:
+		'''
+		手持代行者的冷兵器时获得效果
+		增加{0}代行者伤害，{1}代行者暴击概率
+		对原始护甲值较低的目标造成额外伤害，最大额外造成{2}
+		'''
+}
+
+EmblemThrown: {
+	DisplayName: 投掷品硬币
+	Tooltip:
+		'''
+		手持代行者的投掷品时获得效果
+		增加{0}代行者暴击伤害
+		增加{1}代行者暴击概率
+		'''
+}
+
+EmblemGalaxy: {
+	DisplayName: 群星之证
+	Tooltip:
+		'''
+		佩戴后，对背包内的[i:LostbeltTraveler/TheSevenStar]七星按下互动键，以转化为[i:LostbeltTraveler/TheGreatDipper]极星
+		极星只有在佩戴群星之证时才能正常使用
+		'''
+}
+
+SkyofHorizon: {
+	DisplayName: 蓝之地平线
+	Tooltip:
+		'''
+		提高飞行和跳跃能力，获得无限飞行时间
+		使你免疫击退
+		'''
+}
+
+LightofHorizon: {
+	DisplayName: 光之地平线
+	Tooltip:
+		'''
+		可飞行或缓降，飞行时按住下键可悬浮，极大地减少惯性
+		提高飞行和跳跃能力，获得无限飞行时间
+		获得所有[i:ContinentOfJourney/Horizon]视界的能力
+		获得所有[i:ContinentOfJourney/Altitude]海拔的能力
+		“飞翔吧，向着彼方的天空”
+		'''
+}
+
+BambooShield: {
+	DisplayName: 简易竹盾
+	Tooltip:
+		'''
+		使你免疫剧毒
+		可作为[i:Bezoar]牛黄的替代品
+		'''
+}
+
+PendantFlow: {
+	DisplayName: 狂风吊坠
+	Tooltip:
+		'''
+		延长5秒代行者支援道具的支援效果持续时间
+		手持代行者武器叠加处决时，为同样位于右方的代行者支援道具叠加2次处决进程
+		'''
+}
+
+PendantGold: {
+	DisplayName: 金色吊坠
+	Tooltip:
+		'''
+		增加10%代行者伤害
+		延长10秒代行者支援道具的支援效果持续时间
+		手持代行者武器叠加处决时，会同样使用位于右方的代行者支援道具进行攻击
+		'''
+}
+
+PendantWitness: {
+	DisplayName: 目击吊坠
+	Tooltip:
+		'''
+		延长1秒代行者支援物品的支援效果持续时间
+		手持代行者武器叠加处决时，为同样位于右方的代行者支援物品叠加1次处决进程
+		'''
+}
+
+CombatSlot: {
+	DisplayName: 战斗镶嵌框
+	Tooltip:
+		'''
+		佩戴后获得额外饰品栏
+		没有别的了
+		'''
+}
+
+SpellBreaker: {
+	DisplayName: 破法之刃-进阶
+	Tooltip:
+		'''
+		增加{0}近战伤害
+		近战攻击命中时施加[ScarletDebuff/Terraria/Venom]，[ScarletDebuff/Terraria/CursedInferno]和[ScarletDebuff/Terraria/Ichor]
+		敌人每拥有1个减益，则额外造成{1}伤害
+		该伤害加成发生在所有伤害结算之后
+		触发效果后会进入{2}帧的冷却
+		'''
+}
+
+SpellBreakerAdvanced: {
+	DisplayName: 破法之刃-精通
+	Tooltip:
+		'''
+		增加{0}近战伤害，{1}近战暴击概率
+		近战攻击命中时施加[ScarletDebuff/ContinentOfJourney/PlagueBuff]，[ScarletDebuff/ContinentOfJourney/DivineFireBuff]和[ScarletDebuff/ContinentOfJourney/VulnerableBuff]
+		敌人每拥有1个减益，则额外造成{2}伤害
+		该伤害加成发生在所有伤害结算之后
+		触发效果后会进入{3}帧的冷却
+		'''
+}
+
+SpellBreakerSmall: {
+	DisplayName: 破法之刃
+	Tooltip:
+		'''
+		近战攻击命中时施加[ScarletDebuff/Terraria/Poisoned]和[ScarletDebuff/Terraria/OnFire]
+		敌人每拥有1个减益，则额外造成{0}伤害
+		该伤害加成发生在所有伤害结算之后
+		触发效果后会进入{1}帧的冷却
+		'''
+}
+
+SelfPortraitoftheSunflower: {
+	DisplayName: 向日葵的自画像
+	Tooltip:
+		'''
+		命中时，敌人承受的持续性减益伤害放大{0}
+		敌人每拥有1个减益，持续性减益伤害额外放大{1}，上限至{2}
+		“在艰难时刻下，作家无法保证其创作的作品所发生的事情。”
+		'''
+}
+
+SelfPortraitoftheBleachingOne: {
+	DisplayName: 褪色之人的自画像
+	Tooltip:
+		'''
+		你的攻击可以施加[ScarletDebuff/LostbeltTraveler/TheBleachingBuff]
+		命中时，敌人承受的持续性减益伤害放大{0}
+		敌人每拥有1个减益，持续性减益伤害额外放大{1}，上限至{2}
+		该效果发生在减益伤害放大之前
+		“文明已然消失，随同那被舍弃的可能世界。”
+		'''
+}
+
+BloodThornCrown: {
+	DisplayName: 血染的荆棘王冠
+	Tooltip:
+		'''
+		任意Boss单位不在场时
+		增加{0}伤害减免，减少{1}伤害和{2}暴击概率
+		任意Boss单位在场时
+		增加{3}伤害
+		且受击超过{4}次时死亡
+		'''
+}
+
+HandofGods: {
+	DisplayName: 神之一手
+	Tooltip:
+		'''
+		增加{0}物块放置速度，{3}格放置距离
+		增加{1}墙壁放置速度，{2}挖掘速度
+		你可以凭空放置物块
+		下方放置在时装栏也同样生效：
+		使你获得各种探索便利，光标位置发光
+		'''
+}
+
+CombatSlotAdvanced: {
+	DisplayName: 高级战斗镶嵌框
+	Tooltip:
+		'''
+		佩戴后允许同一行的时装栏生效
+		然后没有别的了
+		'''
+}
+
+ChargeFeatherFlame: {
+	DisplayName: 充能烈焰羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{2}伤害与{3}暴击概率
+		{0}佩戴时，额外增加{1}秒飞行时间
+		'''
+}
+
+ChargeFeatherBroken: {
+	DisplayName: 充能雏鸟羽翼
+	Tooltip: "[i:CreativeWings]佩戴时，增加15秒飞行时间"
+	Globals: 允许进行羽翼冲刺，冲刺结束时恢复{0}飞行时间
+}
+
+ChargeFeatherEmpress: {
+	DisplayName: 充能女皇羽翼
+	Tooltip:
+		'''
+		允许进行羽翼冲刺
+		佩戴任意翅膀时，获得无限飞行时间
+		{0}佩戴时
+		在白天增加{1}伤害，但减少{2}防御
+		在夜晚增加{2}防御，但减少{1}伤害
+		'''
+}
+
+ChargeFeatherGhost: {
+	DisplayName: 充能幽灵羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{0}秒飞行时间与{1}跳跃速度
+		{6}佩戴时
+		增加{2}魔法伤害，{4}魔法暴击概率
+		减少{3}魔力消耗，增加{5}最大魔力上限
+		'''
+}
+
+ChargeFeatherAngel: {
+	DisplayName: 充能天使羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{3}生命上限
+		{0}佩戴时，{1}生命恢复速度，+{2}防御力
+		'''
+}
+
+ChargeFeatherBeetle: {
+	DisplayName: 充能甲虫羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，攻击召唤甲虫狂潮
+		{0}佩戴时，增加{2}伤害减免，{1}近战攻击速度
+		'''
+}
+
+ChargeFeatherBetsy: {
+	DisplayName: 充能双足翼龙羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，攻击会附带双足翼龙的怒气
+		{0}佩戴时，你可以按下技能键向前方吐出火焰
+		'''
+}
+
+ChargeFeatherButterfly: {
+	DisplayName: 充能蝴蝶羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{1}秒飞行时间
+		佩戴{0}时
+		在飞行时间即将结束时将允许无限飞行
+		但会使翅膀的飞行能力降低至与[i:CreativeWings]同级
+		'''
+}
+
+ChargeFeatherDemon: {
+	DisplayName: 充能恶魔羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{1}疾跑加速度
+		{0}佩戴时，增加{2}伤害和{3}暴击率
+		'''
+}
+
+ChargeFeatherFairy: {
+	DisplayName: 充能仙灵羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{1}点幸运值
+		{0}佩戴时，大部分稀有生物的刷新率提升{2}
+		'''
+}
+
+ChargeFeatherFestival: {
+	DisplayName: 充能节日羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{3}生命上限
+		{0}佩戴时，{1}生命恢复速度，+{2}防御力
+		'''
+}
+
+ChargeFeatherFish: {
+	DisplayName: 充能鱼鳍羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{1}渔力
+		{0}佩戴时
+		你可以无视鱼池的大小惩罚
+		在水中允许无限飞行时间
+		收杆会随机获得一份食物
+		[ScarletBuff/Terraria/WellFed]的食物概率为60%
+		[ScarletBuff/Terraria/WellFed2]的食物概率为30%
+		[ScarletBuff/Terraria/WellFed3]的食物概率为10%
+		'''
+}
+
+ChargeFeatherLeafs: {
+	DisplayName: 充能树叶羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{1}疾跑速度
+		{0}佩戴时，鞭子的攻击距离增加{2}
+		'''
+}
+
+ChargeFeatherSpooky: {
+	DisplayName: 充能哀木羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{1}疾跑速度
+		{0}佩戴时，增加{2}仆从上限，{3}召唤伤害
+		'''
+}
+
+ChargeFeatherVortex: {
+	DisplayName: 充能星璇推进器
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{1}远程伤害与{2}远程暴击率
+		{0}佩戴时，将其基础飞行能力强化至与[i:WingsSolar]和[i:WingsStardust]同级
+		'''
+}
+
+ChargeFeatherTattered: {
+	DisplayName: 充能褴褛仙灵羽翼
+	Tooltip:
+		'''
+		佩戴任意翅膀时，增加{1}疾跑速度
+		{0}佩戴时，增加{2}伤害，{3}暴击概率
+		'''
+}
+
+DetailFang: {
+	// DisplayName: Detail Fang
+	// Tooltip: ""
+}
+
+SupremeBundleBalloon: {
+	DisplayName: 终极气球礼包
+	Tooltip:
+		'''
+		可让持有者十连跳
+		增加跳跃高度，消除掉落伤害
+		受到伤害后释放蜜蜂并将使用者浸入蜂蜜中
+		允许朝四个方向冲刺
+		向下冲刺时可以践踏敌人
+		“儿时的终极梦想。”
+		'''
+}
+
+FinalBarBalloon: {
+	DisplayName: 报应
+	Tooltip:
+		'''
+		增加{0}最大生命上限，{1}生命恢复速度
+		可让持有者无限连跳
+		增加跳跃高度，消除掉落伤害
+		最大生命上限在佩戴[i:ContinentOfJourney/WhaleBoneCharm]时失效
+		获得[i:ContinentOfJourney/DarkHorseshoeBalloon]与[ScarletBuff/Terraria/Honey]的效果
+		在进行连跳时，会向附近的敌人降下雷罚
+		“所以，你们将会看到报应。”
+		'''
+}
+
+SelfPortraitoftheHoloFace: {
+	DisplayName: 电子之海的自画像
+	Tooltip:
+		'''
+		完全禁用生命恢复，承受的减益伤害减少50%
+		每拥有+1 HP/s生命恢复速度，你命中时敌人承受的持续性减益伤害额外放大{0}
+		同时，每次命中时，根据敌人身上拥有的减益数量来治疗你自己
+		“总有一天会在电子之海重逢的吧？”
+		'''
+}
+
+SelfPortraitoftheJourney: {
+	DisplayName: 漂流旅者的自画像
+	Tooltip:
+		'''
+		承受的减益伤害减少25%
+		+1 HP/s生命恢复速度，缩短25%治疗药水的冷却时间
+		命中时施加[ScarletDebuff/LostbeltTraveler/TheBleachingBuff]
+		命中时，敌人承受的持续性减益伤害放大{0}
+		命中时，根据敌人身上拥有的减益数量来治疗你自己
+		敌人每拥有1个减益，持续性减益伤害额外放大{1}，上限至{2}
+		该效果发生在减益伤害放大之前
+		“不要，将我遗忘。”
+		'''
+}
+
+SelfPortraitoftheLady: {
+	DisplayName: 贵妇人的自画像
+	Tooltip:
+		'''
+		命中时，敌人承受的持续性减益伤害放大{0}
+		敌人每拥有1个减益，持续性减益伤害额外放大{1}，上限至{2}
+		该效果发生在减益伤害放大之前
+		'''
+}
+
+SelfPortraitoftheNameless: {
+	DisplayName: 无名氏的自画像
+	Tooltip:
+		'''
+		命中时，敌人承受的持续性减益伤害放大{0}
+		敌人每拥有1个减益，持续性减益伤害额外放大{1}，上限至{2}
+		该效果发生在减益伤害放大之前
+		'''
+}
+
+OverwatchWatch: {
+	DisplayName: 极视手表
+	Tooltip: 持续在你周围释放指针
+}
+
+GunWitchNecklace: {
+	DisplayName: 枪女巫项链
+	Tooltip:
+		'''
+		增加{0}伤害
+		佩戴[i:LostbeltTraveler/GunWitchHead][i:LostbeltTraveler/GunWitchBody][i:LostbeltTraveler/GunWitchLegs]时
+		手持代行者热武器下，增加{1}代行者的攻击速度
+		“融合了一些巫术、火药，以及一点点好奇心。”
+		'''
+}
+
+LifeHairCut: {
+	DisplayName: 生命发夹
+	Tooltip:
+		'''
+		增加{0}生命恢复速度
+		根据损失的生命值与总生命值的比例提升玩家的治疗药水回复量
+		'''
+}
+
+GemYoyoBag: {
+	DisplayName: 宝石悠悠球袋
+	Tooltip:
+		'''
+		可随意选择其中一种宝石的力量增幅宝石悠悠球
+		按住Shift时右键切换
+		'''
+}
+
+YoyoRopeAmber: {
+	DisplayName: 琥珀绳
+	Tooltip:
+		'''
+		[i:LostbeltTraveler/AmberYoyo]充盈着琥珀的力量[i:Amber]
+		'''
+
+}
+
+YoyoRopeAmethyst: {
+	DisplayName: 紫水晶绳
+	Tooltip:
+		'''
+		[i:LostbeltTraveler/AmethystYoyo]充盈着紫水晶的力量[i:Amethyst]
+		'''
+}
+
+YoyoRopeDiamond: {
+	DisplayName: 钻石绳
+	Tooltip:
+		'''
+		[i:LostbeltTraveler/DiamondYoyo]充盈着钻石的力量[i:Diamond]
+		'''
+}
+
+YoyoRopeEmerald: {
+	DisplayName: 绿宝石绳
+	Tooltip:
+		'''
+		[i:LostbeltTraveler/EmeraldYoyo]充盈着绿宝石的力量[i:Emerald]
+		'''
+}
+
+YoyoRopeOnyx: {
+	DisplayName: 玛瑙绳
+	Tooltip:
+		'''
+		[i:LostbeltTraveler/OnyxYoyo]充盈着玛瑙的力量[i:ContinentOfJourney/Onyx]
+		'''
+}
+
+YoyoRopeRuby: {
+	DisplayName: 红玉绳
+	Tooltip:
+		'''
+		[i:LostbeltTraveler/RubyYoyo]充盈着红玉的力量[i:Ruby]
+		'''
+
+}
+
+YoyoRopeSapphire: {
+	DisplayName: 蓝宝石绳
+	Tooltip:
+		'''
+		[i:LostbeltTraveler/SapphireYoyo]充盈着蓝宝石的力量[i:Sapphire]
+		'''
+}
+
+YoyoRopeTopaz: {
+	DisplayName: 黄玉绳
+	Tooltip:
+		'''
+		[i:LostbeltTraveler/TopazYoyo]充盈着黄玉的力量[i:Topaz]
+		'''
+}

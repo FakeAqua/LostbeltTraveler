@@ -1,0 +1,18 @@
+MirrorWhip: {
+	DisplayName: 镜中的我
+	Tooltip:
+		'''
+		从场外抛入
+		仆从将集中打击命中的敌人
+		'''
+}
+
+ShardSpitter: {
+	DisplayName: 碎片喷射器
+	Tooltip:
+		'''
+		仆从将集中打击命中的敌人，无视其50%的防御力
+		按住Shift+右键可切换至远程伤害
+		“我会礼貌地……把他们撕成碎片。”
+		'''
+}

@@ -1,0 +1,76 @@
+BambooSong: {
+	DisplayName: 竹笛
+	Tooltip: ""
+}
+
+ShatterSongs: {
+	DisplayName: 崩碎之歌
+	Tooltip: ""
+}
+
+Corona: {
+	DisplayName: 烈冕
+	Tooltip:
+		'''
+		迸发追踪的流火
+		按下鼠标右键将水晶球降低至玩家高度
+		'''
+}
+
+DragonStaff: {
+	// DisplayName: Dragon Staff
+	// Tooltip: ""
+}
+
+DragonSword: {
+	// DisplayName: Dragon Sword
+	// Tooltip: ""
+}
+
+DragonSniper: {
+	// DisplayName: Dragon Sniper
+	// Tooltip: ""
+}
+
+Fleshtumor: {
+	DisplayName: 肉瘤
+	Tooltip: 快速释放饿鬼攻击敌人
+}
+
+PestilenceFlower: {
+	DisplayName: 恶役之花
+	Tooltip: 快速释放触手攻击敌人
+}
+
+TheFinalDawn: {
+	DisplayName: 落日余晖
+	Tooltip:
+		'''
+		在光标位置降下一个小型太阳
+		小型太阳会在一定时间后展开为大型火柱，滞留在场上持续造成伤害
+		火柱会在消失时，对世界范围内的所有敌人造成一次伤害
+		'''
+}
+
+BrimstoneHeart: {
+	DisplayName: 硫磺火之心
+	Tooltip:
+		'''
+		手持时自身的生命恢复速度减半，并禁用[ScarletBuff/Terraria/Regeneration]
+		启动时自残150点生命值并造成[ScarletDebuff/Terraria/Bleeding]，但给予自身极长的无敌时间
+		发射较为迅捷的硫磺火球，命中时造成熔岩爆炸
+		你的生命值越低，熔岩爆炸造成的伤害越高
+		Shift + 右键以切换物品模式，更为安全地掏出心脏，但不提供自残与无敌效果
+		'''
+}
+
+LivingBoomerangMagic: {
+	DisplayName: 魔能活旋镖
+	Tooltip:
+		'''
+		使用时为自己施加[ScarletBuff/Terraria/ManaRegeneration]
+		持续生成追杀敌人的花瓣与树叶
+		活旋镖本身直接命中时，为你恢复魔力值
+		“另一个世界真实的存在过的证明”
+		'''
+}

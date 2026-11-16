@@ -1,0 +1,19 @@
+﻿namespace LostbeltTraveler.Items.Vanity.Yards
+{
+    public class CantoneseGirlItem : AccVanityItem
+    {
+        public override string VanityName => "CantoneseGirl";
+        public override VanityData VanityData => new VanityData(
+            Color.Lerp(Color.White, Color.Green, 0.35f),
+            Color.Lerp(Color.White, Color.DarkGreen, 0.95f),
+            Color.White);
+        public override Color ParticleColor1 => Color.Green;
+        public override Color ParticleColor2 => Color.White;
+        public override bool HasFlavorTooltip => false;
+        public override void ExSD()
+        {
+            Item.Lostbelt().CanDrawIcon = false;
+            Item.Lostbelt().CanDrawGhost = true;
+        }
+    }
+}

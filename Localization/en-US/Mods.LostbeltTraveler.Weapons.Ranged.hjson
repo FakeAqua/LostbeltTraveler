@@ -1,0 +1,58 @@
+BambooRocket: {
+	DisplayName: Bamboo Rocket
+	Tooltip: Fires homing bamboo
+}
+
+TerraFlamethrower: {
+	DisplayName: Terra Flamethrower
+	Tooltip:
+		'''
+		Bathe your enemies in the dazzling light of Terra
+		Press right-click to throw a phlogiston grenade that explodes, applying[ScarletDebuff/LostbeltTraveler/TerraFlamethrowerBuff]
+		80% chance to not consume gel
+		'''
+}
+
+BlazingSun: {
+	DisplayName: Blazing Sun
+	Tooltip:
+		'''
+		Rapidly fires blazing arrows in succession and summons two miniature suns to fight for you
+		All attacks can pass through walls
+		'''
+}
+
+PandorasBurger: {
+	DisplayName: Pandora's Burger
+	Tooltip:
+		'''
+		On use, randomly fires three different projectiles
+		Randomly selected from weapons in all enabled mods
+		"What?"
+		'''
+}
+
+Duskfall: {
+	DisplayName: Duskfall
+	Tooltip:
+		'''
+		Throws a seeking possessed throwing axe
+		On hit after passing through a ring, applies [ScarletDebuff/ContinentOfJourney/SolarBurntBuff]
+		'''
+}
+
+PropellerRapierRanged: {
+	DisplayName: Storm Propeller
+	Tooltip:
+		'''
+		Continuously releases small tornadoes On Hit
+		Passing through a ring generates a large tornado that hunts down enemies
+		Large tornado applies [ScarletDebuff/LostbeltTraveler/TheBleachingBuff] On Hit
+		"A proof that another world truly existed"
+		'''
+}
+
+RadiantBlazeDawn: {
+	DisplayName: Radiant Blaze Dawn
+	Tooltip: Allows passing through walls
+}

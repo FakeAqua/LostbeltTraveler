@@ -1,0 +1,59 @@
+﻿using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Instances.Items;
+using LostbeltTraveler.Projs.Executor.Thrown;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
+{
+    public class ThePunishment : ExecutorWeaponClass
+    {
+        public override ExecutorWeaponType ExecutorWeaponType => ExecutorWeaponType.Throw;
+        public override int ExecutionProgress => 25;
+        public override void ExSSD()
+        {
+            LostbeltList.ShinyRarityItemDictionary.Add(Type, ShinyRarityType.Hallowed);
+        }
+
+        public override void ExSD()
+        {
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.UseSound = SoundID.Item1;
+            Item.shoot = ProjectileType<ThePunishmentProj>();
+            Item.knockBack = 8f;
+            Item.width = Item.height = 44;
+            Item.damage = 44;
+            Item.useTime = 13;
+            Item.useAnimation = 13;
+            Item.shootSpeed = 18f;
+            Item.SetUpRarityPrice(ItemRarityID.LightRed);
+            Item.SetUpNoUseGraphicItem();
+        }
+        public override void AddRecipes()
+        {
+            if (ModLoader.HasMod("CalamityMod"))
+            {
+                CreateRecipe().
+                    AddIngredient(ItemID.Pwnhammer).
+                    AddRecipeGroup(LostbeltRecipeGroup.AnyMechBossSoul, 5).
+                    AddIngredient(ItemID.Diamond, 5).
+                    AddIngredient(ItemID.Amethyst, 5).
+                    AddTile(TileID.MythrilAnvil).
+                    Register();
+            }
+            else
+            {
+                CreateRecipe().
+                        AddIngredient(ItemID.Pwnhammer).
+                        AddIngredient(ItemID.HallowedBar, 5).
+                        AddIngredient(ItemID.Diamond, 5).
+                        AddIngredient(ItemID.Amethyst, 5).
+                        AddTile(TileID.MythrilAnvil).
+                        Register();
+            }
+        }
+    }
+}

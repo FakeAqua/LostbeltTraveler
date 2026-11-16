@@ -1,0 +1,173 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.Primitives.Trail;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Globals.Methods;
+using System.Collections.Generic;
+using Terraria;
+
+namespace LostbeltTraveler.Projs.Melee
+{
+    public class EvolutionArrow : LostbeltFriendlyProj
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Melee;
+        public override string Texture => LostbeltModAssets.InvisAsset.Path;
+        public override void SetStaticDefaults() => Projectile.ToTrailSetting(20, 2);
+        public enum Style
+        {
+            Attack,
+            Fade
+        }
+        public Style AttackType
+        {
+            get => (Style)Projectile.ai[0];
+            set => Projectile.ai[0] = (float)value;
+        }
+        public ref float Timer => ref Projectile.ai[1];
+        public bool HasPrioityTarget = false;
+        public bool SetToPriotyTarget = false;
+        public override void ExSD()
+        {
+            Projectile.width = Projectile.height = 16;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.extraUpdates = 4;
+            Projectile.penetrate = 1;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.noEnchantmentVisuals = true;
+            Projectile.timeLeft = 600;
+        }
+        public override void AI()
+        {
+            if (!Projectile.Lostbelt().FirstFrame)
+            {
+                Projectile.penetrate = HasPrioityTarget ? 3 : 1;
+            }
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            Timer += 0.025f;
+            //在这个过程生成需要的粒子
+            if (AttackType == Style.Attack)
+                AttackAI();
+            else
+            {
+                Projectile.damage *= 0;
+                Projectile.velocity *= 0.98f;
+                Projectile.Opacity -= 0.025f;
+                if (Projectile.Opacity == 0)
+                    Projectile.Kill();
+            }
+            SpawnParticle();
+        }
+        public void AttackAI()
+        {
+            if (Projectile.GetTargetSafe(out NPC target, true, 1200f))
+            {
+                Projectile.extraUpdates = 5;
+                Projectile.HomingTarget(target.Center, -1f, 20f, 35f);
+            }
+            else
+                Projectile.extraUpdates = 4;
+            //在这个过程中如果penetrate提前变为了0，进入别的状态 
+            bool shouldDisapper = (Projectile.penetrate == -1 && Projectile.damage == 0) || (!Projectile.ToHJScarletNPC().CanBeChasedBy()) || ((Projectile.ToHJScarletNPC().Center - Projectile.Center).LengthSquared() < 50f * 50f);
+            if (shouldDisapper)
+            {
+                Projectile.netUpdate = true;
+                AttackType = Style.Fade;
+            }
+
+
+        }
+        public void SpawnParticle()
+        {
+            if (Main.rand.NextBool(3))
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Vector2 pos = Projectile.Center + Main.rand.NextVector2CircularEdge(6f, 6f);
+                    new StarShape(pos, Projectile.SafeDir() * 4f, RandLerpColor(Color.Green, Color.LimeGreen), 0.4f * Projectile.Opacity, 10).Spawn();
+                    new StarShape(pos, Projectile.SafeDir() * 4f, Color.White, 0.15f * Projectile.Opacity, 10).Spawn();
+                }
+            }
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.HitDirectionOverride = Projectile.ApplyDirectionOverride(target);
+        }
+        public override bool? CanHitNPC(NPC target)
+        {
+
+            bool isNextHit = Projectile.penetrate == 1 && target == Projectile.ToHJScarletNPC();
+            bool isFirstHit = Projectile.penetrate != 1;
+            bool canHit = HasPrioityTarget == false || isNextHit || isFirstHit;
+            if (canHit)
+                return null;
+            return false;
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (AttackType == Style.Attack)
+            {
+                //如果有传入的目标，或者说压根没目标，我们才正常切换状态
+                if (Projectile.Lostbelt().GlobalTargetIndex == target.whoAmI)
+                {
+                    AttackType = Style.Fade;
+                    Projectile.netUpdate = true;
+                }
+            }
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (LostbeltMethods.OutOffScreen(Projectile.Center))
+                return false;
+            SB.EnterShaderArea();
+            DrawTrailBeam(Color.DarkGreen, 0.8f);
+            DrawTrailBeam(Color.LightGreen, 0.4f);
+            DrawTrailBeam(Color.White, 0.2f);
+            SB.EndShaderArea();
+            return false;
+        }
+        public void DrawStar(Vector2 drawPos, float rot, Color starColor)
+        {
+            Texture2D sharpTears = LostbeltModAssets.Particle_HRStar.Value;
+            Vector2 targetSize = 0.36f * Projectile.scale * new Vector2(1.2f, 0.25f);
+            SB.Draw(sharpTears, drawPos, null, starColor, rot, sharpTears.Size() / 2, targetSize, SpriteEffects.None, 0);
+            SB.Draw(sharpTears, drawPos, null, Color.White with { A = 150 }, rot, sharpTears.Size() / 2, targetSize * 0.5f, SpriteEffects.None, 0);
+        }
+        public void DrawTrailBeam(Color color, float heightMul)
+        {
+            Texture2D trail = LostbeltModAssets.Trail_TerraRayFlow.Value;
+            Effect shader = LostbeltShaderAssets.TerrarRayLaser;
+            shader.Parameters["LaserTextureSize"].SetValue(trail.Size());
+            shader.Parameters["targetSize"].SetValue(new Vector2(50, trail.Height));
+            shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 50);
+            shader.Parameters["uColor"].SetValue(color.ToVector4() * Projectile.Opacity);
+            shader.Parameters["uFadeoutLength"].SetValue(0.2f);
+            shader.Parameters["uFadeinLength"].SetValue(0.2f);
+            shader.CurrentTechnique.Passes[0].Apply();
+            GD.Textures[0] = trail;
+            GD.SamplerStates[0] = SamplerState.PointClamp;
+            Projectile.ClearInvaidData(out List<Vector2> validPos, out List<float> validRot);
+            //直接获取需要的贝塞尔曲线。
+            List<ScarletVertex> list = [];
+            int totalpoints = validPos.Count;
+            //创建顶点列表
+            for (int i = 0; i < validPos.Count; i++)
+            {
+                Vector2 oldCenter = validPos[i] + Projectile.Size / 2 - Main.screenPosition;
+                float progress = (float)i / (validPos.Count - 1);
+                Vector2 posOffset = new Vector2(0, 40f * heightMul).RotatedBy(validRot[i]);
+                ScarletVertex upClass = new(oldCenter - posOffset, color, new Vector3(progress, 0, 0f));
+                ScarletVertex downClass = new(oldCenter + posOffset, color, new Vector3(progress, 1, 0f));
+                list.Add(upClass);
+                list.Add(downClass);
+            }
+            if (list.Count >= 3)
+            {
+                GD.DrawUserPrimitives(PrimitiveType.TriangleStrip, list.ToArray(), 0, list.Count - 2);
+            }
+        }
+    }
+}

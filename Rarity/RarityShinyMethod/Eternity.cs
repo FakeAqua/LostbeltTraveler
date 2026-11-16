@@ -1,0 +1,35 @@
+﻿using System.Collections.Generic;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Rarity.RarityDrawHandler;
+using LostbeltTraveler.Rarity.RarityParticles;
+using Terraria;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Rarity.RarityShinyMethod
+{
+    public static class EternityRarity
+    {
+        public static void DrawItemName(DrawableTooltipLine line)
+        {
+            RarityDrawHelper.DrawCustomTooltipLine(line, Color.Yellow, Color.Lerp(Color.White, Color.Yellow, 0.13f), Color.Lerp(Color.Gold, Color.Black, .25f), 0.45f);
+        }
+        public static void DrawItemNameParticle(DrawableTooltipLine tooltipLine, ref List<RaritySparkle> particleList)
+        {
+            //在这里手动创建新的粒子，然后我们再将其添加进需要的表单内
+            Vector2 textSize = tooltipLine.Font.MeasureString(tooltipLine.Text);
+            if (Main.rand.NextBool(8))
+            {
+                float scale = Main.rand.NextFloat(0.30f * 0.5f, 0.30f) * 1.2f;
+                int lifetime = 160;
+                Vector2 position = Main.rand.NextVector2FromRectangle(new(-(int)(textSize.X * 0.5f), -(int)(textSize.Y * 0.5f), (int)textSize.X, (int)(textSize.Y * 0.35f)));
+                Vector2 velocity = Vector2.UnitY * Main.rand.NextFloat(0.25f, 0.35f);
+                RarityShinyOrb rarityShinyOrb = new RarityShinyOrb(position, velocity, RandLerpColor(Color.Gold, Color.Yellow).ToAddColor(), lifetime, scale);
+                RarityShinyOrb rarityShinyOrb2 = new RarityShinyOrb(position, velocity, Color.White.ToAddColor(), lifetime, scale * 0.5f);
+                particleList.Add(rarityShinyOrb2);
+                particleList.Add(rarityShinyOrb);
+            }
+            //最后更新他。
+        }
+
+    }
+}

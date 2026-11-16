@@ -1,0 +1,478 @@
+CreationHat: {
+	DisplayName: 化方术士之帽
+	Tooltip:
+		'''
+		与很久以前的法袍搭配也许会有意想不到的效果……
+		或许你应该手持一下看看？
+		'''
+	SetBonus:
+		'''
+		增加{0}防御力，{1}最大魔力上限
+		增加{2}魔法伤害，{4}魔法暴击概率
+		减少{3}魔力消耗，允许所有魔法攻击造成暴击伤害
+		溢出的暴击概率以1/2的形式等价转模为你的魔法暴击伤害加成
+		'''
+	// BonusDetail: ""
+}
+
+RedDragonKnightBody: {
+	DisplayName: 红龙骑士重铠
+	Tooltip: 增加{0}伤害
+}
+
+RedDragonKnightHead: {
+	DisplayName: 红龙骑士战盔
+	Tooltip:
+		'''
+		增加{0}代行者伤害
+		增加{1}代行者暴击概率
+		'''
+	SetBouns:
+		'''
+		增加{0}代行者暴击伤害
+		手持代行者武器攻击时，每隔{1}秒为所有代行者武器叠加{2}处决进程
+		'''
+}
+
+RedDragonKnightLegs: {
+	DisplayName: 红龙骑士护腿
+	Tooltip: 增加{0}移动速度
+}
+
+RuneWizardExecutor: {
+	HelmetTooltip: 增加12%代行者暴击概率
+	ChestplateTooltip: 增加20%代行者伤害
+	SetBonus: 攻击时追加符文魔法
+}
+
+CowboyExecutor: {
+	HelmetTooltip: 增加5%代行者伤害
+	ChestplateTooltip: 增加5%代行者暴击概率
+	LegsTooltip: 增加15%移动速度
+	SetBonus: 命中时追加一把左轮攻击，造成40点伤害，受代行者伤害加成
+}
+
+MaidExecutor: {
+	HelmetTooltip:
+		'''
+		增加10%代行者伤害
+		增加5%代行者暴击概率
+		'''
+	ChestplateTooltip: ""
+	LegsTooltip: ""
+	SetBonus: ""
+}
+
+RaincoatExecutor: {
+	HelmetTooltip: 增加5%代行者暴击概率
+	ChestplateTooltip: 增加5%代行者伤害
+	SetBonus:
+		'''
+		正上方来犯的射弹在接触帽子时减少35%伤害
+		该射弹也不会造成击退和较弱的减益
+		'''
+}
+
+FloretProtectorExecutor: {
+	HelmetTooltip: 增加30%代行者伤害和暴击概率
+	ChestplateTooltip:
+		'''
+		增加10%代行者伤害
+		使你免疫击退
+		'''
+	LegsTooltip:
+		'''
+		增加5%代行者伤害和暴击概率
+		增加20%移动速度
+		'''
+	SetBonus:
+		'''
+		增加100点最大生命上限
+		总会以一定时间在你的周围漂浮多种草药
+		靠近时以拾取，并依据拾取草药的不同获得不同的效果
+		首次拾取时获得5秒的护林草药Buff，且后续的拾取不会刷新这个时间
+		在已有护林草药Buff时拾取草药会为你提供一定的治疗
+		按住左Alt以具体查看草药的效果
+		'''
+	BuffDetail:
+		'''
+		[i:Daybloom]太阳花：
+		增加30点防御力，+4 HP/s生命恢复速度，使你发光
+		已拥有护林草药Buff时，增加10点防御力，+2 HP/s生命恢复速度
+		[i:Moonglow]月光花：
+		增加12%伤害减免，对玩家背后来犯的伤害减免65%，降低敌人仇恨值
+		已拥有护林草药Buff时，增加8%伤害减免，对玩家背后来犯的伤害减免25%
+		[i:Deathweed]死亡草：
+		增加20%代行者伤害与暴击概率，大幅度提高敌人仇恨值
+		已拥有护林草药Buff时，增加10%代行者伤害与暴击概率
+		[i:Fireblossom]火焰花：
+		处于岩浆内时，增加35%代行者伤害与暴击概率
+		已拥有护林草药Buff时，增加15%代行者伤害和暴击概率
+		[i:Waterleaf]水叶草：
+		增加50点幸运值，几乎所有右键开启的战利品袋子/板条箱都会为你提供金钱
+		已拥有护林草药Buff时，增加25点幸运值
+		[i:Blinkroot]闪耀根：
+		增加50%挖掘速度，获得洞穴勘探的所有效果
+		已拥有护林草药Buff时，增加30%挖掘速度
+		[i:Shiverthorn]寒颤棘：
+		以1/4的概率命中时对敌人造成额外的1.15倍伤害
+		已拥有护林草药Buff时，以1/4的概率命中时对敌人造成额外的1.10倍伤害
+		'''
+}
+
+FishCostumeExecutor: {
+	HelmetTooltip: 增加5%代行者伤害
+	ChestplateTooltip: 允许你水下呼吸
+	LegsTooltip: 增加10%移动速度
+	SetBonus:
+		'''
+		允许在空气中如同在水面一样自由游泳
+		处决攻击命中时存储至多一个小鱼冲刺
+		在需要的时候按下 互动键 即可释放
+		浸入岩浆时会持续损失生命值，无关是否拥有免疫岩浆的道具
+		'''
+}
+
+ShinobiBody: {
+	DisplayName: 渗透忍者上衣-代行者
+	Tooltip: 增加{0}代行者暴击概率
+}
+
+ShinobiHead: {
+	DisplayName: 渗透忍者头盔-代行者
+	Tooltip: 增加{0}代行者伤害
+	SetBonus:
+		'''
+		+{0}最大哨兵上限
+		增强瞌睡章鱼与天龙之怒，并大幅度提升闪电光环的效力
+		使瞌睡章鱼，天龙之怒和闪电光环仅造成代行者伤害，受代行者伤害加成
+		所有的闪电光环手杖伤害增强500%
+		'''
+	WeaponBuff: 由护甲进行强化：
+}
+
+ShinobiLegs: {
+	DisplayName: 渗透忍者裤装-代行者
+	Tooltip:
+		'''
+		+{0}代行者护甲穿透
+		增加{1}移动速度
+		'''
+}
+
+MonkBody: {
+	DisplayName: 武僧衣-代行者
+	Tooltip: 增加{0}代行者暴击概率
+}
+
+MonkHead: {
+	DisplayName: 武僧浓眉秃头帽-代行者
+	Tooltip: 增加{0}代行者伤害
+	SetBonus:
+		'''
+		+{0}最大哨兵上限
+		增强瞌睡章鱼与天龙之怒，并大幅度提升闪电光环的效力
+		使瞌睡章鱼，天龙之怒和闪电光环仅造成代行者伤害，受代行者伤害加成
+		所有的闪电光环手杖伤害增强200%
+		'''
+	SleepyOctBuff:
+		'''
+		增加{0}伤害，{1}暴击概率，武器大小提升{2}
+		挥舞过程中不断释放追踪魔力球
+		按下互动键，挥舞武器并为你与你的队友提供治疗
+		交互完成时，会持续治疗你自己直到接近完全回复
+		受到伤害时会打断所有的治疗效果
+		'''
+	DragonFuryBuff:
+		'''
+		增加{0}伤害，{1}暴击概率，武器大小提升{2}
+		挥舞过程中对附近多个敌人天降闪电
+		按下互动键，挥舞武器并为你与你的队友提供治疗
+		交互完成时，会持续治疗你自己直到接近完全回复
+		受到伤害时会打断所有的治疗效果
+		'''
+}
+
+MonkLegs: {
+	DisplayName: 武僧裤-代行者
+	Tooltip:
+		'''
+		+{0}代行者护甲穿透
+		增加{1}移动速度
+		'''
+}
+
+DiverBody: {
+	DisplayName: 潜航员护胸
+	Tooltip: 增加{0}代行者暴击伤害
+}
+
+DiverHead: {
+	DisplayName: 潜航员面罩
+	Tooltip: 增加{0}代行者伤害
+	SetBonus:
+		'''
+		移动时沿轨迹生成在空中滞留的水母
+		所有玩家或敌人在接触水母时提供[ScarletBuff/LostbeltTraveler/JellyfishGroupBuff]
+		玩家接触时会根据水母类型的不同为你提供不同的效果
+		敌人接触时则会受到持续的伤害
+		每只水母只能提供一次[ScarletBuff/LostbeltTraveler/JellyfishGroupBuff]
+		'''
+}
+
+DiverLegs: {
+	DisplayName: 潜航员护腿
+	Tooltip: 增加{0}暴击概率
+}
+
+ReaperBody: {
+	DisplayName: 前台死神长裙
+	Tooltip: 增加{0}代行者暴击伤害
+}
+
+ReaperHead: {
+	DisplayName: 前台死神发箍
+	Tooltip:
+		'''
+		增加{0}代行者伤害，{0}代行者暴击概率
+		敌人更有可能攻击你
+		'''
+	SetBonus:
+		'''
+		+2HP/s 生命恢复速度
+		按下 互动键 以消耗当前代行者武器的处决进程收割敌人的血量
+		收割的血量由敌人的当前生命值，与当前武器处决进程和处决次数要求的比率共同决定
+		收割的血量越多，该能力的冷却时间越长，最大收割敌人当前血量的5%
+		该能力的优先级低于手动处决的优先级
+		'''
+}
+
+ReaperLegs: {
+	DisplayName: 前台死神下着
+	Tooltip:
+		'''
+		增加{0}移动速度
+		敌人更有可能攻击你
+		'''
+}
+
+AdamantiteHeadExecutor: {
+	DisplayName: 精金兜帽
+	Tooltip: 增加{0}代行者伤害，{1}代行者暴击概率
+	SetBonus:
+		'''
+		增加{0}代行者暴击伤害
+		以{1}秒1次的频率向附近最多{2}名敌人降下精金闪电
+		每道闪电造成{3}伤害，受代行者职业加成，1/{4}的概率暴击
+		'''
+}
+
+ChlorophyteHeadExecutor: {
+	DisplayName: 叶绿翼盔
+	Tooltip:
+		'''
+		增加{0}代行者伤害，{1}代行者暴击概率
+		增加{2}代行者暴击伤害
+		'''
+	SetBonus:
+		'''
+		召唤强大的叶状水晶来射击附近的敌人
+		叶状水晶攻击频率更高，攻击无限穿透，造成{0}伤害，受代行者职业加成
+		水晶射线首次命中敌人时会为你恢复一定量的飞行时间
+		'''
+}
+
+CobaltHeadExecutor: {
+	DisplayName: 钴便帽
+	Tooltip: 增加{0}代行者伤害
+	SetBonus: 增加{0}代行者暴击伤害
+}
+
+HallowedHeadExecutor: {
+	DisplayName: 神圣战罩
+	Tooltip:
+		'''
+		增加{0}代行者伤害，{1}代行者暴击概率
+		增加{2}代行者暴击伤害
+		'''
+	SetBonus: 攻击敌人后进入免疫状态
+}
+
+MythrilHeadExecutor: {
+	DisplayName: 秘银覆面
+	Tooltip:
+		'''
+		增加{0}代行者暴击概率
+		增加{1}代行者暴击伤害
+		'''
+	SetBonus: 增加{0}代行者暴击概率
+}
+
+OrichalcumHeadExecutor: {
+	DisplayName: 山铜战盔
+	Tooltip:
+		'''
+		增加{0}代行者暴击伤害
+		增加{1}移动速度
+		'''
+	SetBonus: 花瓣将落到目标身上造成额外伤害
+}
+
+PalladiumHeadExecutor: {
+	DisplayName: 钯金顿项
+	Tooltip:
+		'''
+		增加{0}伤害
+		{1}生命恢复速度
+		'''
+	SetBonus: 攻击敌人后大大提高生命再生速度
+}
+
+TitaniumHeadExecutor: {
+	DisplayName: 钛金冠盔
+	Tooltip:
+		'''
+		增加{0}代行者伤害，{1}代行者暴击概率
+		增加{2}代行者暴击伤害
+		'''
+	SetBonus:
+		'''
+		攻击时快速发射多枚追踪的钛金碎片
+		钛金碎片基础伤害为{0}，受代行者伤害加成
+		'''
+}
+
+DragonHunterBody: {
+	DisplayName: 猎龙重铠
+	Tooltip: 增加{0}代行者暴击概率
+}
+
+DragonHunterHead: {
+	DisplayName: 猎龙头盔
+	Tooltip: 增加{0}代行者伤害
+	SetBonus:
+		'''
+		增加{0}近战攻速，远程职业武器增加{1}暴击概率
+		增加{2}最大魔力上限，减少{3}魔力消耗
+		将最大仆从上限与最大哨兵上限重设为{4}
+		所有武器增加{5}暴击伤害
+		所有非代行者职业武器将只造成代行者伤害
+		非代行者职业的武器伤害与暴击概率仅受到代行者职业加成
+		'''
+}
+
+DragonHunterLegs: {
+	DisplayName: 猎龙护腿
+	Tooltip: 增加{0}移动速度
+}
+
+SaintChurchHead: {
+	DisplayName: 圣堂教会印记
+	Tooltip:
+		'''
+		增加{0}代行者伤害，{1}代行者暴击概率
+		增加{2}代行者暴击伤害
+		'''
+	SetBonus:
+		'''
+		承受致命伤害时，进入[ScarletBuff/LostbeltTraveler/SaintChurchBuff]，并以{1}的生命值复活
+		状态期间，禁用治疗药水与生命恢复，+{0}仇恨值
+		再次承受致命伤害时概率以{2}生命值再度复活，无次数上限
+		每次复活都会全队提供可叠加的{3}伤害与{4}暴击概率加成
+		'''
+}
+
+SaintChurchLegs: {
+	DisplayName: 圣堂教会礼服
+	Tooltip:
+		'''
+		增加{0}代行者伤害
+		增加{1}移动速度
+		增加{2}疾跑加速度
+		'''
+}
+
+SaintChurchBody: {
+	DisplayName: 圣堂教会外套
+	Tooltip:
+		'''
+		增加{0}代行者暴击伤害
+		增加{1}代行者暴击概率
+		'''
+}
+
+GunWitchBody: {
+	DisplayName: 枪女巫连衣裙
+	Tooltip: 增加{0}代行者暴击概率
+}
+
+GunWitchHead: {
+	DisplayName: 枪女巫宽帽
+	Tooltip:
+		'''
+		增加{0}代行者伤害
+		增加{0}代行者暴击概率
+		'''
+	SetBonus:
+		'''
+		手持代行者热武器攻击时，会额外发射一枚魔法弹
+		魔法弹会沿途滞留一些伤害性的魔法星辰
+		'''
+}
+
+GunWitchLegs: {
+	DisplayName: 枪女巫皮靴
+	Tooltip:
+		'''
+		增加{0}代行者伤害
+		增加{0}移动速度
+		'''
+}
+
+GlowMushroomBody: {
+	DisplayName: 夜光蘑菇大衣
+	Tooltip:
+		'''
+		增加{0}伤害
+		获得[ScarletBuff/Terraria/Shine]
+		'''
+}
+
+GlowMushroomHead: {
+	DisplayName: 夜光蘑菇帽
+	Tooltip:
+		'''
+		增加{0}代行者暴击概率
+		获得[ScarletBuff/Terraria/NightOwl]
+		'''
+	SetBonus:
+		'''
+		正上方来犯的射弹在接触帽子时减少25%伤害
+		该射弹也不会造成击退和较弱的减益
+		'''
+}
+
+GlowMushroomLegs: {
+	DisplayName: 夜光蘑菇裤
+	Tooltip: 增加{0}移动速度
+}
+
+WesternBoyBody: {
+	DisplayName: 蛮荒牛仔衣
+	Tooltip: 增加{0}暴击概率
+}
+
+WesternBoyHead: {
+	DisplayName: 蛮荒牛仔帽
+	Tooltip: 增加{0}代行者伤害
+	SetBonus:
+		'''
+		代行者命中追加一把左轮攻击
+		左轮造成40点基础伤害，受代行者伤害加成
+		'''
+}
+
+WesternBoyLegs: {
+	DisplayName: 蛮荒牛仔裤
+	Tooltip: 增加{0}移动速度
+}

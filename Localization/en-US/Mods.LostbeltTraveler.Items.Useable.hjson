@@ -1,0 +1,354 @@
+CorePickaxe: {
+	DisplayName: Core Pickaxe
+	Tooltip:
+		'''
+		A tool hot enough to smelt ores for you��
+		This feature is temporarily disabled in multiplayer mode
+		Center of the Earth
+		'''
+}
+
+TerrariaRecipe: {
+	DisplayName: Terraria Recipe
+	Tooltip:
+		'''
+		Grants a bonus to maximum health based on the number of different food types consumed
+		Gains 10 max health for every 5 food items consumed
+		Right-click to toggle
+		"This isn't Minecraft."
+		'''
+	Eaten: Eaten: Allows max health bonus
+	NotEaten: '''"Not eaten yet! Want to give it a try?"'''
+	Active: Currently active
+	FoodList:
+		'''
+		Eaten ({2})
+		{0}
+		Not eaten ({3})
+		{1}
+		'''
+}
+
+GoldenApple: {
+	DisplayName: Golden Apple
+	Tooltip:
+		'''
+		Greatly increases all stats
+		Directly reduces damage taken
+		Grants[ScarletBuff/LostbeltTraveler/GoldenAppleBuff]
+		"Merely a coincidence"
+		'''
+}
+
+GoldenAppleEnchanted: {
+	DisplayName: Enchanted Golden Apple
+	Tooltip:
+		'''
+		Greatly increases all stats
+		Directly reduces damage taken
+		Grants[ScarletBuff/LostbeltTraveler/GoldenAppleBuffEnchanted]
+		"Merely a coincidence"
+		'''
+}
+
+GoldenAppleEnchantedFully: {
+	DisplayName: True Enchanted Golden Apple
+	Tooltip:
+		'''
+		Greatly increases all stats
+		Reduced damage taken by 99%，alaways heal you for a high rate
+		Can be active in inventory
+		'''
+}
+
+DescriptionPaper: {
+	DisplayName: Description Paper
+	Tooltip:
+		'''
+		This note is just to let you know that the Lostbelt Journey mod has added a new class: the Executor.
+		However, since the mod currently lacks sufficient armor sprites, the mod provides Executor-modified versions of the vanilla armors listed below.
+		[i:FloretProtectorHelmet][i:FloretProtectorChestplate][i:FloretProtectorLegs]Floret Protector Set – can be transformed after defeating The Lifebringer
+		[i:MonkBrows][i:MonkShirt][i:MonkPants]Monk Armor /[i:MonkAltHead][i:MonkAltShirt][i:MonkAltPants]Shinobi Armor – also receive Executor versions
+		All of the reworked vanity sets mentioned above gain brand new effects and set bonuses.
+		Also, you can hold Left Alt to view the list of developers and support staff who contributed to this mod
+		'''
+	ThanksList:
+		'''
+		[c/CC0340:Lead Developers:]
+		ScarletShelf - Lead Programmer
+		Inoljw, 名字, Freya - Artists
+		-
+		[c/BAEE1B:Support Staff:]
+		Sakuraba Ichika, Demon Lilies, Plantare
+		Serrat Antler, 南鸢北笙, 梦山之主, Yilyn, TIM
+		[c/B19CD9:Testers:]
+		Endtimeless, Woodi Stigma, 妩媚の5妹儿, Shizuku, 步出夏门行
+		[c/FFC0CB:Donators:]
+		巴雷难破长夜, 冰川咲, 银九, 曦, 丰川祥子, 苏利, 池堂爱吃糖, 咕咕叶子
+		[c/AACCCC:Many thanks to everyone for making this mod a success and pushing it forward]
+		'''
+}
+
+PurePrismFate: {
+	DisplayName: Pure Prism
+	Tooltip:
+		'''
+		Press the Interact key on a crafting material in your inventory to duplicate it.
+		Up to 100 copies can be duplicated at once, and each duplication consumes 3 Prisms.
+		"A more refined Mana Crystal."
+		'''
+}
+
+UnregisteredSpiritOrigin: {
+	DisplayName: Unregistered Spirit Origin
+	Tooltip:
+		'''
+		Press the Interact key on a weapon/accessory/armor/treasure bag in your inventory to duplicate.
+		The Unregistered Spirit Origin itself cannot be duplicated.
+		"The overflowing remnants of a Spirit Origin."
+		'''
+}
+
+ArcaeaPack: {
+	DisplayName: Arcaea Bonus Bundle
+	Tooltip:
+		'''
+		Grants[i:LostbeltTraveler/HikariItem]Exquisite Rose and[i:LostbeltTraveler/TairitsuItem]Black Parasol on open
+		Hikari and Tairitsu costume transformation item
+		-
+		WITHOUT LIGHT
+		OR CONFLICT
+		DIVINE GRACE FALLS UPON YOU IN A DEAD WORLD
+		-
+		'''
+}
+
+CursedGoldenKey: {
+	DisplayName: Cursed Golden Key
+	Tooltip: Put into an empty chest to summon Mimic
+}
+
+ProvidenceHolyWater: {
+	DisplayName: Holy Water of Destiny
+	Tooltip:
+		'''
+		While held, press the Interact key on a Mana Potion in your inventory to inherit its restoration amount
+		Restores an additional 10 mana when used, and is not consumed
+		"A transcendent water not of this world, capable of conducting immense mana with zero loss"
+		'''
+}
+
+BiomeKeyString: {
+	DisplayName: Treasure Keychain
+	Tooltip: Place it in an empty chest to fill it with Dungeon treasure
+}
+
+FruitofEternity: {
+	DisplayName: Fruit of Eternity
+	Tooltip:
+		'''
+		Grants[ScarletBuff/LostbeltTraveler/FruitofEternityBuff]
+		Gain {0} defense and +{1} HP/s health regeneration
+		You deals {2} less damage to all divine enemy
+		Taken damage will reset your speed, with 1/{3} chance to teleport randomly
+		'''
+	DetailTooltip:
+		'''
+		Any who consume this fruit become immortal, but at a price.
+		Those who accept its boon also become servants of the gods for eternity.
+		'''
+}
+
+GaiaStrikerLootBox: {
+	DisplayName: Gaia Chest
+	Tooltip:
+		'''
+		Opens to provide you with[i:LostbeltTraveler/GaiaStriker][c/FE0000:Gaia Hammer]
+		Please use in an open area
+		'''
+}
+
+YogsothothsYardPack: {
+	DisplayName: Yog-Sothoth's Yard Reward Pack
+	Tooltip:
+		'''
+		Instantly grants the following items upon opening:
+		[i:LostbeltTraveler/CrimsonScythe][c/DC143C:Crimson Heavy Scythe]
+		[i:LostbeltTraveler/ReaperHead][c/DC143C:Front Desk Reaper Headband]
+		[i:LostbeltTraveler/ReaperBody][c/DC143C:Front Desk Reaper Top]
+		[i:LostbeltTraveler/ReaperLegs][c/DC143C:Front Desk Reaper Skirt]
+		[i:LostbeltTraveler/LeafMaidItem][c/00BFFF:Puppet Crystal]
+		[i:LostbeltTraveler/RedDragonItem][c/F08080:Red Dragon Horn]
+		[i:LostbeltTraveler/CantoneseGirlItem][c/2E8B57:Spirit-Slaying Scabbard]
+		Includes the Telipoca series items, as well as costume transformation items for Little Leaf, Yevna, and XiaLuLing
+		-
+		"Also, employees are romanceable."
+		-
+		'''
+}
+
+AxeCharm: {
+	DisplayName: Axe Charm
+	Tooltip:
+		'''
+		Right-click to toggle manual execution mode for Executor weapons
+		Does not work on some weapons
+		'''
+	EnableTooltips: Manual Execution Mode: {0}
+	CritDamageMult: Current Executor Critical Damage Bonus: {0}
+}
+
+TheSonBuff: {
+	DisplayName: Post-Son Level Up
+	Tooltip:
+		'''
+		Right-click to toggle whether certain items are allowed to gain the damage boost from the Son
+		While holding, you can view eligible items in your inventory
+		'''
+	EnableTooltips: Upgrade: {0}
+}
+
+CrystallizedLore: {
+	DisplayName: Crystallized Lore
+	Tooltip:
+		'''
+		Press the Interact key on a weapon in your inventory to grant it the best prefix 
+		If it fails, grants the "Demonic" prefix instead
+		If use on an accessory, it will attempt to grant it the best accessory prefix
+		Hold shift and right-click to cycle through the available accessory prefix options
+		'''
+	DetailTooltip:
+		'''
+		A highly pure crystal of magic created when
+		human history crosses a stream of Mana.
+		It can be said that it is the ingredient
+		for materializing Heroic Spirits.
+		'''
+	PrefixLine: Current selected accessory prefix: {0}
+}
+
+FreehandFrame: {
+	DisplayName: Freehand Frame
+	Tooltip: Used to craft vanity that added by Lostbelt Journey
+}
+
+RandomNewFolder: {
+	DisplayName: New Folder (1)
+	Tooltip:
+		'''
+		Ammo for weapons that can satisfy multiple different ammo requirements at once
+		"Don't create another new folder, leave it unnamed, and throw everything in there all at once"
+		'''
+}
+
+SuicideKnife: {
+	DisplayName: Suicide Knife
+	AltDisplayName: ""
+	Tooltip: Can damage yourself
+}
+
+LivingReaverShark: {
+	DisplayName: Living Reaver Shark
+	Tooltip:
+		'''
+		Grants[ScarletBuff/Terraria/Regeneration], [ScarletBuff/Terraria/Ironskin], [ScarletBuff/Terraria/Swiftness] and [ScarletBuff/Terraria/WellFed3] on held
+		Can be used to mine Final Ore
+		Condensed the power of the Life
+		...Wait, why does this even exist
+		'''
+}
+
+MatterSawtoothShark: {
+	DisplayName: Matter Sawtooth Shark
+	Tooltip:
+		'''
+		Condensed the power of the Matter
+		...Wait, why does this even exist
+		'''
+}
+
+SunWorm: {
+	DisplayName: Sun Worm
+	Tooltip:
+		'''
+		Condensed the power of the Sun
+		...Wait, why does this even exist
+		'''
+}
+
+DarkenRockFish: {
+	DisplayName: Darken Rockfish
+	Tooltip:
+		'''
+		Condensed the power of the Darkness
+		...Wait, why does this even exist
+		'''
+}
+
+StarterBag: {
+	DisplayName: Drifter's Pouch
+	Tooltip: A cloth bag with a few items inside
+}
+
+FishingPaper: {
+	DisplayName: Lostbelt Journey Fishing Guide
+	Tooltip:
+		'''
+		The Lostbelt Journey adds brand new catches, but due to the lack of a wiki
+		Therefore, here is a guide note
+		Before you can obtain the special catches added by Lostbelt Journey, you need to first obtain and equip [i:LostbeltTraveler/BitingClaw]Biting Claw
+		Special Catch List:
+		[i:LostbeltTraveler/DiverHead][i:LostbeltTraveler/DiverBody][i:LostbeltTraveler/DiverLegs]Diver Armor, obtained by fishing in the Ocean after defeating [i:EaterMask]Eater of Worlds / [i:BrainMask]Brain of Cthulhu
+		[i:LostbeltTraveler/EthrealSwordfish]Eternal Swordfish, obtained in the Desert after defeating the Overwatcher
+		[i:LostbeltTraveler/LivingReaverShark]Living Reaver Shark, obtained in the Jungle after defeating the Lifebringer
+		[i:LostbeltTraveler/MatterSawtoothShark]Matter Sawtooth Shark, obtained in the Snow biome after defeating the Materializer
+		[i:LostbeltTraveler/DarkenRockFish]Darken Rockfish, obtained Underground after defeating the Wall of Shadows
+		'''
+}
+
+FishingCoinEmerial: {
+	DisplayName: Angler Emerial Coin
+	Tooltip: Fisherman's Beloved
+}
+
+TerrariaRecipeDeactive: {
+	DisplayName: Terraria Recipe (Deactive)
+	Tooltip:
+		'''
+		Grants a bonus to maximum health based on the number of different food types consumed
+		Gains 10 max health for every 5 food items consumed
+		Right-click to toggle
+		"This isn't Minecraft."
+		'''
+	Active: Currently Deactive
+}
+
+InstaSupremeDeath: {
+	DisplayName: Insta Supreme Death
+	Tooltip: ""
+}
+
+InstaSupremeLiving: {
+	DisplayName: Insta Supreme Living
+	Tooltip: ""
+}
+
+InstaSupremeMatter: {
+	DisplayName: Insta Supreme Matter
+	Tooltip: ""
+}
+
+InstaSupremeNone: {
+	DisplayName: Insta Supreme None
+	Tooltip: ""
+}
+
+InstaSupremeSon: {
+	DisplayName: Insta Supreme Son
+	Tooltip: ""
+}
+
+InstaSupremeTime: {
+	DisplayName: Insta Supreme Time
+	Tooltip: ""
+}

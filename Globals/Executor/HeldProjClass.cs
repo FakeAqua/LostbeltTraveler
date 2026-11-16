@@ -1,0 +1,70 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Configs;
+using LostbeltTraveler.Globals.Database.Enums;
+using Terraria;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Globals.Executor
+{
+    public abstract class ExecutorHeldProj : ModProjectile, ILocalizedModType
+    {
+        public Player Owner => Main.player[Projectile.owner];
+        public virtual EnumDamageClass Category => EnumDamageClass.Executor;
+        public virtual int OriginalItemID => -1;
+        public static string ProjPath => $"LostbeltTraveler/Assets/Texture/Projs/";
+        public override string Texture => ProjPath + GetType().Name;
+        public new string LocalizationCategory => $"Projs.Friendly.{Category}";
+        public bool PerformanceMode = LostbeltConfigClient.Instance.PerformanceMode;
+        public virtual Vector2 TileHitbox => Vector2.Zero;
+        public virtual int MinAttackRates => 5;
+        public int AttackSpeed => Owner.ApplyWeaponAttackSpeed(Owner.HeldItem, Owner.HeldItem.useTime * Projectile.MaxUpdates, MinAttackRates * Projectile.MaxUpdates);
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 2;
+            Projectile.friendly = true;
+            Projectile.DamageType = ExecutorDamageClass.Instance;
+            ExSD();
+        }
+        public virtual void OnFirstFrame() { }
+        public override void AI()
+        {
+            if (!Projectile.Lostbelt().FirstFrame)
+                OnFirstFrame();
+            ProjAI();
+        }
+        /// <summary>
+        /// 直接管理的工具方法。
+        /// </summary>
+        /// <returns></returns>
+        public bool HandleExecution()
+        {
+            if (Owner.GetExecutionSrike() && !Projectile.Lostbelt().ExecutionStrike)
+            {
+                Projectile.Lostbelt().ExecutionStrike = true;
+                Owner.RemoveExecutionProgress(OriginalItemID);
+                OnExecution();
+                return true;
+            }
+            return false;
+        }
+        public virtual void OnExecution() { }
+        public override void OnKill(int timeLeft)
+        {
+            base.OnKill(timeLeft);
+        }
+        public override bool ShouldUpdatePosition() => false;
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            if (!TileHitbox.Equals(Vector2.Zero))
+            {
+                width = (int)TileHitbox.X;
+                height = (int)TileHitbox.Y;
+            }
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
+        }
+        public SpriteBatch SB { get => Main.spriteBatch; }
+        public GraphicsDevice GD { get => Main.graphics.GraphicsDevice; }
+        public virtual void ProjAI() { }
+        public virtual void ExSD() { }
+    }
+}

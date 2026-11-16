@@ -1,0 +1,36 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Projs.Executor.Thrown;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
+{
+    public class JungleMadness : ExecutorWeaponClass
+    {
+        public override int ExecutionProgress => 15;
+        public override ExecutorWeaponType ExecutorWeaponType => ExecutorWeaponType.Throw;
+        public override void ExSD()
+        {
+            Item.width = Item.height = 66;
+            Item.damage = 24;
+            Item.knockBack = 8f;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
+            Item.shootSpeed = 16f;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.UseSound = SoundID.Item1;
+            Item.shoot = ProjectileType<JungleMadnessProj>();
+            Item.useTime = Item.useAnimation = 30;
+            Item.SetUpRarityPrice(ItemRarityID.Blue);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.JungleSpores, 12).
+                AddIngredient(ItemID.Stinger, 4).
+                AddIngredient(ItemID.Vine, 2).
+                AddTile(TileID.Anvils).
+                Register();
+        }
+    }
+}

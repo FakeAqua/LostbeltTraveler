@@ -1,0 +1,77 @@
+WhaleItem: {
+	DisplayName: Whale Xun
+	Tooltip:
+		'''
+		Summons a departed whale
+		"Play the song of the whale"
+		'''
+}
+
+NoneItem: {
+	DisplayName: Arcane Symbol
+	Tooltip:
+		'''
+		Summons
+		"404 not found"
+		'''
+}
+
+ShadowItem: {
+	DisplayName: Shrink Ray
+	Tooltip:
+		'''
+		Summons a miniaturized Shadow Wall
+		"A relic from the future. You shine it into the abyss, and something wonderful happens."
+		'''
+}
+
+SquidItem: {
+	DisplayName: Mini Squid Bait
+	Tooltip:
+		'''
+		Summons a baby squid
+		"Specially formulated for baby squids"
+		'''
+}
+
+WatcherItem: {
+	DisplayName: Bell of Ultimate Sight
+	Tooltip:
+		'''
+		Summons a larva of the Time God
+		"Its bell rings ripple across the river of time"
+		'''
+}
+
+DracoItem: {
+	DisplayName: Rose of Annihilation
+	Tooltip: Summon the pet: Draco
+	FlavorTooltip:
+		'''
+		Rose petals soaked in the blood of the dying still retain their crimson hue
+		Even after withering
+		'''
+}
+
+SonItem: {
+	DisplayName: Holy Lily
+	Tooltip: Summons a Son companion
+}
+
+LifeWormItem: {
+	DisplayName: Living Apple
+	Tooltip:
+		'''
+		Summons a larva of the Life God
+		"Brimming with vitality"
+		'''
+}
+
+DiverItem: {
+	DisplayName: Miniature Portal
+	Tooltip:
+		'''
+		Summons a Tiny Diver
+		"Kids under 1.4m get in free."
+		'''
+}

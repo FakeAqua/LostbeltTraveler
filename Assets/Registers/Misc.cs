@@ -1,0 +1,73 @@
+﻿using ReLogic.Content;
+using ReLogic.Graphics;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Assets.Registers
+{
+    public partial class LostbeltModAssets : ModSystem
+    {
+        private string Path_Fonts => "LostbeltTraveler/Assets/Fonts/";
+        public static Tex2DWithPath Specific_DialectBall { get; set; }
+        public static Tex2DWithPath Specific_DialectCube { get; set; }
+        public static Tex2DWithPath Specific_AimLabBox { get; set; }
+        public static Tex2DWithPath Specific_Clock { get; set; }
+        public static Tex2DWithPath Specific_RocketTrail { get; set; }
+
+
+
+        public static Tex2DWithPath ColorMap_Aqua { get; set; }
+
+        public static Tex2DWithPath Metaball_ShadowNebula { get; set; }
+        public static Tex2DWithPath Metaball_FlickerWater { get; set; }
+        public static Tex2DWithPath Metaball_GreenWater { get; set; }
+        public static Tex2DWithPath Metaball_ShinyStardust { get; set; }
+        public static Tex2DWithPath Metaball_Bloody { get; set; }
+        public static Asset<DynamicSpriteFont> Font_Eras_Bold { get; set; }
+        public static Asset<DynamicSpriteFont> Font_MGR { get; set; }
+        public static Asset<DynamicSpriteFont> Font_Cabin { get; set; }
+        public static Asset<DynamicSpriteFont> Font_圆体 { get; set; }
+
+        public void LoadMisc()
+        {
+            Specific_DialectBall = new Tex2DWithPath($"{Path_Particle}{nameof(Specific_DialectBall)}");
+            Specific_DialectCube = new Tex2DWithPath($"{Path_Particle}{nameof(Specific_DialectCube)}");
+            Specific_AimLabBox = new Tex2DWithPath($"{Path_Particle}{nameof(Specific_AimLabBox)}");
+            Specific_Clock = new Tex2DWithPath($"{Path_Particle}{nameof(Specific_Clock)}");
+            Specific_RocketTrail = new Tex2DWithPath($"{Path_Particle}{nameof(Specific_RocketTrail)}");
+
+            Metaball_ShadowNebula = new Tex2DWithPath($"{Path_Metaball}{nameof(Metaball_ShadowNebula)}");
+            Metaball_FlickerWater = new Tex2DWithPath($"{Path_Metaball}{nameof(Metaball_FlickerWater)}");
+            Metaball_GreenWater = new Tex2DWithPath($"{Path_Metaball}{nameof(Metaball_GreenWater)}");
+            Metaball_ShinyStardust = new Tex2DWithPath($"{Path_Metaball}{nameof(Metaball_ShinyStardust)}");
+            Metaball_Bloody = new Tex2DWithPath($"{Path_Metaball}{nameof(Metaball_Bloody)}");
+
+            ColorMap_Aqua = new Tex2DWithPath($"{Path_General}{nameof(ColorMap_Aqua)}");
+
+            Font_Eras_Bold = Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_Eras_Bold)}");
+            Font_MGR = Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_MGR)}");
+           Font_圆体= Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_圆体)}");
+            Font_Cabin= Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_Cabin)}");
+        }
+        public static void UnloadMisc()
+        {
+            Specific_DialectCube = null;
+            Specific_DialectBall = null;
+            Specific_AimLabBox = null;
+            Specific_Clock = null;
+            Specific_RocketTrail = null;
+
+            Metaball_ShadowNebula = null;
+            Metaball_FlickerWater = null;
+            Metaball_GreenWater = null;
+            Metaball_ShinyStardust = null;
+            Metaball_Bloody = null;
+
+            ColorMap_Aqua = null;
+
+            Font_Eras_Bold = null;
+            Font_MGR = null;
+            Font_圆体 = null;
+            Font_Cabin = null;
+        }
+    }
+}

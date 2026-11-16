@@ -1,0 +1,770 @@
+SouloftheTidalMark: {
+	DisplayName: Soul of the Tidal Mark
+	Tooltip:
+		'''
+		Restore 20 health on hit
+		Your health can never drop below 5, but you can still take fatal damage
+		'''
+}
+
+HeartoftheCrystal: {
+	DisplayName: Heart of the Crystal
+	Tooltip:
+		'''
+		All magic weapons no longer consume any mana
+		15% increased magic critcal strike chance
+		Reduces your magic damage multiplicatively by 20%
+		'''
+}
+
+HeartoftheMountain: {
+	DisplayName: Heart of the Mountain
+	Tooltip:
+		'''
+		All magic weapons no longer consume any mana
+		50% increased magic critcal strike chance
+		Multiplies your magic damage by 10.0x
+		'''
+}
+
+SteadyBreath: {
+	DisplayName: Steady Breath
+	Tooltip:
+		'''
+		Increases ranged damage by {0} and ranged critical strike chance by {1}
+		Summons a crosshair at the cursor position; enemies targeted by the crosshair take {2} additional damage
+		Non-critical ranged attacks have an independent {3} chance to be treated as critical damage
+		Toggle crosshair visibility via accessory visibility
+		'''
+}
+
+PreciousTarget: {
+	DisplayName: Accurate Aim
+	Tooltip:
+		'''
+		Increases ranged damage by {0} and ranged critical strike chance by {1}
+		Summons a crosshair at the cursor position; enemies targeted by the crosshair take {2} additional damage
+		Non-critical ranged attacks have an independent {3} chance to be treated as critical damage
+		Toggle crosshair visibility via accessory visibility
+		'''
+}
+
+ExecutorsSwordMarkPlus: {
+	DisplayName: Executioner's Sword Mark A++
+	Tooltip:
+		'''
+		When taking damage, adds {0} Execution Progress to your currently held weapon
+		After an Execution Strike, adds {0} Execution Progress to the current weapon, but clears Execution Progress from all other weapons
+		If holding a Caster weapon, adds 1/{1} of the Execution Progress required to trigger Execution Strike for that weapon
+		After an Execution Strike, until you manually switch weapons, gain the following effects:
+		When current health is above 50%, increases executor critical strike damage by {2}%
+		When current health is 100%, increases executor critical strike damage by {2}%
+		'''
+}
+
+ExecutorsSwordMark: {
+	DisplayName: Executioner's Sword Mark A
+	Tooltip:
+		'''
+		When taking damage, adds {0} Execution Progress to your currently held weapon
+		After an Execution Strike, adds {0} Execution Progress to the current weapon, but clears Execution Progress from all other weapons
+		If holding a Caster weapon, adds 1/{1} of the Execution Progress required to trigger Execution Strike for that weapon
+		After an Execution Strike, until you manually switch weapons, gain the following effects:
+		When current health is above 50%, increases executor critical strike damage by {2}%
+		When current health is 100%, increases executor critical strike damage by {2}%
+		'''
+}
+
+CrimsonRune: {
+	DisplayName: Crimson Rune
+	Tooltip:
+		'''
+		Greatly increases health regeneration rate
+		Reduces healing potion cooldown by 25%
+		'''
+}
+
+SacarbWings: {
+	DisplayName: Wings of Sacarb
+	Tooltip:
+		'''
+		Allows flight and slow falls
+		Grants[ScarletBuff/LostbeltTraveler/AntiKnockbackBuff]
+		Grants immnunity to[ScarletDebuff/ContinentOfJourney/IcarusBuff], [ScarletDebuff/ContinentOfJourney/PlagueBuff], [ScarletDebuff/ContinentOfJourney/MonarchButterflyBuff] and [ScarletDebuff/ContinentOfJourney/DivineFireBuff]
+		All of your attack inflict[ScarletDebuff/LostbeltTraveler/TheBleachingBuff]
+		Grants infinite flight time and immunity of knockback
+		'''
+}
+
+ShadowCast: {
+	DisplayName: Necro Heart
+	Tooltip:
+		'''
+		Double-tap Up/Down/Left/Right to perform a Necro Dash, passing through enemies and projectiles.
+		Passing through an enemy applies a special Infestation effect.
+		Infested enemies take powerful, contagious damage over time.
+		The Infestation effect cannot be ignored by enemies.
+		'''
+}
+
+LifeBalloon: {
+	DisplayName: Life Balloon
+	Tooltip: ""
+}
+
+Desterrennacht: {
+	DisplayName: Desterrennacht
+	Tooltip:
+		'''
+		Restore 20 health on hit
+		Automatically restore 25 health every few seconds
+		Upon taking fatal damage, revive with 15% of your health
+		After a successful revival, gain two chances to dodge all attacks
+		Your health can never drop below 20, but you can still take fatal damage
+		"Relying on the stardust spiral, I place this in your hand"
+		'''
+}
+
+ManaSavingsJar: {
+	DisplayName: Mana Savings Jar
+	Tooltip:
+		'''
+		Provides increased mana cap, reduced with each Mana Crystal used
+		Maximum mana cap increase at 150
+		'''
+}
+
+CycleMadness: {
+	DisplayName: Cycle Madness
+	Tooltip:
+		'''
+		Clears weapon critical strike chance
+		Dealing any damage always generates a critical star
+		Each critical star picked up increases critical strike chance by {0}, up to a maximum of {2}
+		Picking up a critical star always refreshes the above effect for {1} seconds
+		'''
+}
+
+EmblemVanguard: {
+	DisplayName: Vanguard Emblem
+	Tooltip:
+		'''
+		Grants knockback immunity
+		Press the Skill Key to grant yourself {0} seconds of invincibility
+		After the invincibility ends, enters a cooldown of about {1} seconds
+		'''
+}
+
+EmblemExecutor: {
+	DisplayName: Handman's Emblem
+	Tooltip: 15% increased executor damage
+}
+
+LoveRing: {
+	DisplayName: Love Ring
+	Tooltip:
+		'''
+		Reduces shop prices by 40%
+		Further reduces shop prices by 5% for opposite-gender NPCs
+		When near an opposite-gender player, increases their attack speed and movement speed by 10%
+		'''
+}
+
+ExecutorBadge: {
+	DisplayName: Executor's Badge
+	Tooltip:
+		'''
+		Increases executor damage by 20%
+		Increases executor critical strike chance by 5%
+		'''
+}
+
+AxeofPerun: {
+	DisplayName: Axe of Perun
+	Tooltip:
+		'''
+		{0} increased executor critical strike chance 
+		{1} increased executor critical strike damage
+		'''
+}
+
+ConceptualBlackKey: {
+	DisplayName: Conceptual Black Key
+	Tooltip:
+		'''
+		{0} increased executor damage and critical strike chance
+		{1} increased executor critical strike damage
+		+{2} executor armor penetration
+		Grants[ScarletBuff/LostbeltTraveler/BlackKeyExecutionBuff] for {3} seconds on execution strike
+		Repeatedly triggering execution strike does not refresh the duration
+		Restore {4} health while taking damage
+		Extends invincibility frames after taking damage
+		"Executor, praise the Lord"
+		'''
+}
+
+ArcBow: {
+	DisplayName: Arc Bow
+	Tooltip:
+		'''
+		Restore {0} health while taking damage
+		Grants[ScarletBuff/LostbeltTraveler/ArcBowBuff] for {1} seconds
+		Repeatedly triggering execution strike does not refresh the duration
+		'''
+}
+
+MachineGunTalisman: {
+	DisplayName: Machinegun Talisman
+	Tooltip:
+		'''
+		Restore {0} health while taking damage
+		Grants[ScarletBuff/LostbeltTraveler/ArcBowBuff] for {1} seconds
+		Repeatedly triggering execution strike does not refresh the duration
+		'''
+}
+
+RocketCharm: {
+	DisplayName: Rocket Charm
+	Tooltip:
+		'''
+		+{0} executor armor penetration
+		Grants[ScarletBuff/LostbeltTraveler/ArcBowBuff] for {1} seconds
+		Repeatedly triggering execution strike does not refresh the duration
+		'''
+}
+
+MiniatureBayonet: {
+	DisplayName: Miniature Bayonet
+	Tooltip:
+		'''
+		{0} increased executor critical strike chance 
+		{1} increased executor critical strike damage
+		'''
+}
+
+ArtificalManaStar: {
+	DisplayName: Artifical Mana Star
+	Tooltip:
+		'''
+		Reduces mana cost of magic weapons by 1
+		Automatically uses mana potions when needed
+		Reduces mana potion restoration efficiency by 15%
+		'''
+}
+
+MayaBall: {
+	DisplayName: Blue Pumper
+	Tooltip:
+		'''
+		The knockback you take is multiplied by 5
+		On hit, the knockback force you receive is inversely proportional to the enemy's knockback resistance
+		If the enemy is completely immune to knockback, you will not be affected by knockback either
+		'''
+}
+
+HeartoftheRuinFrost: {
+	DisplayName: Heart of the Ruin Frost Kingdom
+	Tooltip:
+		'''
+		+{0} max health
+		Allow the player to dash into the enemy
+		Grants immunity to Knockback and Lava
+		Grants immunity to[ScarletDebuff/Terraria/Frozen],[ScarletDebuff/Terraria/Frostburn],[ScarletDebuff/Terraria/Frostburn2] and[ScarletDebuff/Terraria/Chilled]
+		Grants ablitiy to breath in the water
+		Grants all the effect from Frozen Shield
+		"The once-prosperous otherworldly kingdom has now crumbled and fallen silent beneath the blizzard."
+		'''
+}
+
+ExecutorsSwordMarkSmall: {
+	DisplayName: Executioner's Sword Mark
+	Tooltip:
+		'''
+		When taking damage, adds {0} Execution Progress to your currently held weapon
+		After an Execution Strike, adds {0} Execution Progress to the current weapon, but clears Execution Progress from all other weapons
+		If holding a Caster weapon, adds 1/{1} of the Execution Progress required to trigger Execution Strike for that weapon
+		After an Execution Strike, until you manually switch weapons, gain the following effects:
+		When current health is above 50%, increases executor critical strike damage by {2}%
+		When current health is 100%, increases executor critical strike damage by {2}%
+		'''
+}
+
+HeartoftheDistantArk: {
+	DisplayName: Heart of the Distant Ark
+	Tooltip:
+		'''
+		+{0} max health
+		Allow the player to dash into the enemy
+		Grants immunity to Knockback and Lava
+		Grants ability to breath in the water
+		"The sunken city... we failed to board that ark in time."
+		'''
+}
+
+PinballPurgatory: {
+	DisplayName: Pinball Purgatory
+	Tooltip:
+		'''
+		The knockback you take is multiplied by 5
+		On hit, the knockback force you receive is inversely proportional to the enemy's knockback resistance
+		If the enemy is completely immune to knockback, you will not be affected by knockback either
+		Also selects one of four different effects based on the type of marble when hit
+		"Send you to Pinball Purgatory, where four different colored marble arrows go clink clank for a prize draw"
+		'''
+	DetailTooltip:
+		'''
+		White marbles do nothing
+		Blue marbles allow you to dash in four directions for a short time
+		Pink marbles allow you to dash in four directions for a longer time
+		Orange marbles cause purgatory fireballs to fall from the sky when hit for a longer duration
+		'''
+}
+
+SlimeGodShield: {
+	DisplayName: Slime God Shield
+	Tooltip: ""
+}
+
+GreedyMask: {
+	DisplayName: Greedy Mask
+	Tooltip:
+		'''
+		+2 HP/s life regen speed, 1.5x natural regeneration rate
+		Resets the healing amount of all healing potions to scale based on a percentage of the max health
+		Using healing potion grants[ScarletBuff/LostbeltTraveler/CrimsonCharmBuff] instead of[ScarletDebuff/Terraria/PotionSickness] for {1} seconds 
+		Without[ScarletBuff/LostbeltTraveler/CrimsonCharmBuff], healing potions always restore 100% health
+		Using healing potion while under[ScarletBuff/LostbeltTraveler/CrimsonCharmBuff] will reduces the healing amount by {0}, down to a minimum of {2}
+		"Unimagined madness just to stay alive"
+		'''
+}
+
+BitingClaw: {
+	DisplayName: Biting Crab Claw
+	Tooltip: When equipped, adds special catches provided by the Lostbelt Journey mod
+}
+
+PassionfruitJar: {
+	DisplayName: Passionfruit Jar
+	Tooltip: ""
+}
+
+SpaceHorror: {
+	DisplayName: Space Horror
+	Tooltip:
+		'''
+		Clears weapon critical strike chance
+		Dealing any damage always generates a critical star
+		Each critical star picked up increases critical strike chance by {0}, up to a maximum of {2}
+		Picking up a critical star always refreshes the above effect for {1} seconds
+		'''
+}
+
+RuShiWoWen: {
+	DisplayName: Thus Have I Heard
+	Tooltip:
+		'''
+		On first equip, instantly clears all summoned minions
+		Every {0} seconds, clears all summoned minions and randomly summons 1 minion from all minion types until the minion cap is reached
+		All minions summoned in the same batch have their base damage set to the lowest base damage among that batch, and affacted by[i:SummonerEmblem]summoner class
+		Holding this and press the Interact key on a minion summoning staff in your inventory to disable that minion from being summoned
+		Up to {1} minion types can be disabled; pressing the Interact key on this accessory removes the last minion added to the list
+		Hold Left Alt to view the ban list
+		'''
+	BanMinionList: Minion Ban List ({1}){0}
+	FlavorTooltips:
+		'''
+		Namo Tathagata, the Worthy One
+		Perfectly Enlightened, Perfect in Knowledge and Conduct
+		Sugata, Knower of the World
+		Unsurpassed Lord, Tamer of Men
+		Teacher of Gods and Humans, Buddha, the World-Honored One
+		'''
+}
+
+EmblemFirearm: {
+	DisplayName: Firearm Coin
+	Tooltip:
+		'''
+		Grants effects while holding an Executor Firearm
+		Increases executor critical strike chance by {1}
+		The longer you hold the firearm, the higher your executor critical strike damage, up to a maximum of {0}%
+		Resets immediately when switching weapons
+		'''
+}
+
+EmblemColdSteel: {
+	DisplayName: Cold Steel Coin
+	Tooltip:
+		'''
+		Grants effects while holding an Executor Cold Steel
+		Increases executor damage by {0} and executor critical strike chance by {1}
+		Deals additional damage to targets with lower base defense, up to a maximum of {2} additional damage
+		'''
+}
+
+EmblemThrown: {
+	DisplayName: Throwing Coin
+	Tooltip:
+		'''
+		Grants effects while holding an Executor Throwing
+		Increases executor critical strike damage by {0}
+		Increases executor critical strike chance by {1}
+		'''
+}
+
+EmblemGalaxy: {
+	DisplayName: Proof of the Stars
+	Tooltip:
+		'''
+		While equipped, press the Interact key on[i:LostbeltTraveler/TheSevenStar]Seven Stars in your inventory to transform it into[i:LostbeltTraveler/TheGreatDipper]Polaris
+		Polaris can only be used while Proof of the Stars is equipped
+		'''
+}
+
+SkyofHorizon: {
+	DisplayName: Sky of Horizon
+	Tooltip:
+		'''
+		Grants infinite wing and rocket boot flight
+		Grants immunity of knockback
+		Increases flight and jump mobility
+		'''
+}
+
+LightofHorizon: {
+	DisplayName: Light of Horizon
+	Tooltip:
+		'''
+		Grants the all ability of[i:ContinentOfJourney/Horizon]Horizon
+		Grants the all ability of[i:ContinentOfJourney/Altitude]Altitude
+		Grants extra accessory slot and immunity of knockback
+		Grants infinite wing and rocket boot flight
+		Increases flight and jump mobility
+		"Fly, toward the sky beyond"
+		'''
+}
+
+BambooShield: {
+	DisplayName: Bamboo Shield
+	Tooltip:
+		'''
+		Grants immnuity to poison
+		Can be used as a substitute for[i:Bezoar]
+		'''
+}
+
+PendantFlow: {
+	DisplayName: Pendant Flow
+	Tooltip: ""
+}
+
+PendantGold: {
+	DisplayName: Pendant Gold
+	Tooltip: ""
+}
+
+PendantWitness: {
+	DisplayName: Pendant Witness
+	Tooltip: ""
+}
+
+CombatSlot: {
+	DisplayName: Combat Slot
+	Tooltip:
+		'''
+		Grants extra accessory slot
+		...Nothing else
+		'''
+}
+
+SpellBreaker: {
+	DisplayName: Spell Breaker Prestige I
+	Tooltip:
+		'''
+		{0} increased melee damage
+		Your melee attack inflicts[ScarletDebuff/Terraria/Venom],[ScarletDebuff/Terraria/CursedInferno] and[ScarletDebuff/Terraria/Ichor]
+		Deals extra {1} damage every inflicted debuff on target
+		Has a {2} frames cooldown upon a successful hit
+		'''
+}
+
+SpellBreakerAdvanced: {
+	DisplayName: Spell Breaker Prestige II
+	Tooltip:
+		'''
+		{0} increased melee damage, {1} increased melee critical strike chance
+		Your melee attack inflicts[ScarletDebuff/ContinentOfJourney/PlagueBuff],[ScarletDebuff/ContinentOfJourney/DivineFireBuff] and[ScarletDebuff/ContinentOfJourney/VulnerableBuff]
+		Deals extra {2} damage every inflicted debuff on target
+		Has a {3} frames cooldown upon a successful hit
+		'''
+}
+
+SpellBreakerSmall: {
+	DisplayName: Spell Breaker
+	Tooltip:
+		'''
+		Your melee attack inflict[ScarletDebuff/Terraria/Poisoned] and[ScarletDebuff/Terraria/OnFire]
+		Deals extra {0} damage every inflicted debuff on target
+		Has a {1} frames cooldown upon a successful hit
+		'''
+}
+
+SelfPortraitoftheSunflower: {
+	DisplayName: Self-Portrait of the Sunflower
+	Tooltip:
+		'''
+		On hit, damage over time debuff damage taken by the enemy is amplified by {0}
+		For each debuff the enemy has, damage over time debuff damage is additionally amplified by {1}, up to a maximum of {2}
+		"In difficult times, the author cannot guarantee what happens to the work they create"
+		'''
+}
+
+SelfPortraitoftheBleachingOne: {
+	DisplayName: Self-Portrait of the Bleaching One
+	Tooltip:
+		'''
+		Your attack inflict[ScarletDebuff/LostbeltTraveler/TheBleachingBuff]
+		On hit, damage over time debuff damage taken by the enemy is amplified by {0}
+		For each debuff the enemy has, damage over time debuff damage is additionally amplified by {1}, up to a maximum of {2}
+		"Civilization has vanished, along with that abandoned possible world"
+		'''
+}
+
+BloodThornCrown: {
+	DisplayName: Blood Thorn Crown
+	Tooltip:
+		'''
+		If any Boss isn't present
+		Increases damage reduction by {0}, reduces damage by {1} and critical strike chance by {2}
+		If any Boss is present
+		Increases damage by {3}
+		Also dies upon being hit more than {4} times
+		'''
+}
+
+HandofGods: {
+	DisplayName: Hand of Gods
+	Tooltip:
+		'''
+		{0} increased tile placement speed, {3} tile range
+		{1} increased wall placement speed, {2} mining speed
+		Emit lighting on cursor position, grants various exploration ability
+		You can freely place any tiles in air
+		The following also takes effect when placed in vanity slot:
+		Grants various exploration conveniences, and lights up the cursor position
+		'''
+}
+
+CombatSlotAdvanced: {
+	DisplayName: Combat Slot Advanced
+	Tooltip: ""
+}
+
+ChargeFeatherFlame: {
+	DisplayName: Charge Feather Flame
+	Tooltip: ""
+}
+
+ChargeFeatherBroken: {
+	DisplayName: Charge Feather Broken
+	Tooltip: ""
+	Globals: Allows feather dash, restores {0} flight time on dash end
+}
+
+ChargeFeatherEmpress: {
+	DisplayName: Charge Feather Empress
+	Tooltip: ""
+}
+
+ChargeFeatherGhost: {
+	DisplayName: Charge Feather Ghost
+	Tooltip: ""
+}
+
+ChargeFeatherAngel: {
+	DisplayName: Charge Feather Angel
+	Tooltip: ""
+}
+
+ChargeFeatherBeetle: {
+	DisplayName: Charge Feather Beetle
+	Tooltip: ""
+}
+
+ChargeFeatherBetsy: {
+	DisplayName: Charge Feather Betsy
+	Tooltip: ""
+}
+
+ChargeFeatherButterfly: {
+	DisplayName: Charge Feather Butterfly
+	Tooltip: ""
+}
+
+ChargeFeatherDemon: {
+	DisplayName: Charge Feather Demon
+	Tooltip: ""
+}
+
+ChargeFeatherFairy: {
+	DisplayName: Charge Feather Fairy
+	Tooltip: ""
+}
+
+ChargeFeatherFestival: {
+	DisplayName: Charge Feather Festival
+	Tooltip: ""
+}
+
+ChargeFeatherFish: {
+	DisplayName: Charged Fishing Fin
+	Tooltip:
+		'''
+		While wearing any wings, increases fishing power by 50%
+		While wearing {0}:
+		You can ignore the water body size penalty
+		Reeling in grants a random food item
+		60% chance to obtain food that grants [ScarletBuff/Terraria/WellFed]
+		30% chance to obtain food that grants [ScarletBuff/Terraria/WellFed2]
+		10% chance to obtain food that grants [ScarletBuff/Terraria/WellFed3]
+		'''
+}
+
+ChargeFeatherLeafs: {
+	DisplayName: Charge Feather Leafs
+	Tooltip: ""
+}
+
+ChargeFeatherSpooky: {
+	DisplayName: Charge Feather Spooky
+	Tooltip: ""
+}
+
+ChargeFeatherVortex: {
+	DisplayName: Charge Feather Vortex
+	Tooltip: ""
+}
+
+ChargeFeatherTattered: {
+	DisplayName: Charge Feather Tattered
+	Tooltip: ""
+}
+
+DetailFang: {
+	DisplayName: Detail Fang
+	Tooltip: ""
+}
+
+SupremeBundleBalloon: {
+	DisplayName: Supreme Bundle Balloon
+	Tooltip: ""
+}
+
+FinalBarBalloon: {
+	DisplayName: Retribution
+	Tooltip:
+		'''
+		+{0} max life, {1} life regen speed
+		The max life bonus is disabled while equipped with [i:ContinentOfJourney/WhaleBoneCharm]
+		Grants the ability infinite multi-jumps
+		Increases jump height and negates fall damage
+		Grants the effects of [i:ContinentOfJourney/DarkHorseshoeBalloon] and[ScarletBuff/Terraria/Honey]
+		Calls down lightning upon nearby enemies during multi-jumps
+		"Thus, you shall face retribution."
+		'''
+}
+
+SelfPortraitoftheHoloFace: {
+	DisplayName: Self-Portrait of the Digital Sea
+	Tooltip:
+		'''
+		Completely disables life regeneration, reduces debuff damage taken by 50%
+		For every +1 HP/s life regen speed you have, additionally amplifies the DoT damage on enemy by {0} on hit
+		Additionally, on hit, heals you based on the number of debuffs on the enemy
+		"We will reunite in the digital sea one day, won't we?"
+		'''
+}
+SelfPortraitoftheJourney: {
+	DisplayName: Self-Portrait of the Drifting Voyager
+	Tooltip:
+		'''
+		Reduces debuff damage taken by 25%
+		+1 HP/s life regen speed, reduces healing potion cooldown by 25%
+		Inflicts[ScarletDebuff/LostbeltTraveler/TheBleachingBuff] on hit
+		On hit, amplifies the DoT damage on enemy by {0}
+		On hit, heals you based on the number of debuffs on the enemy
+		For each debuff the enemy has, additionally amplifies DoT damage by {1}, up to a maximum of {2}
+		This effect occurs before the DoT amplification
+		"Do not forget me."
+		'''
+}
+
+SelfPortraitoftheLady: {
+	DisplayName: Self Portraitofthe Lady
+	Tooltip: ""
+}
+
+SelfPortraitoftheNameless: {
+	DisplayName: Self Portraitofthe Nameless
+	Tooltip: ""
+}
+
+OverwatchWatch: {
+	DisplayName: Overwatch Watch
+	Tooltip: ""
+}
+
+GunWitchNecklace: {
+	DisplayName: Gun Witch Necklace
+	Tooltip: ""
+}
+
+LifeHairCut: {
+	DisplayName: Life Hair Cut
+	Tooltip: ""
+}
+
+GemYoyoBag: {
+	DisplayName: Gem Yoyo Bag
+	Tooltip: ""
+}
+
+YoyoRopeAmber: {
+	DisplayName: Yoyo Rope Amber
+	Tooltip: ""
+}
+
+YoyoRopeAmethyst: {
+	DisplayName: Yoyo Rope Amethyst
+	Tooltip: ""
+}
+
+YoyoRopeDiamond: {
+	DisplayName: Yoyo Rope Diamond
+	Tooltip: ""
+}
+
+YoyoRopeEmerald: {
+	DisplayName: Yoyo Rope Emerald
+	Tooltip: ""
+}
+
+YoyoRopeOnyx: {
+	DisplayName: Yoyo Rope Onyx
+	Tooltip: ""
+}
+
+YoyoRopeRuby: {
+	DisplayName: Yoyo Rope Ruby
+	Tooltip: ""
+}
+
+YoyoRopeSapphire: {
+	DisplayName: Yoyo Rope Sapphire
+	Tooltip: ""
+}
+
+YoyoRopeTopaz: {
+	DisplayName: Yoyo Rope Topaz
+	Tooltip: ""
+}

@@ -1,0 +1,33 @@
+﻿using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Projs.Executor.Thrown;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Items.Weapons.Executor.Caster
+{
+    public class AbyssalWorld : ExecutorWeaponClass
+    {
+        public override bool IsLoadingEnabled(Mod mod)
+        {
+            return false;
+        }
+        public override int ExecutionProgress => 40;
+        public override void ExSD()
+        {
+            Item.width = Item.height = 72;
+            Item.Lostbelt().NotFinished = true;
+            Item.damage = 108;
+            Item.useTime = Item.useAnimation = 35;
+            Item.rare = ItemRarityID.Yellow;
+            Item.shootSpeed = 18f;
+            Item.shoot = ProjectileType<AbyssalWorldHeldProj>();
+        }
+        public override bool CanUseItem(Player player) => !player.HasProj<AbyssalWorldHeldProj>();
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            return true;
+        }
+    }
+}

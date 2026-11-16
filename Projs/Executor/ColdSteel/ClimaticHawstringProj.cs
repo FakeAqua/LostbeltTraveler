@@ -1,0 +1,159 @@
+﻿using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.NetCode;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Globals.Handlers;
+using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Projs.Executor.ColdSteel
+{
+    public class ClimaticHawstringProj : LostbeltProjs
+    {
+        public override EnumDamageClass Category => EnumDamageClass.Executor;
+        public override string Texture => GetInstance<ClimaticHawstring>().Texture;
+        public AnimationStruct Helper = new(2);
+        public int GetUseTime => Owner.ApplyWeaponAttackSpeed(GetInstance<ClimaticHawstring>().Item, GetInstance<ClimaticHawstring>().Item.useTime, 5);
+        public ref float Timer => ref Projectile.ai[0];
+        public bool CanLaser => Owner.Lostbelt().climaticHawstringLaserCounter >= 30;
+        public override void ExSD()
+        {
+            Projectile.width = 28;
+            Projectile.height = 60;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.penetrate = -1;
+            Projectile.extraUpdates = 0;
+            Projectile.noEnchantmentVisuals = true;
+            Projectile.timeLeft = 10000;
+
+        }
+        public override bool ShouldUpdatePosition() => false;
+        public override bool? CanDamage() => false;
+        public override void OnFirstFrame()
+        {
+            Helper.MaxProgress[0] = GetSeconds(5);
+        }
+
+        public void UpdateBowStatement()
+        {
+            Projectile.velocity = Owner.ToMouseVector2();
+            Projectile.rotation = Projectile.velocity.ToRotation();
+        }
+
+        public void UpdateAttackAI()
+        {
+            Owner.itemAnimation = Owner.itemTime = 2;
+            Vector2 dir = Projectile.SafeDir();
+            if (CanLaser)
+            {
+                Helper.UpdateAniState(0);
+                if (Helper.Progress[0] % 3 == 0)
+                {
+                    SoundEngine.PlaySound(SoundID.Item158 with { MaxInstances = 0, Pitch = -0.38f, PitchVariance = 0.1f }, Projectile.Center);
+                    Vector2 laserPos = Projectile.SafeDir().RotatedBy(PiOver2) * Main.rand.NextFloat(-15f, 16f);
+                    Projectile proj2 = Projectile.NewProjectileDirect(Owner.GetSource_ItemUse(Owner.HeldItem), Projectile.Center + laserPos + dir * 17f, dir * 12f, ProjectileType<ClimaticHawstringBeam>(), Projectile.damage / 2, Projectile.knockBack, Owner.whoAmI);
+                    proj2.rotation = dir.ToRotation();
+                    new ShinyCrossStar(Projectile.Center + laserPos + dir * 27f, Vector2.Zero, RandLerpColor(Color.DarkGoldenrod, Color.Goldenrod), 40, 0, 1, 0.80f, false).Spawn();
+                    for (int j = 0; j < 8; j++)
+                        new StarShape(Projectile.Center.ToRandCirclePos(4f) + laserPos + dir * 17f, dir * Main.rand.NextFloat(0.1f, 6.2f), RandLerpColor(Color.Goldenrod, Color.DarkGoldenrod), Main.rand.NextFloat(0.35f, 0.45f) * 1.2f, 40).Spawn();
+                }
+                if (Helper.IsDone[0])
+                {
+                    Helper.IsDone[0] = false;
+                    Helper.Progress[0] = 0;
+                    Owner.Lostbelt().climaticHawstringLaserCounter = 0;
+                    //喷一点粒子出来收尾
+                    for (int i = 0; i < 8; i++)
+                        new StarShape(Projectile.Center.ToRandCirclePos(4f) + dir * 17f, dir.ToRandVelocity(ToRadians(5f), 0.1f, 6.2f), RandLerpColor(Color.DarkGoldenrod, Color.Goldenrod), Main.rand.NextFloat(0.35f, 0.45f) * 2.0f, 40).Spawn();
+                    for (int i = 0; i < 16; i++)
+                        new ShinyOrbParticle(Projectile.Center.ToRandCirclePos(4f) + dir * 17f, dir.ToRandVelocity(ToRadians(5f), 0.1f, 9.2f), RandLerpColor(Color.Goldenrod, Color.PaleGoldenrod), 40, Main.rand.NextFloat(0.24f, 0.35f) * Projectile.scale).Spawn();
+                }
+            }
+            Timer++;
+            if (Timer < GetUseTime)
+                return;
+
+            for (int i = -1; i < 2; i += 2)
+            {
+                Vector2 pos = dir.RotatedBy(PiOver2) * i * 22f + Projectile.Center;
+                Projectile proj = Projectile.NewProjectileDirect(Owner.GetSource_ItemUse(Owner.HeldItem), pos + dir * 17f, dir * 12f, ProjectileType<ClimaticHawstringArrow>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
+                proj.rotation = dir.ToRotation();
+                proj.Lostbelt().HasExecutionMechanic = true;
+                for (int j = 0; j < 16; j++)
+                    new StarShape(pos.ToRandCirclePos(4f) + dir * 17f, dir * Main.rand.NextFloat(0.1f, 6.2f), RandLerpColor(Color.Goldenrod, Color.DarkGoldenrod), Main.rand.NextFloat(0.35f, 0.45f) * 1.2f, 40).Spawn();
+                new ShinyCrossStar(pos + dir * 17f, Vector2.Zero, RandLerpColor(Color.DarkGoldenrod, Color.Goldenrod), 40, 0, 1, 1.2f, false).Spawn();
+            }
+            ScarletSound(LostbeltSoundAssets.SodomsDisaster_Hit, Projectile.Center, .54f, 0);
+            Timer = 0;
+        }
+        public void UpdatePlayerState()
+        {
+            Projectile.spriteDirection = Projectile.direction = (Owner.LocalMouseWorld().X > Owner.Center.X).ToDirectionInt();
+            Owner.ControlPlayerArm(Projectile.rotation);
+            Owner.ChangeDir(Projectile.direction);
+            Owner.heldProj = Projectile.whoAmI;
+            Projectile.Center = Owner.MountedCenter;
+            Projectile.position.Y += Owner.gfxOffY;
+        }
+
+        public override void ProjAI()
+        {
+            if (CheckOwnerState())
+                return;
+            //是的这里会全程检查是否拥有这个射弹
+            if (!Owner.HasProj<ClimaticHawstringMinion>(out int projID) && Projectile.CanSpawnChild())
+            {
+                SoundEngine.PlaySound(SoundID.Item44 with { MaxInstances = 0 }, Owner.Center);
+                SpawnProj(1);
+                SpawnProj(-1);
+            }
+            void SpawnProj(int reverse)
+            {
+                Projectile proj = Projectile.NewProjectileDirect(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.MountedCenter + Vector2.UnitX * 500f * reverse - Vector2.UnitY * 1000f, Vector2.Zero, ProjectileType<ClimaticHawstringMinion>(), Projectile.damage / 2, 1f, Owner.whoAmI);
+                proj.rotation = (-Vector2.UnitX).ToRotation();
+                ((ClimaticHawstringMinion)proj.ModProjectile).Reverse = reverse > 0;
+            }
+            bool ifStillUse = (Owner.channel || Owner.controlUseTile) && !Owner.noItems && !Owner.CCed;
+            if (ifStillUse)
+                UpdateAttackAI();
+            UpdateBowStatement();
+            UpdatePlayerState();
+            Projectile.netUpdate = true;
+
+        }
+        public bool CheckOwnerState()
+        {
+            if (!Owner.IsHolding<ClimaticHawstring>() || Owner.dead || Owner.CCed)
+            {
+                Projectile.Kill();
+                return true;
+            }
+            else
+                Projectile.timeLeft = 2;
+            return false;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Vector2 offset = new(12 * Owner.direction, 0);
+            Texture2D tex = TextureAssets.Projectile[Type].Value;
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
+            float drawRot = Projectile.rotation + (Projectile.spriteDirection == -1 ? Pi : 0);
+            Vector2 rotationPoint = tex.Size() * 0.5f;
+            SpriteEffects flipSprite = Projectile.spriteDirection * Main.player[Projectile.owner].gravDir == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            if (CanLaser)
+                for (int i = 0; i < 8; i++)
+                {
+                    Color edgeColor = Color.White.ToAddColor();
+                    SB.Draw(tex, drawPos + offset.RotatedBy(drawRot) + ToRadians(60 * i).ToRotationVector2() * 2f, null, edgeColor, drawRot, rotationPoint, Projectile.scale, flipSprite, default);
+                }
+            SB.Draw(tex, drawPos + offset.RotatedBy(drawRot), null, lightColor, drawRot, rotationPoint, Projectile.scale, flipSprite, default);
+            return false;
+        }
+    }
+}

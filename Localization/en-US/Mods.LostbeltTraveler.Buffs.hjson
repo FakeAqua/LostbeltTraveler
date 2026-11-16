@@ -1,0 +1,272 @@
+HoneyRegenAlt: {
+	DisplayName: Honey Regen
+	Description: Accelerating life regen speed
+}
+
+BlackKeyExecutionBuff: {
+	DisplayName: Conceptual Enhancement
+	Description:
+		'''
+		Enhances your physical attributes
+		+{0} executor armor penetration
+		Reduces damage taken by {1}, removes this effect on trigger
+		'''
+}
+
+WhaleBuff: {
+	DisplayName: Little Whale
+	Description: A deceased whale calf. It is not yet ready to inherit the mantle of Death.
+}
+
+NoneBuff: {
+	DisplayName: _
+	Description: Does a difference between great and small truly exist? Regardless, it follows you now.
+}
+
+ShadowBuff: {
+	DisplayName: Miniature Shadow Wall
+	Description: It will watch you, forever.
+}
+
+SquidBuff: {
+	DisplayName: Little Squid
+	Description: It works part-time at the Underwater Burger Shop for summer break.
+}
+
+WatcherBuff: {
+	DisplayName: Young Watcher of Time
+	Description: The youngest among countless companions of time.
+}
+
+HerbBagBuff: {
+	DisplayName: Forest Herb
+	Description: The power of herbs seems to have been infused into your body.
+}
+
+GoldenAppleBuff: {
+	DisplayName: Golden Apple
+	Description: Your teeth actually survived that?
+}
+
+GoldenAppleBuffEnchanted: {
+	DisplayName: Enchanted Golden Apple
+	Description:
+		'''
+		Accelerates health regeneration and strengthens defense.
+		...How are your teeth this tough?
+		'''
+}
+
+DragonSummonBuff: {
+	DisplayName: Dragon Summon Buff
+	Description: Mods.LostbeltTraveler.Buffs.DragonSummonBuff.Description
+}
+
+CrimsonCharmBuff: {
+	DisplayName: Over Saturation
+	Description: Healing effect is heavily reduced, maybe you should take a break?
+}
+
+TerraFlamethrowerBuff: {
+	DisplayName: Terra Phlogiston
+	Description:
+		'''
+		Causes enemies drip terra essence, dealing damage equal to enemy's contact damage
+		Terra essence does not damage enemies affected by this
+		'''
+}
+
+BoneSlapBuff: {
+	DisplayName: Bone Slap Buff
+	Description: Mods.LostbeltTraveler.Buffs.BoneSlapBuff.Description
+}
+
+StarofHopeBuff: {
+	DisplayName: Star of Hope
+	Description: This is a story full of love and hope
+}
+
+StreamingProtocalBuff: {
+	DisplayName: Streaming Protocal Buff
+	Description: Mods.LostbeltTraveler.Buffs.StreamingProtocalBuff.Description
+}
+
+TearEyeBuff: {
+	DisplayName: Cthulhu's Tear
+	Description: Increases damage reduction
+}
+
+DragonMinionBuff: {
+	DisplayName: Dragon Minion Buff
+	Description: Mods.LostbeltTraveler.Buffs.DragonMinionBuff.Description
+}
+
+FruitofEternityBuff: {
+	DisplayName: Eternal Fruit
+	Description: Physical enhancement, but at what cost
+}
+
+DracoBuff: {
+	DisplayName: Black Mud Holy Grail
+	Description: Humans are beings that obey desires. I am a being that savors desires
+}
+
+SonBuff: {
+	DisplayName: Son Companion
+	Description: But I think this is sacred
+}
+
+GrassPoison: {
+	DisplayName: Grass Poison
+	Description: Mods.LostbeltTraveler.Buffs.GrassPoison.Description
+}
+
+AbsoluteZeroBuff: {
+	DisplayName: Absolute Zero
+	Description:
+		'''
+		Extreme cold freezes the pulse of the living, even time begins to hesitate
+		Greatly reduces movement speed, defense, and health
+		'''
+}
+
+TheBleachingBuff: {
+	DisplayName: The Bleaching
+	Description:
+		'''
+		The soul is fading, leaving only a shell
+		Clears defense, reduces damage dealt and health
+		'''
+}
+
+SaintChurchBuff: {
+	DisplayName: Undying Balu
+	Description:
+		'''
+		The Moon Balu, even if sunk into the abyss of death, will rise and awaken
+		Then, loathing the Dahn who rejected its teachings, it decreed their fate of never reviving after death
+		And cannot repair its own injuries
+		'''
+}
+
+LifeWormBuff: {
+	DisplayName: Little All-Nature's Breath
+	Description: Growing vigorously
+}
+
+CycleMadnessBuff: {
+	DisplayName: Critical Star Cycle
+	Description: Gaining critical stars
+}
+
+AntiKnockbackBuff: {
+	DisplayName: Knockback Immunity
+	Description: No longer affected by knockback
+}
+
+DiamondYoyoBuff: {
+	DisplayName: Diamond Dust
+	Description: Shines brightly, attracting dazzling gems
+}
+
+ForeverNightBuff: {
+	DisplayName: Restless Night
+	Description: Losing health
+}
+
+JellyfishGroupBuff: {
+	DisplayName: Jellyfish Swarm
+	Description:
+		'''
+		Blessing from a group of small jellyfish
+		Blue jellyfish increase damage by {0}, critical strike chance by {1}, and armor penetration by {2}
+		Pink jellyfish grant {3} defense, {4} damage reduction, and {5} health regeneration rate
+		Green jellyfish grant you unlimited flight time and enhance mobility
+		'''
+	Blue: Blue
+	Pink: Pink
+	Green: Green
+}
+
+ParrySpin: {
+	DisplayName: Parry Spin
+	Description: Mods.LostbeltTraveler.Buffs.ParrySpin.Description
+}
+
+CobaltParryBuff: {
+	DisplayName: Cobalt Parry Buff
+	Description: Mods.LostbeltTraveler.Buffs.CobaltParryBuff.Description
+}
+
+EoCParryBuff: {
+	DisplayName: Eo C Parry Buff
+	Description: Mods.LostbeltTraveler.Buffs.EoCParryBuff.Description
+}
+
+FrozenParryBuff: {
+	DisplayName: Frozen Parry Buff
+	Description: Mods.LostbeltTraveler.Buffs.FrozenParryBuff.Description
+}
+
+HuntressParryBuff: {
+	DisplayName: Huntress Parry Buff
+	Description: Mods.LostbeltTraveler.Buffs.HuntressParryBuff.Description
+}
+
+ObsidianParryBuff: {
+	DisplayName: Obsidian Parry Buff
+	Description: Mods.LostbeltTraveler.Buffs.ObsidianParryBuff.Description
+}
+
+PaladinsParryBuff: {
+	DisplayName: Paladins Parry Buff
+	Description: Mods.LostbeltTraveler.Buffs.PaladinsParryBuff.Description
+}
+
+SergantParryBuff: {
+	DisplayName: Sergant Parry Buff
+	Description: Mods.LostbeltTraveler.Buffs.SergantParryBuff.Description
+}
+
+SquireParryBuff: {
+	DisplayName: Squire Parry Buff
+	Description: Mods.LostbeltTraveler.Buffs.SquireParryBuff.Description
+}
+
+DiverBuff: {
+	DisplayName: Lil' Diver
+	Description: A tiny traveler from another realm
+}
+
+ArcBowBuff: {
+	DisplayName: Physical Enhancement
+	Description:
+		'''
+		Briefly enhances your physique
+		Reduces taken damage by 25%, removes this effect on triggered
+		'''
+}
+
+RocketCharmBuff: {
+	DisplayName: Offensive Enhancement
+	Description:
+		'''
+		Enhances your offensive power with a projection
+		+{0} executor armor penetration
+		'''
+}
+
+CursedHeavy: {
+	DisplayName: Cursed Heavy
+	Description: Mods.LostbeltTraveler.Buffs.CursedHeavy.Description
+}
+
+DeathTimer: {
+	DisplayName: Death Timer
+	Description: Mods.LostbeltTraveler.Buffs.DeathTimer.Description
+}
+
+CursedHeavyUpgrade: {
+	DisplayName: Cursed Heavy Upgrade
+	Description: Mods.LostbeltTraveler.Buffs.CursedHeavyUpgrade.Description
+}

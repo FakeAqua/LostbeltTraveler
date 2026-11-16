@@ -1,0 +1,46 @@
+PrefixData: {
+	Warding: Warding
+	Mencing: Mencing
+	Quick: Quick
+	Violent: Violent
+	Lucky: Lucky
+}
+
+PocketMirrorModiflication:
+	'''
+	Lostbelt Journey: While equipped, press the Interact key to teleport back to the spawn point
+	You can enable or disable this function through accessory visibility
+	Takes effect by default when placed in vanity slot
+	'''
+ParryTeacher: ""
+
+GenericText: {
+	BuffDetail: Hold Alt for details
+	// SwitchDetail: ""
+	HoldShiftAndRightClick: Hold Shift and right-click to switch
+	ApplyDoT: Allows applying {0}
+
+	SwitchWeapon: {
+		Tooltip: Hold and press the Interact key to switch forms
+		Visual: Hold and press the Interact key to change visual effects
+		AllFix: Also applies to: {0}
+		Condition: Switch prerequisite: Defeat <{0}>
+	}
+
+	LostbeltJourneyText: Lostbelt Journey:
+}
+
+DownedContidionList: {
+	DownedGolem: Golem
+	DownedLifeGods: The Lifebringer
+	DownedEvilBoss: Evil Boss
+	DownedPlantera: Plantera
+}
+
+ItemBelongTo: {
+	Donator: Donator Item
+	Developer: Developer Item
+	Supporter: Supporter Item
+}
+
+CustomDeathReason.Suicide: Someone's dead.

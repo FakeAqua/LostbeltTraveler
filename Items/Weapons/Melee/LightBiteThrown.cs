@@ -1,0 +1,26 @@
+﻿using ContinentOfJourney.Items;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Projs.Melee;
+using Terraria;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Items.Weapons.Melee
+{
+    public class LightBiteThrown : ThrownSpearClass
+    {
+        public override string Texture => GetInstance<LightBite>().Texture;
+        int UseTime = 25;
+        public override void ExSD()
+        {
+            Item.damage = 110;
+            Item.useTime = Item.useAnimation = UseTime;
+            Item.knockBack = 4;
+            Item.rare = ItemRarityID.Lime;
+            Item.UseSound = SoundID.DD2_MonkStaffSwing;
+            Item.shoot = ProjectileType<LightBiteThrownProj>();
+            Item.shootSpeed = 16;
+        }
+        public override Color MainTooltipColor => Color.DarkOrange;
+        public override void ModifyWeaponCrit(Player player, ref float crit) => crit += 8;
+    }
+}

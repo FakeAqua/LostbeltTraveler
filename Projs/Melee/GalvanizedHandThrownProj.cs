@@ -1,0 +1,406 @@
+﻿using ContinentOfJourney.Projectiles;
+using LostbeltTraveler.Assets.Registers;
+using LostbeltTraveler.Core.Primitives.Trail;
+using LostbeltTraveler.Core.ScreenEffect;
+using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Globals.Methods;
+using LostbeltTraveler.Items.Weapons.Melee;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+
+namespace LostbeltTraveler.Projs.Melee
+{
+    public class GalvanizedHandThrownProj : ThrownSpearProjClass
+    {
+        public override string Texture => GetInstance<GalvanizedHand>().Texture;
+        public enum Style
+        {
+            Shoot,
+            Stab
+        }
+        public Style AttackType
+        {
+            get => (Style)Projectile.ai[0];
+            set => Projectile.ai[0] = (float)value;
+        }
+        public ref float Timer => ref Projectile.ai[1];
+        public float AttackTime = 0;
+        public Vector2 StoredPosition = Vector2.Zero;
+        public float OriginalSpeed = -1f;
+        public bool ShouldPull = false;
+        public bool BeginPull = false;
+        public float DeadTime = 120f;
+        private Vector2 OriginalPos = Vector2.Zero;
+        /// <summary>
+        /// 手持射弹完全接管其行为
+        /// </summary>
+        public override void ExSSD()
+        {
+            Projectile.ToTrailSetting(28, 2);
+        }
+        public override void ExSD()
+        {
+            Projectile.height = Projectile.width = 60;
+            Projectile.extraUpdates = 5;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 60;
+            Projectile.penetrate = -1;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
+            Projectile.netImportant = true;
+            Projectile.ignoreWater = true;
+            Projectile.timeLeft = GetSeconds(10);
+            Projectile.tileCollide = false;
+        }
+
+        public override bool ShouldUpdatePosition()
+        {
+            return AttackType == Style.Shoot;
+        }
+        public override void AI()
+        {
+            if (!Projectile.Lostbelt().FirstFrame)
+            {
+                OriginalSpeed = Projectile.velocity.Length();
+                OriginalPos = Projectile.Center;
+            }
+            ActiveAI();
+            //玩家死亡时候立刻击杀射弹
+            if (Owner.dead || !Owner.active || Projectile.TooAwayFromOwner())
+                Projectile.Kill();
+        }
+        public void ActiveAI()
+        {
+            if (AttackType == Style.Shoot)
+            {
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                if (!LostbeltMethods.OutOffScreen(Projectile.Center))
+                    DrawParticles();
+            }
+            else
+            {
+                Timer++;
+                if (Timer > DeadTime)
+                    Timer = DeadTime;
+                //这里stab成功后，会手动控制玩家的指向
+                if (Projectile.GetTargetSafe(out NPC target, false, canPassWall: true))
+                {
+                    StabAI(target);
+                }
+                else
+                {
+                    //没有合适的目标立刻处死，我草忘了
+                    Projectile.Kill();
+                }
+            }
+        }
+        #region 刺入AI
+        private void PullHit(NPC target)
+        {
+            Owner.Lostbelt().NoSlowFall = 10;
+            Owner.Lostbelt().galvanizedHandDashCD = GetSeconds(1) + 30;
+            //1秒左右的无敌
+            Owner.GetImmnue(ImmunityCooldownID.General, 60);
+            //震屏。
+            ScreenShakeSystem.AddScreenShakes(Projectile.Center, -80 * Owner.direction, 23, Owner.velocity.ToRotation(), 0.2f, true, 1000);
+            if (Projectile.IsMe())
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    float rotArgs = ToRadians(360f / 8 * i);
+                    Vector2 arrowDir = Owner.velocity.ToSafeNormalize().RotatedBy(rotArgs);
+                    Projectile arrow = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, arrowDir * 12f, ProjectileType<GalvanizedHandArrow>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
+                    arrow.Lostbelt().GlobalTargetIndex = target.whoAmI;
+                }
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 spawnPos = Owner.Center - (Owner.Center - target.Center).ToSafeNormalize().RotatedByRandom(PiOver4) * (900f + (i * 150f));
+                    Vector2 vel = LostbeltMethods.PredictAimToTarget(spawnPos, target.Center, target.velocity, 28f, 0);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), spawnPos, vel, ProjectileType<GalvanizedHandSideProj>(), Projectile.damage / 2, Projectile.knockBack, Owner.whoAmI);
+                    proj.extraUpdates += 1;
+                }
+            }
+            SoundEngine.PlaySound(LostbeltSoundAssets.GalvanizedHand_Hit2, Owner.Center);
+            //三倍伤害，单次的判定
+            //把人飞出去
+            Owner.velocity = Owner.velocity.ToSafeNormalize() * -20;
+            Projectile.Kill();
+
+        }
+        private void JustStab(NPC target)
+        {
+            if (Owner.JustPressRightClick() && Owner.HeldItem.type == ItemType<GalvanizedHandThrown>() && Owner.Lostbelt().galvanizedHandDashCD == 0)
+            {
+                //过一个玩家与射弹之间是否存在墙体的安全性检查
+                if (Collision.CanHit(Owner.position, Owner.width, Owner.height, target.position, target.width, target.height))
+                {
+                    if (!ShouldPull)
+                    {
+                        SoundEngine.PlaySound(LostbeltSoundAssets.GalvanizedHand_Charge, Owner.Center);
+                        ShouldPull = true;
+                        //让当前发起冲刺的射弹重设定为3秒的cd
+                        //一般情况下是够用的，这里主要目的是为了防止玩家撞墙之后死在那的问题
+                        Projectile.timeLeft = GetSeconds(3);
+                    }
+                }
+                else if (AttackTime == 0)
+                {
+                    string value = Mod.GetLocalizationKey($"Weapons.Melee.{nameof(GalvanizedHandThrown)}.TileTextvalue").ToLangValue();
+                    CombatText.NewText(Owner.Hitbox, new Color(111, 247, 200), value, true);
+                    //有意给60帧左右的cd
+                    AttackTime = 60;
+                }
+            }
+
+        }
+        #endregion
+        private void StabAI(NPC target)
+        {
+            if (AttackTime > 0)
+                AttackTime--;
+            Projectile.Center = target.Center + StoredPosition;
+            Vector2 dir = (target.Center - Owner.MountedCenter).ToSafeNormalize();
+            //立刻锁住玩家的手臂
+            Owner.ChangeDir(((Projectile.Center.X - Owner.MountedCenter.X) > 0).ToDirectionInt());
+            Owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, dir.ToRotation() - PiOver2);
+            DrawMountedParticle();
+            JustStab(target);
+            if (ShouldPull)
+            {
+                Owner.Lostbelt().NoSlowFall = 120;
+                Owner.Lostbelt().maxFallspeedModify += 10000;
+                Owner.velocity = dir * 80;
+                Owner.GetImmnue(ImmunityCooldownID.General, 12);
+                if (!BeginPull)
+                {
+                    BeginPull = true;
+                    ScreenShakeSystem.AddScreenShakes(Owner.Center, 80 * Owner.direction, 23, Owner.velocity.ToRotation(), 0.2f, true, 1000);
+                }
+                //发起冲刺时在玩家身后绘制粒子作为残影。
+                //这里本质素材复用，但是放过我吧我不想再做更多的效果了
+                SpawnOwnerParticle();
+                //改为了判距离
+                //不需要过于精确，只要大概就行了
+                if ((Owner.Center - target.Center).LengthSquared() < 50f * 50f)
+                {
+                    PullHit(target);
+                }
+            }
+            else
+            {
+                Owner.Lostbelt().maxFallspeedModify += 10000;
+                if (Projectile.timeLeft % GetSeconds(1) == 0)
+                {
+                    Vector2 spawnPos = Owner.Center + (Owner.Center - target.Center).ToSafeNormalize().RotatedByRandom(PiOver4) * (1200f);
+                    Vector2 vel = LostbeltMethods.PredictAimToTarget(spawnPos, target.Center, target.velocity, 28f, 0);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), spawnPos, vel, ProjectileType<GalvanizedHandSideProj>(), Projectile.damage / 2, Projectile.knockBack, Owner.whoAmI);
+                    proj.extraUpdates += 1;
+                    proj.scale *= 0.8f;
+
+                }
+            }
+        }
+
+        private void SpawnOwnerParticle()
+        {
+            Vector2 dir = Owner.velocity.ToSafeNormalize();
+            //本质素材复用
+            //但是我不想做更多特效了 
+            //饶了我吧。
+            for (int i = -1; i < 2; i += 1)
+            {
+                Vector2 shapePos = Owner.Center + dir.RotatedBy(PiOver2) * 15f * i + dir * 10f - dir * Math.Abs(i) * 15f;
+                Vector2 shapeVel = dir * -Main.rand.NextFloat(16f);
+                float shapeScale = Main.rand.NextFloat(0.65f, 0.75f);
+                new StarShape(shapePos.ToRandCirclePosEdge(6.2f) - dir * Main.rand.NextFloat(12f), shapeVel, RandLerpColor(Color.CornflowerBlue, Color.RoyalBlue), shapeScale, 40).Spawn();
+                new ShinyOrbParticle(shapePos.ToRandCirclePos(3.1f), shapeVel * 0.5f, RandLerpColor(Color.CornflowerBlue, Color.RoyalBlue), 40, shapeScale * 1.1f).Spawn();
+
+            }
+            Owner.Lostbelt().maxFallspeedModify += 10000;
+        }
+
+        private void DrawMountedParticle()
+        {
+            Vector2 dir = Projectile.SafeDirByRot();
+            if (Main.rand.NextBool())
+                return;
+
+            for (int i = -1; i < 2; i += 1)
+            {
+                Vector2 shapePos = Projectile.Center + dir.RotatedBy(PiOver2) * 15f * i + dir * 70f - dir * Math.Abs(i) * 15f;
+                Vector2 shapeVel = dir * -Main.rand.NextFloat(16f * (Timer / DeadTime));
+                float shapeScale = (Timer / DeadTime) * Main.rand.NextFloat(0.65f, 0.75f);
+                new StarShape(shapePos.ToRandCirclePosEdge(6.2f) - dir * Main.rand.NextFloat(12f), shapeVel, RandLerpColor(Color.CornflowerBlue, Color.RoyalBlue), shapeScale, 40).Spawn();
+                new ShinyOrbParticle(shapePos.ToRandCirclePos(3.1f), shapeVel * 0.5f, RandLerpColor(Color.CornflowerBlue, Color.RoyalBlue), 40, shapeScale * 1.1f).Spawn();
+            }
+        }
+
+        public void DrawParticles()
+        {
+            for (int i = -1; i < 2; i += 1)
+            {
+                Vector2 spawnDustPos = Projectile.Center + Projectile.SafeDirByRot().RotatedBy(PiOver2) * 15f * i;
+                Vector2 vel = Projectile.velocity / 3;
+                if (Main.rand.NextBool())
+                {
+                    Vector2 shapePos = spawnDustPos.ToRandCirclePosEdge(3.2f);
+                    float shapeScale = Main.rand.NextFloat(0.60f, 0.75f);
+                    new StarShape(shapePos, vel * 1.2f, RandLerpColor(Color.CornflowerBlue, Color.RoyalBlue), shapeScale, 30).Spawn();
+                }
+                if (Main.rand.NextBool(3))
+                {
+                    float speed = Main.rand.NextFloat(0.8f, 1.1f);
+                    float randDir = RandRotTwoPi;
+                    int seedVa = Main.rand.Next(0, 10000);
+                    float scale = 0.6f;
+                    Vector2 pos = spawnDustPos.ToRandCirclePos(1.2f);
+                    new TurbulenceShinyOrb(pos, speed, RandLerpColor(Color.CornflowerBlue, Color.RoyalBlue), 80, scale, randDir, seedValue: seedVa).Spawn();
+                    new TurbulenceShinyOrb(pos, speed, Color.White, 80, scale * 0.5f, randDir, seedValue: seedVa).Spawn();
+                }
+            }
+
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (AttackType == Style.Shoot)
+                modifiers.SetCrit();
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (AttackType == Style.Shoot)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 spawnPos = Owner.Center + (Owner.Center - target.Center).ToSafeNormalize().RotatedByRandom(PiOver4) * (900f + (i * 150f));
+                    Vector2 vel = LostbeltMethods.PredictAimToTarget(spawnPos, target.Center, target.velocity, 28f, 0);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), spawnPos, vel, ProjectileType<GalvanizedHandSideProj>(), Projectile.damage / 2, Projectile.knockBack, Owner.whoAmI);
+                    proj.extraUpdates += 1;
+                }
+                StoredPosition = Projectile.Center - target.Center;
+                AttackType = Style.Stab;
+                Projectile.netUpdate = true;
+                Projectile.velocity = Vector2.Zero;
+                Projectile.extraUpdates = 0;
+                Projectile.localNPCHitCooldown = 20;
+                Projectile.Lostbelt().GlobalTargetIndex = target.whoAmI;
+                SoundEngine.PlaySound(LostbeltSoundAssets.GalvanizedHand_Hit2, Projectile.Center);
+                HitParticle(target.Center);
+            }
+        }
+
+        private void HitParticle(Vector2 _)
+        {
+            Vector2 dir = Projectile.SafeDirByRot();
+            for (int i = -1; i < 2; i += 1)
+            {
+                //生成主方向上的粒子
+                for (int j = 0; j < 35; j++)
+                {
+                    Vector2 spawnDustPos = Projectile.Center + dir.RotatedBy(PiOver2) * 15f * i + dir * 20f;
+                    Vector2 vel = dir * Main.rand.NextFloat(4f, 14f);
+                    new StarShape(spawnDustPos.ToRandCirclePosEdge(3.2f), vel, RandLerpColor(Color.RoyalBlue, Color.CornflowerBlue), Main.rand.NextFloat(0.65f, 0.75f), 40).Spawn();
+                }
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            float fix = PiOver4 + PiOver2;
+            float alphaRatio = Clamp((1 - (Timer / 30f)), 0, 1);
+            SB.EnterShaderArea(BlendState.NonPremultiplied);
+            DrawTrail(Color.RoyalBlue, 15f, alphaRatio);
+            DrawTrail(Color.DeepSkyBlue, 12f, alphaRatio);
+            DrawTrail(Color.White, 8f, alphaRatio);
+            SB.EnterShaderArea();
+            DrawBack(Color.DeepSkyBlue, 15f, 0.85f * alphaRatio);
+            SB.EndShaderArea();
+            Projectile.DrawGlowEdge(Color.White * (Timer / 120f), rotFix: fix);
+            Projectile.DrawProj(Color.White, 2, .4f, rotFix: fix);
+            return false;
+        }
+        public void DrawBack(Color trailColor, float primitiveHeight, float alphaValue = 1f)
+        {
+            Asset<Texture2D> tex = LostbeltModAssets.ColorMap_Aqua.Texture;
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["LaserTextureSize"].SetValue(tex.Size());
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["targetSize"].SetValue(new Vector2(10, tex.Height()));
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * -5.2f);
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uColor"].SetValue(trailColor.ToVector4() * alphaValue);
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uFadeoutLength"].SetValue(1.3f);
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uFadeinLength"].SetValue(0.1f);
+            Projectile.ClearInvaidData(out List<Vector2> validPosition, out List<float> _, Projectile.oldPos, Projectile.oldRot);
+            GD.Textures[0] = tex.Value;
+            GD.SamplerStates[0] = SamplerState.PointClamp;
+            LostbeltShaderAssets.TerrarRayLaser.CurrentTechnique.Passes[0].Apply();
+            List<ScarletVertex> list = [];
+            int totalpoints = validPosition.Count;
+            //创建顶点列表
+            for (int i = 0; i < totalpoints - 1; i++)
+            {
+                if (validPosition[i + 1] - validPosition[i] == Vector2.Zero)
+                    continue;
+                float progress = (float)i / (totalpoints - 1);
+                float rot = (validPosition[i + 1] - validPosition[i]).ToRotation();
+                Vector2 posOffset = new Vector2(0, primitiveHeight * 0.9f).RotatedBy(rot);
+                Vector2 oldCenter = validPosition[i] + Projectile.Size / 2 - Main.screenPosition - rot.ToRotationVector2() * 40f;
+                QuickGetClass(ref list, oldCenter, posOffset, progress);
+            }
+            if (list.Count >= 3)
+            {
+                GD.DrawUserPrimitives(PrimitiveType.TriangleStrip, list.ToArray(), 0, list.Count - 2);
+            }
+
+        }
+        public void DrawTrail(Color trailColor, float primitiveHeight, float alphaValue = 1f)
+        {
+            Asset<Texture2D> tex = LostbeltModAssets.Trail_ManaStreak.Texture;
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["LaserTextureSize"].SetValue(tex.Size());
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["targetSize"].SetValue(new Vector2(20, tex.Height()));
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * -3.2f);
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uColor"].SetValue(trailColor.ToVector4() * alphaValue);
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uFadeoutLength"].SetValue(1f);
+            LostbeltShaderAssets.TerrarRayLaser.Parameters["uFadeinLength"].SetValue(0.1f);
+
+            Projectile.ClearInvaidData(out List<Vector2> validPosition, out List<float> _, Projectile.oldPos, Projectile.oldRot);
+            GD.Textures[0] = tex.Value;
+            GD.SamplerStates[0] = SamplerState.PointClamp;
+            LostbeltShaderAssets.TerrarRayLaser.CurrentTechnique.Passes[0].Apply();
+            List<ScarletVertex> list = [];
+            List<ScarletVertex> list2 = [];
+            List<ScarletVertex> list3 = [];
+            int totalpoints = validPosition.Count;
+            for (int i = 0; i < totalpoints - 1; i++)
+            {
+                if (validPosition[i + 1] - validPosition[i] == Vector2.Zero)
+                    continue;
+                float progress = (float)i / (totalpoints - 1);
+                float rot = (validPosition[i + 1] - validPosition[i]).ToRotation();
+                Vector2 rotDir = rot.ToRotationVector2();
+                Vector2 primiWidth = new Vector2(0, primitiveHeight * 0.9f).RotatedBy(rot);
+
+                //这里的顶点实际绘制位置需要手动做一下偏移对上矛尖
+                Vector2 oldCenter = validPosition[i] + Projectile.Size / 2 - Main.screenPosition - rotDir * 80f;
+                Vector2 offset2 = rotDir.RotatedBy(PiOver2) * 15f;
+                QuickGetClass(ref list, oldCenter, primiWidth, progress);
+                QuickGetClass(ref list2, oldCenter + offset2, primiWidth, progress);
+                QuickGetClass(ref list3, oldCenter - offset2, primiWidth, progress);
+            }
+            if (list.Count >= 3)
+            {
+                GD.DrawUserPrimitives(PrimitiveType.TriangleStrip, list.ToArray(), 0, list.Count - 2);
+                GD.DrawUserPrimitives(PrimitiveType.TriangleStrip, list2.ToArray(), 0, list.Count - 2);
+                GD.DrawUserPrimitives(PrimitiveType.TriangleStrip, list3.ToArray(), 0, list.Count - 2);
+            }
+        }
+        public void QuickGetClass(ref List<ScarletVertex> list, Vector2 oldCenter, Vector2 posOffset, float progress)
+        {
+            ScarletVertex upClass = new(oldCenter - posOffset, Color.White, new Vector3(progress, 0, 0f));
+            ScarletVertex downClass = new(oldCenter + posOffset, Color.White, new Vector3(progress, 1, 0f));
+            list.Add(upClass);
+            list.Add(downClass);
+        }
+    }
+}
