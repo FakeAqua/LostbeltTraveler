@@ -33,16 +33,13 @@ namespace LostbeltTraveler.Globals.Players
         public bool cowboyExecutor = false;
         public bool creationHat = false;
         public bool crimsonCharm = false;
-        public bool cycleMadness = false;
         public bool desterrennacht = false;
         public bool diverArmor = false;
         public bool petDraco = false;
         public bool dragonHunter = false;
         public bool emblemColdSteel = false;
-        public bool emblemExecutor = false;
         public bool emblemFirearm = false;
         public bool emblemGalaxy = false;
-        public bool emblemThrown = false;
         public bool emblemVanguard = false;
         public bool executorSwordMark = false;
         public bool executorSwordMarkPing = false;
@@ -65,7 +62,6 @@ namespace LostbeltTraveler.Globals.Players
         public bool LightofHorizon = false;
         public bool loveRing = false;
         public bool maidReaperArmor = false;
-        public bool maidReaperHealUp = false;
         public bool mayaPumper = false;
         public bool mayaPumperParty = false;
 
@@ -80,8 +76,6 @@ namespace LostbeltTraveler.Globals.Players
         public bool protectorShiver = false;
         public bool raincoatExecutor = false;
         public bool redDragonKnight = false;
-        public bool resetEatenFoodCounts = false;
-        public bool resetTerraRecipe = false;
         public bool sacarbWings = false;
         public bool theDragonBallSwordMode = false;
         public bool petNone = false;
@@ -123,16 +117,11 @@ namespace LostbeltTraveler.Globals.Players
         public int curLifeRegenSpeed = 0;
         public int cycleMadnessLevel = -1;
         public int cycleMadnessCrit = 0;
-        public int cycleMadnessTimer = 0;
         public int defenderEmblemCD = 0;
-        public int desterrannachtImmortalTime = 0;
-        public int desterranRespawnChargeTimer = 0;
         public int desterrannachtStack = 0;
         public int dotMultCount = -1;
         public int drawUseableItemIcon = -1;
         public int executorSwordMarkLevel = -1;
-        public int Executor_AFKTimer = 0;
-        public int exsanguinationBuffTime = 0;
         public int floretProtectorTimer = 0;
         public int flybackhandBuffTime = 0;
         public int flybackhandBuffTimeCurrent = 0;
@@ -149,7 +138,6 @@ namespace LostbeltTraveler.Globals.Players
         public int maidReaperHealTimer = 0;
         public int maidReaperIndex = -1;
         public int manaSavingsJar = 0;
-        public int mayaPumperDashTime = 0;
         public int mayaPumperDashType = -1;
         public int NoSlowFall = 0;
         public int outlawSniperStack = 0;
@@ -163,12 +151,8 @@ namespace LostbeltTraveler.Globals.Players
         public int saintChurchLastStanding = 0;
         public int selfPortraitType = -1;
         public int spellBreakerLevel = 0;
-        public int spellBreakerTimer = 0;
-        public int stardustRuneHitHealTimer = 0;
-        public int stardustRuneStaticHealTimer = 0;
         public int tearEyeBuff = 0;
         public int terrariaRecipeEatenFoodCounts = 0;
-        public int terrariaRecipeEatenMultTimes = 0;
         public int wingsType = -1;
         public int wingsChargeType = -1;
 
@@ -178,13 +162,9 @@ namespace LostbeltTraveler.Globals.Players
         public float containedBlastBoomCount = 0;
         public float dotMult = 0;
         public float dotMultExtra = 0;
-
-        public float Executor_BarOpacity = 0;
         public float healingPotionMult = 1f;
         public float heldProjReUseTime = 0;
         public float maxFallspeedModify = 0;
-        public float PlayerFinalSpeedStoredTime = 0f;
-        public float PlayerLastSpeedStored = 0f;
 
         public string gemYoyoStrings = "None";
 
@@ -262,7 +242,6 @@ namespace LostbeltTraveler.Globals.Players
                 givePaper = false;
             }
             OnEnterWorldReset();
-            resetTerraRecipe = true;
             if (terrariaRecipeNotEatenList.Count < 1)
             {
                 terrariaRecipeNotEatenList = [.. LostbeltList.LegalFoodListName];

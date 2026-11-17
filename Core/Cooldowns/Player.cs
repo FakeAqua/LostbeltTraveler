@@ -29,14 +29,15 @@ namespace LostbeltTraveler.Core.Cooldowns
             for(int i = 0; i < ActiveCooldown.Count;i++)
             {
                 ActiveCooldown[i].Update(Player);
+                if (ActiveCooldown[i].Time > 0 && ActiveCooldown[i].CanTickDown())
+                    ActiveCooldown[i].Time--;
+
                 if (ActiveCooldown[i].Time<=0)
                 {
                     ActiveCooldown[i].OnKill(Player);
                     if (ActiveCooldown[i].DeactiveSound is not null)
                         SoundEngine.PlaySound(ActiveCooldown[i].DeactiveSound,Player.Center);
                 }
-                if (ActiveCooldown[i].Time > 0 && ActiveCooldown[i].CanTickDown())
-                    ActiveCooldown[i].Time--;
             }
             ActiveCooldown?.RemoveAll(i =>
             {

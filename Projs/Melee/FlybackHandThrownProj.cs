@@ -3,6 +3,7 @@ using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Methods;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
@@ -146,7 +147,7 @@ namespace LostbeltTraveler.Projs.Melee
                 new HRShinyOrbMedium(target.Center + pos * 150f, RandLerpColor(Color.Gold, Color.White), 60, 0.15f, 0).Spawn();
             }
             //准备依据时间的不同给予增益
-            Owner.Lostbelt().flybackInGameTimeBuff = 180;
+            Owner.AddInnerCooldown(InnerCooldownType.FlybackHandTimeBuff, 180);
         }
         public override bool? CanDamage() => true;
 

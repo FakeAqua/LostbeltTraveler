@@ -2,6 +2,7 @@
 using LostbeltTraveler.Core.NetCode;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using ReLogic.Graphics;
 using Terraria;
 using Terraria.UI.Chat;
@@ -46,7 +47,7 @@ namespace LostbeltTraveler.Projs.General
                 return false;
             if (!Projectile.Lostbelt().FirstFrame)
                 return false;
-            DrawNumberWithEffect(SB, Projectile.Center, Owner.Lostbelt().mayaPumperDashTime, Projectile.Opacity);
+            DrawNumberWithEffect(SB, Projectile.Center, Owner.GetInnerCooldownTime(InnerCooldownType.MayaPumperDash), Projectile.Opacity);
             return false;
         }
         private void DrawNumberWithEffect(SpriteBatch sb, Vector2 basePos, int number, float opa)

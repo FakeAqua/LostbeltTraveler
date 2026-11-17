@@ -6,6 +6,7 @@ using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Accessories;
 using LostbeltTraveler.Items.Armor.WesternBoy;
 using LostbeltTraveler.Items.Weapons.Executor.Assistance;
@@ -56,15 +57,15 @@ namespace LostbeltTraveler.Globals.Instances.Projs
                 {
                     Owner.Lostbelt().tearEyeBuff = GetSeconds(1);
                 }
-                if (Owner.Lostbelt().KnifeMarkIndex == ProjectileType<MoltenKnifeMark>() && projectile.type != ProjectileType<MoltenKnifeBoom>() && projectile.type != ProjectileType<MoltenKnifeProj>() && Owner.Lostbelt().markProjTimer == 0 && HasExecutionMechanic)
+                if (Owner.Lostbelt().KnifeMarkIndex == ProjectileType<MoltenKnifeMark>() && projectile.type != ProjectileType<MoltenKnifeBoom>() && projectile.type != ProjectileType<MoltenKnifeProj>() && !Owner.HasInnerCooldown(InnerCooldownType.ExecutorKnifeMarkTimer)&& HasExecutionMechanic)
                 {
                     int dmg = (int)(projectile.originalDamage * MoltenKnife.BoomDamageMult);
-                    Owner.Lostbelt().markProjTimer = GetInstance<MoltenKnife>().Item.useTime;
+                    Owner.AddInnerCooldown(InnerCooldownType.ExecutorKnifeMarkTimer, GetInstance<MoltenKnife>().Item.useTime);
                     Projectile proj = Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), target.Center, Vector2.Zero, ProjectileType<MoltenKnifeBoom>(), dmg, 1f, Owner.whoAmI);
                 }
-                if (Owner.Lostbelt().KnifeMarkIndex == ProjectileType<GrassKnifeMark>() && projectile.type != ProjectileType<GrassKnifePoisonProj>() && projectile.type != ProjectileType<InvisBoom>() && Owner.Lostbelt().markProjTimer == 0)
+                if (Owner.Lostbelt().KnifeMarkIndex == ProjectileType<GrassKnifeMark>() && projectile.type != ProjectileType<GrassKnifePoisonProj>() && projectile.type != ProjectileType<InvisBoom>() && !Owner.HasInnerCooldown(InnerCooldownType.ExecutorKnifeMarkTimer))
                 {
-                    Owner.Lostbelt().markProjTimer = GetInstance<GrassKnife>().Item.useTime;
+                    Owner.AddInnerCooldown(InnerCooldownType.ExecutorKnifeMarkTimer, GetInstance<GrassKnife>().Item.useTime);
                     if (target.HasBuff<GrassPoison>())
                     {
                         foreach (var proj in Main.ActiveProjectiles)
@@ -115,14 +116,14 @@ namespace LostbeltTraveler.Globals.Instances.Projs
 
         public void HandleCowboy(Player Owner, NPC target)
         {
-            if (Owner.Lostbelt().cowboyExecutor && Owner.Lostbelt().cowboyRevolverTimer == 0)
+            if (Owner.Lostbelt().cowboyExecutor && !Owner.HasInnerCooldown(InnerCooldownType.CowboyRevoler))
             {
                 int revolverDamage = (int)Owner.GetTotalDamage<ExecutorDamageClass>().ApplyTo(WesternBoyHead.RevolerDamage);
                 Projectile proj2 = Projectile.NewProjectileDirect(Owner.GetSource_FromThis(), target.Center, (-Vector2.UnitY).ToRandVelocity(ToRadians(35f), 9f, 11f), ProjectileType<CowboyRevolverProj>(), revolverDamage, 0f, Owner.whoAmI);
                 proj2.timeLeft = 300;
                 if (target.CanBeChasedBy())
                     ((CowboyRevolverProj)proj2.ModProjectile).CurTarget = target;
-                Owner.Lostbelt().cowboyRevolverTimer = 30;
+                Owner.AddInnerCooldown(InnerCooldownType.CowboyRevoler,30);
             }
         }
 

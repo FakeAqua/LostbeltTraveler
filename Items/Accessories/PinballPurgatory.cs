@@ -4,6 +4,7 @@ using LostbeltTraveler.Globals.Database.Localization;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players.Dashes;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Globals.Systems;
 using LostbeltTraveler.Projs.General;
 using System.Collections.Generic;
@@ -39,14 +40,14 @@ namespace LostbeltTraveler.Items.Accessories
             player.noFallDmg = true;
             player.Lostbelt().mayaPumper = true;
             player.Lostbelt().mayaPumperParty = true;
-            if (player.Lostbelt().mayaPumperDashTime > 0)
+            if (player.HasInnerCooldown(InnerCooldownType.MayaPumperDash))
             {
                 if (player.Lostbelt().mayaPumperDashType != OrangeType && player.Lostbelt().mayaPumperDashType != WhiteType)
                     player.ApplyDash(GetInstance<CelesteDash>().Type);
                 if (player.IsOwnerSide() && !player.HasProj<PinballPurgatoryTimer>())
                 {
                     Projectile proj = Projectile.NewProjectileDirect(player.GetSource_Accessory(Item), player.Center, Vector2.Zero, ProjectileType<PinballPurgatoryTimer>(), 0, 0, player.whoAmI);
-                    proj.timeLeft = player.Lostbelt().mayaPumperDashTime;
+                    proj.timeLeft = player.GetInnerCooldownTime(InnerCooldownType.MayaPumperDash);
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.Firearm;
 using Terraria;
 
@@ -30,7 +31,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         public ref float MountedLerp => ref Projectile.localAI[0];
         public Vector2 MountedPos = Vector2.Zero;
         public NPC Target = null;
-        public bool IsBuffing => Owner.Lostbelt().containedBlastBuffTime > 0;
+        public bool IsBuffing => Owner.HasInnerCooldown(InnerCooldownType.ContainedBlastBuff);
         public override void ExSD()
         {
             Projectile.height = Projectile.width = 12;

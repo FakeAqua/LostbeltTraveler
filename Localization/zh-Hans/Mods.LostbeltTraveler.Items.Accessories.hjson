@@ -872,66 +872,40 @@ GemYoyoBag: {
 
 YoyoRopeAmber: {
 	DisplayName: 琥珀绳
-	Tooltip:
-		'''
-		[i:LostbeltTraveler/AmberYoyo]充盈着琥珀的力量[i:Amber]
-		'''
-
+	Tooltip: "[i:LostbeltTraveler/AmberYoyo]充盈着琥珀的力量[i:Amber]"
 }
 
 YoyoRopeAmethyst: {
 	DisplayName: 紫水晶绳
-	Tooltip:
-		'''
-		[i:LostbeltTraveler/AmethystYoyo]充盈着紫水晶的力量[i:Amethyst]
-		'''
+	Tooltip: "[i:LostbeltTraveler/AmethystYoyo]充盈着紫水晶的力量[i:Amethyst]"
 }
 
 YoyoRopeDiamond: {
 	DisplayName: 钻石绳
-	Tooltip:
-		'''
-		[i:LostbeltTraveler/DiamondYoyo]充盈着钻石的力量[i:Diamond]
-		'''
+	Tooltip: "[i:LostbeltTraveler/DiamondYoyo]充盈着钻石的力量[i:Diamond]"
 }
 
 YoyoRopeEmerald: {
 	DisplayName: 绿宝石绳
-	Tooltip:
-		'''
-		[i:LostbeltTraveler/EmeraldYoyo]充盈着绿宝石的力量[i:Emerald]
-		'''
+	Tooltip: "[i:LostbeltTraveler/EmeraldYoyo]充盈着绿宝石的力量[i:Emerald]"
 }
 
 YoyoRopeOnyx: {
 	DisplayName: 玛瑙绳
-	Tooltip:
-		'''
-		[i:LostbeltTraveler/OnyxYoyo]充盈着玛瑙的力量[i:ContinentOfJourney/Onyx]
-		'''
+	Tooltip: "[i:LostbeltTraveler/OnyxYoyo]充盈着玛瑙的力量[i:ContinentOfJourney/Onyx]"
 }
 
 YoyoRopeRuby: {
 	DisplayName: 红玉绳
-	Tooltip:
-		'''
-		[i:LostbeltTraveler/RubyYoyo]充盈着红玉的力量[i:Ruby]
-		'''
-
+	Tooltip: "[i:LostbeltTraveler/RubyYoyo]充盈着红玉的力量[i:Ruby]"
 }
 
 YoyoRopeSapphire: {
 	DisplayName: 蓝宝石绳
-	Tooltip:
-		'''
-		[i:LostbeltTraveler/SapphireYoyo]充盈着蓝宝石的力量[i:Sapphire]
-		'''
+	Tooltip: "[i:LostbeltTraveler/SapphireYoyo]充盈着蓝宝石的力量[i:Sapphire]"
 }
 
 YoyoRopeTopaz: {
 	DisplayName: 黄玉绳
-	Tooltip:
-		'''
-		[i:LostbeltTraveler/TopazYoyo]充盈着黄玉的力量[i:Topaz]
-		'''
+	Tooltip: "[i:LostbeltTraveler/TopazYoyo]充盈着黄玉的力量[i:Topaz]"
 }

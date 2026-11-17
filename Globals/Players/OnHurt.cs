@@ -9,6 +9,7 @@ using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Database.Localization;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Accessories;
 using LostbeltTraveler.Items.Armor.SaintChurch;
 using LostbeltTraveler.Items.Useables;
@@ -132,29 +133,30 @@ namespace LostbeltTraveler.Globals.Players
                     type = Main.rand.Next(PinballPurgatory.WhiteType, PinballPurgatory.PinkType + 1);
                 //粉色冲刺
                 mayaPumperDashType = type;
+                bool hasDashTimer = Player.HasInnerCooldown(InnerCooldownType.MayaPumperDash);
                 if (type == PinballPurgatory.PinkType)
                 {
-                    if (mayaPumperDashTime == 0)
-                        mayaPumperDashTime = GetSeconds(4);
+                    if (!hasDashTimer)
+                        Player.AddInnerCooldown(InnerCooldownType.MayaPumperDash, GetSeconds(4));
                     SpawnPumpperParticleAlt(beginCenter.GetNormalVector2(Player.Center), Color.HotPink, Color.Pink);
                 }
                 else if (type == PinballPurgatory.BlueType)
                 {
-                    if (mayaPumperDashTime == 0)
-                        mayaPumperDashTime = GetSeconds(2);
+                    if (!hasDashTimer)
+                        Player.AddInnerCooldown(InnerCooldownType.MayaPumperDash, GetSeconds(2));
                     SpawnPumpperParticleAlt(beginCenter.GetNormalVector2(Player.Center), Color.AliceBlue, Color.SkyBlue);
                 }
                 else if (type == PinballPurgatory.OrangeType)
                 {
                     SpawnPumpperParticleAlt(beginCenter.GetNormalVector2(Player.Center), Color.OrangeRed, Color.Orange);
-                    if (mayaPumperDashTime == 0)
-                        mayaPumperDashTime = GetSeconds(4);
+                    if (!hasDashTimer)
+                        Player.AddInnerCooldown(InnerCooldownType.MayaPumperDash, GetSeconds(4));
                 }
                 else
                 {
                     SpawnPumpperParticleAlt(beginCenter.GetNormalVector2(Player.Center), Color.White, Color.WhiteSmoke);
-                    if (mayaPumperDashTime == 0)
-                        mayaPumperDashTime = GetSeconds(3);
+                    if (!hasDashTimer)
+                        Player.AddInnerCooldown(InnerCooldownType.MayaPumperDash, GetSeconds(3));
                 }
             }
             else
@@ -265,7 +267,7 @@ namespace LostbeltTraveler.Globals.Players
         }
         public override void OnHurt(Player.HurtInfo info)
         {
-            if (mayaPumperParty && mayaPumperDashTime > 0 && mayaPumperDashType == PinballPurgatory.OrangeType)
+            if (mayaPumperParty && Player.HasInnerCooldown(InnerCooldownType.MayaPumperDash) && mayaPumperDashType == PinballPurgatory.OrangeType)
             {
                 ScarletSound(SoundID.DD2_BetsyFlameBreath, Player.Center, pitchVariance: .1f, instances: 0);
                 for (int i = 0; i < 9; i++)

@@ -2,10 +2,9 @@
 using LostbeltTraveler.Buffs.GoodBuffs;
 using LostbeltTraveler.Buffs.Status;
 using LostbeltTraveler.Core.ParticleECS;
-using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
-using LostbeltTraveler.Items.Accessories;
+using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -16,56 +15,29 @@ namespace LostbeltTraveler.Globals.Players
 {
     public partial class LostbeltPlayer : ModPlayer
     {
-        public int defenseBuffTimer = 0;
-        public int defenseBuff = 0;
         public int swapTimer = 0;
         public int ruShiWoWenBanTimer = 0;
         public int globalSoundDelay = 0;
         public int bookcaseBuffTime = 0;
-        public int markProjTimer = 0;
         public int emblemFirearmTimer = 0;
-        public int cycleMadnessCrtiStarTimer = 0;
         public int jellyfishGroupBuffTime = 0;
         public int selfPortraitHealTiming = -1;
         public void ResetTimer()
         {
             outlawSniperStack = 0;
-            selfPortraitHealTiming = 0;
-            markProjTimer = 0;
-            mayaPumperDashTime = 0;
             mayaPumperDashType = -1;
-            spellBreakerTimer = 0;
             emblemFirearmTimer = 0;
             climaticHawstringLaserCounter = 0;
-            desterrannachtImmortalTime = 0;
-            desterranRespawnChargeTimer = 0;
-            stardustRuneHitHealTimer = 0;
-            defenderEmblemCD = 0;
-            exsanguinationBuffTime = 0;
             tacticalExecutionInputCache = 0;
-            blackKeyTimer = 0;
-            heldProjReUseTime = 0;
             antiKnockbackTime = 0;
             crimsonCharmReduceTime = 0;
-            cowboyRevolverTimer = 0;
-            floretProtectorTimer = 0;
             containedBlastBoomCount = 0;
-            containedBlastBuffTime = 0;
-            defenseBuffTimer = 0;
-            defenseBuff = 0;
-            swapTimer = 0;
-            adamantiteHeadExecutorThunderTimer = 0;
             powerLilyTimer = 0;
-            ruShiWoWenBanTimer = 0;
-            globalSoundDelay = 0;
-            maidReaperHealTimer = 0;
             conferenceCallBuffTime = 0;
             tearEyeBuff = 0;
-            bookcaseBuffTime = 0;
-            cycleMadnessCrtiStarTimer = 0;
             jellyfishGroupBuffTime = 0;
         }
-               private readonly List<int> keysToRemoveCache = new();
+        private readonly List<int> keysToRemoveCache = new();
         public void UpdateTimer()
         {
             if (ExecutionBuffTimeStored.Keys.Count == 0)
@@ -74,7 +46,7 @@ namespace LostbeltTraveler.Globals.Players
             }
             else
             {
-                
+
                 foreach (var pair in ExecutionBuffTimeStored)
                 {
                     int key = pair.Key;
@@ -94,14 +66,8 @@ namespace LostbeltTraveler.Globals.Players
                     ExecutionBuffTimeStored.Remove(key);
                 }
             }
-            if (mayaPumperDashTime > 0)
+            if (!Player.HasInnerCooldown(InnerCooldownType.MayaPumperDash))
             {
-                mayaPumperDashTime--;
-            }
-
-            if (mayaPumperDashTime <= 0)
-            {
-                mayaPumperDashTime = 0;
                 mayaPumperDashType = -1;
             }
             if (!bloodThronCrown)
@@ -115,26 +81,12 @@ namespace LostbeltTraveler.Globals.Players
                 desterrannachtStack = 0;
             if (!Player.HasBuff<JellyfishGroupBuff>())
                 jellyfishGroupIndex = -1;
-            if (cycleMadnessCrtiStarTimer > 0)
-                cycleMadnessCrtiStarTimer--;
-            if (spellBreakerTimer > 0)
-                spellBreakerTimer--;
             if (!emblemFirearm)
                 emblemFirearmTimer = 0;
-            if (markProjTimer > 0)
-                markProjTimer--;
-            if (bookcaseBuffTime > 0)
-                bookcaseBuffTime--;
             if (tearEyeBuff > 0)
                 tearEyeBuff--;
             if (conferenceCallBuffTime > 0)
                 conferenceCallBuffTime--;
-            if (maidReaperHealTimer > 0)
-                maidReaperHealTimer--;
-            if (globalSoundDelay > 0)
-                globalSoundDelay--;
-            if (ruShiWoWenBanTimer > 0)
-                ruShiWoWenBanTimer--;
             if (powerLilyTimer > 1)
             {
                 powerLilyTimer--;
@@ -142,24 +94,14 @@ namespace LostbeltTraveler.Globals.Players
             }
             if (!powerLily && powerLilyTimer > 0)
                 powerLilyTimer = 0;
-            if (adamantiteHeadExecutorThunderTimer > 0)
-                adamantiteHeadExecutorThunderTimer--;
-            if (swapTimer > 0)
-                swapTimer--;
             if (tacticalExecutionInputCache > 0)
                 tacticalExecutionInputCache--;
-            if (selfPortraitHealTiming > 0)
-                selfPortraitHealTiming--;
-
 
             if (flybackhandBuffTime > 0)
                 flybackhandBuffTime--;
 
             if (flybackhandBuffTime == 0)
                 flybackhandBuffTimeCurrent = 0;
-
-            if (flybackInGameTimeBuff > 0)
-                flybackInGameTimeBuff--;
 
             if (galvanizedHandDashCD > 0)
             {
@@ -174,59 +116,14 @@ namespace LostbeltTraveler.Globals.Players
                 galvanizedHandDashCD--;
             }
 
-            if (desterranRespawnChargeTimer > 0)
-                desterranRespawnChargeTimer--;
-            if (desterranRespawnChargeTimer == 0)
-                desterrannachtImmortalTime = 0;
-
-
             if (NoSlowFall > 0)
                 NoSlowFall--;
-
-            if (defenderEmblemCD > 0)
-            {
-                defenderEmblemCD--;
-                if (defenderEmblemCD == 0)
-                {
-                    ScarletSound(SoundID.DD2_DarkMageAttack, Player.Center);
-                    for (int i = 0; i < 16; i++)
-                        ECSParticle.SmokeParticle(Player.ToRandRec(), -Vector2.UnitY * Main.rand.NextFloat(12), Color.White, 36, RandRotTwoPi, 1, .4f, blendstate: BlendState.AlphaBlend);
-                }
-            }
-
-            if (genderChangeTimer > 0)
-                genderChangeTimer--;
-
-            if (stardustRuneHitHealTimer > 0)
-                stardustRuneHitHealTimer--;
-
-            if (stardustRuneStaticHealTimer > 0)
-                stardustRuneStaticHealTimer--;
-
-            if (cowboyRevolverTimer > 0)
-                cowboyRevolverTimer--;
-
-            if (blackKeyTimer > 0)
-                blackKeyTimer--;
-            if (floretProtectorTimer > 0)
-                floretProtectorTimer--;
-            if (heldProjReUseTime > 0)
-                heldProjReUseTime--;
-
             protectorPlantID = Player.HasBuff<HerbBagBuff>() ? protectorPlantID : -1;
             for (int i = 0; i < protectorHerbTimerList.Length; i++)
             {
                 if (protectorHerbTimerList[i] != 0)
                     protectorHerbTimerList[i]--;
             }
-            if (PlayerFinalSpeedStoredTime > 0)
-                PlayerFinalSpeedStoredTime--;
-            if (PlayerFinalSpeedStoredTime == 0)
-                PlayerLastSpeedStored = 0;
-            if (exsanguinationBuffTime > 0)
-                exsanguinationBuffTime--;
-            if (hasSendExecutionTintTimer > 0)
-                hasSendExecutionTintTimer--;
 
             if (!Player.HasBuff<BlackKeyExecutionBuff>())
                 blackKeyDefenseTrigger = false;
@@ -235,20 +132,15 @@ namespace LostbeltTraveler.Globals.Players
                 if (Player.miscCounter % 10 == 0 && crimsonCharmReduceTime > 0)
                     crimsonCharmReduceTime--;
             }
-            if (containedBlastBuffTime > 0)
-                containedBlastBuffTime--;
-            if (containedBlastBuffTime == 0)
+            if (!Player.HasInnerCooldown(InnerCooldownType.ContainedBlastBuff))
                 containedBlastBoomCount = 0;
             if (antiKnockbackTime > 0)
             {
                 Player.noKnockback = true;
                 antiKnockbackTime--;
             }
-            if (defenseBuffTimer > 0)
-            {
-                Player.statDefense += defenseBuff;
-                defenseBuffTimer--;
-            }
+            if (Player.HasInnerCooldown(InnerCooldownType.PureDaggerDefense))
+                Player.statDefense += PureDagger.DefenseAdd;
             if (Player.HeldItem.type != lastHeldItemIndex)
             {
                 lastHeldItemIndex = Player.HeldItem.type;

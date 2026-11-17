@@ -54,8 +54,6 @@ namespace LostbeltTraveler.Globals.Players
             emblemVanguard = false;
             emblemColdSteel = false;
             emblemFirearm = false;
-            emblemThrown = false;
-            emblemExecutor = false;
             emblemGalaxy = false;
             combatSlot = false;
             combatSlot2 = false;

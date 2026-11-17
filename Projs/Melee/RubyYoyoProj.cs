@@ -33,6 +33,7 @@ namespace LostbeltTraveler.Projs.Melee
         public override void ProjAI()
         {
             base.ProjAI();
+            DoBehaviourDiamond(RandLerpColor(Color.Red, Color.Crimson), Color.Red);
             Lighting.AddLight(Projectile.Center, TorchID.Red);
             if (Projectile.velocity.LengthSquared() > 2.5f * 2.5f)
             {

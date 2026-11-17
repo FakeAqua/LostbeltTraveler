@@ -7,6 +7,7 @@ using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Globals.Methods;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using System.Collections.Generic;
 using Terraria;
@@ -198,8 +199,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Owner.Lostbelt().defenseBuff = PureDagger.DefenseAdd + 2;
-            Owner.Lostbelt().defenseBuffTimer = GetSeconds(1);
+            Owner.AddInnerCooldown(InnerCooldownType.PureDaggerDefense,60);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

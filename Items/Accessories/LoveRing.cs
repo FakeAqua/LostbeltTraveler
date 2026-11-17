@@ -19,7 +19,7 @@ namespace LostbeltTraveler.Items.Accessories
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.Lostbelt().loveRing = player.Lostbelt().genderChangeTimer < 1;
+            player.Lostbelt().loveRing = true;
         }
         public override void AddRecipes()
         {

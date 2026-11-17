@@ -40,6 +40,11 @@ namespace LostbeltTraveler.Core.Cooldowns
                     return cd;
                 }
             }
+            cd.MaxTime = timeLeft;
+            cd.Time = timeLeft;
+            cdp.ActiveCooldown.Insert(0, cd);
+            if(syned)
+                        player.SyncedCooldown(type, timeLeft);
             return cd;
         }
         /// <summary>

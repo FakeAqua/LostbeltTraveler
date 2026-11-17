@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Buffs.GoodBuffs;
+using ContinentOfJourney.NPCs;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
-using LostbeltTraveler.Globals.Graphics.ParticleECS;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using ReLogic.Content;
 using Terraria;
 
@@ -48,6 +45,7 @@ namespace LostbeltTraveler.Projs.Melee
             if (Main.rand.NextBool(4))
                 ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(4), RandVelTwoPi(1), Color.White, 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .4f, .2f);
 
+            DoBehaviourDiamond(RandLerpColor(Color.White, Color.WhiteSmoke), RandLerpColor(Color.Silver, Color.White),true);
             FloatingTimer++;
             if (FloatingTimer > Projectile.MaxUpdates * 60)
             {
@@ -72,7 +70,6 @@ namespace LostbeltTraveler.Projs.Melee
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(BuffType<DiamondYoyoBuff>(), 180);
             base.OnHitNPC(target, hit, damageDone);
         }
         public override bool PreDraw(ref Color lightColor)
@@ -98,23 +95,6 @@ namespace LostbeltTraveler.Projs.Melee
             SB.FastDraw(glowTex, drawPos.ToRandCirclePos(1.5f, 1.5f), Color.White, 0, glowTex.Size() / 2f, Projectile.scale * Main.rand.NextFloat(.9f, 1.01f) * .15f, 0);
             SB.EndShaderArea();
             SB.EndShaderArea();
-
-            for (int i = length - 1; i >= 0; i--)
-            {
-                Vector2 lerpPos = Vector2.Lerp(Projectile.oldPos[i], Projectile.oldPos[0], 0f);
-                Vector2 oldPos = lerpPos - Main.screenPosition + Projectile.Size / 2f;
-                float oldRot = Projectile.oldRot[i];
-                //图竖直
-                float progress = i / (float)length;
-                float xMult = Lerp(1f, .55f, progress);
-                float yMult = Lerp(1f, .55f, progress);
-                Vector2 scale = new Vector2(xMult, yMult) * Projectile.scale;
-                Color c = Color.Lerp(Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f), EaseInOutQuad(progress));
-                float opac = Lerp(1f, .3f, EaseInOutExpo(progress));
-                Color pixelColor = Color.Lerp(Color.White, Color.Lerp(Color.SkyBlue, Color.AliceBlue, .63f), EaseInOutQuad(progress));
-                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), pixelColor.ToAddColor(50) * opac * 0.815f, oldRot, projTex.Size() / 2f, scale * .95f, 0);
-                SB.FastDraw(projTex, oldPos, c.ToAddColor(0) * opac * .315f, oldRot, projTex.Size() / 2f, scale * .98f, 0);
-            }
 
             for (int i = 0; i < 8; i++)
                 SB.FastDraw(projTex, drawPos + Main.rand.NextVector2Circular(1.5f, 1.5f) + (TwoPi / 8f * i).ToRotationVector2() * 1.5f, Color.AliceBlue.ToAddColor(), Projectile.rotation, projTex.Size() / 2f, Projectile.scale, 0);

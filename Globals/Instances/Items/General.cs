@@ -140,10 +140,6 @@ namespace LostbeltTraveler.Globals.Instances.Items
         }
         public override void OnConsumeItem(Item item, Player player)
         {
-            if (item.type == ItemID.GenderChangePotion)
-            {
-                player.Lostbelt().genderChangeTimer = GetSeconds(300);
-            }
             if (player.Lostbelt().protectorShiver)
             {
                 player.QuickSpawnItem(player.GetSource_OpenItem(item.type), ItemID.GoldCoin, 50);

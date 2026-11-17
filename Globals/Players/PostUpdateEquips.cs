@@ -13,6 +13,7 @@ using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Keybinds;
 using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players.Dashes;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Globals.Systems;
 using LostbeltTraveler.Items.Accessories;
 using LostbeltTraveler.Items.Armor.ExecutorVanillaHead;
@@ -216,7 +217,7 @@ namespace LostbeltTraveler.Globals.Players
         }
         public void HandleLoveRing()
         {
-            if (!loveRing || genderChangeTimer < 1)
+            if (!loveRing)
                 return;
             foreach (var player in Main.ActivePlayers)
             {
@@ -234,7 +235,7 @@ namespace LostbeltTraveler.Globals.Players
 
         public void UpdateFloretProtectorHerbSpawn()
         {
-            if (floretProtectorTimer == 0 && floretProtectorExecutor && Player.IsOwnerSide())
+            if (!Player.HasInnerCooldown(InnerCooldownType.BeniEmmaRice) && floretProtectorExecutor && Player.IsOwnerSide())
             {
                 if (Main.rand.NextBool())
                     return;
@@ -264,7 +265,7 @@ namespace LostbeltTraveler.Globals.Players
                 Projectile proj = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), spawnPos, RandVelTwoPi(2f, 6f), ProjectileType<FloatingPlants>(), 0, 0, Player.whoAmI);
                 proj.rotation = RandRotTwoPi;
                 proj.ai[1] = Main.rand.Next(0, 7);
-                floretProtectorTimer = 40;
+                Player.AddInnerCooldown(InnerCooldownType.BeniEmmaRice, 40);
             }
         }
 
@@ -358,7 +359,7 @@ namespace LostbeltTraveler.Globals.Players
 
         public void AdamantiteHeadExecutorThunder()
         {
-            if (!(adamantiteHeadExecutor && adamantiteHeadExecutorThunderTimer == 0))
+            if (!(adamantiteHeadExecutor && Player.HasInnerCooldown(InnerCooldownType.AdamantiteExecutorThunder)))
                 return;
             float searchDist = 1100f;
             List<NPC> availableTarget = [];
@@ -390,7 +391,7 @@ namespace LostbeltTraveler.Globals.Players
                 Projectile proj = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), pos, vel, ProjectileType<AdamantiteThunder>(), damage, 3f, Player.whoAmI);
                 ((AdamantiteThunder)proj.ModProjectile).CurTarget = target;
             }
-            adamantiteHeadExecutorThunderTimer = GetSeconds(AdamantiteHeadExecutor.StrikeChance);
+            Player.AddInnerCooldown(InnerCooldownType.AdamantiteExecutorThunder, AdamantiteHeadExecutor.StrikeChance);
         }
 
         public void ChlorophyteHeadExecutorCrystal()
@@ -426,7 +427,7 @@ namespace LostbeltTraveler.Globals.Players
             if (checkExecution)
                 return;
             if (LostbeltKeybinds.GeneralActionKeybind.JustPressed && maidReaperIndex != -1 &&
-                Player.HeldItem.DamageType.CountsAsClass<ExecutorDamageClass>() && maidReaperHealTimer == 0 && Player.IsOwnerSide())
+                Player.HeldItem.DamageType.CountsAsClass<ExecutorDamageClass>() && !Player.HasInnerCooldown(InnerCooldownType.TlipocaHeal) && Player.IsOwnerSide())
             {
                 NPC npc = Main.npc[maidReaperIndex];
                 if (npc.IsLegal())
@@ -437,7 +438,7 @@ namespace LostbeltTraveler.Globals.Players
                     proj.ai[2] = ratios;
                     ((MaidReaperHeal)proj.ModProjectile).CurTarget = npc;
                     Player.RemoveExecutionProgress(Player.HeldItem.type);
-                    maidReaperHealTimer = GetSeconds((int)(Lerp(0, ReaperHead.MaidReaperMaxHealCooldown, ratios)));
+                    Player.AddInnerCooldown(InnerCooldownType.TlipocaHeal, GetSeconds((int)Lerp(0, ReaperHead.MaidReaperMaxHealCooldown, ratios)));
                 }
             }
         }
@@ -466,7 +467,7 @@ namespace LostbeltTraveler.Globals.Players
                 Player.endurance += (1 + Condition.Hardmode.IsMet().ToInt() + DownedBossSystem.downedBarrier.ToInt()) * .05f;
             }
             //幽灵短匕
-            if (Main.mouseLeft && !Player.IsInInventory()
+            if (Player.MouseLeftOf() && !Player.IsInInventory()
                 && Player.miscCounter % GhostKnife.MarkGhostKnifeAttackSpeed == 0f
                 && KnifeMarkIndex == GetInstance<GhostKnifeMark>().Type
                 && Player.IsOwnerSide())

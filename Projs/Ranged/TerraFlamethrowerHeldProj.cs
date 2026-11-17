@@ -3,6 +3,7 @@ using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Weapons.Ranged;
 using Terraria;
 using Terraria.Audio;
@@ -58,7 +59,7 @@ namespace LostbeltTraveler.Projs.Ranged
             }
             if (JustPressRight)
             {
-                Owner.Lostbelt().heldProjReUseTime = 40;
+                Owner.AddInnerCooldown(InnerCooldownType.TerraFlamethrowerReuse, 40);
                 Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Projectile.Center, Vector2.Zero, ProjectileType<TerraFlamethrowerTank>(), Projectile.damage, 5f, Owner.whoAmI);
                 Vector2 dir = Owner.ToMouseVector2();
                 for (int i = 0; i < 16; i++)

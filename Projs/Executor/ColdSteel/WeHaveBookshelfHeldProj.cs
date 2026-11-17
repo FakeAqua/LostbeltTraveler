@@ -4,6 +4,7 @@ using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using System.Collections.Generic;
 using Terraria;
@@ -66,12 +67,12 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             UpdateHeldState();
             UpdatePlayerState();
             HandleExecution();
-            if (Owner.Lostbelt().bookcaseBuffTime > 0 && Projectile.FinalUpdateNextBool(4))
+            if (Owner.HasInnerCooldown(InnerCooldownType.WeHaveBookshelf) && Projectile.FinalUpdateNextBool(4))
                 ECSParticle.LightntingGlow(Owner.ToRandRec(), -Vector2.UnitY, RandLerpColor(Color.LimeGreen, Color.GreenYellow), 40, 1, 0.4f);
         }
         public override void OnExecution()
         {
-            Owner.Lostbelt().bookcaseBuffTime = GetSeconds(15);
+            Owner.AddInnerCooldown(InnerCooldownType.WeHaveBookshelf, GetSeconds(15));
             ScarletSound(LostbeltSoundAssets.Misc_ManaClearUse, Owner.Center, 0.55f, 1, -0.84f, 0.2f);
             for (int i = 0; i < 8; i++)
             {
@@ -116,14 +117,11 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
                 if (Helper.OnAnimationBegin(0))
                 {
                     int count = 2;
-                    if (Owner.Lostbelt().bookcaseBuffTime > 0)
-                    {
+                    if (Owner.HasInnerCooldown(InnerCooldownType.WeHaveBookshelf))
                         count = 4;
-
-                    }
                     for (int i = 0; i < count; i++)
                     {
-                        Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Owner.ToMouseVector2().ToRandVelocity(ToRadians(15f), 4.4f, 5.8f), ProjectileType<WeHaveBookshelfBook>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+                        Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Owner.ToMouseVector2().ToRandVelocity(ToRadians(15f), 4.4f, 5.8f), ProjectileType<WeHaveBookshelfBook>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
                     }
                 }
                 UpdateBeginAnimation();
@@ -182,7 +180,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Owner.Lostbelt().bookcaseBuffTime == 0)
+            if (!Owner.HasInnerCooldown(InnerCooldownType.WeHaveBookshelf))
                 Projectile.AddExecutionTimeImmediate(OriginalItemID);
             target.Lostbelt().StopNpcTime = 16;
             if (Projectile.numHits < 1)

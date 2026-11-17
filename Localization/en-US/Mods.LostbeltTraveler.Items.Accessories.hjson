@@ -684,6 +684,7 @@ SelfPortraitoftheHoloFace: {
 		"We will reunite in the digital sea one day, won't we?"
 		'''
 }
+
 SelfPortraitoftheJourney: {
 	DisplayName: Self-Portrait of the Drifting Voyager
 	Tooltip:

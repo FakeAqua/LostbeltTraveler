@@ -18,6 +18,14 @@ namespace LostbeltTraveler.Globals.Players.InnerCooldown.Methods
             else
                 player.InnerCooldown().ActiveInnerCD.TryAdd(type, time);
         }
+        public static int GetInnerCooldownTime(this Player player, InnerCooldownType type)
+        {
+            int count = -1;
+            if (player.InnerCooldown().ActiveInnerCD.TryGetValue(type, out count))
+                return count;
+            return count;
+
+        }
         public static bool HasInnerCooldown(this Player player, InnerCooldownType type)
         {
             return player.InnerCooldown().ActiveInnerCD.ContainsKey(type);

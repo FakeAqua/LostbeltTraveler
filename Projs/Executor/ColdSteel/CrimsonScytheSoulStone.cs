@@ -7,6 +7,7 @@ using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Globals.Methods;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -121,10 +122,10 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
         }
         public void DoExplosion()
         {
-            if (Owner.Lostbelt().globalSoundDelay == 0)
+            if (!Owner.HasInnerCooldown(InnerCooldownType.PlayerSoundDelay))
             {
                 ScarletSound(LostbeltSoundAssets.Tlipoca_StoneShatter, Projectile.Center, 0.13f, 1, -0.4f);
-                Owner.Lostbelt().globalSoundDelay = 45;
+                Owner.AddInnerCooldown(InnerCooldownType.PlayerSoundDelay, 45);
             }
             Projectile.Kill();
         }

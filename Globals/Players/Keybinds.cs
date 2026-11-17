@@ -1,4 +1,7 @@
 ﻿using LostbeltTraveler.Buffs.Debuffs;
+using LostbeltTraveler.Cooldowns;
+using LostbeltTraveler.Core;
+using LostbeltTraveler.Core.Cooldowns;
 using LostbeltTraveler.Core.NetCode;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Graphics.Particles;
@@ -28,11 +31,11 @@ namespace LostbeltTraveler.Globals.Players
             }
             if (LostbeltNetInput.SkillJustPressed)
             {
-                if (defenderEmblemCD == 0 && emblemVanguard)
+                if (!Player.HasCooldown<VanguardEmblemCooldown>() && emblemVanguard)
                 {
                     Player.GetImmnue(ImmunityCooldownID.General, GetSeconds(EmblemVanguard.InvinceTime), false);
                     ScarletSound(LostbeltSoundAssets.GrabCharge, Player.Center, instances: 0);
-                    defenderEmblemCD = GetSeconds(EmblemVanguard.Cooldown + EmblemVanguard.InvinceTime);
+                    Player.AddCooldown(ScarletContent.CooldownType<VanguardEmblemCooldown>(), GetSeconds(EmblemVanguard.Cooldown + EmblemVanguard.InvinceTime));
                     for (int i = 0; i < 30; i++)
                         ECSParticle.TurbulenceShinyOrb(Player.Center.ToRandCirclePos(15), 2.4f, Color.White, 120, 1, 0.3f, RandRotTwoPi);
                     new GeneralMountedPlayerParticle(LostbeltModAssets.Particle_RingShiny.Value, Color.White, 0, .24f, .8f, GetSeconds(3), Player.whoAmI, BlendState.Additive).Spawn();

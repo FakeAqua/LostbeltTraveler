@@ -2,6 +2,7 @@
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.Firearm;
 using System.Collections.Generic;
 using Terraria;
@@ -70,7 +71,7 @@ namespace LostbeltTraveler.Projs.Summon
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.DefenseEffectiveness *= 0;
-            bool hasBuff = Owner.Lostbelt().exsanguinationBuffTime != 0;
+            bool hasBuff = Owner.HasInnerCooldown(InnerCooldownType.ExsanguinationBuff);
             if (!hasBuff)
                 Projectile.AddExecutionTimeImmediate(ItemType<Exsanguination>());
             SoundStyle style = hasBuff ? LostbeltSoundAssets.Light_FleshHit with { MaxInstances = 4, Volume = 0.40f } : LostbeltSoundAssets.Light_ShieldHit with { MaxInstances = 4, Volume = 0.40f };
@@ -78,7 +79,7 @@ namespace LostbeltTraveler.Projs.Summon
         }
         public override void OnKill(int timeLeft)
         {
-            bool hasBuff = Owner.Lostbelt().exsanguinationBuffTime != 0;
+            bool hasBuff = Owner.HasInnerCooldown(InnerCooldownType.ExsanguinationBuff);
             if (!hasBuff)
             {
                 for (int i = 0; i < 4; i++)

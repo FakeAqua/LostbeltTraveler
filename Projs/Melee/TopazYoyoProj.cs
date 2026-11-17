@@ -1,6 +1,7 @@
 ﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Methods;
 using Terraria;
 using Terraria.ID;
@@ -27,6 +28,7 @@ namespace LostbeltTraveler.Projs.Melee
         public bool GemStringDiamond => CurrentyGemString.Equals("Diamond");
         #endregion
         public float TimerEmerald = 0;
+        public float TimerDiamond = 0;
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.YoyosLifeTimeMultiplier[Type] = YoyoLifeTime;
@@ -60,6 +62,34 @@ namespace LostbeltTraveler.Projs.Melee
         public void DoBehaviourTopaz()
         {
             Projectile.tileCollide = !GemStringTopaz;
+        }
+        public void DoBehaviourDiamond(Color noiseShockRingColor, Color turbulenceShinyOrbColor,bool force = false)
+        {
+            if (!(GemStringDiamond || force))
+                return;
+            TimerDiamond++;
+            if (TimerDiamond> Projectile.MaxUpdates * 60)
+            {
+                Vector2 spawnPos = Projectile.Center;
+                for (int i = 0; i < 6; i++)
+                {
+                    Color color = noiseShockRingColor;
+                    new NoiseShockRing(spawnPos, Vector2.Zero, color, 45, 1f, .06f + i * 0.12f, -1, Vector2.Zero, false).Spawn();
+                }
+                for (int i = 0; i < 15; i++)
+                    ECSParticle.TurbulenceShinyOrb(spawnPos.ToRandCirclePosEdge(30), Main.rand.NextFloat(1.2f, 2.4f) * 2, 
+                        turbulenceShinyOrbColor, 120, 1, Main.rand.NextFloat(.9f, 1.15f) * .13f);
+                ScarletSound(LostbeltSoundAssets.Misc_Spell, Projectile.Center, 0.45f);
+
+                float rod = RandRotTwoPi;
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 dir = (rod + TwoPi / 3 * i).ToRotationVector2();
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, dir * 6f, ProjectileType<DiamondYoyoDiamond>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
+                }
+                TimerDiamond= 0;
+            }
+
         }
         public void DoBehaviourEmerald()
         {

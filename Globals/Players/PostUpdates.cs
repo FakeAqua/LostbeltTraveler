@@ -11,6 +11,7 @@ using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Graphics.Metaballs;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Keybinds;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Accessories;
 using LostbeltTraveler.Items.Armor.RedDragonKnight;
 using LostbeltTraveler.Items.Useables;
@@ -94,7 +95,7 @@ namespace LostbeltTraveler.Globals.Players
         public void UpdateFlybackBuff()
         {
             //归零针buff
-            bool hasBuff = (flybackInGameTimeBuff > 0) && (Player.HeldItem.type == ItemType<FlybackHandThrown>());
+            bool hasBuff = Player.HasInnerCooldown(InnerCooldownType.FlybackHandTimeBuff) && (Player.HeldItem.type == ItemType<FlybackHandThrown>());
             if (!hasBuff)
                 return;
             //白天上午与夜间前半夜：给予15%近战伤害加成/15防御力加成
@@ -680,14 +681,14 @@ namespace LostbeltTraveler.Globals.Players
         public override bool HoverSlot(Item[] inventory, int context, int slot)
         {
             mouseHoveringBanWeaponAbility = inventory[slot].IsLegal();
-            if (LostbeltKeybinds.GeneralActionKeybind.JustPressed && swapTimer == 0 && mouseHoveringBanWeaponAbility)
+            if (LostbeltKeybinds.GeneralActionKeybind.JustPressed && !Player.HasInnerCooldown(InnerCooldownType.ItemSwapper) && mouseHoveringBanWeaponAbility)
             {
                 HoverSevenStarOrGreatDipper(ref inventory, context, slot);
                 ClearUpParticle(ref inventory, context, slot);
                 HoverSwitchWeapon(ref inventory, context, slot);
                 HoverRuShiWoWen(ref inventory, context, slot);
                 HoverCryLore(ref inventory, context, slot);
-                swapTimer = 30;
+                Player.AddInnerCooldown(InnerCooldownType.ItemSwapper, 45);
             }
             return false;
         }

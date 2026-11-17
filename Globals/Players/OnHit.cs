@@ -71,7 +71,7 @@ namespace LostbeltTraveler.Globals.Players
         public float FloretProtectorModify(NPC target, ref NPC.HitModifiers modifiers)
         {
             float sourceDamageModify = 1f;
-            if (floretProtectorExecutor && modifiers.DamageType == ExecutorDamageClass.Instance)
+            if (floretProtectorExecutor && modifiers.DamageType.CountsAsClass<ExecutorDamageClass>())
             {
                 if (protectorShiver)
                 {
@@ -111,7 +111,7 @@ namespace LostbeltTraveler.Globals.Players
                         break;
                 }
                 //这里才开始进判定。
-                if (spellBreakerTimer == 0)
+                if (!Player.HasInnerCooldown(InnerCooldownType.SpellBreakerHit))
                 {
                     int count = GetDotCounts(target);
                     //先搜……诶。
@@ -131,7 +131,7 @@ namespace LostbeltTraveler.Globals.Players
                         for (int i = 0; i < 32; i++)
                             ECSParticle.TurbulenceShinyOrb(target.Center.ToRandCirclePos(32), 1.2f, RandLerpColor(Color.Orange, Color.OrangeRed), 45, 1, Main.rand.NextFloat(.9f, 1.1f) * .23f, glowMult: .65f);
                         CombatText.NewText(target.Hitbox, Color.PaleGoldenrod, bounces + "x");
-                        spellBreakerTimer = SpellBreaker.Countdown;
+                        Player.AddInnerCooldown(InnerCooldownType.SpellBreakerHit, SpellBreaker.Countdown);
                         return bounces;
                     }
                 }
@@ -206,7 +206,7 @@ namespace LostbeltTraveler.Globals.Players
             {
                 totalCritsBonus += critDamageExecutor;
             }
-            if (spellBreakerLevel > 1 && spellBreakerTimer > 0 && modifiers.DamageType.CountsAsClass<MeleeDamageClass>())
+            if (spellBreakerLevel > 1 && Player.HasInnerCooldown(InnerCooldownType.SpellBreakerHit) && modifiers.DamageType.CountsAsClass<MeleeDamageClass>())
                 totalCritsBonus += .1f;
             totalCritsBonus += critDamageAll;
             modifiers.CritDamage += totalCritsBonus;
@@ -215,10 +215,6 @@ namespace LostbeltTraveler.Globals.Players
         public float GetWantedCrits<Type>() where Type : DamageClass
         {
             return (Player.GetTotalCritChance<Type>() + 4f - 100f);
-        }
-        public void MaidReaperHealDamage(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
-        {
-
         }
         public int CurHit = 0;
         public void GlobalExecutorOnHit(NPC target, NPC.HitInfo hit, int damageDone)
@@ -253,10 +249,10 @@ namespace LostbeltTraveler.Globals.Players
                 target.Lostbelt().isPotraitTimer = GetSeconds(5);
                 target.Lostbelt().potraityDoT = dotMult;
                 int c = GetDotCounts(target);
-                if (c > 0 && selfPortraitHealTiming == 0)
+                if (c > 0 && !Player.HasInnerCooldown(InnerCooldownType.SelfPortraitHeal))
                 {
                     Player.Heal(c);
-                    selfPortraitHealTiming = 60;
+                    Player.AddInnerCooldown(InnerCooldownType.SelfPortraitHeal,GetSeconds(1));
                 }
             }
             if (selfPortraitType > 0)
@@ -272,10 +268,10 @@ namespace LostbeltTraveler.Globals.Players
                     target.Lostbelt().potraityDoT += c * extraDoTDamage;
                 }
             }
-            if (cycleMadnessLevel > 0 && cycleMadnessCrtiStarTimer == 0)
+            if (cycleMadnessLevel > 0 && !Player.HasInnerCooldown(InnerCooldownType.CycleMadnessHit))
             {
                 Projectile.NewProjectileDirect(Player.GetSource_FromThis(), target.ToRandRec(), RandVelTwoPi(.5f, 1.1f) * 25f, ProjectileType<CycleMadnessStar>(), 0, 0, Player.whoAmI);
-                cycleMadnessCrtiStarTimer = 30;
+                Player.AddInnerCooldown(InnerCooldownType.CycleMadnessHit,30);
             }
         }
         public int GetDotCounts(NPC target)

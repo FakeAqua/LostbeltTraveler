@@ -3,6 +3,7 @@ using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Graphics.Particles;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.Firearm;
 using ReLogic.Utilities;
 using Terraria;
@@ -18,7 +19,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         public ref float Timer => ref Projectile.ai[0];
         public ref float OnFireTimer => ref Projectile.localAI[0];
         public float RecoilTimer = 0;
-        public bool IsBuffing => Owner.Lostbelt().containedBlastBuffTime > 0;
+        public bool IsBuffing => Owner.HasInnerCooldown(InnerCooldownType.ContainedBlastBuff);
         public override void ExSD()
         {
             Projectile.SetUpHeldProj(5);
@@ -81,8 +82,8 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         {
             Projectile proj = Projectile.NewProjectileDirect(Owner.GetSource_ItemUse(Owner.HeldItem), pos, vel, type, damage, Projectile.knockBack, Projectile.owner);
             proj.originalDamage = Projectile.originalDamage;
-            proj.Lostbelt().HasExecutionMechanic = Owner.Lostbelt().containedBlastBuffTime < GetSeconds(3);
-            proj.ai[0] = Owner.Lostbelt().containedBlastBuffTime;
+            proj.Lostbelt().HasExecutionMechanic = Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff)< GetSeconds(3);
+            proj.ai[0] = Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff);
             if (IsBuffing)
                 proj.extraUpdates += 1;
         }
@@ -98,12 +99,12 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
                 Timer = 0;
                 ScreenShakeSystem.AddScreenShakes(firePos, 1f, 10, RandRotTwoPi, 6.2f);
                 SlotId slotId1 = SoundEngine.PlaySound(LostbeltSoundAssets.Misc_Boom with { Variants = [1], MaxInstances = 0, Pitch = 0.75f, Volume = .35f }, Projectile.Center);
-                if (SoundEngine.TryGetActiveSound(slotId1, out ActiveSound sound) && Owner.Lostbelt().containedBlastBuffTime > 0)
+                if (SoundEngine.TryGetActiveSound(slotId1, out ActiveSound sound) && Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff) > 0)
                 {
                     sound.Volume /= 2;
                 }
                 Vector2 dir = Projectile.rotation.ToRotationVector2();
-                float rnd = Owner.Lostbelt().containedBlastBuffTime > 0 ? Main.rand.NextFloat(.90f, 1.1f) * 1f : 1f;
+                float rnd = Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff) > 0 ? Main.rand.NextFloat(.90f, 1.1f) * 1f : 1f;
                 int bulletDamage = (int)(Projectile.originalDamage * rnd * Clamp(1 + Owner.Lostbelt().containedBlastBoomCount, 1f, 1.30f));
                 if (IsAlterBullet)
                 {
@@ -173,7 +174,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             if (count == 0)
                 return;
             float ratios = Utils.GetLerpValue(0, 15, count, true);
-            Owner.Lostbelt().containedBlastBuffTime = (int)Lerp(5, 15, ratios) * 60;
+            Owner.AddInnerCooldown(InnerCooldownType.ContainedBlastBuff,(int)Lerp(5, 15, ratios) * 60);
             Owner.Lostbelt().containedBlastBoomCount = Lerp(0f, .45f, ratios);
         }
         public bool HandleDeadOrAlive()
@@ -223,7 +224,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             float fireProgess = Utils.GetLerpValue(0, 1, OnFireTimer / (60f * Projectile.MaxUpdates), true);
             float edgeProgress = EaseOutCubic(fireProgess);
             Color edgeC = Color.White;
-            if (Owner.Lostbelt().containedBlastBuffTime > 0)
+            if (Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff)     > 0)
                 edgeC = Color.Red;
             for (int i = 0; i < 16; i++)
                 SB.Draw(tex, drawPos + offset.BetterRotatedBy(drawRot) + Projectile.SafeDirByRot() * 0.28f + (TwoPi / 16f * i).ToRotationVector2() * 1.2f * edgeProgress, null, edgeC.ToAddColor(50) * edgeProgress, drawRot, rotPoint, Projectile.scale * .70f, se, 0);

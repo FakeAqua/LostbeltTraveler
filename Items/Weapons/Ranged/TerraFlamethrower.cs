@@ -2,6 +2,7 @@
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Projs.Ranged;
 using Terraria;
 using Terraria.DataStructures;
@@ -31,7 +32,7 @@ namespace LostbeltTraveler.Items.Weapons.Ranged
         }
         public override bool CanUseItem(Player player)
         {
-            return !player.HasProj(Item.shoot) && player.Lostbelt().heldProjReUseTime == 0;
+            return !player.HasProj(Item.shoot) && !player.HasInnerCooldown(InnerCooldownType.TerraFlamethrowerReuse);
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
