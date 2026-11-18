@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Globals.Instances.Items;
 using LostbeltTraveler.Globals.Players;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

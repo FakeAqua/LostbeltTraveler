@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-namespace LostbeltTraveler.Items.Vanity.Misc
+﻿namespace LostbeltTraveler.Items.Vanity.Misc
 {
     public class MollyItem : AccVanityItem
     {

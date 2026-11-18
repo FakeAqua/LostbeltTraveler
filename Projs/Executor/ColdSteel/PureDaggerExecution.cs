@@ -1,12 +1,10 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using System.Collections.Generic;
@@ -199,7 +197,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Owner.AddInnerCooldown(InnerCooldownType.PureDaggerDefense,60);
+            Owner.AddInnerCooldown(InnerCooldownType.PureDaggerDefense, 60);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

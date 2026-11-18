@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Instances.Items;
+﻿using LostbeltTraveler.Globals.Instances.Items;
 using LostbeltTraveler.Projs.Melee;
 using Terraria.ID;
 using Terraria.ModLoader;

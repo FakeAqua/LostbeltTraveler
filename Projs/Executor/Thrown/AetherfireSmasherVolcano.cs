@@ -1,7 +1,5 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Methods;
 using ReLogic.Utilities;
 using Terraria;
 using Terraria.Audio;

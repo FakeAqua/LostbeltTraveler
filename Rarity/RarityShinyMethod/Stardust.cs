@@ -21,8 +21,8 @@ namespace LostbeltTraveler.Rarity.RarityShinyMethod
             DynamicSpriteFont font = line.Font;
             float xa = 0;
             Color namecolor = Color.DodgerBlue;
-            Color strokeColor = Color.SkyBlue* .75f;
-            Color targetStrokeColor = Color.White* .75f;
+            Color strokeColor = Color.SkyBlue * .75f;
+            Color targetStrokeColor = Color.White * .75f;
             Color targetColor = Color.RoyalBlue;
             int totalLength = line.Text.Length;
             for (int i = 0; i < totalLength; i++)

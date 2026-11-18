@@ -1,8 +1,6 @@
 ﻿using ContinentOfJourney.Items;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Projs.Melee;
 using Terraria;
 using Terraria.DataStructures;

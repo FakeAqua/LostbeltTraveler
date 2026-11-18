@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ContinentOfJourney;
+﻿using ContinentOfJourney;
 using ContinentOfJourney.Buffs;
 using ContinentOfJourney.Items;
 using ContinentOfJourney.Items.Accessories.Bookmarks;
@@ -19,6 +18,7 @@ using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Items.Accessories;
 using LostbeltTraveler.Items.Useables;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 

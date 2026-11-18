@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Handlers;
 using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

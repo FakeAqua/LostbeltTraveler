@@ -5,7 +5,7 @@ using Terraria.ID;
 
 namespace LostbeltTraveler.Items.Accessories
 {
-    public class DetailFang:LostbeltItemClass
+    public class DetailFang : LostbeltItemClass
     {
         public override string AssetPath => AssetHandler.Equips;
         public override void SetStaticDefaults()

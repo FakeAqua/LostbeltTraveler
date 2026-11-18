@@ -1,7 +1,6 @@
 ﻿using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Projs.Executor.ColdSteel
 {

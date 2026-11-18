@@ -1,7 +1,7 @@
-global using Microsoft.Xna.Framework;
-global using Microsoft.Xna.Framework.Graphics;
 global using LostbeltTraveler.Assets.Registers;
 global using LostbeltTraveler.Globals.Methods;
+global using Microsoft.Xna.Framework;
+global using Microsoft.Xna.Framework.Graphics;
 global using static LostbeltTraveler.Globals.Handlers.EasingHandler;
 global using static LostbeltTraveler.Globals.Handlers.GlobalHandler;
 global using static LostbeltTraveler.Globals.Handlers.RandHandler;

@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Graphics.Particles;
+﻿using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Items.Weapons.Melee;
 using System.Collections.Generic;
 using Terraria;

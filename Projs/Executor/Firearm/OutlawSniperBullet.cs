@@ -1,14 +1,13 @@
-﻿using LostbeltTraveler.Core.PixelatedRender;
-using LostbeltTraveler.Globals.Classes;
-using System;
-using System.Collections.Generic;
+﻿using LostbeltTraveler.Core.ParticleECS;
+using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
+using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using ReLogic.Content;
-using Terraria;
-using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.Firearm;
+using ReLogic.Content;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 
 
@@ -140,7 +139,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         public void RenderPixelated(SpriteBatch spriteBatch)
         {
             float Progress = StickProgress;
-            float overallScale = 1.75f*Progress;
+            float overallScale = 1.75f * Progress;
             LostbeltMethods.EnterShaderAreaPixel(BlendState.Additive);
             ////这里是强行使用ex98拼凑出来的子弹效果
             Texture2D tex = LostbeltModAssets.Specific_RocketTrail.Value;
@@ -166,10 +165,10 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
                 float opac = Lerp(1f, .79f, EaseInOutExpo(progress));
                 Color pixelColor = Color.Lerp(Color.OrangeRed, Color.Lerp(Color.LightGoldenrodYellow, Color.OrangeRed, 0.85f), EaseInOutExpo(progress));
                 int by = (int)Lerp(50, 0, progress);
-                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), 
+                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f),
                     c.ToAddColor(0) * opac * 1.2f, oldRot, projTex.Size() / 2f, scale * 1.1f, 0);
                 //这里重复多画一次。
-                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), 
+                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f),
                     c.ToAddColor((byte)by) * opac * .6f, oldRot, projTex.Size() / 2f, scale, 0);
                 SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(0.5f, 0.5f),
                     pixelColor.ToAddColor(100) * opac, oldRot, projTex.Size() / 2f, scale, 0);

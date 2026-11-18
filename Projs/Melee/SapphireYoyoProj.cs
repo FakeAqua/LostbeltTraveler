@@ -1,8 +1,5 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
-using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Methods;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
@@ -30,7 +27,7 @@ namespace LostbeltTraveler.Projs.Melee
         {
             base.ProjAI();
             Lighting.AddLight(Projectile.Center, TorchID.Blue);
-            if (TimerSapphire> 0)
+            if (TimerSapphire > 0)
             {
                 if (Main.rand.NextBool(2))
                     ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(4), RandVelTwoPi(1), Color.RoyalBlue, 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .4f, .2f);
@@ -52,8 +49,8 @@ namespace LostbeltTraveler.Projs.Melee
         {
             Projectile.GetProjDrawData(out Texture2D projTex, out Vector2 drawPos, out Vector2 ori);
             int length = Projectile.oldPos.Length;
-            Color innerColor = Color.Lerp(Color.MidnightBlue,Color.White,.75f) * .85f;
-            Color outterColor = Color.RoyalBlue* .95f;
+            Color innerColor = Color.Lerp(Color.MidnightBlue, Color.White, .75f) * .85f;
+            Color outterColor = Color.RoyalBlue * .95f;
 
             if (GemStringAmethyst)
             {

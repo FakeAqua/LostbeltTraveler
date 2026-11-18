@@ -2,7 +2,6 @@
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Items.Weapons.Melee;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -113,7 +112,7 @@ namespace LostbeltTraveler.Projs.Melee
         public override bool PreDraw(ref Color lightColor)
         {
             Projectile.GetProjDrawData(out Texture2D projTex, out Vector2 drawPos, out Vector2 ori);
-            
+
             int length = Projectile.oldPos.Length;
             SB.EnterShaderArea();
             DrawTrails(LostbeltModAssets.Trail_BloomDualLine.Texture, Color.DarkRed, 1f, 1f, 1.1f);

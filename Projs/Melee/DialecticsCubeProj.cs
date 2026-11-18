@@ -1,7 +1,6 @@
-﻿using System;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
+using System;
 using Terraria;
 using Terraria.ID;
 

@@ -1,8 +1,6 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.NetCode;
+﻿using LostbeltTraveler.Core.NetCode;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -182,7 +180,7 @@ namespace LostbeltTraveler.Projs.Melee
             }
             else if (CurWaveStyle == WaveStyle.Square)
             {
-                
+
                 if (Projectile.CanSpawnChild())
                 {
                     foreach (var p in Main.ActiveProjectiles)

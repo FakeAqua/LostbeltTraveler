@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Globals.Executor

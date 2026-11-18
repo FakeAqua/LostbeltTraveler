@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Graphics.ParticleECS;
+﻿using LostbeltTraveler.Globals.Graphics.ParticleECS;
 using Terraria;
 
 namespace LostbeltTraveler.Core.ParticleECS
@@ -211,26 +210,26 @@ namespace LostbeltTraveler.Core.ParticleECS
         /// <paramref name="spining"/>表示星星是否自转，默认为是，即允许
         /// </summary>
         /// <returns></returns>
-        public static int ManaStarDust(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float rotation, float scale, bool spining = true,BlendState blendState = null)
+        public static int ManaStarDust(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float rotation, float scale, bool spining = true, BlendState blendState = null)
         {
             BlendState bs = blendState ?? BlendState.AlphaBlend;
-            return ECSMethod.NewParticle(GetInstance<ManaStarDust>().Type, timeLeft, pos, vel, color, opacity, rotation, scale, bs,aibool0:spining);
+            return ECSMethod.NewParticle(GetInstance<ManaStarDust>().Type, timeLeft, pos, vel, color, opacity, rotation, scale, bs, aibool0: spining);
         }
         /// <summary>
         /// <br>像素闪电粒子</br>
         /// <paramref name="spining"/>表示是否上下翻转，默认为否
         /// </summary>
         /// <returns></returns>
-        public static int ElectricLink(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float rotation, float scale, bool spining = false,BlendState blendState = null)
+        public static int ElectricLink(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float rotation, float scale, bool spining = false, BlendState blendState = null)
         {
             BlendState bs = blendState ?? BlendState.AlphaBlend;
-            return ECSMethod.NewParticle(GetInstance<ElectricLink>().Type, timeLeft, pos, vel, color, opacity, rotation, scale, bs,aibool0:spining);
+            return ECSMethod.NewParticle(GetInstance<ElectricLink>().Type, timeLeft, pos, vel, color, opacity, rotation, scale, bs, aibool0: spining);
         }
         /// <summary>
         /// <br>湍流方块</br>
         /// </summary>
         /// <returns></returns>
-        public static int TurbulenceShinyCube(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float rotation, float scale, bool doPosMove = true,float xPosMoveValue = 13, float yPosMoveValue = 13,BlendState blendState = null)
+        public static int TurbulenceShinyCube(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float rotation, float scale, bool doPosMove = true, float xPosMoveValue = 13, float yPosMoveValue = 13, BlendState blendState = null)
         {
             BlendState bs = blendState ?? BlendState.AlphaBlend;
             return ECSMethod.NewParticle(GetInstance<TurbulenceShinyCubeECS>().Type, timeLeft, pos, vel, color, opacity, rotation, scale, bs, aibool0: doPosMove, ai0: xPosMoveValue, ai1: yPosMoveValue);

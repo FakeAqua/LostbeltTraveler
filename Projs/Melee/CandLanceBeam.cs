@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 

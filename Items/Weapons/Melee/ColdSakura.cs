@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.Items.Material;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Projs.Melee;
@@ -29,7 +28,7 @@ namespace LostbeltTraveler.Items.Weapons.Melee
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.SetUpRarityPrice(ItemRarityID.Red);
             Item.shoot = ProjectileType<ColdSakuraProj>();
-            Item.UseSound = LostbeltSoundAssets.Misc_KnifeToss with {Volume=.6f, MaxInstances = 0, Pitch = 0.5f,PitchVariance=.1f, Variants = [1] };
+            Item.UseSound = LostbeltSoundAssets.Misc_KnifeToss with { Volume = .6f, MaxInstances = 0, Pitch = 0.5f, PitchVariance = .1f, Variants = [1] };
             Item.shootSpeed = 16f;
         }
         public override void HoldItem(Player player)

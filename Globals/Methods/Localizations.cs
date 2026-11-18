@@ -129,7 +129,7 @@ namespace LostbeltTraveler.Globals.Methods
 
         }
         public static int FindLineIndex(this List<TooltipLine> tooltips, string lineName, string lineMod = "Terraria") => tooltips.FindIndex(t => t.Name == lineName && t.Mod == lineMod);
-        public static int FindLineIndexLast(this List<TooltipLine> tooltips, string lineName, string lineMod = "Terraria") => 
+        public static int FindLineIndexLast(this List<TooltipLine> tooltips, string lineName, string lineMod = "Terraria") =>
             tooltips.FindLastIndex(t => t.Name.Contains(lineName) && t.Mod == lineMod);
         public static void AddSwapTooltipValueBossCondition(this List<TooltipLine> tooltips, int downedNPCID, Color? color = null)
         {
@@ -165,8 +165,8 @@ namespace LostbeltTraveler.Globals.Methods
         private static readonly Func<string, string, string, TooltipLine> CreateLineFunc = BuildFactory();
         private static Func<string, string, string, TooltipLine> BuildFactory()
         {
-            ConstructorInfo ctor = typeof(TooltipLine).GetConstructor( BindingFlags.NonPublic | BindingFlags.Instance, 
-                null,[typeof(string), typeof(string), typeof(string)], null);
+            ConstructorInfo ctor = typeof(TooltipLine).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance,
+                null, [typeof(string), typeof(string), typeof(string)], null);
 
             //todo：我不确定未来这里会不会改为public，现在是默认其为internal
             ParameterExpression a = Expression.Parameter(typeof(string), "mod");

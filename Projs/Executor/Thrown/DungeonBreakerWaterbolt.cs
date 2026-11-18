@@ -1,10 +1,10 @@
-﻿using static LostbeltTraveler.Globals.Methods.LostbeltMethods;
-using LostbeltTraveler.Core.PixelatedRender;
+﻿using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using Terraria;
 using Terraria.ID;
+using static LostbeltTraveler.Globals.Methods.LostbeltMethods;
 
 namespace LostbeltTraveler.Projs.Executor.Thrown
 {

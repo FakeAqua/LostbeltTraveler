@@ -85,14 +85,14 @@ namespace LostbeltTraveler.Globals.Methods
         }
         public static bool IsBestPrefix(this Item item)
         {
-            if(item.accessory)
+            if (item.accessory)
             {
                 return true;
             }
             if (item.damage > 0)
             {
                 HashSet<int> isGoodPrefix = [PrefixID.Godly, PrefixID.Demonic, PrefixID.Legendary, PrefixID.Legendary2, PrefixID.Mythical, PrefixID.Unreal, PrefixType<Phantasmic>()];
-                return isGoodPrefix.Contains(item.prefix) || item.Lostbelt().ItemBelongTo != Database.Enums.EnumItemOwner.None ;
+                return isGoodPrefix.Contains(item.prefix) || item.Lostbelt().ItemBelongTo != Database.Enums.EnumItemOwner.None;
             }
             return true;
         }

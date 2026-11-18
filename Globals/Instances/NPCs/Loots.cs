@@ -1,5 +1,4 @@
-﻿using static LostbeltTraveler.Globals.Methods.LostbeltMethods;
-using ContinentOfJourney.NPCs;
+﻿using ContinentOfJourney.NPCs;
 using ContinentOfJourney.NPCs.Boss_BigDipper;
 using ContinentOfJourney.NPCs.Boss_GoblinChariot;
 using ContinentOfJourney.NPCs.Boss_MarquisMoonsquid;
@@ -27,6 +26,7 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static LostbeltTraveler.Globals.Methods.LostbeltMethods;
 
 namespace LostbeltTraveler.Globals.Instances.NPCs
 {

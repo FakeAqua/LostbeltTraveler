@@ -15,9 +15,9 @@ namespace LostbeltTraveler.Items.Accessories
         public float Damage = .05f;
         public int Crit = 5;
         public int MaxMana = 25;
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(WingTime, 
-            ((float)(int)(WingPower*100/ 5)) + "%",
-            Damage.ToPercent(), ManaCost.ToPercent(), Crit + "%", MaxMana, $"[i:{ItemID.Search.GetName( MatchWing)}]");
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(WingTime,
+            ((float)(int)(WingPower * 100 / 5)) + "%",
+            Damage.ToPercent(), ManaCost.ToPercent(), Crit + "%", MaxMana, $"[i:{ItemID.Search.GetName(MatchWing)}]");
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Yellow);

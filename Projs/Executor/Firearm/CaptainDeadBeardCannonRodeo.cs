@@ -9,12 +9,11 @@ using LostbeltTraveler.Projs.Melee;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 
 namespace LostbeltTraveler.Projs.Executor.Firearm
 {
-    public class CaptainDeadBeardCannonRodeo:LostbeltProjs, IPixelatedRenderer
+    public class CaptainDeadBeardCannonRodeo : LostbeltProjs, IPixelatedRenderer
     {
         public ref float Timer => ref Projectile.ai[0];
         public bool HitTile = false;
@@ -38,7 +37,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         public override void ProjAI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
-                        //复制原版双足翼龙怒焰的AI
+            //复制原版双足翼龙怒焰的AI
             Projectile.ai[0] += 1f;
             if (Projectile.ai[0] >= 10f)
             {
@@ -59,9 +58,9 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             }
             if (Projectile.IsOutScreen())
                 return;
-                if (Main.rand.NextBool(3))
-                    ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(16), Projectile.velocity / 6f,
-                        RandLerpColor(Color.OrangeRed, Color.Orange), 45, RandRotTwoPi, 1, Main.rand.NextFloat(.9f, 1.1f) * .34f, false, blendstate: BlendState.Additive);
+            if (Main.rand.NextBool(3))
+                ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(16), Projectile.velocity / 6f,
+                    RandLerpColor(Color.OrangeRed, Color.Orange), 45, RandRotTwoPi, 1, Main.rand.NextFloat(.9f, 1.1f) * .34f, false, blendstate: BlendState.Additive);
 
             if (Main.rand.NextBool(6))
             {
@@ -79,7 +78,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if(!HitTile)
+            if (!HitTile)
             {
                 HitTile = true;
                 Projectile.velocity *= 0f;
@@ -100,8 +99,8 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            if(!HitTile)
-            overWiresUI.Add(index);
+            if (!HitTile)
+                overWiresUI.Add(index);
         }
         public float OverallOpa = 1;
         public ScarletDrawLayer LayerToRenderTo => ScarletDrawLayer.BeforePlayer;
@@ -121,7 +120,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             LostbeltMethods.EnterShaderAreaPixel(BlendState.Additive);
             Texture2D line = LostbeltModAssets.Specific_RocketTrail.Value;
             Vector2 offset2 = Projectile.velocity.ToSafeNormalize() * 0f;
-            int length =(int)( Projectile.oldRot.Length*OverallOpa);
+            int length = (int)(Projectile.oldRot.Length * OverallOpa);
             for (int i = 0; i < length; i++)
             {
                 float progress = 1 - (float)i / length;
@@ -133,7 +132,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
                 Vector2 innerScale = new Vector2(0.405f * 1, 1.1f * progress);
                 SB.FastDraw(line, AfterImagePos + offset, col * 0.45f * progress * 1f * OverallOpa,
                     rot, line.Size() / 2f, lineScale * 1.25f * 1.5f);
-                SB.FastDraw(line, AfterImagePos + offset, Color.White * 0.405f * progress * 1f *OverallOpa,
+                SB.FastDraw(line, AfterImagePos + offset, Color.White * 0.405f * progress * 1f * OverallOpa,
                    rot, line.Size() / 2f, innerScale * 1.5f);
             }
 
@@ -141,11 +140,11 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         }
         public void DrawTrails(Asset<Texture2D> useTex, Color drawColor, float multipleSize = 1f, float alphaValue = 1f, float laserLengthMult = 1f)
         {
-            float laserLength = 400 *laserLengthMult;
+            float laserLength = 400 * laserLengthMult;
             LostbeltShaderAssets.StandardFlowShader.Parameters["LaserTextureSize"].SetValue(useTex.Size());
             LostbeltShaderAssets.StandardFlowShader.Parameters["targetSize"].SetValue(new Vector2(laserLength, useTex.Height()));
-            LostbeltShaderAssets.StandardFlowShader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * -130f*alphaValue);
-            LostbeltShaderAssets.StandardFlowShader.Parameters["uColor"].SetValue(drawColor.ToVector4()*OverallOpa);
+            LostbeltShaderAssets.StandardFlowShader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * -130f * alphaValue);
+            LostbeltShaderAssets.StandardFlowShader.Parameters["uColor"].SetValue(drawColor.ToVector4() * OverallOpa);
             LostbeltShaderAssets.StandardFlowShader.Parameters["uFadeoutLength"].SetValue(0.9f);
             LostbeltShaderAssets.StandardFlowShader.Parameters["uFadeinLength"].SetValue(0.1f);
             LostbeltShaderAssets.StandardFlowShader.CurrentTechnique.Passes[0].Apply();
@@ -154,14 +153,14 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             //做掉可能存在的零向量
             DrawSetting drawSetting = new DrawSetting(useTex.Value, true);
             List<TrailDrawDate> trailDrawDates = [];
-            int posCount = (int)(Projectile.oldPos.Length*OverallOpa);
+            int posCount = (int)(Projectile.oldPos.Length * OverallOpa);
             for (int j = 0; j < posCount - 1; j++)
             {
                 if (Projectile.oldPos[j] == Vector2.Zero)
                     continue;
                 float rot = Projectile.oldRot[j];
                 Vector2 posOffset = Main.rand.NextVector2Circular(1.5f, 1.5f);
-                trailDrawDates.Add(new(Projectile.oldPos[j] + Projectile.SafeDir()*15f + Projectile.Size / 2, drawColor, new Vector2(0, 7 * multipleSize * Projectile.scale), rot));
+                trailDrawDates.Add(new(Projectile.oldPos[j] + Projectile.SafeDir() * 15f + Projectile.Size / 2, drawColor, new Vector2(0, 7 * multipleSize * Projectile.scale), rot));
             }
             TrailRender.DrawTrail([.. trailDrawDates], drawSetting);
         }
@@ -175,10 +174,10 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             Projectile.GetProjDrawData(out Texture2D projTex, out Vector2 drawPos, out Vector2 ori);
             SB.EnterShaderArea();
             Texture2D tex2 = LostbeltModAssets.Particle_ShinyOrb.Value;
-            SB.FastDraw(tex2, drawPos, Color.OrangeRed, 0, tex2.Size() / 2f, Projectile.scale*1.9f);
+            SB.FastDraw(tex2, drawPos, Color.OrangeRed, 0, tex2.Size() / 2f, Projectile.scale * 1.9f);
             SB.EndShaderArea();
-            for(int i =0;i<3;i++)
-            SB.FastDraw(projTex, drawPos.ToRandCirclePos(3), Color.Orange.ToAddColor(), Projectile.rotation, ori, Projectile.scale*1.1f);
+            for (int i = 0; i < 3; i++)
+                SB.FastDraw(projTex, drawPos.ToRandCirclePos(3), Color.Orange.ToAddColor(), Projectile.rotation, ori, Projectile.scale * 1.1f);
             SB.FastDraw(projTex, drawPos, Color.White, Projectile.rotation, ori, Projectile.scale);
             return false;
         }

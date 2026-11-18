@@ -1,9 +1,4 @@
 ﻿using LostbeltTraveler.Core.NetCode;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 
@@ -11,7 +6,7 @@ namespace LostbeltTraveler.Core.Cooldowns
 {
     public static partial class CooldownMethods
     {
-        public static bool HasCooldown<T>(this Player player) where T:ScarletCooldown
+        public static bool HasCooldown<T>(this Player player) where T : ScarletCooldown
         {
             int type = ScarletContent.CooldownType<T>();
             return player.CDPlayer().ActiveCooldown.Contains(ScarletCooldownManager.CooldownCollection[type]);
@@ -43,8 +38,8 @@ namespace LostbeltTraveler.Core.Cooldowns
             cd.MaxTime = timeLeft;
             cd.Time = timeLeft;
             cdp.ActiveCooldown.Insert(0, cd);
-            if(syned)
-                        player.SyncedCooldown(type, timeLeft);
+            if (syned)
+                player.SyncedCooldown(type, timeLeft);
             return cd;
         }
         /// <summary>
@@ -58,10 +53,10 @@ namespace LostbeltTraveler.Core.Cooldowns
         {
             if (!player.HasCooldown(type))
                 return;
-            for(int i =0;i<player.CDPlayer().ActiveCooldown.Count;i++)
+            for (int i = 0; i < player.CDPlayer().ActiveCooldown.Count; i++)
             {
                 ScarletCooldown sc = player.CDPlayer().ActiveCooldown[i];
-                if(sc.Type==type)
+                if (sc.Type == type)
                 {
                     sc.Time = 0;
                     sc.OnDestroy(player);

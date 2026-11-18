@@ -7,11 +7,11 @@ using Terraria.ID;
 
 namespace LostbeltTraveler.Projs.Executor.Thrown
 {
-    public class LunarHammerExecution:LostbeltProjs
+    public class LunarHammerExecution : LostbeltProjs
     {
         public override string Texture => GetInstance<LunarHammerProj>().Texture;
         public override EnumDamageClass Category => EnumDamageClass.Executor;
-                private enum DoType
+        private enum DoType
         {
             IsArcRotating,
             IsHanging
@@ -28,7 +28,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             set => Projectile.ai[2] = value;
         }
         public float RotProgress = 0;
-                private int StartSpinTime => 30 * Projectile.extraUpdates;
+        private int StartSpinTime => 30 * Projectile.extraUpdates;
         public override void SetStaticDefaults()
         {
             Projectile.ToTrailSetting(10);
@@ -72,9 +72,9 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
                 AttackType = DoType.IsHanging;
             }
         }
-         private void ReleaseDarkEnegry()
+        private void ReleaseDarkEnegry()
         {
-            if (Projectile.GetTargetSafe(out NPC target,canPassWall:true))
+            if (Projectile.GetTargetSafe(out NPC target, canPassWall: true))
             {
                 //下方是一段基于主射弹当前速度而做出动态变化的射弹生成代码
                 //表现来说是，衍生射弹的生成频率将会与主射弹的速度会成正比，并尽可能控制在需要的固定间隔内
@@ -123,7 +123,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             else
                 Projectile.extraUpdates = 3;
         }
-         //下面这段圆弧代码需要重置
+        //下面这段圆弧代码需要重置
         private float RotateTime = 0;
         private bool _isArcRotating = false;
         private float _arcStartRotation;
@@ -146,7 +146,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
                     _prevArcAngle = TotalArcAngle;
                 else
                     TotalArcAngle = -_prevArcAngle;
-                Projectile.velocity *=.28f;
+                Projectile.velocity *= .28f;
             }
             if (_isArcRotating)
             {
@@ -182,7 +182,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-                        //非挂载情况返回不执行。
+            //非挂载情况返回不执行。
             if (AttackType != DoType.IsHanging)
                 return;
 
@@ -190,17 +190,17 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
                 FlareCounts++;
 
             int flareDamage = (int)(Projectile.damage / 2 * Math.Log(1 + FlareCounts));
-                ScarletSound(SoundID.Item88, Projectile.Center);
+            ScarletSound(SoundID.Item88, Projectile.Center);
             for (int i = 0; i < FlareCounts; i++)
             {
-                Vector2 pos = Projectile.Center - Vector2.UnitY * 800f + Main.rand.NextFloat(-150f,150f)*Vector2.UnitX;
+                Vector2 pos = Projectile.Center - Vector2.UnitY * 800f + Main.rand.NextFloat(-150f, 150f) * Vector2.UnitX;
                 ScarletSound(SoundID.Item88, Projectile.Center);
                 Vector2 normalVec = pos.GetNormalVector2(target.Center);
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, normalVec * 18f, ProjectileType<LunarHammerMissle>(), Projectile.damage, 1, Projectile.owner);
                 proj.localAI[1] = Main.rand.NextFloat(0.27f, 1.01f);
 
             }
-                //NightmareArrowDrop(target, flareDamage);
+            //NightmareArrowDrop(target, flareDamage);
 
             int leastHitCD = 6 * Projectile.extraUpdates;
             Projectile.localNPCHitCooldown -= 5 * Projectile.extraUpdates;
@@ -226,13 +226,13 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             }
             for (int i = 0; i < 3; i++)
             {
-                SB.FastDraw(projTex, drawPos+Main.rand.NextVector2Circular(3,3), Color.LightSkyBlue.ToAddColor()*.5f, Projectile.rotation, ori, Projectile.scale*1.05f, 0);
+                SB.FastDraw(projTex, drawPos + Main.rand.NextVector2Circular(3, 3), Color.LightSkyBlue.ToAddColor() * .5f, Projectile.rotation, ori, Projectile.scale * 1.05f, 0);
             }
             SB.FastDraw(projTex, drawPos, lightColor, Projectile.rotation, ori, Projectile.scale, 0);
             float LerpValue = 1f;
             float lerpRot = Lerp(-PiOver2, PiOver2, EaseOutCubic(LerpValue));
             float opac1 = EaseInCubic(LerpValue);
-            GemYoyoProj.DrawAmethystSmear(Projectile, Color.Aquamarine*opac1, Color.LightSkyBlue*opac1, 3.5f*LerpValue, lerpRot);
+            GemYoyoProj.DrawAmethystSmear(Projectile, Color.Aquamarine * opac1, Color.LightSkyBlue * opac1, 3.5f * LerpValue, lerpRot);
             return false;
         }
     }

@@ -1,10 +1,4 @@
-﻿using LostbeltTraveler.Buffs.Debuffs;
-using LostbeltTraveler.Core.ParticleECS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -26,8 +20,8 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= badLifeRegenPool;
-                damage = badLifeRegenPool/5;
-                
+                damage = badLifeRegenPool / 5;
+
             }
             badLifeRegenPool = 0;
             if (npc.lifeRegen < 0)

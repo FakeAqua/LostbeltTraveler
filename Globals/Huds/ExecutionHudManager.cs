@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Configs;
+﻿using LostbeltTraveler.Globals.Configs;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players;
 using ReLogic.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
@@ -44,7 +42,7 @@ namespace LostbeltTraveler.Globals.Huds
         public static void DrawExecutorHud(On_FilterManager.orig_EndCapture orig, FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
 
         {
-            orig(self,finalTexture,screenTarget1,screenTarget2,clearColor);
+            orig(self, finalTexture, screenTarget1, screenTarget2, clearColor);
             if (Main.dedServ || Main.gameMenu)
                 return;
             LostbeltConfigClient config = LostbeltConfigClient.Instance;

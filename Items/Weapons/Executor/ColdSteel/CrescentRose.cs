@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Database.IDSets;
-using LostbeltTraveler.Globals.Database.List;
+﻿using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Items.Materials;
 using LostbeltTraveler.Projs.Executor.ColdSteel;
 using LostbeltTraveler.Rarity.RarityDrawHandler;
 using ReLogic.Graphics;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -46,7 +43,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-                        bool exe = player.GetExecutionSrike();
+            bool exe = player.GetExecutionSrike();
             Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.UnitX);
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<CrescentRoseHeldProj>(), damage, knockback, player.whoAmI);
             proj.Lostbelt().HasExecutionMechanic = true;
@@ -71,13 +68,13 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
         {
             if (line.IsItemName())
                 DrawItemName(line);
-            if(line.Mod==Mod.Name&&line.Name=="FlavorTooltipsName")
+            if (line.Mod == Mod.Name && line.Name == "FlavorTooltipsName")
             {
                 DrawFlavorName(line);
 
             }
         }
-                public void DrawFlavorName(DrawableTooltipLine line)
+        public void DrawFlavorName(DrawableTooltipLine line)
         {
             //先更新需要的背景图
             line.QuickSetupRarityBackground(Color.Red);
@@ -85,9 +82,9 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
             DynamicSpriteFont font = line.Font;
             float xa = 0;
             Color namecolor = Color.Black;
-            Color strokeColor = Color.Crimson* .75f;
-            Color targetStrokeColor = Color.Crimson* .75f;
-            Color targetColor = Color.Lerp(Color.DarkRed,Color.Black,.5f);
+            Color strokeColor = Color.Crimson * .75f;
+            Color targetStrokeColor = Color.Crimson * .75f;
+            Color targetColor = Color.Lerp(Color.DarkRed, Color.Black, .5f);
             int totalLength = line.Text.Length;
             for (int i = 0; i < totalLength; i++)
             {
@@ -112,7 +109,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
             }
         }
 
-                public void DrawItemName(DrawableTooltipLine line)
+        public void DrawItemName(DrawableTooltipLine line)
         {
             //先更新需要的背景图
             line.QuickSetupRarityBackground(Color.Red);
@@ -120,8 +117,8 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
             DynamicSpriteFont font = line.Font;
             float xa = 0;
             Color namecolor = Color.Crimson;
-            Color strokeColor = Color.Black* .75f;
-            Color targetStrokeColor = Color.DarkRed* .75f;
+            Color strokeColor = Color.Black * .75f;
+            Color targetStrokeColor = Color.DarkRed * .75f;
             Color targetColor = Color.Red;
             int totalLength = line.Text.Length;
             for (int i = 0; i < totalLength; i++)

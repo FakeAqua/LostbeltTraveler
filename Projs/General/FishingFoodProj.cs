@@ -2,16 +2,11 @@
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.General
 {
-    public class FishingFoodProj:LostbeltProjs
+    public class FishingFoodProj : LostbeltProjs
     {
         public override string Texture => LostbeltModAssets.InvisAsset.Path;
         public override EnumDamageClass Category => EnumDamageClass.Typeless;
@@ -74,7 +69,7 @@ namespace LostbeltTraveler.Projs.General
             SB.EnterShaderArea();
             Texture2D tex = LostbeltModAssets.Particle_HRShinyOrb.Value;
             Vector2 center = Projectile.Center - Main.screenPosition;
-            SB.FastDraw(tex, center, Color.White, 0, tex.Size() / 2f, 0.6f*LerpValue, 0);
+            SB.FastDraw(tex, center, Color.White, 0, tex.Size() / 2f, 0.6f * LerpValue, 0);
             SB.EndShaderArea();
             return false;
         }

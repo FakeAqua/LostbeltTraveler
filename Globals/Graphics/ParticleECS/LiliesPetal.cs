@@ -1,6 +1,5 @@
-﻿using System;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
+using System;
 using Terraria;
 
 namespace LostbeltTraveler.Globals.Graphics.ParticleECS

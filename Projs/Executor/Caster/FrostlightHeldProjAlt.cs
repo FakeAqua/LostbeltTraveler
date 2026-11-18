@@ -1,8 +1,6 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.Caster;
 using System;
 using Terraria;

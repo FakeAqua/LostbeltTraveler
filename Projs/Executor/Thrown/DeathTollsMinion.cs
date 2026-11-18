@@ -1,10 +1,7 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.NetCode;
-using LostbeltTraveler.Core.ParticleSystem;
+﻿using LostbeltTraveler.Core.NetCode;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -116,7 +113,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
                 return;
             Vector2 anchorPos = Projectile.Center + Projectile.rotation.ToRotationVector2() * 18f;
             Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), anchorPos, (Owner.LocalMouseWorld() - anchorPos).SafeNormalize(Vector2.UnitX) * 12f, ProjectileType<DeathTollsStreak>(), Projectile.damage * 2, Projectile.knockBack, Owner.whoAmI);
-            ScarletSound(LostbeltSoundAssets.Hammer_Shoot, Projectile.Center, .6f,1,.8f);
+            ScarletSound(LostbeltSoundAssets.Hammer_Shoot, Projectile.Center, .6f, 1, .8f);
             //设定为46确保其不会出现可能的情况
             ShootTimer -= rate + 2f;
         }
@@ -167,7 +164,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
                     continue;
                 //最终生成粒子。
                 Color drawColor = i > 0 ? Color.Black : new(75, 0, 130);
-                ShinyOrbParticle shinyOrbParticle = new ShinyOrbParticle(spawnPosition, realVel, drawColor, 140, 1.2f, i < 0 ? BlendState.Additive: BlendState.AlphaBlend, false);
+                ShinyOrbParticle shinyOrbParticle = new ShinyOrbParticle(spawnPosition, realVel, drawColor, 140, 1.2f, i < 0 ? BlendState.Additive : BlendState.AlphaBlend, false);
                 shinyOrbParticle.Spawn();
             }
         }

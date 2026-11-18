@@ -1,12 +1,8 @@
 ﻿using LostbeltTraveler.Rarity.RarityDrawHandler;
 using LostbeltTraveler.Rarity.RarityParticles;
-using rail;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,9 +21,9 @@ namespace LostbeltTraveler.Rarity.RarityShinyMethod
             DynamicSpriteFont font = line.Font;
             float xa = 0;
             Color namecolor = Color.PaleGreen;
-            Color strokeColor = Color.Black* .75f;
+            Color strokeColor = Color.Black * .75f;
             Color targetColor = Color.Turquoise;
-            Color targetStrokeColor = Color.Black* .75f;
+            Color targetStrokeColor = Color.Black * .75f;
             int totalLength = line.Text.Length;
             for (int i = 0; i < totalLength; i++)
             {

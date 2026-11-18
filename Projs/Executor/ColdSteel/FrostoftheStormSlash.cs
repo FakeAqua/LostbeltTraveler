@@ -1,12 +1,10 @@
 ﻿using ContinentOfJourney.NPCs.Boss_WorldsEndEverlastingFallingWhale;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Buffs.Debuffs;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using System.Collections.Generic;
 using Terraria;

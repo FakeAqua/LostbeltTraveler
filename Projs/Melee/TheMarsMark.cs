@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.Melee

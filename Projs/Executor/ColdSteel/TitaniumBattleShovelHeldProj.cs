@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Core.ScreenEffect;
@@ -7,7 +6,6 @@ using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using LostbeltTraveler.Projs.General;
 using System.Collections.Generic;

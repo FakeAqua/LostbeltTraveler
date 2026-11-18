@@ -1,19 +1,11 @@
-﻿using ContinentOfJourney.Items.ThrowerWeapons;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ScreenEffect;
-using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Items.Weapons.Executor.Firearm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 
 namespace LostbeltTraveler.Projs.Executor.Firearm
@@ -83,7 +75,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
                 if (BurstTime >= 8 && RecoilTimer == 0)
                 {
                     Timer++;
-                Projectile.rotation = Owner.ToMouseVector2().ToRotation();
+                    Projectile.rotation = Owner.ToMouseVector2().ToRotation();
                     if (Timer > AttackSpeed * 2)
                         Projectile.Kill();
                     return;
@@ -114,7 +106,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             Projectile.scale = tarPos.Length();
             //武器的角度为（起始角度 + 目标角度）的值
             Projectile.rotation = tarPos.ToRotation() + TargetRotation;
-                TargetRotation = TargetRotation.AngleTowards(Owner.GetToMouseVector2(Projectile.Center).ToRotation(), .15f);
+            TargetRotation = TargetRotation.AngleTowards(Owner.GetToMouseVector2(Projectile.Center).ToRotation(), .15f);
         }
         public void UpdateEndAnimation()
         {
@@ -135,7 +127,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             Projectile.scale = tarPos.Length();
             //武器的角度为（起始角度 + 目标角度）的值
             Projectile.rotation = tarPos.ToRotation() + TargetRotation;
-                TargetRotation = TargetRotation.AngleTowards(Owner.GetToMouseVector2(Projectile.Center).ToRotation(), .15f);
+            TargetRotation = TargetRotation.AngleTowards(Owner.GetToMouseVector2(Projectile.Center).ToRotation(), .15f);
 
         }
         public void UpdateAttack()
@@ -238,16 +230,16 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             float progress = Utils.GetLerpValue(0, AttackSpeed, RecoilTimer, true);
             if (!Helper.IsDone[0])
             {
-                progress = EaseOutExpo( Helper.GetAniProgress(0));
+                progress = EaseOutExpo(Helper.GetAniProgress(0));
             }
             else if (!Helper.IsDone[1])
             {
-                progress =EaseOutCubic( 1- Helper.GetAniProgress(1));
+                progress = EaseOutCubic(1 - Helper.GetAniProgress(1));
 
             }
             else
             {
-            progress = Utils.GetLerpValue(0, BurstAttackSpeed(), RecoilTimer, true);
+                progress = Utils.GetLerpValue(0, BurstAttackSpeed(), RecoilTimer, true);
 
             }
             float edgeProgress = EaseInCubic(progress);

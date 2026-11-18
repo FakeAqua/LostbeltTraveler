@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Rarity.RarityDrawHandler;
+﻿using LostbeltTraveler.Rarity.RarityDrawHandler;
 using LostbeltTraveler.Rarity.RarityParticles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 

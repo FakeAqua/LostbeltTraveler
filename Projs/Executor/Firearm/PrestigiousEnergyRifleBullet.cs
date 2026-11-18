@@ -1,12 +1,12 @@
-﻿using LostbeltTraveler.Core.PixelatedRender;
-using LostbeltTraveler.Globals.Classes;
-using System.Collections.Generic;
+﻿using LostbeltTraveler.Core.ParticleECS;
+using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
+using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using ReLogic.Content;
-using Terraria;
-using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Items.Weapons.Executor.Firearm;
+using ReLogic.Content;
+using System.Collections.Generic;
+using Terraria;
 
 
 namespace LostbeltTraveler.Projs.Executor.Firearm
@@ -36,7 +36,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         {
             if (!Projectile.Lostbelt().ExecutionStrike)
                 Projectile.AddExecutionTimeImmediate<PrestigiousEnergyRifle>();
-                                    for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 16; i++)
             {
                 Vector2 pos = Projectile.Center.ToRandCirclePosEdge(8);
                 Vector2 vel = Projectile.SafeDir().ToRandVelocity(ToRadians(0), 1.2f, 18f);
@@ -66,19 +66,19 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             Lighting.AddLight(Projectile.Center, Color.RoyalBlue.ToVector3());
-            if(!Projectile.tileCollide)
+            if (!Projectile.tileCollide)
             {
                 Projectile.velocity *= .95f;
             }
             if (Projectile.IsOutScreen())
                 return;
-            if(Main.rand.NextBool(6))
-            ECSParticle.GlowSquare(Projectile.Center.ToRandCirclePos(16), Projectile.velocity / 8f, 
-                RandLerpColor(Color.SkyBlue, Color.LightSkyBlue), 50, 1, RandRotTwoPi, 0.64f*StickProgress, 0, Main.rand.NextFloat(-.1f, .1f), 0.4f);
+            if (Main.rand.NextBool(6))
+                ECSParticle.GlowSquare(Projectile.Center.ToRandCirclePos(16), Projectile.velocity / 8f,
+                    RandLerpColor(Color.SkyBlue, Color.LightSkyBlue), 50, 1, RandRotTwoPi, 0.64f * StickProgress, 0, Main.rand.NextFloat(-.1f, .1f), 0.4f);
 
-            if(Main.rand.NextBool(6))
-            ECSParticle.TurbulenceShinyCube(Projectile.Center.ToRandCirclePos(6), Projectile.velocity/3f, 
-                RandLerpColor(Color.SkyBlue, Color.LightSkyBlue), 30, 1*StickProgress, Projectile.velocity.ToRotation(), .5f);
+            if (Main.rand.NextBool(6))
+                ECSParticle.TurbulenceShinyCube(Projectile.Center.ToRandCirclePos(6), Projectile.velocity / 3f,
+                    RandLerpColor(Color.SkyBlue, Color.LightSkyBlue), 30, 1 * StickProgress, Projectile.velocity.ToRotation(), .5f);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -97,7 +97,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         public void RenderPixelated(SpriteBatch spriteBatch)
         {
             float Progress = StickProgress;
-            float overallScale = 1.35f*Progress;
+            float overallScale = 1.35f * Progress;
             LostbeltMethods.EnterShaderAreaPixel(BlendState.Additive);
             ////这里是强行使用ex98拼凑出来的子弹效果
             Texture2D tex = LostbeltModAssets.Specific_RocketTrail.Value;

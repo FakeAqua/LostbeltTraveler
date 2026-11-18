@@ -1,6 +1,6 @@
-﻿using System;
-using LostbeltTraveler.Globals.Graphics.Particles;
+﻿using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Items.Weapons.Melee;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

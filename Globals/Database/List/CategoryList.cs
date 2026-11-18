@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.NPCs.Boss_TheLifebringer;
-using Steamworks;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -24,9 +23,9 @@ namespace LostbeltTraveler.Globals.Database.List
         /// </summary>
         public static HashSet<int> DebuffListTarget = [];
         public static List<int> PandorasBurgerWeaponList = [];
-        public static List<int> WellFed1HashSet= [];
-        public static List<int> WellFed2HashSet= [];
-        public static List<int> WellFed3HashSet= [];
+        public static List<int> WellFed1HashSet = [];
+        public static List<int> WellFed2HashSet = [];
+        public static List<int> WellFed3HashSet = [];
         public override void Load()
         {
             for (int i = 0; i < LegalFoodList.Count; i++)
@@ -92,15 +91,15 @@ namespace LostbeltTraveler.Globals.Database.List
                         LegalFoodListName.Add(vanillaName);
                     }
                 }
-                if(item.buffType == BuffID.WellFed&&!WellFed1HashSet.Contains(item.type))
+                if (item.buffType == BuffID.WellFed && !WellFed1HashSet.Contains(item.type))
                 {
                     WellFed1HashSet.Add(item.type);
                 }
-                if(item.buffType == BuffID.WellFed2&&!WellFed2HashSet.Contains(item.type))
+                if (item.buffType == BuffID.WellFed2 && !WellFed2HashSet.Contains(item.type))
                 {
                     WellFed2HashSet.Add(item.type);
                 }
-                if(item.buffType == BuffID.WellFed3&&!WellFed3HashSet.Contains(item.type))
+                if (item.buffType == BuffID.WellFed3 && !WellFed3HashSet.Contains(item.type))
                 {
                     WellFed3HashSet.Add(item.type);
 

@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Buffs.Debuffs;
+﻿using LostbeltTraveler.Buffs.Debuffs;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;

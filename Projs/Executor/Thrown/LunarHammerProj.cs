@@ -9,12 +9,12 @@ using Terraria.ID;
 
 namespace LostbeltTraveler.Projs.Executor.Thrown
 {
-    public class LunarHammerProj: LostbeltProjs
+    public class LunarHammerProj : LostbeltProjs
     {
         public override string Texture => GetInstance<LunarHammer>().Texture;
         public override EnumDamageClass Category => EnumDamageClass.Executor;
         public ref float Timer => ref Projectile.ai[0];
-        public override Vector2 TileHitbox => new Vector2(12,12);
+        public override Vector2 TileHitbox => new Vector2(12, 12);
         public enum State
         {
             Shoot,
@@ -30,7 +30,8 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
         {
             Projectile.ToTrailSetting(8, 2);
         }
-        public float LerpValue { 
+        public float LerpValue
+        {
             get
             {
                 float distanceSquare = (Projectile.Center - Owner.Center).LengthSquared();
@@ -52,7 +53,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Projectile.BounceOnTile(oldVelocity,.3f);
+            Projectile.BounceOnTile(oldVelocity, .3f);
             return false;
         }
         public override void OnFirstFrame()
@@ -73,7 +74,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
                     break;
             }
             Projectile.frameCounter++;
-            if (Projectile.frameCounter % (Projectile.MaxUpdates * 10) == 0&&AttackState != State.Homing)
+            if (Projectile.frameCounter % (Projectile.MaxUpdates * 10) == 0 && AttackState != State.Homing)
             {
                 float glowScale = Projectile.scale * .3f;
                 //ECSParticle.CrossGlow(Projectile.Center, Color.DeepSkyBlue, 120, 0.85f, glowScale, 0.1f);
@@ -91,14 +92,14 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             if (Main.rand.NextBool(18))
                 ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(65), -Vector2.UnitY, RandLerpColor(Color.DarkSeaGreen, Color.LightSkyBlue), 40, 1, Main.rand.NextFloat(.85f, 1.15f) * .8f, .2f);
             if (Main.rand.NextBool(18))
-                ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePosEdge(55), -Vector2.UnitY, RandLerpColor(Color.DarkSeaGreen, Color.LightSkyBlue), 60, 1, Main.rand.NextFloat(.95f, 1.15f)*.1f, .2f);
+                ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePosEdge(55), -Vector2.UnitY, RandLerpColor(Color.DarkSeaGreen, Color.LightSkyBlue), 60, 1, Main.rand.NextFloat(.95f, 1.15f) * .1f, .2f);
 
             base.ProjAI();
         }
         public void DoShoot()
         {
             Timer++;
-            if(Timer > Projectile.MaxUpdates * 15f)
+            if (Timer > Projectile.MaxUpdates * 15f)
             {
                 Projectile.netUpdate = true;
                 Timer = 0;
@@ -134,7 +135,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if(Projectile.Lostbelt().ExecutionStrike&&AttackState == State.Homing)
+            if (Projectile.Lostbelt().ExecutionStrike && AttackState == State.Homing)
             {
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ProjectileType<LunarHammerExecution>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 ScarletSound(LostbeltSoundAssets.Misc_SwordHit, Projectile.Center);
@@ -143,7 +144,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             }
             if (!Owner.HasProj<LunarHammerExecution>())
                 Projectile.AddExecutionTimeImmediate<LunarHammer>();
-            ScarletSound(LostbeltSoundAssets.Smash_AirHeavy, target.Center,variantType:2);
+            ScarletSound(LostbeltSoundAssets.Smash_AirHeavy, target.Center, variantType: 2);
             int dustSets = Main.rand.Next(5, 8);
             int dustRadius = 6;
             Vector2 corner = new(target.Center.X - dustRadius, target.Center.Y - dustRadius);
@@ -183,12 +184,12 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             }
             for (int i = 0; i < 3; i++)
             {
-                SB.FastDraw(projTex, drawPos+Main.rand.NextVector2Circular(3,3), Color.LightSkyBlue.ToAddColor()*.5f, Projectile.rotation, ori, Projectile.scale*1.05f, 0);
+                SB.FastDraw(projTex, drawPos + Main.rand.NextVector2Circular(3, 3), Color.LightSkyBlue.ToAddColor() * .5f, Projectile.rotation, ori, Projectile.scale * 1.05f, 0);
             }
             SB.FastDraw(projTex, drawPos, lightColor, Projectile.rotation, ori, Projectile.scale, 0);
             float lerpRot = Lerp(-PiOver2, PiOver2, EaseOutCubic(LerpValue));
             float opac1 = EaseInCubic(LerpValue);
-            GemYoyoProj.DrawAmethystSmear(Projectile, Color.Aquamarine*opac1, Color.LightSkyBlue*opac1, 3.5f*LerpValue, lerpRot);
+            GemYoyoProj.DrawAmethystSmear(Projectile, Color.Aquamarine * opac1, Color.LightSkyBlue * opac1, 3.5f * LerpValue, lerpRot);
             return false;
         }
     }

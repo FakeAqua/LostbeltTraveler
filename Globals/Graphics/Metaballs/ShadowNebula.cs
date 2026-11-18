@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.MetaballSystem;
+﻿using LostbeltTraveler.Core.MetaballSystem;
+using System.Collections.Generic;
 using Terraria;
 
 namespace LostbeltTraveler.Globals.Graphics.Metaballs

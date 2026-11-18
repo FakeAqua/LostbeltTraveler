@@ -6,7 +6,6 @@ using LostbeltTraveler.Globals.Methods.Textbox;
 using LostbeltTraveler.Projs.Executor.ColdSteel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -43,14 +42,14 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
         }
         public override bool CanShoot(Player player)
         {
-            return !player.HasProj(Item.shoot)&&!player.HasProj(Item.Lostbelt().ExecutionProj);
+            return !player.HasProj(Item.shoot) && !player.HasProj(Item.Lostbelt().ExecutionProj);
         }
         public override void UpdateInventory(Player player)
         {
             bool swordTex = ZSword || Main.keyState.PressingAlt();
-            TextureAssets.Item[Type] = swordTex ? Request<Texture2D>(Texture + "Z"): Request<Texture2D>(Texture);
-                string v = swordTex ? this.GetLocalizedValue("DisplayNameAlt"):this.GetLocalizedValue("DisplayName");
-                Item.SetNameOverride(v);
+            TextureAssets.Item[Type] = swordTex ? Request<Texture2D>(Texture + "Z") : Request<Texture2D>(Texture);
+            string v = swordTex ? this.GetLocalizedValue("DisplayNameAlt") : this.GetLocalizedValue("DisplayName");
+            Item.SetNameOverride(v);
 
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -83,7 +82,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
             if (ZSword || Main.keyState.PressingAlt())
                 value = this.GetLocalizedValue("FlavorTooltipAlt").ToLangValue();
             //实例化toolti并注册名字
-            TooltipLine flavorTooltips = new(Mod, "FlavorTooltipsName","「" +value + "」")
+            TooltipLine flavorTooltips = new(Mod, "FlavorTooltipsName", "「" + value + "」")
 
             {
                 OverrideColor = Color.Lerp(Color.MediumPurple, Color.LightPink, 0.3f)

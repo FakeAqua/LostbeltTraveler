@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.GameContent.Events;
+﻿using System.Collections.Generic;
 using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Assets.Registers
@@ -11,7 +6,7 @@ namespace LostbeltTraveler.Assets.Registers
     public class LostbeltModMusic : ModSystem
     {
         public static string BurialAgencyCelestialPillarFight => "BurialAgencyCelestialPillarFight";
-        public static string LostbeltFatalBattle=> "LostbeltFatalBattle";
+        public static string LostbeltFatalBattle => "LostbeltFatalBattle";
 
         public static Dictionary<string, int> MusicDictionary;
         public static int ApplyMusic(string keys)

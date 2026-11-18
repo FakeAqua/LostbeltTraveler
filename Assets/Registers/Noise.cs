@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Assets.Registers
-{ 
+{
     public partial class LostbeltModAssets : ModSystem
     {
         public static Tex2DWithPath Noise_Misc { get; set; }
@@ -18,8 +13,8 @@ namespace LostbeltTraveler.Assets.Registers
         public static Tex2DWithPath Noise_WaterFlow { get; set; }
         public static Tex2DWithPath Noise_BlackGalaxy1 { get; set; }
         public static Tex2DWithPath Noise_BlackGalaxy2 { get; set; }
-        public static Tex2DWithPath Noise_Distortion{ get; set; }
-        public static Tex2DWithPath Noise_MiscNoise{ get; set; }
+        public static Tex2DWithPath Noise_Distortion { get; set; }
+        public static Tex2DWithPath Noise_MiscNoise { get; set; }
 
         public void LoadNoise()
         {
@@ -32,8 +27,8 @@ namespace LostbeltTraveler.Assets.Registers
             Noise_WaterFlow = new Tex2DWithPath($"{Path_Noise}{nameof(Noise_WaterFlow)}");
             Noise_BlackGalaxy1 = new Tex2DWithPath($"{Path_Noise}{nameof(Noise_BlackGalaxy1)}");
             Noise_BlackGalaxy2 = new Tex2DWithPath($"{Path_Noise}{nameof(Noise_BlackGalaxy2)}");
-            Noise_Distortion= new Tex2DWithPath($"{Path_Noise}{nameof(Noise_Distortion)}");
-            Noise_MiscNoise= new Tex2DWithPath($"{Path_Noise}{nameof(Noise_MiscNoise)}");
+            Noise_Distortion = new Tex2DWithPath($"{Path_Noise}{nameof(Noise_Distortion)}");
+            Noise_MiscNoise = new Tex2DWithPath($"{Path_Noise}{nameof(Noise_MiscNoise)}");
 
 
         }

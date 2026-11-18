@@ -11,7 +11,7 @@ namespace LostbeltTraveler.Rarity.RarityShinyMethod
     /// <summary>
     /// 物质重构
     /// </summary>
-    public static class GunwitchFancyText 
+    public static class GunwitchFancyText
     {
         public static void DrawItemName(DrawableTooltipLine line)
         {
@@ -21,8 +21,8 @@ namespace LostbeltTraveler.Rarity.RarityShinyMethod
             DynamicSpriteFont font = line.Font;
             float xa = 0;
             Color namecolor = Color.DodgerBlue;
-            Color strokeColor = Color.SkyBlue* .75f;
-            Color targetStrokeColor = Color.White* .75f;
+            Color strokeColor = Color.SkyBlue * .75f;
+            Color targetStrokeColor = Color.White * .75f;
             Color targetColor = Color.Violet;
             int totalLength = line.Text.Length;
             for (int i = 0; i < totalLength; i++)

@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Globals.Configs;
-using LostbeltTraveler.Globals.Database.IDSets;
+﻿using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Methods.Textbox;
 using System;

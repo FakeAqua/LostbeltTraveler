@@ -1,11 +1,9 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;

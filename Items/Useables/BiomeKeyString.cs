@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Globals.Instances.Items;

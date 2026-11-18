@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Graphics.Particles;
@@ -82,7 +81,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         {
             Projectile proj = Projectile.NewProjectileDirect(Owner.GetSource_ItemUse(Owner.HeldItem), pos, vel, type, damage, Projectile.knockBack, Projectile.owner);
             proj.originalDamage = Projectile.originalDamage;
-            proj.Lostbelt().HasExecutionMechanic = Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff)< GetSeconds(3);
+            proj.Lostbelt().HasExecutionMechanic = Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff) < GetSeconds(3);
             proj.ai[0] = Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff);
             if (IsBuffing)
                 proj.extraUpdates += 1;
@@ -174,7 +173,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             if (count == 0)
                 return;
             float ratios = Utils.GetLerpValue(0, 15, count, true);
-            Owner.AddInnerCooldown(InnerCooldownType.ContainedBlastBuff,(int)Lerp(5, 15, ratios) * 60);
+            Owner.AddInnerCooldown(InnerCooldownType.ContainedBlastBuff, (int)Lerp(5, 15, ratios) * 60);
             Owner.Lostbelt().containedBlastBoomCount = Lerp(0f, .45f, ratios);
         }
         public bool HandleDeadOrAlive()
@@ -224,7 +223,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             float fireProgess = Utils.GetLerpValue(0, 1, OnFireTimer / (60f * Projectile.MaxUpdates), true);
             float edgeProgress = EaseOutCubic(fireProgess);
             Color edgeC = Color.White;
-            if (Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff)     > 0)
+            if (Owner.GetInnerCooldownTime(InnerCooldownType.ContainedBlastBuff) > 0)
                 edgeC = Color.Red;
             for (int i = 0; i < 16; i++)
                 SB.Draw(tex, drawPos + offset.BetterRotatedBy(drawRot) + Projectile.SafeDirByRot() * 0.28f + (TwoPi / 16f * i).ToRotationVector2() * 1.2f * edgeProgress, null, edgeC.ToAddColor(50) * edgeProgress, drawRot, rotPoint, Projectile.scale * .70f, se, 0);

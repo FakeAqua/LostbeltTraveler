@@ -4,7 +4,7 @@ using Terraria.Localization;
 
 namespace LostbeltTraveler.Items.Accessories
 {
-    public class ChargeFeatherFestival: ChargeFeatherBroken
+    public class ChargeFeatherFestival : ChargeFeatherBroken
     {
         public override int MatchWing => ItemID.FestiveWings;
         public override float RestoredCharge => .25f;
@@ -12,7 +12,7 @@ namespace LostbeltTraveler.Items.Accessories
         public static int LifeRegen = 1;
         public static int MaxLife = 40;
 
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs($"[i:{ItemID.Search.GetName(MatchWing)}]",LifeRegen.ToLifeRegenFormat(),Defense,MaxLife);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs($"[i:{ItemID.Search.GetName(MatchWing)}]", LifeRegen.ToLifeRegenFormat(), Defense, MaxLife);
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Yellow);

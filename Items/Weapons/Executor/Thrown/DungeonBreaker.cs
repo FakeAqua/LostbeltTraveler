@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Executor;
+﻿using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Projs.Executor.Thrown;
 using Terraria;
 using Terraria.ID;
@@ -19,7 +18,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
             Item.shootSpeed = 19f;
             Item.useTime = Item.useAnimation = 38;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.UseSound = LostbeltSoundAssets.Misc_KnifeToss with { PitchVariance=.1f, Pitch = -0.4f, Variants = [2] };
+            Item.UseSound = LostbeltSoundAssets.Misc_KnifeToss with { PitchVariance = .1f, Pitch = -0.4f, Variants = [2] };
             Item.shoot = ProjectileType<DungeonBreakerProj>();
             Item.SetUpRarityPrice(ItemRarityID.Orange);
             Item.SetUpNoUseGraphicItem();

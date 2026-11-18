@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Accessories
 {
@@ -11,7 +10,7 @@ namespace LostbeltTraveler.Items.Accessories
         public override float RestoredCharge => 0;
         public static float Damage = .20f;
         public static int StatDefense = 10;
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs($"[i:{ItemID.Search.GetName(MatchWing)}]",Damage.ToPercent(),StatDefense);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs($"[i:{ItemID.Search.GetName(MatchWing)}]", Damage.ToPercent(), StatDefense);
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Yellow);

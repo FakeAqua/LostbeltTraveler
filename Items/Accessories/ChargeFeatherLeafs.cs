@@ -12,7 +12,7 @@ namespace LostbeltTraveler.Items.Accessories
         public static float WhipRange = 1f;
 
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(
-            $"[i:{ItemID.Search.GetName(MatchWing)}]",RunSpeedAcc.ToPercent(),WhipRange.ToPercent());
+            $"[i:{ItemID.Search.GetName(MatchWing)}]", RunSpeedAcc.ToPercent(), WhipRange.ToPercent());
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Yellow);

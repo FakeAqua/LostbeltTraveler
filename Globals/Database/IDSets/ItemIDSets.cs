@@ -64,11 +64,11 @@ namespace LostbeltTraveler.Globals.Database.IDSets
 
         public static bool[] CountAsWeapon = ItemID.Sets.Factory.CreateBoolSet();
         public static bool[] CountAsWings = ItemID.Sets.Factory.CreateBoolSet(
-            ItemID.WingsVortex,ItemID.AngelWings,ItemID.ArkhalisWings,ItemID.WingsNebula,ItemID.WingsofEvil,ItemID.WingsSolar,ItemID.WingsStardust,ItemID.BatWings,ItemID.BeetleWings,ItemID.BeeWings,ItemID.BetsyWings,
-            ItemID.BoneWings,ItemID.BoneWings,ItemID.ButterflyWings,ItemID.FoodBarbarianWings,ItemID.CenxsWings,ItemID.CreativeWings,ItemID.CrownosWings,ItemID.DemonWings,ItemID.DTownsWings,ItemID.FairyWings,ItemID.FestiveWings,
-            ItemID.FinWings,ItemID.FishronWings,ItemID.FlameWings,ItemID.FrozenWings,ItemID.TatteredFairyWings,ItemID.GhostarsWings,ItemID.GhostWings,ItemID.GroxTheGreatWings,ItemID.HarpyWings,ItemID.JimsWings,ItemID.LeafWings,
-            ItemID.LeinforsWings,ItemID.LokisWings,ItemID.LongRainbowTrailWings,ItemID.MothronWings,ItemID.Yoraiz0rWings,ItemID.RainbowWings,ItemID.RedsWings,ItemID.SafemanWings,ItemID.SkiphsWings,ItemID.SpookyWings,ItemID.SteampunkWings,
-            ItemID.BejeweledValkyrieWing,ItemID.WillsWings,ItemType<LightofHorizon>(),ItemType<Altitude>(),ItemType<SacarbWings>());
+            ItemID.WingsVortex, ItemID.AngelWings, ItemID.ArkhalisWings, ItemID.WingsNebula, ItemID.WingsofEvil, ItemID.WingsSolar, ItemID.WingsStardust, ItemID.BatWings, ItemID.BeetleWings, ItemID.BeeWings, ItemID.BetsyWings,
+            ItemID.BoneWings, ItemID.BoneWings, ItemID.ButterflyWings, ItemID.FoodBarbarianWings, ItemID.CenxsWings, ItemID.CreativeWings, ItemID.CrownosWings, ItemID.DemonWings, ItemID.DTownsWings, ItemID.FairyWings, ItemID.FestiveWings,
+            ItemID.FinWings, ItemID.FishronWings, ItemID.FlameWings, ItemID.FrozenWings, ItemID.TatteredFairyWings, ItemID.GhostarsWings, ItemID.GhostWings, ItemID.GroxTheGreatWings, ItemID.HarpyWings, ItemID.JimsWings, ItemID.LeafWings,
+            ItemID.LeinforsWings, ItemID.LokisWings, ItemID.LongRainbowTrailWings, ItemID.MothronWings, ItemID.Yoraiz0rWings, ItemID.RainbowWings, ItemID.RedsWings, ItemID.SafemanWings, ItemID.SkiphsWings, ItemID.SpookyWings, ItemID.SteampunkWings,
+            ItemID.BejeweledValkyrieWing, ItemID.WillsWings, ItemType<LightofHorizon>(), ItemType<Altitude>(), ItemType<SacarbWings>());
 
 
     }

@@ -5,7 +5,6 @@ using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players.Dashes;
 using LostbeltTraveler.Globals.Systems;
 using System;

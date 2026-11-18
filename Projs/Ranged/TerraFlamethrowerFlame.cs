@@ -1,10 +1,9 @@
-﻿using System;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Buffs.Debuffs;
+﻿using LostbeltTraveler.Buffs.Debuffs;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 

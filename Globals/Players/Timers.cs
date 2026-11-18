@@ -1,7 +1,6 @@
 ﻿using LostbeltTraveler.Buffs.Debuffs;
 using LostbeltTraveler.Buffs.GoodBuffs;
 using LostbeltTraveler.Buffs.Status;
-using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;

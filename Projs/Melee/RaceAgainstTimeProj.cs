@@ -26,13 +26,13 @@ namespace LostbeltTraveler.Projs.Melee
             Projectile.penetrate = 2;
             Projectile.SetupImmnuity(1);
             Projectile.stopsDealingDamageAfterPenetrateHits = true;
-            Projectile.timeLeft = 600*Projectile.MaxUpdates;
+            Projectile.timeLeft = 600 * Projectile.MaxUpdates;
         }
-        public float LerpProgress => Clamp((float)Projectile.timeLeft / (30*Projectile.MaxUpdates), 0, 1);
+        public float LerpProgress => Clamp((float)Projectile.timeLeft / (30 * Projectile.MaxUpdates), 0, 1);
         public override void ProjAI()
         {
             int lifeTime = Projectile.MaxUpdates * 30;
-            if (Projectile.timeLeft > lifeTime && Projectile.damage== 0)
+            if (Projectile.timeLeft > lifeTime && Projectile.damage == 0)
             {
                 Projectile.timeLeft = lifeTime;
             }
@@ -41,11 +41,11 @@ namespace LostbeltTraveler.Projs.Melee
                 Projectile.velocity *= .95f;
             }
             Projectile.rotation = Projectile.velocity.ToRotation();
-            if (Projectile.IsOutScreen()&&Main.rand.NextFloat()>LerpProgress)
+            if (Projectile.IsOutScreen() && Main.rand.NextFloat() > LerpProgress)
                 return;
             if (Main.rand.NextBool(8))
-                ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePosEdge(6), Projectile.velocity / 6f, 
-                    RandLerpColor(Color.Goldenrod, Color.LightGoldenrodYellow), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .3f*LerpProgress*LerpProgress, Main.rand.NextFloat(-.1f, .1f));
+                ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePosEdge(6), Projectile.velocity / 6f,
+                    RandLerpColor(Color.Goldenrod, Color.LightGoldenrodYellow), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .3f * LerpProgress * LerpProgress, Main.rand.NextFloat(-.1f, .1f));
 
         }
         public override void OnKill(int timeLeft)
@@ -56,16 +56,16 @@ namespace LostbeltTraveler.Projs.Melee
         {
             if (Projectile.penetrate == 1)
             {
-                ScarletSound(LostbeltSoundAssets.TheMars_Hit, target.Center,pitch:-.5f);
-            for(int i =0;i<3;i++)
-            {
-            ECSParticle.ShinyCrossStarECS(target.Center.ToRandCirclePosEdge(8),RandVelTwoPi(1.2f,7.6f), 
-                RandLerpColor(Color.DarkGoldenrod, Color.LightGoldenrodYellow), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .8f, .2f);
-            }
-            for(int i =0;i<10;i++)
-            {
-                ECSParticle.TurbulenceShinyOrb(target.Center.ToRandCirclePos(50), 2.2f, RandLerpColor(Color.DarkGoldenrod, Color.LightGoldenrodYellow), 45, 1, 0.13f,glowMult:.3f);
-            }
+                ScarletSound(LostbeltSoundAssets.TheMars_Hit, target.Center, pitch: -.5f);
+                for (int i = 0; i < 3; i++)
+                {
+                    ECSParticle.ShinyCrossStarECS(target.Center.ToRandCirclePosEdge(8), RandVelTwoPi(1.2f, 7.6f),
+                        RandLerpColor(Color.DarkGoldenrod, Color.LightGoldenrodYellow), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .8f, .2f);
+                }
+                for (int i = 0; i < 10; i++)
+                {
+                    ECSParticle.TurbulenceShinyOrb(target.Center.ToRandCirclePos(50), 2.2f, RandLerpColor(Color.DarkGoldenrod, Color.LightGoldenrodYellow), 45, 1, 0.13f, glowMult: .3f);
+                }
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -83,7 +83,7 @@ namespace LostbeltTraveler.Projs.Melee
             Texture2D projTex = tex;
             LostbeltMethods.EnterShaderAreaPixel(BlendState.Additive);
 
-            int length = (int)((Projectile.oldPos.Length - 3)*LerpProgress);
+            int length = (int)((Projectile.oldPos.Length - 3) * LerpProgress);
             for (int i = length - 1; i >= 0; i--)
             {
                 Vector2 lerpPos = Vector2.Lerp(Projectile.oldPos[i], Projectile.oldPos[0], .1f);
@@ -95,7 +95,7 @@ namespace LostbeltTraveler.Projs.Melee
                 float yMult = Lerp(1.2f, .2f, progress);
                 Vector2 scale = new Vector2(xMult, yMult) * Projectile.scale * 1f;
                 Color c = Color.Lerp(Color.DarkGoldenrod, Color.Lerp(Color.Gold, Color.White, .75f), EaseInOutQuad(progress));
-                float opac = Lerp(1f, .79f, EaseInOutExpo(progress))*LerpProgress*LerpProgress;
+                float opac = Lerp(1f, .79f, EaseInOutExpo(progress)) * LerpProgress * LerpProgress;
                 Color pixelColor = Color.Lerp(Color.White, Color.Lerp(Color.Gold, Color.Goldenrod, 0.85f), EaseInOutExpo(progress));
                 int by = (int)Lerp(50, 0, progress);
                 SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), c.ToAddColor(0) * opac * 1.2f, oldRot, projTex.Size() / 2f, scale * 1.1f, 0);
@@ -112,7 +112,7 @@ namespace LostbeltTraveler.Projs.Melee
             shader.Parameters["LaserTextureSize"].SetValue(tex.Size());
             shader.Parameters["targetSize"].SetValue(new Vector2(laserLength, tex.Height));
             shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * -100);
-            shader.Parameters["uColor"].SetValue(color.ToVector4() * 1*LerpProgress);
+            shader.Parameters["uColor"].SetValue(color.ToVector4() * 1 * LerpProgress);
             shader.Parameters["uFadeoutLength"].SetValue(1.13f);
             shader.Parameters["uFadeinLength"].SetValue(0.2f);
             shader.CurrentTechnique.Passes[0].Apply();
@@ -143,7 +143,7 @@ namespace LostbeltTraveler.Projs.Melee
             float rot = Projectile.rotation + rotFix;
             Vector2 rotPoint = tex.Size() / 2f;
             SpriteEffects se = Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            int length = (int)((Projectile.oldPos.Length - 5)*LerpProgress);
+            int length = (int)((Projectile.oldPos.Length - 5) * LerpProgress);
             for (int i = 0; i < length; i++)
             {
                 float progress = (float)i / length;
@@ -160,15 +160,15 @@ namespace LostbeltTraveler.Projs.Melee
             }
             SB.EnterShaderArea();
             Texture2D orb = LostbeltModAssets.Particle_KiraStar.Value;
-            float scale2 = Projectile.scale * .5f*LerpProgress;
+            float scale2 = Projectile.scale * .5f * LerpProgress;
             SB.FastDraw(orb, pos, Color.DarkGoldenrod, 0, orb.Size() / 2f, scale2, 0, 0);
             SB.FastDraw(orb, pos, Color.White, 0, orb.Size() / 2f, scale2 * .9f, 0, 0);
             SB.EndShaderArea();
             for (int i = 0; i < 8; i++)
             {
-                SB.FastDraw(tex, pos + (TwoPi / 8 * i).ToRotationVector2() * 1.5f + Main.rand.NextVector2Circular(3, 3), Color.DarkGoldenrod.ToAddColor()*LerpProgress, rot, rotPoint, Projectile.scale*LerpProgress, se);
+                SB.FastDraw(tex, pos + (TwoPi / 8 * i).ToRotationVector2() * 1.5f + Main.rand.NextVector2Circular(3, 3), Color.DarkGoldenrod.ToAddColor() * LerpProgress, rot, rotPoint, Projectile.scale * LerpProgress, se);
             }
-            SB.FastDraw(tex, pos, Color.White * LerpProgress*LerpProgress, rot, rotPoint, Projectile.scale, se);
+            SB.FastDraw(tex, pos, Color.White * LerpProgress * LerpProgress, rot, rotPoint, Projectile.scale, se);
             return false;
         }
     }

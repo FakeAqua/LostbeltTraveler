@@ -1,6 +1,5 @@
 ﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Methods;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -72,8 +71,8 @@ namespace LostbeltTraveler.Globals.Executor
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if(IsExecutorWeapon)
-            Projectile.AddExecutionTimeImmediate(OriginalWhip, WhipHitDefaults.ExecutorProgressAdd);
+            if (IsExecutorWeapon)
+                Projectile.AddExecutionTimeImmediate(OriginalWhip, WhipHitDefaults.ExecutorProgressAdd);
             Projectile.damage = (int)(Projectile.damage * WhipHitDefaults.PenetrateDamageRedcution);
             ExOnHitNPC(target, hit, damageDone);
         }

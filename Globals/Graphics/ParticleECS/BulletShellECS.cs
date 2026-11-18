@@ -1,5 +1,4 @@
 ﻿using LostbeltTraveler.Core.ParticleECS;
-using LostbeltTraveler.Assets.Registers;
 using System;
 using Terraria;
 

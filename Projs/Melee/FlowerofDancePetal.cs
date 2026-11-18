@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.DeepGlowSystem;
+﻿using LostbeltTraveler.Core.DeepGlowSystem;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.Melee

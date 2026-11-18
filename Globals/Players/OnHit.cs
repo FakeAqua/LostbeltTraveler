@@ -1,7 +1,6 @@
 ﻿using ContinentOfJourney.Buffs;
 using LostbeltTraveler.Buffs.Debuffs;
 using LostbeltTraveler.Core.ParticleECS;
-using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
@@ -10,7 +9,6 @@ using LostbeltTraveler.Items.Accessories;
 using LostbeltTraveler.Projs.General;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -252,7 +250,7 @@ namespace LostbeltTraveler.Globals.Players
                 if (c > 0 && !Player.HasInnerCooldown(InnerCooldownType.SelfPortraitHeal))
                 {
                     Player.Heal(c);
-                    Player.AddInnerCooldown(InnerCooldownType.SelfPortraitHeal,GetSeconds(1));
+                    Player.AddInnerCooldown(InnerCooldownType.SelfPortraitHeal, GetSeconds(1));
                 }
             }
             if (selfPortraitType > 0)
@@ -271,7 +269,7 @@ namespace LostbeltTraveler.Globals.Players
             if (cycleMadnessLevel > 0 && !Player.HasInnerCooldown(InnerCooldownType.CycleMadnessHit))
             {
                 Projectile.NewProjectileDirect(Player.GetSource_FromThis(), target.ToRandRec(), RandVelTwoPi(.5f, 1.1f) * 25f, ProjectileType<CycleMadnessStar>(), 0, 0, Player.whoAmI);
-                Player.AddInnerCooldown(InnerCooldownType.CycleMadnessHit,30);
+                Player.AddInnerCooldown(InnerCooldownType.CycleMadnessHit, 30);
             }
         }
         public int GetDotCounts(NPC target)

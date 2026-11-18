@@ -1,20 +1,15 @@
 ﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 
 namespace LostbeltTraveler.Projs.Executor.Thrown
 {
-    public class LunarHammerTrail:LostbeltProjs
+    public class LunarHammerTrail : LostbeltProjs
     {
         public override EnumDamageClass Category => EnumDamageClass.Executor;
-        public override string Texture => GetVanillaAssetPath(VanillaAsset.Projectile,ProjectileID.MoonlordArrowTrail);
-        public override Vector2 TileHitbox => new Vector2(10,10);
+        public override string Texture => GetVanillaAssetPath(VanillaAsset.Projectile, ProjectileID.MoonlordArrowTrail);
+        public override Vector2 TileHitbox => new Vector2(10, 10);
         public override void SetStaticDefaults()
         {
             Projectile.ToTrailSetting(20);

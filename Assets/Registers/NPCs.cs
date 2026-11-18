@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Assets.Registers
@@ -17,14 +13,14 @@ namespace LostbeltTraveler.Assets.Registers
                 return value;
             return null;
         }
-            public static string ApplyBoss(string key)
+        public static string ApplyBoss(string key)
         {
             if (BossDictionary.TryGetValue(key, out string value))
                 return value;
             return null;
         }
         public override void Load()
-        { 
+        {
             static string LoadAssetNPC(string name)
             {
                 return "LostbeltTraveler/Assets/Texture/NPCs/Enemy/" + name;

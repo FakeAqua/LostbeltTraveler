@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Executor;
+﻿using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Items.Weapons.Executor.Assistance;
 using System.Collections.Generic;
 using Terraria;

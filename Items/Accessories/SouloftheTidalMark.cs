@@ -1,7 +1,6 @@
 ﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -14,7 +13,7 @@ namespace LostbeltTraveler.Items.Accessories
         public static float DR = .05f;
         public static int LifeThreshold = 50;
         public int MinionSlots = 2;
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(LifeThreshold,DR.ToPercent(),CritDamage.ToPercent());
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(LifeThreshold, DR.ToPercent(), CritDamage.ToPercent());
         public override string AssetPath => AssetHandler.Equips;
         public override void SetStaticDefaults()
         {

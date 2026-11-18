@@ -1,9 +1,7 @@
 ﻿using ContinentOfJourney.Projectiles;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Weapons.Melee;
 using ReLogic.Content;
 using System;

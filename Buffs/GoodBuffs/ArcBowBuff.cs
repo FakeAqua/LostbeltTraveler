@@ -1,5 +1,4 @@
 ﻿using LostbeltTraveler.Globals.Database.IDSets;
-using LostbeltTraveler.Globals.Methods;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

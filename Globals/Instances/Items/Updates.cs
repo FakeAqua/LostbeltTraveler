@@ -1,7 +1,5 @@
 ﻿using LostbeltTraveler.Globals.Configs;
-using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Items.Accessories;
-using Newtonsoft.Json.Serialization;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,7 +14,7 @@ namespace LostbeltTraveler.Globals.Instances.Items
             {
                 player.Lostbelt().pocketMirror = !hideVisual;
             }
-            if(item.wingSlot!=-1)
+            if (item.wingSlot != -1)
             {
                 player.Lostbelt().wingsType = item.type;
             }

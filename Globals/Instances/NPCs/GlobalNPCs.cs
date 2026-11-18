@@ -34,11 +34,11 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
         public int cursedHeavyStack = 0;
         public bool inHorror = false;
         public float horrorLerp = 0;
-        public float cursedLerp= 0;
+        public float cursedLerp = 0;
         public bool inCursedHeavy = false;
         public override void ResetEffects(NPC npc)
         {
-            if(cursedHeavyStack!=0&&!inHorror)
+            if (cursedHeavyStack != 0 && !inHorror)
                 cursedHeavyStack = 0;
             if (cursedLerp != 0 && !inCursedHeavy)
                 cursedLerp = 0;
@@ -78,9 +78,9 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
                 miscCounter = 0;
         }
         public float dizzedStarIconLerp = 0;
-        public void SmoothLerpingSelf(bool condition,ref float lerping)
+        public void SmoothLerpingSelf(bool condition, ref float lerping)
         {
-            if(condition)
+            if (condition)
             {
                 lerping = Lerp(lerping, 1, .2f);
                 if (lerping > .98f)
@@ -175,7 +175,7 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
         {
             int count = icons.Length;
             int maxWidth = 5;
-            for(int i =0;i<count;i++)
+            for (int i = 0; i < count; i++)
             {
                 var icon = icons[i];
                 int row = i / maxWidth;
@@ -188,7 +188,7 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
                 float lerping = Clamp(Lerp(1, 0, icon.opacity), 0, 1);
                 yOffset += lerping * icon.floatAmp;
                 //最后绘制出来
-                Texture2D tex= TextureAssets.Buff[icon.buffType].Value;
+                Texture2D tex = TextureAssets.Buff[icon.buffType].Value;
                 Vector2 ori = tex.Size() / 2f;
                 Vector2 anchor = npc.Center + new Vector2(xOffset, 0);
                 Vector2 pos1 = anchor.ToRandCirclePos(icon.backgroundShake * icon.opacity) - screenPos - Vector2.UnitY * yOffset;
@@ -227,7 +227,7 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
             {
                 icons[n++] = new BuffIconVisual(BuffType<DeathTimer>(), horrorLerp, 50, 1, 3);
             }
-            if(cursedLerp>=.02f)
+            if (cursedLerp >= .02f)
                 icons[n++] = new BuffIconVisual(BuffType<CursedHeavy>(), horrorLerp, 50, 1, 3);
             DrawBuffIconList(npc, spriteBatch, screenPos, drawColor, icons[..n]);
         }

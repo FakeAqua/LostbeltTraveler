@@ -3,7 +3,6 @@ using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Materials;
 using System.Collections.Generic;
 using Terraria;

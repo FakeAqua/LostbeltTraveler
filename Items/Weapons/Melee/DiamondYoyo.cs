@@ -2,7 +2,6 @@
 using LostbeltTraveler.Projs.Melee;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Weapons.Melee
 {

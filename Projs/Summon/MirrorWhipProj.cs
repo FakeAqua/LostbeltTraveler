@@ -9,8 +9,8 @@ namespace LostbeltTraveler.Projs.Summon
     public class MirrorWhipProj : ScarletWhipProj
     {
         public override int OriginalWhip => ItemType<MirrorWhip>();
-                public override (Texture2D LineTexture, Color LineColor, int LineEndCut, bool FullBright) LineSetting => (
-            TextureAssets.FishingLine.Value, Color.SkyBlue, HeadPosOffsetFactor, false);
+        public override (Texture2D LineTexture, Color LineColor, int LineEndCut, bool FullBright) LineSetting => (
+    TextureAssets.FishingLine.Value, Color.SkyBlue, HeadPosOffsetFactor, false);
         public override (int SegmentCount, float RangeFactor, int ExtraUpdates, int SpriteFrames) WhipDefaults => (
             12, 0.40f, 0, 4);
         public override (int ExecutorProgressAdd, float PenetrateDamageRedcution) WhipHitDefaults => (1, 0.95f);

@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-namespace LostbeltTraveler.Items.Vanity.Arceca
+﻿namespace LostbeltTraveler.Items.Vanity.Arceca
 {
     public class HikariItem : AccVanityItem
     {

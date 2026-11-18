@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Items.Useables;
 using LostbeltTraveler.Items.Vanity.Arceca;
 using LostbeltTraveler.Items.Vanity.Misc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;

@@ -1,13 +1,10 @@
 ﻿using ContinentOfJourney.Buffs;
 using ContinentOfJourney.Items.Material;
 using ContinentOfJourney.Tiles;
-using LostbeltTraveler.Core.Lightning;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -59,7 +56,7 @@ namespace LostbeltTraveler.Items.Accessories
                 AddTile(TileType<FountainofLife>()).
                 Register();
         }
-        
+
     }
     public class LifeBalloonExJump : ExtraJump
     {
@@ -105,8 +102,8 @@ namespace LostbeltTraveler.Items.Accessories
             for (int i = 0; i < 24; i++)
             {
                 Vector2 vel = RandVelTwoPi(1.5f, 21.6f);
-                ECSParticle.LiliesPetal(center.ToRandCirclePos(16), new Vector2(vel.X, vel.Y / 2f), 
-                    RandLerpColor(Color.LimeGreen, Color.ForestGreen), 45, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .12f, 0.51f,false,0,true,false, BlendState.AlphaBlend);
+                ECSParticle.LiliesPetal(center.ToRandCirclePos(16), new Vector2(vel.X, vel.Y / 2f),
+                    RandLerpColor(Color.LimeGreen, Color.ForestGreen), 45, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .12f, 0.51f, false, 0, true, false, BlendState.AlphaBlend);
             }
             SoundEngine.PlaySound(SoundID.Item42 with { PitchVariance = 0.04f }, player.Bottom);
             // Decrement the jump counter

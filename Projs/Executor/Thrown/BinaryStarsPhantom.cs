@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Instances.Projs;
-using LostbeltTraveler.Globals.Methods;
 using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

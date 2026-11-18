@@ -37,10 +37,10 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Firearm
         }
         public override void HoldItem(Player player)
         {
-            if (player.HasProj(Item.shoot)||player.HasProj(ProjectileType<PrestigiousEnergyRifleBurstHeldProj>())||!player.IsOwnerSide())
+            if (player.HasProj(Item.shoot) || player.HasProj(ProjectileType<PrestigiousEnergyRifleBurstHeldProj>()) || !player.IsOwnerSide())
                 return;
             int projDamage = (int)player.GetTotalDamage<ExecutorDamageClass>().ApplyTo(Item.damage);
-            Projectile proj = Projectile.NewProjectileDirect(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, Item.shoot, 0, 
+            Projectile proj = Projectile.NewProjectileDirect(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, Item.shoot, 0,
                 Item.knockBack, player.whoAmI);
             proj.originalDamage = projDamage;
             proj.Lostbelt().HasExecutionMechanic = true;

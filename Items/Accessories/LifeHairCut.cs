@@ -2,18 +2,13 @@
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 
 namespace LostbeltTraveler.Items.Accessories
 {
-    public class LifeHairCut:LostbeltItemClass
+    public class LifeHairCut : LostbeltItemClass
     {
         public override string AssetPath => AssetHandler.Equips;
         public int LifeRegen = 2;

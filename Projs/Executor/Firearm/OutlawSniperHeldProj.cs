@@ -4,16 +4,11 @@ using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Items.Weapons.Executor.Firearm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.Executor.Firearm
 {
-    public class OutlawSniperHeldProj: LostbeltRangedWeaponoutClass
+    public class OutlawSniperHeldProj : LostbeltRangedWeaponoutClass
     {
         public override EnumDamageClass Category => EnumDamageClass.Executor;
         public override int OriginalItemID => ItemType<OutlawSniper>();
@@ -21,9 +16,9 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         public override float RecoilPower => 15;
         public override int ProjExtraUpdates => 2;
         public override float HoldoutDrawScale => base.HoldoutDrawScale;
-        public override Vector2 HoldoutOffset => new Vector2(20,0);
+        public override Vector2 HoldoutOffset => new Vector2(20, 0);
         public override Color HoldoutEdgeColor => base.HoldoutEdgeColor;
-                protected override void PreAttack()
+        protected override void PreAttack()
         {
             if (!Owner.GetExecutionSrike())
                 Projectile.Lostbelt().ExecutionStrike = false;
@@ -45,12 +40,12 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             proj.MaxUpdates = Projectile.Lostbelt().ExecutionStrike ? 4 : 3;
             if (proj.Lostbelt().ExecutionStrike)
             {
-                ScreenShakeSystem.AddScreenShakes(Projectile.Center, 20f, 20, Projectile.rotation,0.1f);
+                ScreenShakeSystem.AddScreenShakes(Projectile.Center, 20f, 20, Projectile.rotation, 0.1f);
                 ScarletSound(LostbeltSoundAssets.Misc_PistolClear, Projectile.Center, 0.20f, 1, -.3f, 0.1f);
             }
             else
             {
-                ScreenShakeSystem.AddScreenShakes(Projectile.Center, 10f, 10, Projectile.rotation,0.1f);
+                ScreenShakeSystem.AddScreenShakes(Projectile.Center, 10f, 10, Projectile.rotation, 0.1f);
                 ScarletSound(LostbeltSoundAssets.Misc_Pistol, Projectile.Center, 0.20f, 1, -.3f, 0.1f);
             }
             Vector2 offset = new Vector2(45, -5 * Projectile.direction).RotatedBy(Projectile.rotation);

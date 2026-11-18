@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Globals.Methods;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Globals.Classes

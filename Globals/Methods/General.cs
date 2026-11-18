@@ -71,7 +71,7 @@ namespace LostbeltTraveler.Globals.Methods
             float clampValue = Clamp(ratios, 0, 1);
             player.statLife = (int)(player.statLifeMax2 * ratios);
         }
-                public static bool HoldingTools(this Player player, int damageThreshold = 5)
+        public static bool HoldingTools(this Player player, int damageThreshold = 5)
         {
             Item item = player.HeldItem;
             return item.pick > 0 || item.axe > 0 || item.damage < damageThreshold;

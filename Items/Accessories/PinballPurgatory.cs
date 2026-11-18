@@ -2,7 +2,6 @@
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Localization;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players.Dashes;
 using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Globals.Systems;

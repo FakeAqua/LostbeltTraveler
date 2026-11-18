@@ -1,9 +1,7 @@
 ﻿using ContinentOfJourney.Buffs;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using System;
 using Terraria;
 using Terraria.Audio;

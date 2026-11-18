@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Items.Weapons.Executor.Firearm;

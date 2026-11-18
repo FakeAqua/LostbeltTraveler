@@ -1,14 +1,9 @@
 ﻿using LostbeltTraveler.Core.ParticleECS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace LostbeltTraveler.Globals.Graphics.ParticleECS
 {
-    public class DarkMoonDust:ECSParticleBehavior
+    public class DarkMoonDust : ECSParticleBehavior
     {
         public override void OnSpawn(ref ECSParticleData data)
         {
@@ -18,7 +13,7 @@ namespace LostbeltTraveler.Globals.Graphics.ParticleECS
             data.Scale *= .97f;
             data.Rotation += (data.Velocity.X > 0).ToDirectionInt() * .2f;
             data.Velocity *= .97f;
-            if(data.aibool0)
+            if (data.aibool0)
             {
 
             }
@@ -32,7 +27,7 @@ namespace LostbeltTraveler.Globals.Graphics.ParticleECS
             frame.Y += frame.Height;
             frame.Height -= 2;
             Color color = data.DrawColor;
-            Main.spriteBatch.Draw(tex, data.Position - Main.screenPosition, frame, 
+            Main.spriteBatch.Draw(tex, data.Position - Main.screenPosition, frame,
                 color * 0.5f, data.Rotation, new Vector2(13), data.Scale, 0, 0);
             frame.Y -= frame.Height + 2;
             Main.spriteBatch.Draw(tex, data.Position - Main.screenPosition, frame, color, data.Rotation, new Vector2(13), data.Scale, 0, 0);

@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Executor;
+﻿using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Projs.Executor.Caster;
 using ReLogic.Content;
 using Terraria;

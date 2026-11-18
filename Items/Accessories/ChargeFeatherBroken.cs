@@ -31,7 +31,7 @@ namespace LostbeltTraveler.Items.Accessories
         }
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            if (player.Lostbelt().wingsChargeType == equippedItem.type && player.Lostbelt().wingsChargeType!=incomingItem.type)
+            if (player.Lostbelt().wingsChargeType == equippedItem.type && player.Lostbelt().wingsChargeType != incomingItem.type)
                 return false;
             return base.CanAccessoryBeEquippedWith(equippedItem, incomingItem, player);
         }
@@ -45,8 +45,8 @@ namespace LostbeltTraveler.Items.Accessories
                 Texture2D tex = LostbeltModAssets.Particle_GlowSquareThick.Value;
                 //spriteBatch.Draw(tex, position, null, drawColor.ToAddColor(), 0, tex.Size()/2f, scale*.28f, 0, 0);
                 tex = LostbeltModAssets.Particle_GlowSquareBig.Value;
-                spriteBatch.Draw(tex, position, null, Color.GreenYellow.ToAddColor(), 0, tex.Size()/2f, scale*0.24f, 0, 0);
-                spriteBatch.Draw(tex, position, null, Color.YellowGreen.ToAddColor(), 0, tex.Size()/2f, scale*0.24f*.95f, 0, 0);
+                spriteBatch.Draw(tex, position, null, Color.GreenYellow.ToAddColor(), 0, tex.Size() / 2f, scale * 0.24f, 0, 0);
+                spriteBatch.Draw(tex, position, null, Color.YellowGreen.ToAddColor(), 0, tex.Size() / 2f, scale * 0.24f * .95f, 0, 0);
             }
             base.PostDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
         }
@@ -55,7 +55,7 @@ namespace LostbeltTraveler.Items.Accessories
         {
             if (RestoredCharge == 0)
                 return;
-            int index = tooltips.FindIndex(t => t.Name.Contains("Tooltip")&&t.Mod == "Terraria");
+            int index = tooltips.FindIndex(t => t.Name.Contains("Tooltip") && t.Mod == "Terraria");
             string value = Mod.GetLocalizationKey("Items.Accessories.ChargeFeatherBroken.Globals").ToLangValue().ToFormatValue(RestoredCharge.ToPercent());
             tooltips.CreateTooltipDirect(value, Color.GreenYellow, LineName: "ChargeFeatherGlobal", index: index);
         }

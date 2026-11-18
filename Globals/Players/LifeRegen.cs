@@ -1,6 +1,4 @@
-﻿using LostbeltTraveler.Buffs.Debuffs;
-using LostbeltTraveler.Items.Accessories;
-using LostbeltTraveler.Items.Useables;
+﻿using LostbeltTraveler.Items.Accessories;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

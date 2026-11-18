@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.Items;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Projs.Melee;
@@ -23,7 +22,7 @@ namespace LostbeltTraveler.Items.Weapons.Melee
             Item.useTime = Item.useAnimation = 55;
             Item.shootSpeed = 18f;
             Item.rare = ItemRarityID.Yellow;
-            Item.UseSound = LostbeltSoundAssets.Hammer_Shoot with {Variants = [1], Pitch = -0.5f, MaxInstances = 0, Volume = 0.8f };
+            Item.UseSound = LostbeltSoundAssets.Hammer_Shoot with { Variants = [1], Pitch = -0.5f, MaxInstances = 0, Volume = 0.8f };
             Item.shoot = ProjectileType<TerraSpearProj>();
 
         }

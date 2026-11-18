@@ -4,14 +4,7 @@ using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -83,7 +76,7 @@ namespace LostbeltTraveler.Items.Accessories
                 offsetY = 0;
 
             offsetY -= 16;
-            Vector2 center = player.Top+ new Vector2(0, offsetY);
+            Vector2 center = player.Top + new Vector2(0, offsetY);
 
             if (jumps == 5)
             {
@@ -110,7 +103,7 @@ namespace LostbeltTraveler.Items.Accessories
                         RandLerpColor(Color.LightSkyBlue, Color.RoyalBlue), 40, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .5f, BlendState.Additive);
 
             }
-            else if (jumps==1)
+            else if (jumps == 1)
             {
                 for (int i = 0; i < 4; i++)
                     ECSParticle.ShinyCrossStarECS(center.ToRandCirclePos(16), -player.velocity * .15f,
@@ -162,7 +155,7 @@ namespace LostbeltTraveler.Items.Accessories
                 offsetY = 0;
 
             offsetY -= 16;
-            Vector2 center = player.Center+ new Vector2(0, offsetY);
+            Vector2 center = player.Center + new Vector2(0, offsetY);
 
 
             // Play a different sound
@@ -172,7 +165,7 @@ namespace LostbeltTraveler.Items.Accessories
                 for (int i = 0; i < 24; i++)
                 {
                     Vector2 vel = RandVelTwoPi(1.5f, 3.6f);
-                    ECSParticle.ManaStarDust(center.ToRandCirclePos(16), new Vector2(vel.X,vel.Y/2f),
+                    ECSParticle.ManaStarDust(center.ToRandCirclePos(16), new Vector2(vel.X, vel.Y / 2f),
                         RandLerpColor(Color.Gold, Color.Yellow), 40, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .5f, true, BlendState.Additive);
                 }
 
@@ -182,7 +175,7 @@ namespace LostbeltTraveler.Items.Accessories
                 for (int i = 0; i < 24; i++)
                 {
                     Vector2 vel = RandVelTwoPi(1.5f, 3.6f);
-                    ECSParticle.DarkMoonDust(center.ToRandCirclePos(16), new Vector2(vel.X,vel.Y/2f),
+                    ECSParticle.DarkMoonDust(center.ToRandCirclePos(16), new Vector2(vel.X, vel.Y / 2f),
                         RandLerpColor(Color.Purple, Color.DarkViolet), 40, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .5f, BlendState.Additive);
                 }
             }
@@ -191,17 +184,17 @@ namespace LostbeltTraveler.Items.Accessories
                 for (int i = 0; i < 24; i++)
                 {
                     Vector2 vel = RandVelTwoPi(1.5f, 3.6f);
-                    ECSParticle.DarkMoonDust(center.ToRandCirclePos(16),  new Vector2(vel.X,vel.Y/2f),
+                    ECSParticle.DarkMoonDust(center.ToRandCirclePos(16), new Vector2(vel.X, vel.Y / 2f),
                         RandLerpColor(Color.LightSkyBlue, Color.RoyalBlue), 40, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .5f, BlendState.Additive);
                 }
 
             }
-            else if (jumps==2)
+            else if (jumps == 2)
             {
                 for (int i = 0; i < 24; i++)
                 {
                     Vector2 vel = RandVelTwoPi(1.5f, 3.6f);
-                    ECSParticle.ShinyCrossStarECS(center.ToRandCirclePos(16), new Vector2(vel.X,vel.Y/2f),
+                    ECSParticle.ShinyCrossStarECS(center.ToRandCirclePos(16), new Vector2(vel.X, vel.Y / 2f),
                         RandLerpColor(Color.Violet, Color.Pink), 45, 1, Main.rand.NextFloat(.9f, 1.1f) * .5f, .2f);
                 }
 
@@ -211,7 +204,7 @@ namespace LostbeltTraveler.Items.Accessories
                 for (int i = 0; i < 24; i++)
                 {
                     Vector2 vel = RandVelTwoPi(1.5f, 3.6f);
-                    ECSParticle.ShinyCrossStarECS(center.ToRandCirclePos(16), new Vector2(vel.X,vel.Y/2f),
+                    ECSParticle.ShinyCrossStarECS(center.ToRandCirclePos(16), new Vector2(vel.X, vel.Y / 2f),
                         RandLerpColor(Color.Lime, Color.LimeGreen), 45, 1, Main.rand.NextFloat(.9f, 1.1f) * .5f, .2f);
                 }
             }
@@ -242,10 +235,10 @@ namespace LostbeltTraveler.Items.Accessories
                     ScarletSound(SoundID.Item144, player.Bottom);
                     break;
                 case 4:
-                    ScarletSound(SoundID.Item143, player.Bottom, pitch:-.2f);
+                    ScarletSound(SoundID.Item143, player.Bottom, pitch: -.2f);
                     break;
                 case 5:
-                    ScarletSound(SoundID.Item142, player.Bottom, pitch:-.2f);
+                    ScarletSound(SoundID.Item142, player.Bottom, pitch: -.2f);
                     break;
             }
 

@@ -1,7 +1,6 @@
-﻿using System;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Buffs.Pets;
+﻿using LostbeltTraveler.Buffs.Pets;
 using LostbeltTraveler.Globals.Classes;
+using System;
 using Terraria;
 using Terraria.ID;
 

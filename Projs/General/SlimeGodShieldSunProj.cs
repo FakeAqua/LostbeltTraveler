@@ -1,6 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
-using LostbeltTraveler.Globals.Methods;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Items.Accessories;
 using ReLogic.Content;
 using System;

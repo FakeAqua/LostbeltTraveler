@@ -1,16 +1,12 @@
-﻿using LostbeltTraveler.Globals.Classes;
-using LostbeltTraveler.Core.ParticleECS;
-using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Items.Weapons.Executor.Firearm;
-using Terraria;
-using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Core.ScreenEffect;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.PixelatedRender;
-using Terraria.Audio;
-using Humanizer;
-using System.Collections.Generic;
+using LostbeltTraveler.Core.ScreenEffect;
+using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Handlers;
+using LostbeltTraveler.Items.Weapons.Executor.Firearm;
 using System;
-using Terraria.GameContent.Bestiary;
+using Terraria;
 
 namespace LostbeltTraveler.Projs.Executor.Firearm
 {
@@ -29,7 +25,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         public float HoldoutTimer = 0;
         public float MaxHoldingTime = GetSeconds(3);
         public float HoldingProgress => Clamp(HoldoutTimer / MaxHoldingTime, 0f, 1f);
-        public override bool IsUsing => base.IsUsing||Projectile.Lostbelt().ExecutionStrike;
+        public override bool IsUsing => base.IsUsing || Projectile.Lostbelt().ExecutionStrike;
         public override int AttackSpeed => base.AttackSpeed * 3 / 2;
         public float TargetRotation = 0;
         public float ArmRotation = 0;
@@ -193,7 +189,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         {
             if (Projectile.Lostbelt().ExecutionStrike)
                 DoExecutionAttack();
-                DoNormalAttack();
+            DoNormalAttack();
         }
 
         public void DoNormalAttack()

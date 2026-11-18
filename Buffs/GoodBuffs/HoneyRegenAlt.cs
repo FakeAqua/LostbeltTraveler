@@ -12,7 +12,7 @@ namespace LostbeltTraveler.Buffs.GoodBuffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-                    player.Lostbelt().lifeRegenPool += 1;
+            player.Lostbelt().lifeRegenPool += 1;
         }
     }
 }

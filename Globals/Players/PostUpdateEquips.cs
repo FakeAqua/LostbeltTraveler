@@ -1,6 +1,4 @@
 ﻿using ContinentOfJourney;
-using ContinentOfJourney.Items.FielderSentries;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Buffs.GoodBuffs;
 using LostbeltTraveler.Buffs.Status;
 using LostbeltTraveler.Core;
@@ -9,9 +7,7 @@ using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
-using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Keybinds;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players.Dashes;
 using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Globals.Systems;
@@ -24,9 +20,6 @@ using LostbeltTraveler.Items.Weapons.Executor.Assistance;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using LostbeltTraveler.Projs.Executor.Assistance;
 using LostbeltTraveler.Projs.General;
-using LostbeltTraveler.Projs.Melee;
-using rail;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -323,7 +316,7 @@ namespace LostbeltTraveler.Globals.Players
             if (Player.statLife < minLife)
                 Player.statLife = minLife;
         }
-             public void UpdateDiverArmorJellyfishSpawn()
+        public void UpdateDiverArmorJellyfishSpawn()
         {
             if (!diverArmor)
                 return;

@@ -1,10 +1,10 @@
-﻿using LostbeltTraveler.Globals.Classes;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ScreenEffect;
+using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Items.Weapons.Executor.Firearm;
 using Terraria;
-using LostbeltTraveler.Globals.Handlers;
 
 namespace LostbeltTraveler.Projs.Executor.Firearm
 {
@@ -57,7 +57,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
 
             base.OnHitNPC(target, hit, damageDone);
         }
-        
+
 
         public override void ProjAI()
         {
@@ -103,7 +103,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             ((CaptainDeadBeard)Owner.HeldItem.ModItem).SniperMode = true;
             ((CaptainDeadBeardSniperProj)proj.ModProjectile).Timer = AttackSpeed;
         }
-        
+
 
         private void UpdateSpining()
         {
@@ -114,33 +114,33 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
 
             if (progress > threshold)
             {
-            float prevProgress = Utils.GetLerpValue(threshold, 1f, progress, true);
-            Projectile.Center = Vector2.Lerp(TargetPos, Owner.MountedCenter, EaseInCubic(prevProgress));
-            Projectile.rotation += Lerp(.3f, 0f, EaseInCubic(prevProgress)) * Projectile.spriteDirection;
+                float prevProgress = Utils.GetLerpValue(threshold, 1f, progress, true);
+                Projectile.Center = Vector2.Lerp(TargetPos, Owner.MountedCenter, EaseInCubic(prevProgress));
+                Projectile.rotation += Lerp(.3f, 0f, EaseInCubic(prevProgress)) * Projectile.spriteDirection;
 
-            if (Main.rand.NextBool(3))
-            {
-                ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePos(100), -Owner.MountedCenter.GetNormalVector2(TargetPos) * 1.1f,
-                    Color.Gold, 40, 1, 0.4f, Main.rand.NextFloat(-.1f, .1f));
-            }
+                if (Main.rand.NextBool(3))
+                {
+                    ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePos(100), -Owner.MountedCenter.GetNormalVector2(TargetPos) * 1.1f,
+                        Color.Gold, 40, 1, 0.4f, Main.rand.NextFloat(-.1f, .1f));
+                }
 
-            float zoomPro = 1 - prevProgress;
-            ScreenZoomSystem.MoveCameraTo(Projectile.Center, EaseOutBack(zoomPro * zoomPro) * .13f);
+                float zoomPro = 1 - prevProgress;
+                ScreenZoomSystem.MoveCameraTo(Projectile.Center, EaseOutBack(zoomPro * zoomPro) * .13f);
 
             }
             else
             {
-            float prevProgress = Utils.GetLerpValue(0, threshold, progress, true);
-            Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, EaseInOutExpo(prevProgress));
-            Projectile.rotation += Lerp(.0f, .3f, EaseOutCubic(prevProgress)) * Projectile.spriteDirection;
+                float prevProgress = Utils.GetLerpValue(0, threshold, progress, true);
+                Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, EaseInOutExpo(prevProgress));
+                Projectile.rotation += Lerp(.0f, .3f, EaseOutCubic(prevProgress)) * Projectile.spriteDirection;
 
-            if (Main.rand.NextBool(3))
-            {
-                ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePos(100), Owner.MountedCenter.GetNormalVector2(TargetPos) * 1.11f,
-                    Color.Gold, 40, 1, 0.4f, Main.rand.NextFloat(-.1f, .1f));
-            }
+                if (Main.rand.NextBool(3))
+                {
+                    ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePos(100), Owner.MountedCenter.GetNormalVector2(TargetPos) * 1.11f,
+                        Color.Gold, 40, 1, 0.4f, Main.rand.NextFloat(-.1f, .1f));
+                }
 
-            ScreenZoomSystem.MoveCameraTo(Projectile.Center, EaseOutBack(prevProgress * prevProgress) * .13f);
+                ScreenZoomSystem.MoveCameraTo(Projectile.Center, EaseOutBack(prevProgress * prevProgress) * .13f);
 
             }
 
@@ -164,7 +164,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             Owner.heldProj = Projectile.whoAmI;
             Projectile.position.Y += Owner.gfxOffY;
         }
-        
+
 
         /// <summary>
         /// 复写这个是因为月火的特殊处决攻击，需要让月火在玩家按下处决键（互动键）时立刻发射一枚子弹
@@ -249,7 +249,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             {
                 Vector2 skyPos = new Vector2(Owner.LocalMouseWorld().X + Main.rand.NextFloat(-250f, 251f), Owner.Center.Y - Main.rand.NextFloat(750f, 950f));
                 Vector2 skyVel = Vector2.UnitY.ToRandVelocity(ToRadians(5), 12f, 17f);
-            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), skyPos, skyVel, ProjectileType<CaptainDeadBeardCannonRodeoSmall>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), skyPos, skyVel, ProjectileType<CaptainDeadBeardCannonRodeoSmall>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
             }
 
             for (int i = 0; i < 16; i++)
@@ -439,6 +439,6 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             SB.FastDraw(glowTex, drawPos.ToRandCirclePos(1.3f), outerColor * .75f, Projectile.rotation + rotFix, glowTex.Size() / 2f, .23f * overallScale, 0);
             SB.FastDraw(glowTex, drawPos.ToRandCirclePos(1.1f), innerColor * .75f, Projectile.rotation + rotFix, glowTex.Size() / 2f, .19f * overallScale, 0);
         }
-        
+
     }
 }

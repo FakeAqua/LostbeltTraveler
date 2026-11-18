@@ -1,12 +1,6 @@
 ﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Items.Weapons.Melee;
-using LostbeltTraveler.Rarity.RarityShinyMethod;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.Melee
@@ -46,20 +40,20 @@ namespace LostbeltTraveler.Projs.Melee
             if (Projectile.IsOutScreen())
                 return;
             if (Main.rand.NextBool())
-            ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePosEdge(8), Projectile.velocity / 8f, RandLerpColor(Color.RoyalBlue, Color.LightSkyBlue), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .3f, .2f);
+                ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePosEdge(8), Projectile.velocity / 8f, RandLerpColor(Color.RoyalBlue, Color.LightSkyBlue), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .3f, .2f);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            for(int i =0;i<20;i++)
+            for (int i = 0; i < 20; i++)
             {
-            ECSParticle.ShinyCrossStarECS(target.Center.ToRandCirclePosEdge(8),RandVelTwoPi(1.2f,7.6f), 
-                RandLerpColor(Color.RoyalBlue, Color.LightSkyBlue), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .8f, .2f);
+                ECSParticle.ShinyCrossStarECS(target.Center.ToRandCirclePosEdge(8), RandVelTwoPi(1.2f, 7.6f),
+                    RandLerpColor(Color.RoyalBlue, Color.LightSkyBlue), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .8f, .2f);
             }
-            for(int i =0;i<10;i++)
+            for (int i = 0; i < 10; i++)
             {
-                ECSParticle.TurbulenceShinyOrb(target.Center, 2.2f, RandLerpColor(Color.RoyalBlue, Color.LightSkyBlue), 45, 1, 0.3f,glowMult:.3f);
+                ECSParticle.TurbulenceShinyOrb(target.Center, 2.2f, RandLerpColor(Color.RoyalBlue, Color.LightSkyBlue), 45, 1, 0.3f, glowMult: .3f);
             }
-            Projectile p= Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<ShroomiteForkSlash>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<ShroomiteForkSlash>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             if (target.IsLegal())
                 p.Lostbelt().CurStoredTarget = target;
             ScarletSound(LostbeltSoundAssets.Atom_Strike, target.Center);
@@ -82,24 +76,24 @@ namespace LostbeltTraveler.Projs.Melee
                 float oldRot = Projectile.oldRot[i] + rotFix;
                 Color sharpColor = Color.Lerp(Color.RoyalBlue, Color.CornflowerBlue, progress);
                 Color c = Color.Lerp(Color.RoyalBlue, Color.SkyBlue, progress);
-                float scale = Lerp(1f, .45f, progress)*.8f;
+                float scale = Lerp(1f, .45f, progress) * .8f;
                 float opac = Lerp(1f, 0f, progress);
                 Vector2 sharpScale = new Vector2(Lerp(.75f, .25f, progress), Lerp(1.35f, 0.35f, progress));
-                SB.FastDraw(sharp, oldPos, sharpColor.ToAddColor(0) * opac*opac, Projectile.oldRot[i]+PiOver2, sharp.Size()/2f, sharpScale*1f,0);
-                SB.FastDraw(sharp, oldPos, Color.White.ToAddColor(0)*.35f * opac*opac, Projectile.oldRot[i]+PiOver2, sharp.Size()/2f, sharpScale,0);
-                SB.FastDraw(tex, oldPos+Main.rand.NextVector2Circular(3,3), c.ToAddColor() * .7f * opac, oldRot, rotPoint, scale * 1.1f, se);
+                SB.FastDraw(sharp, oldPos, sharpColor.ToAddColor(0) * opac * opac, Projectile.oldRot[i] + PiOver2, sharp.Size() / 2f, sharpScale * 1f, 0);
+                SB.FastDraw(sharp, oldPos, Color.White.ToAddColor(0) * .35f * opac * opac, Projectile.oldRot[i] + PiOver2, sharp.Size() / 2f, sharpScale, 0);
+                SB.FastDraw(tex, oldPos + Main.rand.NextVector2Circular(3, 3), c.ToAddColor() * .7f * opac, oldRot, rotPoint, scale * 1.1f, se);
                 Color c2 = Color.Lerp(Color.DarkBlue, Color.DodgerBlue, progress);
-                SB.FastDraw(tex, oldPos, c2.ToAddColor(20) * 1f * opac*opac, oldRot, rotPoint, scale, se);
+                SB.FastDraw(tex, oldPos, c2.ToAddColor(20) * 1f * opac * opac, oldRot, rotPoint, scale, se);
             }
             SB.EnterShaderArea();
             Texture2D orb = LostbeltModAssets.Particle_KiraStar.Value;
             float scale2 = Projectile.scale * .5f;
             SB.FastDraw(orb, pos, Color.RoyalBlue, 0, orb.Size() / 2f, scale2, 0, 0);
-            SB.FastDraw(orb, pos, Color.White, 0, orb.Size() / 2f, scale2*.9f, 0, 0);
+            SB.FastDraw(orb, pos, Color.White, 0, orb.Size() / 2f, scale2 * .9f, 0, 0);
             SB.EndShaderArea();
             for (int i = 0; i < 8; i++)
             {
-                SB.FastDraw(tex, pos + (TwoPi / 8 * i).ToRotationVector2() * 1.5f+Main.rand.NextVector2Circular(3,3), Color.CornflowerBlue.ToAddColor(), rot, rotPoint, Projectile.scale, se);
+                SB.FastDraw(tex, pos + (TwoPi / 8 * i).ToRotationVector2() * 1.5f + Main.rand.NextVector2Circular(3, 3), Color.CornflowerBlue.ToAddColor(), rot, rotPoint, Projectile.scale, se);
             }
             SB.FastDraw(tex, pos, Color.White, rot, rotPoint, Projectile.scale, se);
             return false;

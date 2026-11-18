@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.NPCs.Boss_ScarabBelief;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Buffs.Debuffs;
 using LostbeltTraveler.Core.NetCode;
 using LostbeltTraveler.Core.ParticleECS;
@@ -10,7 +9,6 @@ using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using System.Collections.Generic;
 using Terraria;

@@ -6,7 +6,7 @@ namespace LostbeltTraveler.Globals.Graphics.Particles
 {
     public class HRShinyOrbMedium : BaseParticle
     {
-        public override BlendState UseBlendStateID => BlendState.Additive; 
+        public override BlendState UseBlendStateID => BlendState.Additive;
 
         public float Speed = 5f;
 

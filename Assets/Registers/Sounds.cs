@@ -19,7 +19,7 @@ namespace LostbeltTraveler.Assets.Registers
         public static SoundStyle Dialectics_Hit => new($"{SoundsPath}{nameof(Dialectics_Hit)}");
         public static SoundStyle Dialectics_Throw => new($"{SoundsPath}{nameof(Dialectics_Throw)}");
         public static SoundStyle Dream_Toss => new($"{SoundsPath}{nameof(Dream_Toss)}");
-        public static SoundStyle Detection_Trigger=> new($"{SoundsPath}{nameof(Detection_Trigger)}",numVariants:4);
+        public static SoundStyle Detection_Trigger => new($"{SoundsPath}{nameof(Detection_Trigger)}", numVariants: 4);
 
         public static SoundStyle Evolution_Thrown => new($"{SoundsPath}{nameof(Evolution_Thrown)}");
         public static SoundStyle EndlessWar_SmashReady => new SoundStyle($"{SoundsPath}{nameof(EndlessWar_SmashReady)}");
@@ -101,7 +101,7 @@ namespace LostbeltTraveler.Assets.Registers
         public static SoundStyle Tlipoca_Swing => new SoundStyle($"{SoundsPath}{nameof(Tlipoca_Swing)}", numVariants: 2);
         public static SoundStyle Tlipoca_NpcKillSound => new SoundStyle($"{SoundsPath}{nameof(Tlipoca_NpcKillSound)}");
         public static SoundStyle Wingman => new SoundStyle($"{SoundsPath}{nameof(Wingman)}", numVariants: 4);
-        public static SoundStyle RWBY_SniperShot=> new SoundStyle($"{SoundsPath}{nameof(RWBY_SniperShot)}");
+        public static SoundStyle RWBY_SniperShot => new SoundStyle($"{SoundsPath}{nameof(RWBY_SniperShot)}");
 
     }
 }

@@ -1,13 +1,8 @@
 ﻿using LostbeltTraveler.Globals.Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LostbeltTraveler.Projs.General
 {
-    public class MollyScytheLoot:LostbeltProjs
+    public class MollyScytheLoot : LostbeltProjs
     {
         public override string Texture => LostbeltModAssets.InvisAsset.Path;
         public override void SetStaticDefaults()

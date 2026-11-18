@@ -8,7 +8,7 @@ using Terraria.Localization;
 
 namespace LostbeltTraveler.Items.Weapons.Executor.Firearm
 {
-        public class OutlawSniper : ExecutorWeaponClass
+    public class OutlawSniper : ExecutorWeaponClass
     {
         public static int MaxBuffTime = 5;
         public static float DamagePerBuff = .1f;

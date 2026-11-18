@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.Items;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.ReVisual.Class;
 using Terraria;
 

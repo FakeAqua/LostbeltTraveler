@@ -1,6 +1,5 @@
 ﻿using ContinentOfJourney.NPCs.Boss_TheLifebringer;
 using LostbeltTraveler.Globals.Executor;
-using LostbeltTraveler.Globals.Methods;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;

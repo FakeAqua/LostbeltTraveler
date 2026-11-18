@@ -4,7 +4,6 @@ using LostbeltTraveler.Buffs.GoodBuffs;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players;
 using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using LostbeltTraveler.Items.Accessories;
@@ -57,7 +56,7 @@ namespace LostbeltTraveler.Globals.Instances.Projs
                 {
                     Owner.Lostbelt().tearEyeBuff = GetSeconds(1);
                 }
-                if (Owner.Lostbelt().KnifeMarkIndex == ProjectileType<MoltenKnifeMark>() && projectile.type != ProjectileType<MoltenKnifeBoom>() && projectile.type != ProjectileType<MoltenKnifeProj>() && !Owner.HasInnerCooldown(InnerCooldownType.ExecutorKnifeMarkTimer)&& HasExecutionMechanic)
+                if (Owner.Lostbelt().KnifeMarkIndex == ProjectileType<MoltenKnifeMark>() && projectile.type != ProjectileType<MoltenKnifeBoom>() && projectile.type != ProjectileType<MoltenKnifeProj>() && !Owner.HasInnerCooldown(InnerCooldownType.ExecutorKnifeMarkTimer) && HasExecutionMechanic)
                 {
                     int dmg = (int)(projectile.originalDamage * MoltenKnife.BoomDamageMult);
                     Owner.AddInnerCooldown(InnerCooldownType.ExecutorKnifeMarkTimer, GetInstance<MoltenKnife>().Item.useTime);
@@ -123,7 +122,7 @@ namespace LostbeltTraveler.Globals.Instances.Projs
                 proj2.timeLeft = 300;
                 if (target.CanBeChasedBy())
                     ((CowboyRevolverProj)proj2.ModProjectile).CurTarget = target;
-                Owner.AddInnerCooldown(InnerCooldownType.CowboyRevoler,30);
+                Owner.AddInnerCooldown(InnerCooldownType.CowboyRevoler, 30);
             }
         }
 

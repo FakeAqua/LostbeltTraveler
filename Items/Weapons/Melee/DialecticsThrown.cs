@@ -1,9 +1,7 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Database.Enums;
+﻿using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Projs.Melee;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using static LostbeltTraveler.Projs.Melee.DialecticsThrownProj;
@@ -45,7 +43,7 @@ namespace LostbeltTraveler.Items.Weapons.Melee
             if (curStyle != WaveStyle.Paraline)
                 ScarletSound(LostbeltSoundAssets.Dialectics_Throw, player.Center, .7f, 0, .5f);
             else
-                ScarletSound(LostbeltSoundAssets.Atom_Strike, player.Center, .7f, 1,variantType:1);
+                ScarletSound(LostbeltSoundAssets.Atom_Strike, player.Center, .7f, 1, variantType: 1);
             int realDamage = curStyle == WaveStyle.Square ? damage * (3) : damage;
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, realDamage, knockback, player.whoAmI);
             ((DialecticsThrownProj)proj.ModProjectile).CurWaveStyle = curStyle;

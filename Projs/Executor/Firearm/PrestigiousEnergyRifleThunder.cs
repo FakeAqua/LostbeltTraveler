@@ -3,20 +3,15 @@ using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.Executor.Firearm
 {
-    public class PrestigiousEnergyRifleThunder:LostbeltProjs
+    public class PrestigiousEnergyRifleThunder : LostbeltProjs
     {
         public override string Texture => LostbeltModAssets.InvisAsset.Path;
-        public override EnumDamageClass Category =>  EnumDamageClass.Executor;
-                public Vector2 beginPos;
+        public override EnumDamageClass Category => EnumDamageClass.Executor;
+        public Vector2 beginPos;
         public Vector2 endPos;
 
         public override void ExSD()
@@ -45,18 +40,18 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             Color c1 = Color.Lerp(Color.MidnightBlue, Color.SkyBlue, .5f);
             Color c2 = Color.Lerp(Color.RoyalBlue, Color.SkyBlue, .5f);
             Color color = Main.rand.NextFromList(c1, c2);
-            LightningSetting setting = new LightningSetting(BeginPos, EndPos, color*1.2f, 45, 60, Main.rand.Next(10,15), 6, 0.5f, 3, 100, 0.6f, 30);
+            LightningSetting setting = new LightningSetting(BeginPos, EndPos, color * 1.2f, 45, 60, Main.rand.Next(10, 15), 6, 0.5f, 3, 100, 0.6f, 30);
             LostbeltLightning lostbeltLightning = LightningBuilder.SpawnLightning(setting);
             int c = lostbeltLightning.Nodes.Count;
-            for (int i = 0; i < c/3; i++)
+            for (int i = 0; i < c / 3; i++)
             {
                 LightningNode node = lostbeltLightning.Nodes[Main.rand.Next(c)];
                 Vector2 p = node.Position;
-                for(int j=0;j<4;j++)
-                ECSParticle.ShinyCrossStarSmall(p.ToRandCirclePos(32)+fireVel*Main.rand.NextFloat()*150, 
-                    fireVel * Main.rand.NextFloat(1f, 1.2f) * 2f, RandLerpColor(c1, c2), 20, 1, 0.25f, Main.rand.NextFloat(-.05f, .05f));
+                for (int j = 0; j < 4; j++)
+                    ECSParticle.ShinyCrossStarSmall(p.ToRandCirclePos(32) + fireVel * Main.rand.NextFloat() * 150,
+                        fireVel * Main.rand.NextFloat(1f, 1.2f) * 2f, RandLerpColor(c1, c2), 20, 1, 0.25f, Main.rand.NextFloat(-.05f, .05f));
             }
-            
+
             beginPos = BeginPos;
             endPos = EndPos;
 

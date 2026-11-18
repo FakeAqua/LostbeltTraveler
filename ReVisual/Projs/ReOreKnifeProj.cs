@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.Projectiles.Meelee;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.ReVisual.Class;
 using Terraria;
 using Terraria.ID;

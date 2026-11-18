@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -24,7 +19,7 @@ namespace LostbeltTraveler.Buffs.Debuffs
         public override void Update(NPC npc, ref int buffIndex)
         {
             npc.Lostbelt().inHorror = true;
-            if(Main.rand.NextBool(600))
+            if (Main.rand.NextBool(600))
             {
                 npc.DelBuff(buffIndex);
             }

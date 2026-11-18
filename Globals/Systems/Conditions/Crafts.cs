@@ -1,6 +1,4 @@
 ﻿using ContinentOfJourney;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Methods;
 using Terraria;
 
 namespace LostbeltTraveler.Globals.Systems.Conditions

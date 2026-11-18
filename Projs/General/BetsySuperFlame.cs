@@ -7,7 +7,7 @@ using Terraria;
 
 namespace LostbeltTraveler.Projs.General
 {
-    public class BetsySuperFlame: LostbeltProjs
+    public class BetsySuperFlame : LostbeltProjs
 
     {
         public override EnumDamageClass Category => EnumDamageClass.Typeless;

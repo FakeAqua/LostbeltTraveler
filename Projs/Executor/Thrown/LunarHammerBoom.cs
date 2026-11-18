@@ -5,9 +5,9 @@ using Terraria.ID;
 
 namespace LostbeltTraveler.Projs.Executor.Thrown
 {
-    public class LunarHammerBoom:LostbeltProjs
+    public class LunarHammerBoom : LostbeltProjs
     {
-        public override string Texture => GetVanillaAssetPath(VanillaAsset.Projectile,ProjectileID.LunarFlare);
+        public override string Texture => GetVanillaAssetPath(VanillaAsset.Projectile, ProjectileID.LunarFlare);
         public override EnumDamageClass Category => EnumDamageClass.Executor;
         public override void SetStaticDefaults()
         {

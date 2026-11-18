@@ -1,7 +1,5 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Executor;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Armor.Shinobi;
 using Terraria;
 using Terraria.ID;

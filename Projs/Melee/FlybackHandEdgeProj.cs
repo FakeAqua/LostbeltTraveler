@@ -1,8 +1,6 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.Primitives.Trail;
+﻿using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Methods;
 using System.Collections.Generic;
 using Terraria;
 

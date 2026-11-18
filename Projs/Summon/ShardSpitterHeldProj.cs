@@ -1,21 +1,16 @@
 ﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Items.Weapons.Summon;
 using LostbeltTraveler.Projs.Executor.Firearm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 
 namespace LostbeltTraveler.Projs.Summon
 {
-    public class ShardSpitterHeldProj :LostbeltRangedWeaponoutClass
+    public class ShardSpitterHeldProj : LostbeltRangedWeaponoutClass
     {
         public override string Texture => GetInstance<ShardSpitter>().Texture;
         public override int OriginalItemID => ItemType<ShardSpitter>();
-                public override int AttackSpeed => 4;
+        public override int AttackSpeed => 4;
         public override float HoldoutDrawScale => .5f;
         public override bool HoldoutEdgeEnable => false;
         public override Vector2 HoldoutOffset => new Vector2(15, 5);

@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using ContinentOfJourney.Projectiles;
-using LostbeltTraveler.Assets.Registers;
+﻿using ContinentOfJourney.Projectiles;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
+using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 
@@ -83,7 +80,7 @@ namespace LostbeltTraveler.Projs.Melee
                     ((EvolutionEnergyPortal)proj.ModProjectile).SpawnEvolutionArrow = true;
                 }
                 //在玩家处生成启动音效
-            ScarletSound(LostbeltSoundAssets.Hammer_Shoot, Projectile.Center, .3f,0,.8f,variantType:2);
+                ScarletSound(LostbeltSoundAssets.Hammer_Shoot, Projectile.Center, .3f, 0, .8f, variantType: 2);
             }
             return true;
         }

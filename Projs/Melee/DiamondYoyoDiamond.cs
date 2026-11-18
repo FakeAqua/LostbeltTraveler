@@ -1,9 +1,7 @@
-﻿using LostbeltTraveler.Buffs.GoodBuffs;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Items.Weapons.Melee;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -58,7 +56,7 @@ namespace LostbeltTraveler.Projs.Melee
                 case GemYoyoProj.GemYoyoTypes.Sapphire:
                     SetUpColor(RandLerpColor(Color.RoyalBlue, Color.LightSkyBlue), Color.RoyalBlue);
                     break;
-                case  GemYoyoProj.GemYoyoTypes.Emerald:
+                case GemYoyoProj.GemYoyoTypes.Emerald:
                     SetUpColor(RandLerpColor(Color.Green, Color.LimeGreen), Color.Green);
                     break;
                 case GemYoyoProj.GemYoyoTypes.Amber:
@@ -219,7 +217,7 @@ namespace LostbeltTraveler.Projs.Melee
             {
                 //紫水晶
                 case GemYoyoProj.GemYoyoTypes.Amethyst:
-                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Amethyst), 
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Amethyst),
                         Color.White, Color.Silver, Color.White,
                         Color.White,
                         Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f),
@@ -229,7 +227,7 @@ namespace LostbeltTraveler.Projs.Melee
                     break;
                 //黄玉
                 case GemYoyoProj.GemYoyoTypes.Topaz:
-                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Topaz), 
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Topaz),
                         Color.White, Color.Silver, Color.White,
                         Color.White,
                         Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f),
@@ -239,7 +237,7 @@ namespace LostbeltTraveler.Projs.Melee
                     break;
                 //蓝玉
                 case GemYoyoProj.GemYoyoTypes.Sapphire:
-                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Sapphire), 
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Sapphire),
                         Color.RoyalBlue, Color.LightSkyBlue, Color.White,
                         Color.RoyalBlue,
                         Color.White, Color.Lerp(Color.SkyBlue, Color.Blue, .63f),
@@ -249,7 +247,7 @@ namespace LostbeltTraveler.Projs.Melee
                     break;
                 //绿宝石
                 case GemYoyoProj.GemYoyoTypes.Emerald:
-                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Emerald), 
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Emerald),
                         Color.White, Color.Silver, Color.White,
                         Color.White,
                         Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f),
@@ -259,7 +257,7 @@ namespace LostbeltTraveler.Projs.Melee
                     break;
                 //琥珀
                 case GemYoyoProj.GemYoyoTypes.Amber:
-                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Amber), 
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Amber),
                         Color.White, Color.Silver, Color.White,
                         Color.White,
                         Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f),
@@ -277,7 +275,7 @@ namespace LostbeltTraveler.Projs.Melee
                         Color.Red.ToAddColor(), Color.White);
                     break;
                 default:
-                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Diamond), 
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Diamond),
                         Color.White, Color.Silver, Color.White,
                         Color.White,
                         Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f),

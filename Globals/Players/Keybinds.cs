@@ -61,7 +61,7 @@ namespace LostbeltTraveler.Globals.Players
                         ScarletSound(LostbeltSoundAssets.Gaia_Charge, Player.Center);
                         Player.AddBuff(BuffType<CursedHeavy>(), GetSeconds(60));
                         desterrannachtStack += c;
-                        if (desterrannachtStack> 10)
+                        if (desterrannachtStack > 10)
                             desterrannachtStack = 10;
                         CombatText.NewText(Player.Hitbox, Color.Azure, $"(-{0.25 * desterrannachtStack}/帧)", false, true);
                     }

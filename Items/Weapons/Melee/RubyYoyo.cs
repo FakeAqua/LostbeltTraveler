@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Projs.Melee;
+﻿using LostbeltTraveler.Projs.Melee;
 using Terraria.ID;
 
 namespace LostbeltTraveler.Items.Weapons.Melee

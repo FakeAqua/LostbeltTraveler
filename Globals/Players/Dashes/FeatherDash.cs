@@ -1,16 +1,11 @@
 ﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Systems;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Globals.Players.Dashes
 {
-     public class FeatherDash : PlayerDashClass
+    public class FeatherDash : PlayerDashClass
     {
         public bool AllowWingTimeReset = false;
         public override int ImmuneTime(Player player) => 0;
@@ -32,11 +27,11 @@ namespace LostbeltTraveler.Globals.Players.Dashes
         {
             if (AllowWingTimeReset)
             {
-                if (player.Lostbelt().chargeWingsRestore >0)
+                if (player.Lostbelt().chargeWingsRestore > 0)
                 {
                     player.wingTime = player.wingTimeMax * player.Lostbelt().chargeWingsRestore;
                 }
-                    AllowWingTimeReset = false;
+                AllowWingTimeReset = false;
             }
             base.OnDashEnd(player);
         }
@@ -49,7 +44,7 @@ namespace LostbeltTraveler.Globals.Players.Dashes
             //    Color color2 = RandLerpColor(Color.DarkRed, Color.Crimson);
             //    ECSParticle.SmokeParticle(pos2, vel2, color2, 40, 0, .55f, 0.65f);
             //}
-                        for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 Vector2 pos = player.ToRandRec();
                 Vector2 dir = player.velocity.ToSafeNormalize() * -1f;

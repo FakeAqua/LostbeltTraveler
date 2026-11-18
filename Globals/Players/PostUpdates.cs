@@ -63,7 +63,7 @@ namespace LostbeltTraveler.Globals.Players
                 return;
             if (giveMollyScythe)
                 return;
-            if(Player.sleeping.FullyFallenAsleep)
+            if (Player.sleeping.FullyFallenAsleep)
             {
 
             }

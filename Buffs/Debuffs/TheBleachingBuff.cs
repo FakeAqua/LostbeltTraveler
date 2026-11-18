@@ -1,6 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
-using LostbeltTraveler.Globals.Methods;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,7 +35,7 @@ namespace LostbeltTraveler.Buffs.Debuffs
         public override void Update(Player player, ref int buffIndex)
         {
             player.Lostbelt().theBleachingBuff = true;
-            player.Lostbelt().badLifeRegenPool += BadLifeRegen*2;
+            player.Lostbelt().badLifeRegenPool += BadLifeRegen * 2;
 
             base.Update(player, ref buffIndex);
         }

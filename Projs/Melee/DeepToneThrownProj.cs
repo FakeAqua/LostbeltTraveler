@@ -1,6 +1,5 @@
 ﻿using ContinentOfJourney.Projectiles;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using System;
 using System.Collections.Generic;
 using Terraria;

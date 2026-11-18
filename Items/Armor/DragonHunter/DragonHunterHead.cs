@@ -3,7 +3,6 @@ using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Armor.RedDragonKnight;
 using Terraria;
 using Terraria.ID;

@@ -19,7 +19,7 @@ namespace LostbeltTraveler.Assets.Registers
         public static Tex2DWithPath Trail_Lightning3 { get; set; }
         public static Tex2DWithPath Trail_Lightning4 { get; set; }
         public static Tex2DWithPath Trail_BloomDualLine { get; set; }
-        public static Tex2DWithPath Trail_MagmaStreak{ get; set; }
+        public static Tex2DWithPath Trail_MagmaStreak { get; set; }
         public static Tex2DWithPath Trail_ManaStreakShiny { get; set; }
         public void LoadTrail()
         {
@@ -38,8 +38,8 @@ namespace LostbeltTraveler.Assets.Registers
             Trail_Lightning3 = new Tex2DWithPath($"{Path_General}{nameof(Trail_Lightning3)}");
             Trail_Lightning4 = new Tex2DWithPath($"{Path_General}{nameof(Trail_Lightning4)}");
             Trail_BloomDualLine = new Tex2DWithPath($"{Path_General}{nameof(Trail_BloomDualLine)}");
-            Trail_MagmaStreak= new Tex2DWithPath($"{Path_General}{nameof(Trail_MagmaStreak)}");
-            Trail_ManaStreakShiny= new Tex2DWithPath($"{Path_General}{nameof(Trail_ManaStreakShiny)}");
+            Trail_MagmaStreak = new Tex2DWithPath($"{Path_General}{nameof(Trail_MagmaStreak)}");
+            Trail_ManaStreakShiny = new Tex2DWithPath($"{Path_General}{nameof(Trail_ManaStreakShiny)}");
 
         }
         public static void UnloadTrail()

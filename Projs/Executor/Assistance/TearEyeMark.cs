@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Buffs.GoodBuffs;
+﻿using LostbeltTraveler.Buffs.GoodBuffs;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using Terraria;

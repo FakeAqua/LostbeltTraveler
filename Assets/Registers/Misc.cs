@@ -45,8 +45,8 @@ namespace LostbeltTraveler.Assets.Registers
 
             Font_Eras_Bold = Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_Eras_Bold)}");
             Font_MGR = Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_MGR)}");
-           Font_圆体= Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_圆体)}");
-            Font_Cabin= Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_Cabin)}");
+            Font_圆体 = Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_圆体)}");
+            Font_Cabin = Request<DynamicSpriteFont>($"{Path_Fonts}{nameof(Font_Cabin)}");
         }
         public static void UnloadMisc()
         {

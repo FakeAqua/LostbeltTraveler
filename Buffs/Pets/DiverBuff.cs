@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Projs.Pets;
+﻿using LostbeltTraveler.Projs.Pets;
 
 namespace LostbeltTraveler.Buffs.Pets
 

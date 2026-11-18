@@ -1,10 +1,8 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.PixelatedRender;
+﻿using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;

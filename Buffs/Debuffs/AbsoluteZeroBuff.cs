@@ -26,7 +26,7 @@ namespace LostbeltTraveler.Buffs.Debuffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.Lostbelt().badLifeRegenPool += BadLifeRegen*2;
+            player.Lostbelt().badLifeRegenPool += BadLifeRegen * 2;
             player.Lostbelt().absoluteZeroBuff = true;
         }
     }

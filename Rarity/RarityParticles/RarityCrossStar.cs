@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleSystem;
+﻿using LostbeltTraveler.Core.ParticleSystem;
 using LostbeltTraveler.Rarity.RarityDrawHandler;
 using System;
 using Terraria;

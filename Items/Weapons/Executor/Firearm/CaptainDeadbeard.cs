@@ -4,11 +4,6 @@ using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Projs.Executor.Firearm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 
@@ -46,7 +41,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Firearm
         {
             if (!player.IsOwnerSide())
                 return;
-            if (player.HasProj(Item.shoot)||player.HasProj<CaptainDeadBeardSniperProj>())
+            if (player.HasProj(Item.shoot) || player.HasProj<CaptainDeadBeardSniperProj>())
                 return;
             if (!SniperMode)
             {

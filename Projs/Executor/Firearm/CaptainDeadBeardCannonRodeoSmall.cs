@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Core.DeepGlowSystem;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
@@ -33,9 +32,9 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Projectile.IsOutScreen())
                 return;
-                if (Main.rand.NextBool(3))
-                    ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(16), Projectile.velocity / 6f,
-                        RandLerpColor(Color.OrangeRed, Color.Orange), 45, RandRotTwoPi, 1, Main.rand.NextFloat(.9f, 1.1f) * .34f, false, blendstate: BlendState.Additive);
+            if (Main.rand.NextBool(3))
+                ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(16), Projectile.velocity / 6f,
+                    RandLerpColor(Color.OrangeRed, Color.Orange), 45, RandRotTwoPi, 1, Main.rand.NextFloat(.9f, 1.1f) * .34f, false, blendstate: BlendState.Additive);
 
             if (Main.rand.NextBool(6))
             {
@@ -107,12 +106,12 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             {
                 float progress = 1 - (float)i / Projectile.oldRot.Length;
                 Color col = Color.Lerp(Color.LightGoldenrodYellow, Color.OrangeRed * 1f, progress) * 1f;
-                Vector2 lineScale = new Vector2(0.9f * OverallScale * EaseInCubic( progress), 2f * (progress));
+                Vector2 lineScale = new Vector2(0.9f * OverallScale * EaseInCubic(progress), 2f * (progress));
                 float rot = Projectile.oldRot[i] + PiOver2;
                 Vector2 AfterImagePos = Projectile.oldPos[i] + Projectile.Size / 2f +
-                     - Main.screenPosition;
+                     -Main.screenPosition;
                 Vector2 offset = Main.rand.NextVector2Circular(2.5f, 2f + (2f * (1f - progress))).RotatedBy(Projectile.velocity.ToRotation()) - offset2;
-                Vector2 innerScale = new Vector2(0.9f * OverallScale *EaseInCubic( progress), 1.85f * (progress));
+                Vector2 innerScale = new Vector2(0.9f * OverallScale * EaseInCubic(progress), 1.85f * (progress));
                 SB.FastDraw(line, AfterImagePos + offset, col * 0.45f * progress * 1f,
                     rot, line.Size() / 2f, lineScale * 1.51f * 1.5f);
                 SB.FastDraw(line, AfterImagePos + offset, Color.White * 0.35f * progress * 1f,
@@ -120,7 +119,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             }
 
             //DrawTrail();
-                    //DrawTrail(.7f);
+            //DrawTrail(.7f);
             LostbeltMethods.EndShaderAreaPixel();
 
         }
@@ -132,12 +131,12 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
                 return false;
             PixelatedRenderManager.BeginDrawProj = true;
             Projectile.GetProjDrawData(out Texture2D projTex, out Vector2 drawPos, out Vector2 ori);
-                        int length = Projectile.oldPos.Length;
+            int length = Projectile.oldPos.Length;
             for (int i = 0; i < length; i++)
             {
                 float progress = (float)i / length;
                 Vector2 oldPos = Projectile.oldPos[i] + Projectile.Size / 2f - Main.screenPosition;
-                float oldRot = Projectile.oldRot[i]+PiOver2;
+                float oldRot = Projectile.oldRot[i] + PiOver2;
                 Color c = Color.Lerp(Color.DarkGoldenrod, Color.Orange, progress);
                 float scale = (1f - (progress * 0.8f)) * Projectile.scale;
                 float opac = Lerp(1f, 0f, progress);
@@ -145,15 +144,15 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
                 Color c2 = Color.Lerp(Color.OrangeRed, Color.LightGoldenrodYellow, progress);
                 SB.FastDraw(projTex, oldPos, c2.ToAddColor(75) * .75f * opac * opac, oldRot, ori, scale, 0);
             }
-            for(int i =0;i<3;i++)
-            SB.FastDraw(projTex, drawPos.ToRandCirclePos(3), Color.Goldenrod.ToAddColor(), Projectile.rotation+PiOver2, ori, Projectile.scale*1.1f);
-            SB.FastDraw(projTex, drawPos, Color.White, Projectile.rotation+PiOver2, ori, Projectile.scale);
+            for (int i = 0; i < 3; i++)
+                SB.FastDraw(projTex, drawPos.ToRandCirclePos(3), Color.Goldenrod.ToAddColor(), Projectile.rotation + PiOver2, ori, Projectile.scale * 1.1f);
+            SB.FastDraw(projTex, drawPos, Color.White, Projectile.rotation + PiOver2, ori, Projectile.scale);
             SB.EnterShaderArea();
             SB.EndShaderArea();
 
             return false;
         }
-         public void DrawTrail(float mult =1)
+        public void DrawTrail(float mult = 1)
         {
             //虽然我不想承认，但是这里Trail的绘制方法确实是用的starShape
             Texture2D starShape = LostbeltModAssets.Specific_RocketTrail.Value;
@@ -163,7 +162,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             //重新设定原点
             Vector2 ori = new Vector2(cutSource.Width / 2, cutSource.Height);
             //设定缩放大小
-            Vector2 baseScale = new Vector2(10.2f*mult, 12.2f);
+            Vector2 baseScale = new Vector2(10.2f * mult, 12.2f);
             Effect shader = LostbeltShaderAssets.VolcanoEruptingShader;
             shader.Parameters["uBaseColor"].SetValue(Color.DarkOrange.ToVector4() * 0.5f);
             shader.Parameters["uTargetColor"].SetValue(Color.OrangeRed.ToVector4() * 0.9f);

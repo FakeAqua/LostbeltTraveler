@@ -1,11 +1,6 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ScreenEffect;
+﻿using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Methods;
-using LostbeltTraveler.Projs.Executor.ColdSteel;
-using LostbeltTraveler.Projs.Executor.Firearm;
-using LostbeltTraveler.Projs.General;
 using LostbeltTraveler.Projs.Magic;
 using LostbeltTraveler.Projs.Melee;
 using System.Collections.Generic;
@@ -14,7 +9,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using UtfUnknown.Core.Models.SingleByte.Russian;
 
 namespace LostbeltTraveler.Items
 {
@@ -55,7 +49,7 @@ namespace LostbeltTraveler.Items
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity.ToSafeNormalize()*16f, 
+            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity.ToSafeNormalize() * 16f,
                 ProjectileType<OnyxYoyoOnyx>(), damage, 1);
             Stopwatch.StartNew();
             Stopwatch sw = Stopwatch.StartNew();

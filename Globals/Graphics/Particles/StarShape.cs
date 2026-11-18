@@ -1,6 +1,5 @@
-﻿using System;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleSystem;
+﻿using LostbeltTraveler.Core.ParticleSystem;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

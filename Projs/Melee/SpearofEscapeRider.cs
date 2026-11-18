@@ -1,9 +1,7 @@
 ﻿using ContinentOfJourney.Projectiles;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.DeepGlowSystem;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

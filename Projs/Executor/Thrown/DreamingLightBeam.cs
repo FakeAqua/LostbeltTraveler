@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.DeepGlowSystem;
+﻿using LostbeltTraveler.Core.DeepGlowSystem;
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Metaballs;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using ReLogic.Content;
+using System;
+using System.Collections.Generic;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.Executor.Thrown

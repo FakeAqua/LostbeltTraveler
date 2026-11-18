@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Buffs.Debuffs
 {
-    public class CursedHeavyUpgrade:ModBuff
+    public class CursedHeavyUpgrade : ModBuff
     {
         public static int BadLifeRegenEnemy = 100;
         public static int BadLifeRegenPlayer = 10;

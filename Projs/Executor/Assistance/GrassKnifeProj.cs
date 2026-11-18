@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Buffs.Debuffs;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;

@@ -1,13 +1,9 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Methods;
-using LostbeltTraveler.Items.Weapons.Melee;
 using ReLogic.Content;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Terraria;
 using Terraria.ID;
 

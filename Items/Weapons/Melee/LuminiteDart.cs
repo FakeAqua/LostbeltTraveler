@@ -1,12 +1,9 @@
-﻿using ContinentOfJourney.Items.Material;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Projs.Melee;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using UtfUnknown.Core.Models.SingleByte.Russian;
 
 namespace LostbeltTraveler.Items.Weapons.Melee
 {
@@ -30,7 +27,7 @@ namespace LostbeltTraveler.Items.Weapons.Melee
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            for(int i = -1;i<2;i++)
+            for (int i = -1; i < 2; i++)
             {
                 Vector2 dir = velocity.ToSafeNormalize().RotatedBy(ToRadians(10 * i));
                 Projectile proj = Projectile.NewProjectileDirect(source, position, dir * Item.shootSpeed, type, damage, knockback, player.whoAmI);
@@ -40,7 +37,7 @@ namespace LostbeltTraveler.Items.Weapons.Melee
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ItemID.LunarBar,15).
+                AddIngredient(ItemID.LunarBar, 15).
                 AddTile(TileID.LunarCraftingStation).
                 Register();
         }

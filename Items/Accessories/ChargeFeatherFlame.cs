@@ -1,9 +1,7 @@
-﻿using LostbeltTraveler.Globals.Classes;
-using LostbeltTraveler.Globals.Handlers;
+﻿using LostbeltTraveler.Globals.Handlers;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Accessories
 {
@@ -15,7 +13,7 @@ namespace LostbeltTraveler.Items.Accessories
         public override string AssetPath => AssetHandler.Equips;
         public override int MatchWing => ItemID.FlameWings;
         public override float RestoredCharge => .15f;
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs($"[i:{ItemID.Search.GetName(MatchWing)}]",WingTime, Damage.ToPercent(), CritChance + "%");
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs($"[i:{ItemID.Search.GetName(MatchWing)}]", WingTime, Damage.ToPercent(), CritChance + "%");
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Pink);

@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Vanity.Arceca
 {

@@ -1,9 +1,8 @@
-﻿using System;
+﻿using LostbeltTraveler.Globals.Configs;
+using ReLogic.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Configs;
-using ReLogic.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Localization;
@@ -58,11 +57,11 @@ namespace LostbeltTraveler.Globals.Methods.Textbox
         {
             SpriteBatch sb = Main.spriteBatch;
             DynamicSpriteFont font = FontAssets.MouseText.Value;
-            if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
+            if (Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
             {
                 font = LostbeltModAssets.Font_圆体.Value;
             }
-            if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.English))
+            if (Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.English))
             {
                 font = LostbeltModAssets.Font_Cabin.Value;
             }
@@ -129,11 +128,11 @@ namespace LostbeltTraveler.Globals.Methods.Textbox
                 textboxSettings.TextEdgeColor,
                     5
                 ));
-            if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
+            if (Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
             {
                 font = LostbeltModAssets.Font_圆体.Value;
             }
-            if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.English))
+            if (Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.English))
             {
                 font = LostbeltModAssets.Font_Cabin.Value;
             }
@@ -194,11 +193,11 @@ namespace LostbeltTraveler.Globals.Methods.Textbox
                         maxWidth = size.X;
                 }
             }
-            if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
+            if (Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
             {
                 font = LostbeltModAssets.Font_圆体.Value;
             }
-            if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.English))
+            if (Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.English))
             {
                 font = LostbeltModAssets.Font_Cabin.Value;
             }
@@ -396,11 +395,11 @@ namespace LostbeltTraveler.Globals.Methods.Textbox
             }
             // 2. 计算所有文本框的内容最大宽度（用于统一背景）
             float maxContentWidth = 0;
-            if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
+            if (Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.Chinese))
             {
                 font = LostbeltModAssets.Font_圆体.Value;
             }
-            if(Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.English))
+            if (Language.ActiveCulture == GameCulture.FromCultureName(GameCulture.CultureName.English))
             {
                 font = LostbeltModAssets.Font_Cabin.Value;
             }

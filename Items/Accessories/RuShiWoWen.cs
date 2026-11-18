@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Methods.Textbox;
 using LostbeltTraveler.Globals.Players;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

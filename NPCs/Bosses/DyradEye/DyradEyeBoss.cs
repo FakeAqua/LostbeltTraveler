@@ -1,7 +1,6 @@
 ﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Projs.General;
 using Terraria;
 using Terraria.Audio;

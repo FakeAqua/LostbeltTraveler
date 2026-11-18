@@ -1,18 +1,16 @@
-﻿using ContinentOfJourney.NPCs;
-using LostbeltTraveler.Core.NetCode;
+﻿using LostbeltTraveler.Core.NetCode;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
-using System;
 using System.Collections.Generic;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.Executor.ColdSteel
 {
-    public class DragonBallSlash:LostbeltProjs,IPixelatedRenderer
+    public class DragonBallSlash : LostbeltProjs, IPixelatedRenderer
     {
         public override string Texture => LostbeltModAssets.InvisAsset.Path;
         public override EnumDamageClass Category => EnumDamageClass.Executor;
@@ -182,11 +180,11 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             DrawBaseWave(tex, Color.White * .40f, 20f);
             Texture2D texture2 = LostbeltModAssets.Noise_Aura.Value;
             Vector4 vector4 = new(0.25f, 0.25f, 0.05f, 0.4f);
-            LostbeltMethods.ApplyAlphaCut(vector4, new(0, -Main.GlobalTimeWrappedHourly * 0.09f + RandOffset1), new Vector2(1f, 0.2f), Color.White*Projectile.Opacity);
+            LostbeltMethods.ApplyAlphaCut(vector4, new(0, -Main.GlobalTimeWrappedHourly * 0.09f + RandOffset1), new Vector2(1f, 0.2f), Color.White * Projectile.Opacity);
             DrawBaseWave(texture2, Color.White, 30f);
 
             texture2 = LostbeltModAssets.Noise_HeavyAura.Value;
-            LostbeltMethods.ApplyAlphaCut(vector4, new(0, -Main.GlobalTimeWrappedHourly * 0.25f + RandOffset2), new Vector2(3.5f, 0.1f), Color.White*Projectile.Opacity);
+            LostbeltMethods.ApplyAlphaCut(vector4, new(0, -Main.GlobalTimeWrappedHourly * 0.25f + RandOffset2), new Vector2(3.5f, 0.1f), Color.White * Projectile.Opacity);
             DrawBaseWave(texture2, Color.White * 0.82f, 20f);
 
             LostbeltMethods.EndShaderAreaPixel();
@@ -203,7 +201,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             {
                 float progress = (float)i / CenterPosList.Count;
                 Vector2 posHead = CenterPosList[i] + Projectile.Center - Main.screenPosition;
-                Vector2 posSrc = CenterPosList[i] + Projectile.Center - Main.screenPosition - projVel*pro*Projectile.Opacity * v * heldscale;
+                Vector2 posSrc = CenterPosList[i] + Projectile.Center - Main.screenPosition - projVel * pro * Projectile.Opacity * v * heldscale;
                 VertexList.Add(new ScarletVertex(posHead, color, new Vector3(progress, 0, 0)));
                 VertexList.Add(new ScarletVertex(posSrc, color, new Vector3(progress, 1, 0)));
             }
@@ -214,5 +212,5 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             GD.DrawUserPrimitives(PrimitiveType.TriangleStrip, VertexList.ToArray(), 0, VertexList.Count - 2);
         }
 
-           }
+    }
 }

@@ -1,4 +1,3 @@
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;

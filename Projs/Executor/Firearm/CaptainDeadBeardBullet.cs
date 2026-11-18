@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace LostbeltTraveler.Projs.Executor.Firearm
 {
-    public class CaptainDeadBeardBullet:LostbeltProjs,IPixelatedRenderer
+    public class CaptainDeadBeardBullet : LostbeltProjs, IPixelatedRenderer
     {
         public override string Texture => LostbeltModAssets.InvisAsset.Path;
         public float OverallScale = 0;
@@ -85,12 +85,12 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             for (int i = 0; i < Projectile.oldRot.Length; i++)
             {
                 float progress = 1 - (float)i / Projectile.oldRot.Length;
-                Color col = Color.Lerp(Color.LightGoldenrodYellow, Color.DarkGoldenrod* 1f, progress) * 1f;
-                Vector2 lineScale = new Vector2(0.45f * OverallScale*progress, .9f * progress*progress);
+                Color col = Color.Lerp(Color.LightGoldenrodYellow, Color.DarkGoldenrod * 1f, progress) * 1f;
+                Vector2 lineScale = new Vector2(0.45f * OverallScale * progress, .9f * progress * progress);
                 float rot = Projectile.oldRot[i] + PiOver2;
                 Vector2 AfterImagePos = Projectile.oldPos[i] + Projectile.Size / 2f - Main.screenPosition;
                 Vector2 offset = Main.rand.NextVector2Circular(2.5f, 2f + (2f * (1f - progress))).RotatedBy(Projectile.velocity.ToRotation()) - offset2;
-                Vector2 innerScale = new Vector2(0.45f * OverallScale*progress, .9f * progress*progress);
+                Vector2 innerScale = new Vector2(0.45f * OverallScale * progress, .9f * progress * progress);
                 SB.FastDraw(line, AfterImagePos + offset, col * 0.85f * progress * 1f,
                     rot, line.Size() / 2f, lineScale * 1f * 1.5f);
                 SB.FastDraw(line, AfterImagePos + offset, Color.White * 0.85f * progress * 1f,

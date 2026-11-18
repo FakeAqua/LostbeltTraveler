@@ -605,7 +605,7 @@ namespace LostbeltTraveler.Globals.Methods
         }
         public static void FastDraw(this SpriteBatch sb, Texture2D tex, Vector2 pos, Color c, float rotation, Vector2 origin, float scale)
         {
-            sb.Draw(tex, pos, null, c, rotation, origin, scale, 0,0);
+            sb.Draw(tex, pos, null, c, rotation, origin, scale, 0, 0);
         }
         public static void FastDraw(this SpriteBatch sb, Texture2D tex, Vector2 pos, Color c, float rotation, Vector2 origin, Vector2 scale)
         {

@@ -15,7 +15,7 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
         }
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
-            if(inHorror)
+            if (inHorror)
             {
                 modifiers.SourceDamage *= (1 + DeathTimer.ExtraDamage);
             }

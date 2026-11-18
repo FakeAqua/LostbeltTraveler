@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.Projectiles;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Projs.Executor.Assistance;
 using LostbeltTraveler.Projs.Executor.ColdSteel;
 using LostbeltTraveler.Projs.ParryShield;

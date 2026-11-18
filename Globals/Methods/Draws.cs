@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using Terraria;
+﻿using Terraria;
 
 namespace LostbeltTraveler.Globals.Methods
 {
@@ -165,7 +164,7 @@ namespace LostbeltTraveler.Globals.Methods
             Main.spriteBatch.Draw(star, pos, null, mainColor.ToAddColor(), rot + PiOver2, star.Size() / 2, starScale * proj.scale * scale, SpriteEffects.None, 0);
             Main.spriteBatch.Draw(star, pos, null, Color.White.ToAddColor(), rot + PiOver2, star.Size() / 2, starScale * proj.scale * scale * .5f, SpriteEffects.None, 0);
         }
-                public static void ApplyGraphicTexture(this Texture2D texture2D, int Index)
+        public static void ApplyGraphicTexture(this Texture2D texture2D, int Index)
         {
             Main.graphics.GraphicsDevice.Textures[Index] = texture2D;
         }

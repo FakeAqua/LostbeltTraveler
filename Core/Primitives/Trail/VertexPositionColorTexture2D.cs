@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-namespace LostbeltTraveler.Core.Primitives.Trail
+﻿namespace LostbeltTraveler.Core.Primitives.Trail
 {
     public readonly struct ScarletVertex(Vector2 position, Color color, Vector3 textureCoordinates) : IVertexType
     {

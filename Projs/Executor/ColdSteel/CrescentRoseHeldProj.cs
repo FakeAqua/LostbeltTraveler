@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Core.ScreenEffect;
@@ -8,11 +7,9 @@ using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Graphics.Metaballs;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Weapons.Executor.ColdSteel;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Projs.Executor.ColdSteel
 {
@@ -49,7 +46,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             {
                 Projectile.SetupImmnuity(45);
                 ScarletSound(LostbeltSoundAssets.Tlipoca_Swing, Projectile.Center, 0.75f, 1, 0.14f, 0.1f, 1);
-                Helper.MaxProgress[0] = (int)(AttackSpeed *1.12f);
+                Helper.MaxProgress[0] = (int)(AttackSpeed * 1.12f);
                 Helper.MaxProgress[1] = (int)(AttackSpeed * .3f);
                 Helper.MaxProgress[2] = (int)(AttackSpeed * .5f);
             }
@@ -135,17 +132,17 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
                 if (OldAimPos.Count > 0)
                     OldAimPos.RemoveAt(0);
 
-            Helper.UpdateAniState(2);
-            float heldScale = Owner.HeldItem.scale;
-            float easedProgress = EaseInCubic(Helper.GetAniProgress(2));
-            float beginAngle = 395f * Flip.ToDirectionInt();
-            float endAngle = 415 * Flip.ToDirectionInt();
-            float rot = Helper.UpdateAngle(beginAngle, endAngle, Owner.direction, easedProgress);
-            Matrix tForm = Matrix.CreateRotationZ(rot) * Matrix.CreateScale(Width + .24f, Height + .24f, 1);
-            Vector2 tarPos = Vector2.Transform(Vector2.UnitX, tForm) * 1.65f * heldScale;
-            Projectile.scale = tarPos.Length();
-            Projectile.rotation = tarPos.ToRotation() + TargetRotation;
-            TargetRotation = TargetRotation.AngleTowards(Owner.GetToMouseVector2(Projectile.Center).ToRotation(), .05f);
+                Helper.UpdateAniState(2);
+                float heldScale = Owner.HeldItem.scale;
+                float easedProgress = EaseInCubic(Helper.GetAniProgress(2));
+                float beginAngle = 395f * Flip.ToDirectionInt();
+                float endAngle = 415 * Flip.ToDirectionInt();
+                float rot = Helper.UpdateAngle(beginAngle, endAngle, Owner.direction, easedProgress);
+                Matrix tForm = Matrix.CreateRotationZ(rot) * Matrix.CreateScale(Width + .24f, Height + .24f, 1);
+                Vector2 tarPos = Vector2.Transform(Vector2.UnitX, tForm) * 1.65f * heldScale;
+                Projectile.scale = tarPos.Length();
+                Projectile.rotation = tarPos.ToRotation() + TargetRotation;
+                TargetRotation = TargetRotation.AngleTowards(Owner.GetToMouseVector2(Projectile.Center).ToRotation(), .05f);
 
             }
             else
@@ -182,28 +179,28 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             Vector2 tarPos = Vector2.Transform(Vector2.UnitX, tForm) * 1.65f * heldScale;
             Projectile.scale = tarPos.Length();
             Projectile.rotation = tarPos.ToRotation() + TargetRotation;
-            if(easedProgress>.2f&&!ShootBullet)
+            if (easedProgress > .2f && !ShootBullet)
             {
                 ScarletSound(LostbeltSoundAssets.RWBY_SniperShot, Projectile.Center);
                 ShootBullet = true;
                 Vector2 dir = Owner.ToMouseVector2();
-                Vector2 pos = Projectile.Center + dir*150;
-                        for (int i = 0; i < 12; i++)
-            {
-                Vector2 pos2 = pos.ToRandCirclePos();
-                Vector2 vel = dir.ToRandVelocity(ToRadians(10), 4.1f, 40.6f);
-                float scale = Projectile.scale * Main.rand.NextFloat(.95f, 1.15f) * 0.38f;
-                int timeLeft = Main.rand.Next(30, 45);
-                ECSParticle.LightntingGlow(pos2, vel, RandLerpColor(Color.Red, Color.DarkRed), timeLeft, 1, scale);
-            }
+                Vector2 pos = Projectile.Center + dir * 150;
+                for (int i = 0; i < 12; i++)
+                {
+                    Vector2 pos2 = pos.ToRandCirclePos();
+                    Vector2 vel = dir.ToRandVelocity(ToRadians(10), 4.1f, 40.6f);
+                    float scale = Projectile.scale * Main.rand.NextFloat(.95f, 1.15f) * 0.38f;
+                    int timeLeft = Main.rand.Next(30, 45);
+                    ECSParticle.LightntingGlow(pos2, vel, RandLerpColor(Color.Red, Color.DarkRed), timeLeft, 1, scale);
+                }
 
-            for (int i = 0; i < 24; i++)
-            {
-                bool alt = Main.rand.NextBool();
-                BlendState bs = alt ? BlendState.Additive : BlendState.AlphaBlend;
-                ECSParticle.SmokeParticle(pos, dir.ToRandVelocity(ToRadians(15), 4.4f, 40.4f),
-                    RandLerpColor(Color.Red, Color.Crimson), Main.rand.Next(45, 65), RandRotTwoPi, 1, 0.43f * Main.rand.NextFloat(.95f, 1.25f), alt, bs);
-            }
+                for (int i = 0; i < 24; i++)
+                {
+                    bool alt = Main.rand.NextBool();
+                    BlendState bs = alt ? BlendState.Additive : BlendState.AlphaBlend;
+                    ECSParticle.SmokeParticle(pos, dir.ToRandVelocity(ToRadians(15), 4.4f, 40.4f),
+                        RandLerpColor(Color.Red, Color.Crimson), Main.rand.Next(45, 65), RandRotTwoPi, 1, 0.43f * Main.rand.NextFloat(.95f, 1.25f), alt, bs);
+                }
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, dir * 16f, ProjectileType<CrescentRoseSniperBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
                 ScreenShakeSystem.AddScreenShakes(Projectile.Center, 16, 16, RandRotTwoPi);
             }
@@ -213,14 +210,14 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             else
             {
                 //下面基本上是粒子生成了。
-                    float beginAngle2 = -220f * Flip.ToDirectionInt();
-                    float endAngle2 = 410f * Flip.ToDirectionInt();
+                float beginAngle2 = -220f * Flip.ToDirectionInt();
+                float endAngle2 = 410f * Flip.ToDirectionInt();
 
-                    float slashTrailRotation = Helper.UpdateAngle(beginAngle2, endAngle2 + (0 * (Flip).ToDirectionInt()), Owner.direction, easedProgress);
-                    Matrix tFormSlash = Matrix.CreateRotationZ(slashTrailRotation) * Matrix.CreateScale(Width + .24f, Height + .24f, 1f);
-                    Vector2 slashTargetPos = Vector2.Transform(Vector2.UnitX, tFormSlash) * 1.85f * heldScale;
-                    Vector2 slashPosFinal = slashTargetPos.RotatedBy(TargetRotation) * 120;
-                    OldAimPos.Add(slashPosFinal);
+                float slashTrailRotation = Helper.UpdateAngle(beginAngle2, endAngle2 + (0 * (Flip).ToDirectionInt()), Owner.direction, easedProgress);
+                Matrix tFormSlash = Matrix.CreateRotationZ(slashTrailRotation) * Matrix.CreateScale(Width + .24f, Height + .24f, 1f);
+                Vector2 slashTargetPos = Vector2.Transform(Vector2.UnitX, tFormSlash) * 1.85f * heldScale;
+                Vector2 slashPosFinal = slashTargetPos.RotatedBy(TargetRotation) * 120;
+                OldAimPos.Add(slashPosFinal);
 
                 if (easedProgress >= 0.98f)
                     return;
@@ -287,7 +284,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             {
                 //下面基本上是粒子生成了。
                 float beginAngle2 = -200f * Flip.ToDirectionInt();
-                float endAngle2= 190f * Flip.ToDirectionInt();
+                float endAngle2 = 190f * Flip.ToDirectionInt();
                 float slashTrailRotation = Helper.UpdateAngle(beginAngle2, endAngle2 + (0 * (Flip).ToDirectionInt()), Owner.direction, easedProgress);
                 Matrix tFormSlash = Matrix.CreateRotationZ(slashTrailRotation) * Matrix.CreateScale(Width, Height, 1f);
                 Vector2 slashTargetPos = Vector2.Transform(Vector2.UnitX, tFormSlash) * 1.65f * heldScale;
@@ -303,11 +300,11 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
                     if (Main.rand.NextBool(3))
                     {
                         Vector2 pPos = pos + vel * i * 1.5f;
-                        ECSParticle.ShrinkParticle(pPos, vel * 8.3f, RandLerpColor(Color.DarkRed, Color.Black), 
-                            Main.rand.Next(16, 41), 1 - easedProgress, RandRotTwoPi, Main.rand.NextFloat(.75f, 1.15f)*3 * Lerp(.35f, .9f, easedProgress), 1);
+                        ECSParticle.ShrinkParticle(pPos, vel * 8.3f, RandLerpColor(Color.DarkRed, Color.Black),
+                            Main.rand.Next(16, 41), 1 - easedProgress, RandRotTwoPi, Main.rand.NextFloat(.75f, 1.15f) * 3 * Lerp(.35f, .9f, easedProgress), 1);
                     }
-                        //ECSParticle.SmokeParticle(, vel * 8.3f, RandLerpColor(Color.DarkRed, Color.Black), Main.rand.Next(16, 41), RandRotTwoPi, 
-                        //    0.970f * (1 - easedProgress), Main.rand.NextFloat(.75f, 1.15f) * Lerp(0.357f, 0.9f, easedProgress), false, BlendState.AlphaBlend);
+                    //ECSParticle.SmokeParticle(, vel * 8.3f, RandLerpColor(Color.DarkRed, Color.Black), Main.rand.Next(16, 41), RandRotTwoPi, 
+                    //    0.970f * (1 - easedProgress), Main.rand.NextFloat(.75f, 1.15f) * Lerp(0.357f, 0.9f, easedProgress), false, BlendState.AlphaBlend);
                 }
                 if (Main.rand.NextBool(3))
                 {
@@ -455,10 +452,10 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
                 return;
             _vertexCache.Clear();
             List<ScarletVertex> Vertexlist = new List<ScarletVertex>();
-            if(ThirdSwing&&Helper.GetAniProgress(0)>.5f)
+            if (ThirdSwing && Helper.GetAniProgress(0) > .5f)
             {
-                float t = (Utils.GetLerpValue(1f, .1f, EaseOutCubic( Helper.GetAniProgress(0)), true));
-                drawcolor *= t*t;
+                float t = (Utils.GetLerpValue(1f, .1f, EaseOutCubic(Helper.GetAniProgress(0)), true));
+                drawcolor *= t * t;
             }
             for (int i = 0; i < OldAimPos.Count; i++)
             {
@@ -482,7 +479,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
                 return false;
             PixelatedRenderManager.BeginDrawProj = true;
             Projectile.GetProjDrawInfo_Melee(out Texture2D tex, out Vector2 drawPosition, out float drawRotation, out Vector2 rotationPoint, out SpriteEffects flipSprite);
-                        rotationPoint = Projectile.spriteDirection == -1 ? new Vector2(tex.Width, tex.Height) -new Vector2(10): new Vector2(10, tex.Height-10);
+            rotationPoint = Projectile.spriteDirection == -1 ? new Vector2(tex.Width, tex.Height) - new Vector2(10) : new Vector2(10, tex.Height - 10);
             if (ThirdSwing)
             {
                 Color c = Color.White;
@@ -490,9 +487,9 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
                 float endPro2 = EaseInBack(Helper.GetAniProgress(1));
                 float scaleValue = Lerp(1, 1f, 1 - endPro);
                 for (int i = 0; i < 16; i++)
-                    SB.Draw(tex, drawPosition + (TwoPi / 16f * i).ToRotationVector2() * 2f, null, 
+                    SB.Draw(tex, drawPosition + (TwoPi / 16f * i).ToRotationVector2() * 2f, null,
                         Color.Red.ToAddColor(), drawRotation, rotationPoint, Projectile.scale * scaleValue, flipSprite, 0);
-                SB.Draw(tex, drawPosition, null, c , 
+                SB.Draw(tex, drawPosition, null, c,
                     drawRotation, rotationPoint, Projectile.scale * scaleValue, flipSprite, 0);
                 SB.EnterShaderArea();
                 //Texture2D glow = LostbeltModAssets.Particle_CrossGlow.Value;

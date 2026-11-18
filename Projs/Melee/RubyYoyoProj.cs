@@ -1,7 +1,5 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
-using LostbeltTraveler.Globals.Methods;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
@@ -48,8 +46,8 @@ namespace LostbeltTraveler.Projs.Melee
         public override bool PreDraw(ref Color lightColor)
         {
             Projectile.GetProjDrawData(out Texture2D projTex, out Vector2 drawPos, out Vector2 ori);
-            Color innerColor = Color.Lerp(Color.DarkRed,Color.White,.75f) * .85f;
-            Color outterColor = Color.Red* .95f;
+            Color innerColor = Color.Lerp(Color.DarkRed, Color.White, .75f) * .85f;
+            Color outterColor = Color.Red * .95f;
             if (GemStringAmethyst)
             {
                 DrawAmethystSmear(Projectile, innerColor, outterColor, 1);

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using LostbeltTraveler.Globals.Keybinds;
+using System;
 using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Keybinds;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

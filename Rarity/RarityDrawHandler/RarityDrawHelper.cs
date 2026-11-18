@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Database.Enums;
+﻿using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Rarity.RarityShinyMethod;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
@@ -36,7 +35,7 @@ namespace LostbeltTraveler.Rarity.RarityDrawHandler
             Color mainTextColor = mainColor;
             ChatManager.DrawColorCodedString(Main.spriteBatch, tooltipLine.Font, textValue, textPosition, mainTextColor, tooltipLine.Rotation, tooltipLine.Origin, tooltipLine.BaseScale);
         }
-                public static void QuickSetupRarityBackground(this DrawableTooltipLine tooltipLine, Color glowColor, float glowScaleMult = 1)
+        public static void QuickSetupRarityBackground(this DrawableTooltipLine tooltipLine, Color glowColor, float glowScaleMult = 1)
         {
 
             string textValue = tooltipLine.Text;

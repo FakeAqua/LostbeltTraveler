@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.Projectiles;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Classes;

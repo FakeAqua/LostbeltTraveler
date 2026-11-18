@@ -134,7 +134,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
         }
         protected override void OnAttack()
         {
-            if(Projectile.Lostbelt().ExecutionStrike)
+            if (Projectile.Lostbelt().ExecutionStrike)
             {
                 int projDamage2 = (int)Owner.GetTotalDamage<ExecutorDamageClass>().ApplyTo(Owner.HeldItem.damage);
                 Projectile proj3 = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ProjectileType<PrestigiousEnergyRifleBurstHeldProj>(), projDamage2, Projectile.knockBack, Projectile.owner);

@@ -2,20 +2,15 @@
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.General
 {
-    public class FinalBarBalloonThunder:LostbeltProjs
+    public class FinalBarBalloonThunder : LostbeltProjs
     {
         public override string Texture => LostbeltModAssets.InvisAsset.Path;
         public override EnumDamageClass Category => EnumDamageClass.Typeless;
-                public Vector2 beginPos;
+        public Vector2 beginPos;
         public Vector2 endPos;
         public override void SetStaticDefaults()
         {
@@ -45,7 +40,7 @@ namespace LostbeltTraveler.Projs.General
             Vector2 EndPos = BeginPos + fireVel * 1400;
 
             Color color = Main.rand.NextFromList(Color.Goldenrod, Color.Orange, Color.DarkGoldenrod);
-            LightningSetting setting = new LightningSetting(BeginPos, EndPos, color*1.2f, 50, 60, 45, 6, 0.5f, 3, 100, 0.6f, 30);
+            LightningSetting setting = new LightningSetting(BeginPos, EndPos, color * 1.2f, 50, 60, 45, 6, 0.5f, 3, 100, 0.6f, 30);
             LightningBuilder.SpawnLightning(setting);
 
             beginPos = BeginPos;

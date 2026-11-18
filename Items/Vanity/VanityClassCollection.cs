@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Methods.Textbox;
 using LostbeltTraveler.Globals.Players.VanitySets;
 using LostbeltTraveler.Items.Useables;
 using LostbeltTraveler.Rarity.RarityDrawHandler;
 using LostbeltTraveler.Rarity.RarityParticles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

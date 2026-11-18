@@ -1,10 +1,9 @@
 ﻿using LostbeltTraveler.Core.PixelatedRender;
-using LostbeltTraveler.Globals.Classes;
-using System;
-using System.Collections.Generic;
 using LostbeltTraveler.Core.Primitives.Trail;
+using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
 
 
@@ -32,7 +31,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.stopsDealingDamageAfterPenetrateHits = true;
-            Projectile.timeLeft = Projectile.MaxUpdates*8;
+            Projectile.timeLeft = Projectile.MaxUpdates * 8;
             Projectile.SetupImmnuity(5, ImmnuityType.Static);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

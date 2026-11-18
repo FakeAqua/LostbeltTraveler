@@ -1,6 +1,5 @@
 ﻿using ContinentOfJourney.NPCs.Boss_WorldsEndEverlastingFallingWhale;
 using LostbeltTraveler.Buffs.GoodBuffs;
-using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using System;
 using Terraria;

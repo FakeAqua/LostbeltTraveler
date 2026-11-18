@@ -1,7 +1,5 @@
 ﻿using ContinentOfJourney.Projectiles;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.Primitives.Trail;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.ReVisual.Class;
 using System.Collections.Generic;
 using Terraria;

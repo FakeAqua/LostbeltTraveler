@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Globals.Methods;
-using System;
+﻿using System;
 using Terraria;
 using Terraria.Graphics;
 using Terraria.ModLoader;

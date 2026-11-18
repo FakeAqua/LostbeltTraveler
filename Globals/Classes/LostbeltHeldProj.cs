@@ -1,6 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Database.IDSets;
-using LostbeltTraveler.Globals.Graphics.ParticleECS;
+﻿using LostbeltTraveler.Globals.Database.IDSets;
 using Terraria;
 using Terraria.ModLoader;
 

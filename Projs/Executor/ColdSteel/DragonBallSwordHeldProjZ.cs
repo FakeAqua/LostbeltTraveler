@@ -191,14 +191,14 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             }
             if (easedProgress >= 0.95f)
                 return;
-            if ( Projectile.IsOwnerSide()&&Main.rand.NextBool(4))
+            if (Projectile.IsOwnerSide() && Main.rand.NextBool(4))
             {
-                    Vector2 pos = Vector2.Lerp(Projectile.Center, Projectile.Center + tarPos.RotatedBy(TargetRotation) * 150, Main.rand.NextFloat(0.71f, 1f));
-                    Vector2 dir = (pos - Projectile.Center).ToSafeNormalize(Vector2.UnitX);
-                    Vector2 vel = dir.RotatedBy(PiOver2 * Projectile.spriteDirection);
-                    Vector2 orbVel = vel * Main.rand.NextFloat(.5f, 1.1f) * 10f;
-                    //ECSParticle.ShinyCrossStarECS(pos + orbVel, orbVel, RandLerpColor(Color.LightSkyBlue, Color.White), 40, 1f, Main.rand.NextFloat(.95f, 1.10f) * .43f);
-                    ECSParticle.HRShinyOrb(pos, orbVel, RandLerpColor(Color.White, Color.White), 40, 1, 0.08f, .3f);
+                Vector2 pos = Vector2.Lerp(Projectile.Center, Projectile.Center + tarPos.RotatedBy(TargetRotation) * 150, Main.rand.NextFloat(0.71f, 1f));
+                Vector2 dir = (pos - Projectile.Center).ToSafeNormalize(Vector2.UnitX);
+                Vector2 vel = dir.RotatedBy(PiOver2 * Projectile.spriteDirection);
+                Vector2 orbVel = vel * Main.rand.NextFloat(.5f, 1.1f) * 10f;
+                //ECSParticle.ShinyCrossStarECS(pos + orbVel, orbVel, RandLerpColor(Color.LightSkyBlue, Color.White), 40, 1f, Main.rand.NextFloat(.95f, 1.10f) * .43f);
+                ECSParticle.HRShinyOrb(pos, orbVel, RandLerpColor(Color.White, Color.White), 40, 1, 0.08f, .3f);
             }
         }
 
@@ -225,17 +225,17 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Vector2 dir = (target.Center - Projectile.Center).ToSafeNormalize(Vector2.UnitX);
-                Vector2 vel = dir.RotatedBy(PiOver2 * Projectile.spriteDirection);
+            Vector2 vel = dir.RotatedBy(PiOver2 * Projectile.spriteDirection);
             if (Projectile.numHits < 1)
             {
                 StopTiming = 10 * Projectile.MaxUpdates;
                 ScarletSound(LostbeltSoundAssets.Misc_HeavySwordHit, Projectile.Center, 0.30f, 1, .3f, 0.1f);
-                
+
                 ScreenShakeSystem.AddScreenShakes(Projectile.Center, 32f, 24, vel.ToRotation(), 0, false, 1000, EaseOutCubic);
             }
-            Projectile proj= Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), target.Center, RandDirTwoPi, ProjectileType<DragonBallChi>(), Projectile.damage, 1, Owner.whoAmI);
+            Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), target.Center, RandDirTwoPi, ProjectileType<DragonBallChi>(), Projectile.damage, 1, Owner.whoAmI);
             proj.rotation = RandRotTwoPi;
-            Projectile proj2= Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), target.Center, RandDirTwoPi, ProjectileType<DragonBallChi>(), Projectile.damage, 1, Owner.whoAmI);
+            Projectile proj2 = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), target.Center, RandDirTwoPi, ProjectileType<DragonBallChi>(), Projectile.damage, 1, Owner.whoAmI);
             proj2.rotation = -proj.rotation + ToRadians(Main.rand.NextFloat(-30, 60));
             base.OnHitNPC(target, hit, damageDone);
         }
@@ -295,7 +295,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             for (int i = 0; i < 16; i++)
                 SB.Draw(tex, drawPosition + (TwoPi / 16f * i).ToRotationVector2() * 1.5f * (1 - pro), null, Color.SkyBlue.ToAddColor() * (1 - pro), drawRotation, ori, Projectile.scale, flipSprite, 0);
             SB.Draw(tex, drawPosition, null, c, drawRotation, ori, Projectile.scale, flipSprite, 0);
-                        return false;
+            return false;
         }
 
         public void DrawThisSmear()
@@ -312,7 +312,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             else
             {
                 float p = Utils.GetLerpValue(threshold, 1f, endPro, true);
-                pro = EaseInCubic(1-p);
+                pro = EaseInCubic(1 - p);
             }
             Vector2 pos2 = drawPosition + Vector2.UnitX.RotatedBy(Projectile.rotation) * (0) * Projectile.scale;
             Texture2D smear = LostbeltModAssets.Particle_SmearEdge.Value;
@@ -330,15 +330,15 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             glowScale2 = 3f;
             opac = pro * .5f;
             float lerpRotOff = Lerp(.35f, .15f, pro);
-                rot = drawRotation + Pi * lerpRotOff * Flip.ToDirectionInt() * Owner.direction;
-                SB.Draw(smear, pos2, null, Color.AliceBlue* opac, rot, smear.Size() / 2, glowScale2, flipSprite, 0);
-                smear = LostbeltModAssets.Particle_Smear.Value;
+            rot = drawRotation + Pi * lerpRotOff * Flip.ToDirectionInt() * Owner.direction;
+            SB.Draw(smear, pos2, null, Color.AliceBlue * opac, rot, smear.Size() / 2, glowScale2, flipSprite, 0);
+            smear = LostbeltModAssets.Particle_Smear.Value;
             opac = pro * .4f;
-                SB.Draw(smear, pos2, null, Color.White* opac, rot, smear.Size() / 2, glowScale2, flipSprite, 0);
+            SB.Draw(smear, pos2, null, Color.White * opac, rot, smear.Size() / 2, glowScale2, flipSprite, 0);
             opac = pro * .3f;
-                SB.Draw(smear, pos2, null, Color.CornflowerBlue* .85f * opac, rot, smear.Size() / 2, glowScale2, flipSprite, 0);
-                SB.Draw(smear, pos2, null, Color.AliceBlue* .78f * opac, rot, smear.Size() / 2, glowScale2 * 90f, flipSprite, 0);
-                SB.Draw(smear, pos2, null, Color.LightBlue* opac * .58f, rot, smear.Size() / 2, glowScale2 * .80f, flipSprite, 0);
+            SB.Draw(smear, pos2, null, Color.CornflowerBlue * .85f * opac, rot, smear.Size() / 2, glowScale2, flipSprite, 0);
+            SB.Draw(smear, pos2, null, Color.AliceBlue * .78f * opac, rot, smear.Size() / 2, glowScale2 * 90f, flipSprite, 0);
+            SB.Draw(smear, pos2, null, Color.LightBlue * opac * .58f, rot, smear.Size() / 2, glowScale2 * .80f, flipSprite, 0);
         }
     }
 }

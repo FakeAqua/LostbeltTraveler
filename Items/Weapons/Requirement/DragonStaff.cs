@@ -1,8 +1,6 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.Primitives.Trail;
+﻿using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;

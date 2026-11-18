@@ -1,12 +1,11 @@
 ﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Players.ConditionPlayer;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Globals.Scenes.Music
 {
-    public class LanternNightMusicScene:LostbeltMusicScene
+    public class LanternNightMusicScene : LostbeltMusicScene
     {
         public override string LoadMusic => "LanternNight";
         public override SceneEffectPriority Priority => ConditionModPlayer.Town ? SceneEffectPriority.Environment : SceneEffectPriority.BiomeMedium;

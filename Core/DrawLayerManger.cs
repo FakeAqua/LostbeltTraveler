@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.DeepGlowSystem;
+﻿using LostbeltTraveler.Core.DeepGlowSystem;
 using LostbeltTraveler.Core.MetaballSystem;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.ParticleSystem;

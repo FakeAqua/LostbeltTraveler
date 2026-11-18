@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Globals.Methods;
-using ReLogic.Threading;
+﻿using ReLogic.Threading;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;

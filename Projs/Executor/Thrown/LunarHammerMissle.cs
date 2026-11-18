@@ -4,7 +4,6 @@ using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using Terraria;
-using Terraria.ID;
 
 namespace LostbeltTraveler.Projs.Executor.Thrown
 {

@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Projs.Melee;
+﻿using LostbeltTraveler.Projs.Melee;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

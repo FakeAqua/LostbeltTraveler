@@ -1,11 +1,5 @@
-﻿using LostbeltTraveler.Core.ParticleECS;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Projs.Melee;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -36,8 +30,8 @@ namespace LostbeltTraveler.Items.Weapons.Melee
         }
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
         {
-                        // 必须手动转换，不然会按照int进行加成
-            float Buff = (float)((float)(BaseDamage * Lerp(1f,3f,ChargeProgress)) / (float)BaseDamage);
+            // 必须手动转换，不然会按照int进行加成
+            float Buff = (float)((float)(BaseDamage * Lerp(1f, 3f, ChargeProgress)) / (float)BaseDamage);
             damage *= Buff;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -53,7 +47,7 @@ namespace LostbeltTraveler.Items.Weapons.Melee
         }
         public override void HoldItem(Player player)
         {
-            ChargeProgress = Utils.GetLerpValue(0, GetSeconds(MaxChargeTime), Timer,true);
+            ChargeProgress = Utils.GetLerpValue(0, GetSeconds(MaxChargeTime), Timer, true);
             Timer++;
             if (Main.rand.NextFloat() > ChargeProgress)
                 return;

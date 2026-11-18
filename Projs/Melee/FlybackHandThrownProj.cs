@@ -1,8 +1,6 @@
 ﻿using ContinentOfJourney.Projectiles;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Players.InnerCooldown.Methods;
 using ReLogic.Content;
 using System.Collections.Generic;

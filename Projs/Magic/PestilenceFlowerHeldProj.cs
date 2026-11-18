@@ -1,11 +1,10 @@
-﻿using System;
-using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Items.Weapons.Magic;
+using System;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.Magic

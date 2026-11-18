@@ -1,13 +1,10 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -126,7 +123,7 @@ namespace LostbeltTraveler.Projs.Melee
             //每一次发起攻击都要重置一遍计时器，计时器也会控制candamage
             //因为我们不想让寒霜弹在同一个目标上多次造成伤害
             //Timer *= 0;
-                ScarletSound(LostbeltSoundAssets.Misc_KnifeToss, Projectile.Center, .75f, 0, variantType: 2);
+            ScarletSound(LostbeltSoundAssets.Misc_KnifeToss, Projectile.Center, .75f, 0, variantType: 2);
             float searchDistance = 1000f;
             List<NPC> legalTargetList = [];
             foreach (var tar in Main.ActiveNPCs)

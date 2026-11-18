@@ -1,19 +1,14 @@
-﻿using ContinentOfJourney.Rarity;
-using LostbeltTraveler.Globals.Configs;
+﻿using LostbeltTraveler.Globals.Configs;
 using LostbeltTraveler.Items.Armor.Monk;
 using LostbeltTraveler.Items.Armor.Shinobi;
 using MonoMod.Cil;
 using ReLogic.Graphics;
 using System;
-using System.Linq.Expressions;
-using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace LostbeltTraveler.Globals.Systems

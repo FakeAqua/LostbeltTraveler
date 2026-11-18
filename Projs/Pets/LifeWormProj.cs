@@ -1,6 +1,5 @@
 ﻿using LostbeltTraveler.Buffs.Pets;
 using LostbeltTraveler.Globals.Classes;
-using LostbeltTraveler.Globals.Methods;
 using System;
 using Terraria;
 using Terraria.GameContent;

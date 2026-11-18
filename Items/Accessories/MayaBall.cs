@@ -1,7 +1,6 @@
 ﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Globals.Instances.Items;
-using LostbeltTraveler.Globals.Methods;
 using Terraria;
 using Terraria.ID;
 

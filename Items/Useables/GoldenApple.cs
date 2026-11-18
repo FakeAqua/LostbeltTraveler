@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Buffs.GoodBuffs;
+﻿using LostbeltTraveler.Buffs.GoodBuffs;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;

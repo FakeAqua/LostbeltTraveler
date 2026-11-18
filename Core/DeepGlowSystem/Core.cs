@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.RenderTargetsManager;
+﻿using LostbeltTraveler.Core.RenderTargetsManager;
 using LostbeltTraveler.Globals.Configs;
 using LostbeltTraveler.Globals.Database;
 using LostbeltTraveler.Globals.Database.Enums;

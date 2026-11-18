@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleSystem;
+﻿using LostbeltTraveler.Core.ParticleSystem;
 using Terraria;
 
 namespace LostbeltTraveler.Globals.Graphics.Particles
@@ -10,7 +9,7 @@ namespace LostbeltTraveler.Globals.Graphics.Particles
         private bool AltRing;
         private bool FadeIn;
         private float TargetScale;
-        public override BlendState UseBlendStateID =>BlendState.Additive;
+        public override BlendState UseBlendStateID => BlendState.Additive;
 
         public EmptyRing(Vector2 position, Vector2 velocity, Color color, int lifeTime, float scale, float opacity, bool altRing = false, bool fadeIn = false)
         {

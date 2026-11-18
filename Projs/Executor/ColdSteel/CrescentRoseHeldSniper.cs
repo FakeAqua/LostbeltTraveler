@@ -1,5 +1,4 @@
 ﻿using LostbeltTraveler.Globals.Executor;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Projs.Executor.ColdSteel
 {

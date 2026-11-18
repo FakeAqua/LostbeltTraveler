@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Executor;
+﻿using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Projs.Executor;
 using LostbeltTraveler.Projs.Executor.Assistance;

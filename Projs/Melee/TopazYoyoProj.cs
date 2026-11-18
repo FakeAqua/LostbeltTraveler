@@ -2,8 +2,6 @@
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Graphics.Particles;
-using LostbeltTraveler.Globals.Methods;
-using System.Xml.Schema;
 using Terraria;
 using Terraria.ID;
 
@@ -197,7 +195,7 @@ namespace LostbeltTraveler.Projs.Melee
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dir = (rod + TwoPi / 3 * i).ToRotationVector2();
-                    Projectile p= Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, dir * 6f, ProjectileType<DiamondYoyoDiamond>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
+                    Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, dir * 6f, ProjectileType<DiamondYoyoDiamond>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
                     ((DiamondYoyoDiamond)p.ModProjectile).GemTypes = t;
                 }
                 TimerDiamond = 0;
@@ -459,7 +457,7 @@ namespace LostbeltTraveler.Projs.Melee
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dir = (rod + TwoPi / 3 * i).ToRotationVector2();
-                    Projectile p= Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, dir * 6f, ProjectileType<RubyYoyoRuby>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
+                    Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, dir * 6f, ProjectileType<RubyYoyoRuby>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
                     ((RubyYoyoRuby)p.ModProjectile).GemTypes = t;
                 }
                 TimerRuby = 0;
@@ -704,9 +702,9 @@ namespace LostbeltTraveler.Projs.Melee
                 return;
             if (TimerOnyx == 0)
             {
-                
+
                 GemYoyoTypes t = ForceOnyx ? GemYoyoTypes.Onyx : CurGemType();
-for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), target.Center, RandVelTwoPi(12f, 15f) * .85f, ProjectileType<OnyxYoyoOnyx>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                     p.rotation = RandRotTwoPi;

@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Database.IDSets;
+﻿using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Handlers;
 using System;
 using Terraria;

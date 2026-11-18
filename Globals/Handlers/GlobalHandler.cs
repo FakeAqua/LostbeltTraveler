@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.Items.Placables;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Globals.Configs;
 using ReLogic.Utilities;
 using Terraria.Audio;

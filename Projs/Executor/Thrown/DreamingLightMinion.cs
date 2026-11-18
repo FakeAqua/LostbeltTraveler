@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.NetCode;
+﻿using LostbeltTraveler.Core.NetCode;
 using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
@@ -153,7 +152,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), spawnPos, dir * -16f, ProjectileType<DreamingLightBeam>(), Projectile.damage, 1f, Owner.whoAmI);
             proj.rotation = proj.velocity.ToRotation();
             ((DreamingLightBeam)proj.ModProjectile).BeamState = DreamingLightBeam.BeamType.Minion;
-            ScarletSound(LostbeltSoundAssets.Hammer_Shoot, Projectile.Center, .6f,2,.5f,variantType:2);
+            ScarletSound(LostbeltSoundAssets.Hammer_Shoot, Projectile.Center, .6f, 2, .5f, variantType: 2);
         }
         public void UpdateIdleAI(bool isLeftClicking)
         {

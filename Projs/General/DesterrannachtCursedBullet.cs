@@ -5,9 +5,6 @@ using LostbeltTraveler.Globals.Database.Enums;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace LostbeltTraveler.Projs.General
@@ -61,12 +58,12 @@ namespace LostbeltTraveler.Projs.General
             float Scale1 = .55f * Progress + 0.02f * lerp;
             Scale1 *= overallScale;
             SB.Draw(glow, pos, null, Color.DarkViolet, 0, glow.Size() / 2f, Scale1, SpriteEffects.None, 0);
-            SB.Draw(glow, pos, null, Color.White, PiOver2, glow.Size() / 2f, Scale1*.85f, SpriteEffects.None, 0);
+            SB.Draw(glow, pos, null, Color.White, PiOver2, glow.Size() / 2f, Scale1 * .85f, SpriteEffects.None, 0);
 
             LostbeltMethods.EnterShaderAreaPixel(BlendState.Additive);
 
             DrawTrails(LostbeltModAssets.Trail_TerraRayFlow.Texture, Color.DarkViolet, 1f, 1f, 1f);
-            DrawTrails(LostbeltModAssets.Trail_Lightning4.Texture, Color.Violet*1.5f, 0.7f);
+            DrawTrails(LostbeltModAssets.Trail_Lightning4.Texture, Color.Violet * 1.5f, 0.7f);
 
             LostbeltMethods.EndShaderAreaPixel();
         }

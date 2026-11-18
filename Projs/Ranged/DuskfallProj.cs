@@ -1,13 +1,11 @@
 ﻿using ContinentOfJourney.Buffs;
 using ContinentOfJourney.Projectiles;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Items.Weapons.Ranged;
 using ReLogic.Content;
 using System;

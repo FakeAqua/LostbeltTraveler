@@ -33,7 +33,7 @@ namespace LostbeltTraveler.Projs.Melee
             Projectile.timeLeft = 300 * Projectile.MaxUpdates;
             Projectile.penetrate = 3;
         }
-               public override void OnFirstFrame()
+        public override void OnFirstFrame()
         {
 
             base.OnFirstFrame();

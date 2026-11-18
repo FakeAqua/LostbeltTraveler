@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using ContinentOfJourney.Items.Material;
+﻿using ContinentOfJourney.Items.Material;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Items.Weapons.Melee;
 using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 
 
 namespace LostbeltTraveler.Projs.Melee
@@ -491,7 +488,7 @@ namespace LostbeltTraveler.Projs.Melee
                 SB.FastDraw(projTex, drawPos.ToRandCirclePos(1), Color.DarkViolet.ToAddColor(), Projectile.rotation, projTex.Size() / 2f, Projectile.scale * 1.31f * lerpOverallScale, 0);
             SB.FastDraw(projTex, drawPos, Color.White, Projectile.rotation, projTex.Size() / 2f, Projectile.scale * lerpOverallScale, 0);
         }
-        
+
         public void DoPreDraw_Diamond()
         {
             Projectile.GetProjDrawData(out Texture2D projTex, out Vector2 drawPos, out Vector2 ori);

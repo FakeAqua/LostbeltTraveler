@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Handlers;
+﻿using LostbeltTraveler.Globals.Handlers;
 using Terraria;
 
 namespace LostbeltTraveler.Globals.Classes

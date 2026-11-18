@@ -1,15 +1,10 @@
 ﻿using ContinentOfJourney.Items.Material;
 using LostbeltTraveler.Projs.Melee;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.ID;
 
 namespace LostbeltTraveler.Items.Weapons.Melee
 {
-        public class OnyxYoyo : GemYoyoWeapon
+    public class OnyxYoyo : GemYoyoWeapon
     {
         public override void ExSD()
         {

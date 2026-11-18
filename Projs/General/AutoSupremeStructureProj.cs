@@ -37,12 +37,12 @@ namespace LostbeltTraveler.Projs.General
         {
             Vector2 pos = Projectile.Center;
             ScarletSound(SoundID.Item44, pos);
-            if(UseStructure == SupremeStructureType.Materializer)
+            if (UseStructure == SupremeStructureType.Materializer)
             {
                 //Owner.Hurt(PlayerDeathReason.ByNPC(NPCID.AncientCultistSquidhead), 1, 1);
-                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, Vector2.Zero, ProjectileType<SuicideKnifeInvisProj>(), 1, 1,Owner.whoAmI, ai2:1);
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, Vector2.Zero, ProjectileType<SuicideKnifeInvisProj>(), 1, 1, Owner.whoAmI, ai2: 1);
                 ScarletSound(SoundID.Item153, Owner.Center);
-                for(int i =0;i<16;i++)
+                for (int i = 0; i < 16; i++)
                 {
                     ECSParticle.ManaStarDust(Owner.Center, RandVelTwoPi(6f, 8f), Color.LightSkyBlue, 40, 1, 0, 1);
                 }
@@ -93,16 +93,16 @@ namespace LostbeltTraveler.Projs.General
             if (UseStructure == SupremeStructureType.Scarcb)
             {
                 for (int i = -1; i < 2; i += 1)
-                    PlacingScarabStructure(i, 1, pos, dir, Owner,false);
+                    PlacingScarabStructure(i, 1, pos, dir, Owner, false);
                 //第三步，先放底部的木头
-                PlacingScarabStructure(0, 0, pos, dir, Owner,false);
+                PlacingScarabStructure(0, 0, pos, dir, Owner, false);
             }
-            if(UseStructure == SupremeStructureType.Whale)
+            if (UseStructure == SupremeStructureType.Whale)
             {
 
             }
             //圣子
-            if(UseStructure == SupremeStructureType.Son)
+            if (UseStructure == SupremeStructureType.Son)
             {
 
             }

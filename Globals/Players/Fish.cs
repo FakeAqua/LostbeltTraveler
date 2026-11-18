@@ -7,10 +7,7 @@ using LostbeltTraveler.Items.Accessories;
 using LostbeltTraveler.Items.Armor.Diver;
 using LostbeltTraveler.Items.Useables;
 using LostbeltTraveler.Items.Weapons.Melee;
-using LostbeltTraveler.Projs.General;
-using rail;
 using System.Collections.Generic;
-using System.Xml.Schema;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -27,16 +24,16 @@ namespace LostbeltTraveler.Globals.Players
             int questFish = attempt.questFish;
             int poolSize = attempt.waterTilesCount;
             bool water = !attempt.inHoney && !attempt.inLava;
-            if(wingsType == ItemID.FinWings&&wingsChargeType==ItemType<ChargeFeatherFish>()&&Main.rand.NextBool(5))
+            if (wingsType == ItemID.FinWings && wingsChargeType == ItemType<ChargeFeatherFish>() && Main.rand.NextBool(5))
             {
                 int food = -1;
                 float chance = Main.rand.NextFloat();
-                if(chance<.6f)
+                if (chance < .6f)
                 {
                     int c = Main.rand.Next(0, LostbeltList.WellFed1HashSet.Count);
                     food = LostbeltList.WellFed1HashSet[c];
                 }
-                else if (chance<.9f)
+                else if (chance < .9f)
                 {
                     int c = Main.rand.Next(0, LostbeltList.WellFed2HashSet.Count);
                     food = LostbeltList.WellFed2HashSet[c];

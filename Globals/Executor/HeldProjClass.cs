@@ -1,5 +1,4 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Configs;
+﻿using LostbeltTraveler.Globals.Configs;
 using LostbeltTraveler.Globals.Database.Enums;
 using Terraria;
 using Terraria.ModLoader;

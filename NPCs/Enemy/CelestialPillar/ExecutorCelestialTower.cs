@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
+﻿using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace LostbeltTraveler.NPCs.Enemy.CelestialPillar
 {
-    public class ExecutorCelestialTower:ModNPC
+    public class ExecutorCelestialTower : ModNPC
     {
         public override string Texture => LostbeltNPCAssets.ApplyNPC(GetType().Name);
         public enum AttackStyle

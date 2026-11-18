@@ -1,7 +1,5 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Globals.Classes;
+﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Executor;
-using LostbeltTraveler.Globals.Methods;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -25,7 +23,7 @@ namespace LostbeltTraveler.Items.Armor.ExecutorVanillaHead
         public override void UpdateEquip(Player player)
         {
             player.GetDamage<ExecutorDamageClass>() += Damage;
-            player.Lostbelt().lifeRegenPool+= LifeRegen;
+            player.Lostbelt().lifeRegenPool += LifeRegen;
         }
         public override void UpdateArmorSetBetter(Player player, string setBonusPath)
         {

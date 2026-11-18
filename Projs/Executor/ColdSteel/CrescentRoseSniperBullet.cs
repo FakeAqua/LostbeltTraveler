@@ -6,8 +6,6 @@ using LostbeltTraveler.Globals.Database.Enums;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Projs.Executor.ColdSteel
 {
@@ -21,7 +19,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
         }
         public override void ExSD()
         {
-                        Projectile.width = Projectile.height = 16;
+            Projectile.width = Projectile.height = 16;
             Projectile.MaxUpdates = 5;
             Projectile.penetrate = 3;
             Projectile.ignoreWater = true;
@@ -36,7 +34,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
         }
         public override void ProjAI()
         {
-                        Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.rotation = Projectile.velocity.ToRotation();
             Lighting.AddLight(Projectile.Center, Color.OrangeRed.ToVector3());
             if (!Projectile.tileCollide)
             {
@@ -48,9 +46,9 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             if (Main.rand.NextBool(9))
                 ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePosEdge(8), Projectile.velocity / 6f,
                     RandLerpColor(Color.Red, Color.Crimson), 50, 1, .56f, 0.2f);
-                            if (Main.rand.NextBool(3))
-                    ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(16), Projectile.velocity / 6f,
-                        RandLerpColor(Color.OrangeRed, Color.Crimson), 45, RandRotTwoPi, 1, Main.rand.NextFloat(.9f, 1.1f) * .34f, false, blendstate: BlendState.Additive);
+            if (Main.rand.NextBool(3))
+                ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(16), Projectile.velocity / 6f,
+                    RandLerpColor(Color.OrangeRed, Color.Crimson), 45, RandRotTwoPi, 1, Main.rand.NextFloat(.9f, 1.1f) * .34f, false, blendstate: BlendState.Additive);
             {
                 if (Main.rand.NextBool(3))
                 {
@@ -68,7 +66,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
         public void RenderPixelated(SpriteBatch spriteBatch)
         {
             float Progress = 1;
-            float overallScale = 1.75f*Progress;
+            float overallScale = 1.75f * Progress;
             LostbeltMethods.EnterShaderAreaPixel(BlendState.Additive);
             ////这里是强行使用ex98拼凑出来的子弹效果
             Texture2D tex = LostbeltModAssets.Specific_RocketTrail.Value;
@@ -94,10 +92,10 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
                 float opac = Lerp(1f, .79f, EaseInOutExpo(progress));
                 Color pixelColor = Color.Lerp(Color.Crimson, Color.Lerp(Color.Red, Color.MediumVioletRed, 0.85f), EaseInOutExpo(progress));
                 int by = (int)Lerp(50, 0, progress);
-                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), 
+                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f),
                     c.ToAddColor(0) * opac * 1.2f, oldRot, projTex.Size() / 2f, scale * 1.1f, 0);
                 //这里重复多画一次。
-                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), 
+                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f),
                     c.ToAddColor((byte)by) * opac * .6f, oldRot, projTex.Size() / 2f, scale, 0);
                 SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(0.5f, 0.5f),
                     pixelColor.ToAddColor(100) * opac, oldRot, projTex.Size() / 2f, scale, 0);
@@ -105,11 +103,11 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             LostbeltMethods.EnterShaderAreaPixel(BlendState.NonPremultiplied);
             DrawTrails(LostbeltModAssets.Trail_ManaStreak.Texture, Color.DarkRed, 10 * overallScale);
             LostbeltMethods.EnterShaderAreaPixel(BlendState.Additive);
-            DrawTrails(LostbeltModAssets.Trail_ManaStreak.Texture, Color.PaleVioletRed*1f, 10 * overallScale);
+            DrawTrails(LostbeltModAssets.Trail_ManaStreak.Texture, Color.PaleVioletRed * 1f, 10 * overallScale);
             DrawTrails(LostbeltModAssets.Trail_ManaStreak.Texture, Color.White * .75f, 6 * overallScale);
             LostbeltMethods.EndShaderAreaPixel();
         }
-                public void DrawTrails(Asset<Texture2D> useTex, Color drawColor, float multipleSize = 1f, float alphaValue = 1f, float offsetHeight = 1f)
+        public void DrawTrails(Asset<Texture2D> useTex, Color drawColor, float multipleSize = 1f, float alphaValue = 1f, float offsetHeight = 1f)
         {
             float laserLength = (int)Projectile.localAI[1];
             Effect shader = LostbeltShaderAssets.StandardFlowShader;

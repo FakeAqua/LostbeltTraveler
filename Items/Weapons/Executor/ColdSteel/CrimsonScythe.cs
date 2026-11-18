@@ -1,10 +1,8 @@
 ﻿using ContinentOfJourney;
-using LostbeltTraveler.Globals.Configs;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
-using LostbeltTraveler.Globals.Methods;
 using LostbeltTraveler.Globals.Methods.Textbox;
 using LostbeltTraveler.Globals.Systems.Conditions;
 using LostbeltTraveler.Items.Armor.Reaper;
@@ -73,7 +71,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
         {
             if (DownedBossSystem.downedSunGod)
             {
-                bool traditionalMode = false; 
+                bool traditionalMode = false;
                 bool isPressingLeftAlt = Main.keyState.PressingAlt();
                 int requirements = Math.Max(0, ExecutionProgress);
                 string progressText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionProgress").ToLangValue().ToFormatValue(requirements);

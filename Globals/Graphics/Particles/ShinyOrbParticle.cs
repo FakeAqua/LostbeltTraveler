@@ -31,7 +31,7 @@ namespace LostbeltTraveler.Globals.Graphics.Particles
             DrawColor = InitColor = color;
             Lifetime = lifeTime;
             Scale = scale;
-            TheBlendState = blendState??BlendState.Additive;
+            TheBlendState = blendState ?? BlendState.Additive;
             AffectedByGravity = affactedByGravity;
             GlowCenter = glowCenter;
             GlowCenterScale = glowCenterScale;
