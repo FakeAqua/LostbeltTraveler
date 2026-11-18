@@ -16,7 +16,7 @@ namespace LostbeltTraveler.Projs.Melee
         public ref float FloatingTimer => ref Projectile.ai[2];
         protected override int YoyoMaxUpdates => 2;
         protected override float YoyoTopSpeed => 36;
-
+        public override bool ForceAmber => true;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -35,14 +35,7 @@ namespace LostbeltTraveler.Projs.Melee
             base.ProjAI();
             Lighting.AddLight(Projectile.Center, TorchID.Orange);
             if (Projectile.velocity.LengthSquared() > 2.5f * 2.5f)
-            {
                 ECSParticle.Stain(Projectile.Center.ToRandCirclePosEdge(4), Projectile.velocity / 8f, RandLerpColor(Color.Orange, Color.OrangeRed), 40, 1, Projectile.velocity.ToRotation(), 0.16f);
-
-            }
-            else
-            {
-
-            }
             if (Main.rand.NextBool(4))
                 ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(4), RandVelTwoPi(1), Color.DarkOrange, 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .4f, .2f);
 
@@ -50,26 +43,6 @@ namespace LostbeltTraveler.Projs.Melee
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (FloatingTimer > Projectile.MaxUpdates * 10)
-            {
-
-                Vector2 pos = Owner.Center.ToRandCirclePosEdge(5, 50) + Owner.ToMouseVector2() * -100f;
-                for (int i = 0; i < 8; i++)
-                {
-                    Color color = RandLerpColor(Color.Orange, Color.DarkOrange);
-                    ECSParticle.GlowSquare(pos.ToRandCirclePosEdge(6), RandVelTwoPi(3.5f), color, 40, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .75f, 0, 0.1f);
-                }
-                ECSParticle.HRShinyOrb(pos, Vector2.Zero, Color.Orange, 40, 1, 0.2f, 0.4f);
-
-                Vector2 dir = pos.GetNormalVector2(Main.MouseWorld);
-                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, dir * 10f, ProjectileType<AmberYoyoAmber>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-                if (target.IsLegal())
-                    proj.Lostbelt().CurStoredTarget = target;
-
-                float rod = RandRotTwoPi;
-                FloatingTimer = 0;
-            }
-
             base.OnHitNPC(target, hit, damageDone);
         }
         public override bool PreDraw(ref Color lightColor)

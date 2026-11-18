@@ -25,6 +25,7 @@ namespace LostbeltTraveler.Globals.Players
             manaSavingsJar = 0;
             loveRing = false;
             isBeingLove = false;
+            gemYoyoBag = false;
             heartoftheCrystal = false;
             tacticalExecution = false;
             sacarbWings = false;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using LostbeltTraveler.Assets.Registers;
 using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Graphics.Particles;
@@ -71,7 +70,6 @@ namespace LostbeltTraveler.Globals.Players.VanitySets
         {
             accVanityID = -1;
         }
-        /// <summary>本 ModPlayer 中需要持久化的所有 bool 字段名。</summary>
         private static readonly string[] PersistedBoolFields =
         {
             nameof(arcaceVanity),
@@ -233,7 +231,7 @@ namespace LostbeltTraveler.Globals.Players.VanitySets
         {
             string name = LostbeltList.VanityItemDictionary[accVanityID];
             //怎么都是特殊情况。
-            if (name == nameof(TairitsuItem) || name == nameof(TendouKeiItem) || name == nameof(TendouArisuItem))
+            if (name == nameof(TairitsuItem) || name == nameof(TendouKeiItem) || name == nameof(TendouArisuItem) || name == nameof(KajuItem))
                 Player.back = EquipLoader.GetEquipSlot(Mod, name, EquipType.Back);
             Player.legs = EquipLoader.GetEquipSlot(Mod, name, EquipType.Legs);
             Player.body = EquipLoader.GetEquipSlot(Mod, name, EquipType.Body);

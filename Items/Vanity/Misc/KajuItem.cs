@@ -1,4 +1,6 @@
-﻿namespace LostbeltTraveler.Items.Vanity.Misc
+﻿using Terraria.ModLoader;
+
+namespace LostbeltTraveler.Items.Vanity.Misc
 {
     public class KajuItem : AccVanityItem
     {
@@ -7,5 +9,9 @@
         public override Color ParticleColor1 => Color.Lerp(Color.Gold, Color.White, 0.3f);
         public override Color ParticleColor2 => Color.Gold;
         public override string VanityName => "Kaju";
+        public override void ExLoad()
+        {
+            EquipLoader.AddEquipTexture(Mod, $"{VanityPrefix}Hair", EquipType.Back, this);
+        }
     }
 }

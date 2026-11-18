@@ -150,7 +150,6 @@ namespace LostbeltTraveler.Items.Vanity
         }
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
         {
-
             return true;
         }
         public override void PostDrawTooltipLine(DrawableTooltipLine line)

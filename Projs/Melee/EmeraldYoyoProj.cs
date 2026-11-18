@@ -16,6 +16,7 @@ namespace LostbeltTraveler.Projs.Melee
         protected override float YoyoLifeTime => 6;
         protected override int YoyoMaxUpdates => 1;
         protected override float YoyoTopSpeed => 16;
+        public override bool ForceEmerald => true;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -41,12 +42,6 @@ namespace LostbeltTraveler.Projs.Melee
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (BoosterTime > 90 * Projectile.MaxUpdates)
-            {
-                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, RandVelTwoPi(6, 8f), ProjectileType<EmeraldYoyoEmerald>(), 0, 0, Projectile.owner);
-                ScarletSound(SoundID.DD2_DarkMageAttack, Projectile.Center);
-                BoosterTime = 0;
-            }
             base.OnHitNPC(target, hit, damageDone);
         }
         public override bool PreDraw(ref Color lightColor)

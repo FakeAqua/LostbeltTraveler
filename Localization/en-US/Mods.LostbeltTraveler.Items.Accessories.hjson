@@ -728,6 +728,7 @@ LifeHairCut: {
 GemYoyoBag: {
 	DisplayName: Gem Yoyo Bag
 	Tooltip: ""
+	GemTooltip: ""
 }
 
 YoyoRopeAmber: {

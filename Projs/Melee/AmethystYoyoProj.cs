@@ -10,6 +10,7 @@ namespace LostbeltTraveler.Projs.Melee
         protected override float YoyoLifeTime => 5;
         protected override int YoyoMaxUpdates => 1;
         protected override float YoyoTopSpeed => 16;
+        public override bool ForceAmethyst => true;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

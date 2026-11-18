@@ -866,8 +866,10 @@ GemYoyoBag: {
 	Tooltip:
 		'''
 		可随意选择其中一种宝石的力量增幅宝石悠悠球
+		同时，大幅度加强宝石悠悠球的基础属性
 		按住Shift时右键切换
 		'''
+	GemTooltip: "{0}当前选中的宝石力量：{1}"
 }
 
 YoyoRopeAmber: {

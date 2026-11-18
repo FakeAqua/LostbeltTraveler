@@ -1,9 +1,8 @@
-﻿using LostbeltTraveler.Assets.Registers;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Globals.Methods;
+using LostbeltTraveler.Items.Weapons.Melee;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -17,6 +16,9 @@ namespace LostbeltTraveler.Projs.Melee
         public override string Texture => GetVanillaAssetPath(VanillaAsset.Item, ItemID.Ruby);
         public override EnumDamageClass Category => EnumDamageClass.Melee;
         public ref float Timer => ref Projectile.ai[0];
+        public GemYoyoProj.GemYoyoTypes GemTypes = GemYoyoProj.GemYoyoTypes.Ruby;
+        protected string CurrentyGemString => Owner.Lostbelt().gemYoyoStrings;
+
         public override void SetStaticDefaults()
         {
             Projectile.ToTrailSetting(16);

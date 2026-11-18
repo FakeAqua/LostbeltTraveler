@@ -16,6 +16,7 @@ namespace LostbeltTraveler.Projs.Melee
         protected override float YoyoLifeTime => 6;
         protected override int YoyoMaxUpdates => 1;
         protected override float YoyoTopSpeed => 16;
+        public override bool ForceSapphire => true;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -27,48 +28,23 @@ namespace LostbeltTraveler.Projs.Melee
         }
         public override void ProjAI()
         {
+            base.ProjAI();
             Lighting.AddLight(Projectile.Center, TorchID.Blue);
-            if (BoosterTime > 0)
+            if (TimerSapphire> 0)
             {
-                Projectile.MaxUpdates = YoyoMaxUpdates + 1;
-                Projectile.SetupImmnuity(8, ImmnuityType.Static);
                 if (Main.rand.NextBool(2))
-                {
                     ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(4), RandVelTwoPi(1), Color.RoyalBlue, 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .4f, .2f);
-                }
                 if (Projectile.velocity.LengthSquared() > 2.5f * 2.5f)
-                {
                     ECSParticle.Stain(Projectile.Center.ToRandCirclePosEdge(4), Projectile.velocity / 8f, RandLerpColor(Color.AliceBlue, Color.LightSkyBlue), 40, 1, Projectile.velocity.ToRotation(), 0.16f);
-                }
-
-
             }
             else
             {
-                Projectile.MaxUpdates = YoyoMaxUpdates;
-                Projectile.SetupImmnuity(10, ImmnuityType.Static);
                 if (Main.rand.NextBool(2))
-                {
                     ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(4), RandVelTwoPi(1), Color.RoyalBlue, 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .4f, .2f);
-                }
             }
-            base.ProjAI();
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (BoosterTime == 0)
-            {
-                ScarletSound(LostbeltSoundAssets.GrabCharge, Projectile.Center);
-                for (int i = 0; i < 16; i++)
-                {
-                    ECSParticle.TurbulenceShinyOrb(Owner.Center, 1.2f, RandLerpColor(Color.AliceBlue, Color.LightSkyBlue), 45, 1, 0.1f, glowMult: .4f);
-                }
-            }
-            for (int i = 0; i < 8; i++)
-            {
-                ECSParticle.ShinyCrossStarECS(Projectile.Center, RandVelTwoPi(3), RandLerpColor(Color.AliceBlue, Color.LightSkyBlue), 45, 1, Main.rand.NextFloat(.9f, 1.1f) * .4f, .2f);
-
-            }
             BoosterTime = GetSeconds(1);
             base.OnHitNPC(target, hit, damageDone);
         }

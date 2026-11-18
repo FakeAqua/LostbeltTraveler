@@ -686,7 +686,6 @@ namespace LostbeltTraveler.Globals.Methods
         #region 隐形爆炸生成
         /// <summary>
         /// 不可见爆炸射弹的生成参数
-        /// <br>所有字段均有合理默认值，调用时只需指定需要的部分</br>
         /// </summary>
         public record InvisBoomOptions
         {
@@ -763,7 +762,6 @@ namespace LostbeltTraveler.Globals.Methods
         }
         /// <summary>
         /// 快速生成一个不可见的爆炸射弹。
-        /// <br>通过 <see cref="InvisBoomOptions"/> 指定参数，未指定的部分使用默认值。</br>
         /// </summary>
         public static Projectile SpawnInvisBoom(this Projectile proj, InvisBoomOptions options)
         {

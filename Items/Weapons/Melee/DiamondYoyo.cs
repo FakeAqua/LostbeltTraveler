@@ -1,11 +1,14 @@
 ﻿using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Projs.Melee;
+using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Weapons.Melee
 {
     public class DiamondYoyo : GemYoyoWeapon
     {
+        public override Vector2 TargetBuffer => new Vector2(150, 6);
         public override void SetStaticDefaults()
         {
             LostbeltList.ShinyRarityItemDictionary.Add(Type, Globals.Database.Enums.ShinyRarityType.FateWhite);

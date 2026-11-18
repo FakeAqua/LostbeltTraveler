@@ -19,17 +19,7 @@ namespace LostbeltTraveler.Projs.Melee
         public ref float Timer => ref Projectile.ai[0];
         protected string CurrentyGemString => Owner.Lostbelt().gemYoyoStrings;
 
-        #region 快捷判定
-        public bool GemStringTopaz => CurrentyGemString.Equals("Topaz");
-        public bool GemStringAmethyst => CurrentyGemString.Equals("Amethyst");
-        public bool GemStringSapphire => CurrentyGemString.Equals("Sapphire");
-        public bool GemStringEmerald => CurrentyGemString.Equals("Emerald");
-        public bool GemStringRuby => CurrentyGemString.Equals("Ruby");
-        public bool GemStringAmber => CurrentyGemString.Equals("Amber");
-        public bool GemStringOnyx => CurrentyGemString.Equals("Onyx");
-        public bool GemStringDiamond => CurrentyGemString.Equals("Diamond");
-        #endregion
-        public int GemTypes = 7;
+        public GemYoyoProj.GemYoyoTypes GemTypes = GemYoyoProj.GemYoyoTypes.Diamond;
 
         public override void SetStaticDefaults()
         {
@@ -47,30 +37,9 @@ namespace LostbeltTraveler.Projs.Melee
         }
         public override void OnFirstFrame()
         {
-            if (Owner.IsHolding<DiamondYoyo>())
-                GemTypes = 6;
-            else if (GemStringDiamond)
-            {
-                if (Owner.IsHolding<OnyxYoyo>())
-                    GemTypes = 7;
-                if (Owner.IsHolding<RubyYoyo>())
-                    GemTypes = 5;
-                if (Owner.IsHolding<AmberYoyo>())
-                    GemTypes = 4;
-                if (Owner.IsHolding<EmeraldYoyo>())
-                    GemTypes = 3;
-                if (Owner.IsHolding<SapphireYoyo>())
-                    GemTypes = 2;
-                if (Owner.IsHolding<TopazYoyo>())
-                    GemTypes = 1;
-                if (Owner.IsHolding<AmethystYoyo>())
-                    GemTypes = 0;
-            }
         }
         public override void ProjAI()
         {
-            if (GemStringTopaz)
-                Projectile.tileCollide = false;
             DiamondGemAI();
             DiamondGemParticle();
         }
@@ -80,25 +49,28 @@ namespace LostbeltTraveler.Projs.Melee
                 return;
             switch (GemTypes)
             {
-                case 0:
+                case GemYoyoProj.GemYoyoTypes.Amethyst:
                     SetUpColor(RandLerpColor(Color.Violet, Color.DarkViolet), Color.Purple);
                     break;
-                case 1:
+                case GemYoyoProj.GemYoyoTypes.Topaz:
                     SetUpColor(RandLerpColor(Color.Gold, Color.Goldenrod), Color.Goldenrod);
                     break;
-                case 2:
+                case GemYoyoProj.GemYoyoTypes.Sapphire:
                     SetUpColor(RandLerpColor(Color.RoyalBlue, Color.LightSkyBlue), Color.RoyalBlue);
                     break;
-                case 3:
+                case  GemYoyoProj.GemYoyoTypes.Emerald:
                     SetUpColor(RandLerpColor(Color.Green, Color.LimeGreen), Color.Green);
                     break;
-                case 4:
+                case GemYoyoProj.GemYoyoTypes.Amber:
                     SetUpColor(RandLerpColor(Color.Orange, Color.OrangeRed), Color.Goldenrod);
                     break;
-                case 5:
+                case GemYoyoProj.GemYoyoTypes.Ruby:
                     SetUpColor(RandLerpColor(Color.Red, Color.Crimson), Color.Red);
                     break;
-                case 7:
+                case GemYoyoProj.GemYoyoTypes.Onyx:
+                    break;
+                case GemYoyoProj.GemYoyoTypes.Diamond:
+                    SetUpColor(RandLerpColor(Color.White, Color.Silver), Color.White);
                     break;
                 default:
                     SetUpColor(RandLerpColor(Color.White, Color.Silver), Color.White);
@@ -180,8 +152,11 @@ namespace LostbeltTraveler.Projs.Melee
             ScarletSound(SoundID.Dig, Projectile.Center);
             switch (GemTypes)
             {
-                case 5:
+                case GemYoyoProj.GemYoyoTypes.Ruby:
                     TileColor(Color.Crimson, Color.DarkRed);
+                    break;
+                case GemYoyoProj.GemYoyoTypes.Diamond:
+                    TileColor(Color.White, Color.White);
                     break;
                 default:
                     TileColor(Color.White, Color.White);
@@ -208,8 +183,23 @@ namespace LostbeltTraveler.Projs.Melee
         {
             switch (GemTypes)
             {
-                case 5:
+                case GemYoyoProj.GemYoyoTypes.Ruby:
                     KillColor(Color.Crimson);
+                    break;
+                case GemYoyoProj.GemYoyoTypes.Amethyst:
+                    break;
+                case GemYoyoProj.GemYoyoTypes.Topaz:
+                    break;
+                case GemYoyoProj.GemYoyoTypes.Sapphire:
+                    break;
+                case GemYoyoProj.GemYoyoTypes.Emerald:
+                    break;
+                case GemYoyoProj.GemYoyoTypes.Amber:
+                    break;
+                case GemYoyoProj.GemYoyoTypes.Diamond:
+                    KillColor(Color.White);
+                    break;
+                case GemYoyoProj.GemYoyoTypes.Onyx:
                     break;
                 default:
                     KillColor(Color.White);
@@ -228,22 +218,57 @@ namespace LostbeltTraveler.Projs.Melee
             switch (GemTypes)
             {
                 //紫水晶
-                case 0:
+                case GemYoyoProj.GemYoyoTypes.Amethyst:
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Amethyst), 
+                        Color.White, Color.Silver, Color.White,
+                        Color.White,
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f),
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.AliceBlue, .63f),
+                        Color.AliceBlue.ToAddColor(), Color.White);
+
                     break;
                 //黄玉
-                case 1:
+                case GemYoyoProj.GemYoyoTypes.Topaz:
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Topaz), 
+                        Color.White, Color.Silver, Color.White,
+                        Color.White,
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f),
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.AliceBlue, .63f),
+                        Color.AliceBlue.ToAddColor(), Color.White);
+
                     break;
                 //蓝玉
-                case 2:
+                case GemYoyoProj.GemYoyoTypes.Sapphire:
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Sapphire), 
+                        Color.RoyalBlue, Color.LightSkyBlue, Color.White,
+                        Color.RoyalBlue,
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.Blue, .63f),
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.AliceBlue, .63f),
+                        Color.AliceBlue.ToAddColor(), Color.White);
+
                     break;
                 //绿宝石
-                case 3:
+                case GemYoyoProj.GemYoyoTypes.Emerald:
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Emerald), 
+                        Color.White, Color.Silver, Color.White,
+                        Color.White,
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f),
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.AliceBlue, .63f),
+                        Color.AliceBlue.ToAddColor(), Color.White);
+
                     break;
                 //琥珀
-                case 4:
+                case GemYoyoProj.GemYoyoTypes.Amber:
+                    DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Amber), 
+                        Color.White, Color.Silver, Color.White,
+                        Color.White,
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.Silver, .63f),
+                        Color.White, Color.Lerp(Color.SkyBlue, Color.AliceBlue, .63f),
+                        Color.AliceBlue.ToAddColor(), Color.White);
+
                     break;
                 //红玉
-                case 5:
+                case GemYoyoProj.GemYoyoTypes.Ruby:
                     DrawGem(GetVanillaAsset(VanillaAsset.Item, ItemID.Ruby),
                         Color.DarkRed, Color.Crimson, Color.White,
                         Color.Crimson,

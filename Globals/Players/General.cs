@@ -51,6 +51,7 @@ namespace LostbeltTraveler.Globals.Players
         public bool giveMagicStorage = false;
         public bool givePaper = true;
         public bool giveMollyScythe = false;
+        public bool gemYoyoBag = false;
         public bool goldenAppleEnchanted = false;
         public bool goldenAppleEnchantedFully = false;
         public bool handOfGods = false;

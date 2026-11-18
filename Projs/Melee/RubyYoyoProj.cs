@@ -16,6 +16,7 @@ namespace LostbeltTraveler.Projs.Melee
         protected override float YoyoLength => LostbeltMethods.TilePixel(14.5f);
         protected override int YoyoMaxUpdates => 2;
         protected override float YoyoTopSpeed => 27;
+        public override bool ForceRuby => true;
 
         public override void SetStaticDefaults()
         {
@@ -33,46 +34,15 @@ namespace LostbeltTraveler.Projs.Melee
         public override void ProjAI()
         {
             base.ProjAI();
-            DoBehaviourDiamond(RandLerpColor(Color.Red, Color.Crimson), Color.Red);
             Lighting.AddLight(Projectile.Center, TorchID.Red);
             if (Projectile.velocity.LengthSquared() > 2.5f * 2.5f)
-            {
                 ECSParticle.Stain(Projectile.Center.ToRandCirclePosEdge(4), Projectile.velocity / 8f, RandLerpColor(Color.Red, Color.Crimson), 40, 1, Projectile.velocity.ToRotation(), 0.16f);
-
-            }
-            else
-            {
-
-            }
             if (Main.rand.NextBool(4))
                 ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(4), RandVelTwoPi(1), Color.Red, 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .4f, .2f);
-
             FloatingTimer++;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (FloatingTimer > Projectile.MaxUpdates * 60)
-            {
-                Vector2 spawnPos = Projectile.Center;
-                for (int i = 0; i < 16; i++)
-                {
-                    Color color = RandLerpColor(Color.Red, Color.Crimson);
-                    ECSParticle.GlowSquare(Projectile.Center.ToRandCirclePosEdge(6), RandVelTwoPi(6f), color, 40, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .75f, 0, 0.1f);
-
-                }
-                for (int i = 0; i < 15; i++)
-                    ECSParticle.TurbulenceShinyOrb(spawnPos.ToRandCirclePosEdge(30), Main.rand.NextFloat(1.2f, 2.4f) * 2, RandLerpColor(Color.Crimson, Color.Red), 120, 1, Main.rand.NextFloat(.9f, 1.15f) * .13f);
-                ScarletSound(LostbeltSoundAssets.Misc_Spell, Projectile.Center, 0.45f);
-
-                float rod = RandRotTwoPi;
-                for (int i = 0; i < 3; i++)
-                {
-                    Vector2 dir = (rod + TwoPi / 3 * i).ToRotationVector2();
-                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, dir * 6f, ProjectileType<RubyYoyoRuby>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
-                }
-                FloatingTimer = 0;
-            }
-
             base.OnHitNPC(target, hit, damageDone);
         }
         public override bool PreDraw(ref Color lightColor)

@@ -35,7 +35,7 @@ namespace LostbeltTraveler.Globals.Players.VanitySets
             {
                 string name = LostbeltList.VanityItemDictionary[VanityItemType];
                 //怎么都是特殊情况。
-                if (name == nameof(TairitsuItem) || name == nameof(TendouKeiItem) || name == nameof(TendouArisuItem))
+                if (name == nameof(TairitsuItem) || name == nameof(TendouKeiItem) || name == nameof(TendouArisuItem) || name == nameof(KajuItem))
                     Player.back = EquipLoader.GetEquipSlot(Mod, name, EquipType.Back);
                 Player.legs = EquipLoader.GetEquipSlot(Mod, name, EquipType.Legs);
                 Player.body = EquipLoader.GetEquipSlot(Mod, name, EquipType.Body);
