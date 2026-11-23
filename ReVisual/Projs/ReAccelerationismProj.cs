@@ -16,7 +16,7 @@ namespace LostbeltTraveler.ReVisual.Projs
 
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualAccelerationism;
+            return proj.IsMe() && vp.reAccelerationism;
         }
         public override void RevisualUpdate(Projectile proj)
         {

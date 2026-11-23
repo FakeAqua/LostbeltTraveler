@@ -51,7 +51,6 @@ namespace LostbeltTraveler.Globals.Players.Dashes
                 Vector2 vel = dir * Main.rand.NextFloat(0.3f, 1.7f);
                 int lifeTime = Main.rand.Next(30, 70);
                 pos += player.velocity.ToSafeNormalize() * 20f;
-                //ECSParticle.SmokeParticle(pos, vel.RotatedBy(ToRadians(15f) * i), Color.White, lifeTime, RandRotTwoPi, 1, 0.3f, true,BlendState.Additive);
                 Vector2 stainPos = pos.ToRandCirclePos(6);
                 float stainScale = Main.rand.NextFloat(.9f, 1.1f) * .4f;
                 ECSParticle.ShrinkParticle(stainPos, vel, Color.White, 45, 0.49f, dir.ToRotation(), stainScale, 1, new Vector2(2.0f, 1.4f), 0, 0, BlendState.Additive);

@@ -150,4 +150,9 @@ LostbeltConfigServer: {
 			Default is 1x
 			'''
 	}
+
+	AnomalousInfestation: {
+		Label: Anomalous Infestation
+		Tooltip: ""
+	}
 }

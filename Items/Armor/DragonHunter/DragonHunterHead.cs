@@ -23,16 +23,16 @@ namespace LostbeltTraveler.Items.Armor.DragonHunter
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Purple);
-            Item.defense = 35;
+            Item.defense = 55;
         }
         public float Damage = .20f;
-        public float AttackSpeed = .25f;
+        public float AttackSpeed = .35f;
         public static int RangedCrit = 50;
-        public int MagicMana = 50;
-        public float MagicManaCost = .20f;
+        public int MagicMana = 150;
+        public float MagicManaCost = .45f;
         public int SummonerMinionSlot = 1;
         public int SummonerSentrySlot = 1;
-        public static float FixedDamage = .40f;
+        public static float FixedDamage = .30f;
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(Damage.ToPercent());
         public override void UpdateEquip(Player player)
         {
@@ -43,10 +43,11 @@ namespace LostbeltTraveler.Items.Armor.DragonHunter
             player.GetAttackSpeed<MeleeDamageClass>() += AttackSpeed;
             player.GetCritChance<RangedDamageClass>() += RangedCrit;
             player.statManaMax2 += MagicMana;
-            player.manaCost -= MagicManaCost;
+            player.manaCost *= MagicManaCost;
             player.maxMinions = SummonerMinionSlot;
             player.maxTurrets = SummonerSentrySlot;
             player.Lostbelt().dragonHunter = true;
+            player.Lostbelt().critDamageExecutor += FixedDamage;
             string value = setBonusPath.ToLangValue().ToFormatValue(AttackSpeed.ToPercent(), RangedCrit + "%", MagicMana, MagicManaCost.ToPercent(), SummonerMinionSlot, FixedDamage.ToPercent());
             player.setBonus += "\n" + value;
         }

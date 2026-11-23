@@ -1,19 +1,15 @@
-﻿using LostbeltTraveler.Globals.Executor;
+﻿using LostbeltTraveler.Buffs.GoodBuffs;
+using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Projs.Executor.Assistance;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Weapons.Executor.Assistance
 {
     public class StreamingProtocol : ExecutorWeaponClass
     {
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
-
         public override int ExecutionProgress => 20;
         public override ExecutorWeaponType ExecutorWeaponType => ExecutorWeaponType.Assistance;
+        public override int SupportWeaponBuff => BuffType<StreamingProtocolBuff>();
         public override void ExSD()
         {
             Item.SetUpNoUseGraphicItem(true);

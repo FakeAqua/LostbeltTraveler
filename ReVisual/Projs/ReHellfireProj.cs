@@ -12,7 +12,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int TotalListCount => 7;
         public float Timer = 0;
         public float SpinDirection = 0;
-        public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp) => proj.IsMe() && vp.reVisualHellfire;
+        public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp) => proj.IsMe() && vp.reHellfire;
         public override void RevisualUpdate(Projectile projectile)
         {
             AddListOnNeed(projectile);
@@ -35,7 +35,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
 
-            bool isEnable = IsMyPlayer(projectile, out ReVisualPlayer player) && player.reVisualHellfire;
+            bool isEnable = IsMyPlayer(projectile, out ReVisualPlayer player) && player.reHellfire;
             if (!isEnable)
             {
                 return base.PreDraw(projectile, ref lightColor);

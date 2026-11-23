@@ -10,12 +10,12 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<KingBeeGun>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualKingBeeGun = !vp.reVisualKingBeeGun;
-            item.noUseGraphic = vp.reVisualKingBeeGun;
+            vp.reKingBeeGun = !vp.reKingBeeGun;
+            item.noUseGraphic = vp.reKingBeeGun;
         }
         public override void UpdateInventory(Item item, Player player)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualKingBeeGun)
+            if (player.GetModPlayer<ReVisualPlayer>().reKingBeeGun)
             {
                 item.noUseGraphic = true;
             }
@@ -23,7 +23,7 @@ namespace LostbeltTraveler.ReVisual.Items
         }
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualKingBeeGun)
+            if (player.GetModPlayer<ReVisualPlayer>().reKingBeeGun)
             {
                 Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<ReVisualRecoilProj>(), 0, 0, player.whoAmI);
                 if (proj.ModProjectile is ReVisualRecoilProj holdout)

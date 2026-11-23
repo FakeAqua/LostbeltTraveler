@@ -2,10 +2,11 @@
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
-using LostbeltTraveler.Globals.Methods.Textbox;
+using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using LostbeltTraveler.Projs.Executor.ColdSteel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -72,7 +73,6 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
                 }
             }
             tooltips.CreateHoldAltTooltip();
-            CacheTooltipList = tooltips;
             ExModifyTooltips(tooltips);
         }
         public override void ExModifyTooltips(List<TooltipLine> tooltips)
@@ -90,42 +90,27 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
             //植入Tooltip
             tooltips.Insert(flavorTooltipIndex2 + 1, flavorTooltips);
         }
-        public override void PostDrawTooltipLine(DrawableTooltipLine line)
+        public override bool PreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
         {
-            if (!BlockTextboxDetail())
+            string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
+            if (ZSword || Main.keyState.PressingAlt())
+                detailText = this.GetLocalizationKey("ExecutionStrikeAlt").ToLangValue();
+            int requirements = Math.Max(0, ExecutionProgress);
+            int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
+            string numberText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionProgressRevampedMode").ToLangValue().ToFormatValue(curRequirement, requirements);
+            string titleText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionDescriptionName").ToLangValue();
+            List<SideTextPanelData> list = [];
+            list.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionTitleName", titleText), 1));
+            string[] textBundle = detailText.Split('\n');
+            for (int i = 0; i < textBundle.Length; i++)
             {
-                //记录起始点坐标。
-                //通常情况下，物品不可能没有名字，而物品名称通常都在第一行，所以可以用这个来记录第一行的坐标
-                if (line.IsItemName())
-                {
-                    TextboxManager.FirstLineY = line.Y;
-                }
-                string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
-                if (ZSword || Main.keyState.PressingAlt())
-                    detailText = this.GetLocalizationKey("ExecutionStrikeAlt").ToLangValue();
-                int requirements = Math.Max(0, ExecutionProgress);
-                int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
-                string numberText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionProgressRevampedMode").ToLangValue().ToFormatValue(curRequirement, requirements);
-                detailText += "\n" + "\n" + numberText;
-                //一堆设置，巴拉巴拉。
-                TextboxSettings sets = new TextboxSettings()
-                {
-                    TitleText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionDescriptionName").ToLangValue(),
-                    TitleTextColor = Color.Lerp(Color.Crimson, Color.WhiteSmoke, 1f) with { A = 255 },
-                    TitleEdgeColor = Color.DarkRed,
-                    HasTitle = true,
-                    BackgroundColor = Color.Lerp(Color.WhiteSmoke, Color.Black, .9f) * .60f,
-                    BackgroundEdgeColor = Color.Lerp(Color.White, Color.Red, 0.0f) * .78f,
-                    MainText = detailText,
-                    TextColor = Color.White,
-                    TextEdgeColor = Color.Black,
-                    TitleTextSize = 1.15f,
-                    BoxSize = TextBoxSize
-                };
-                //最后传值。
-                TextboxMethods.DrawTextboxTooltipWithBackground(line, CacheTooltipList, ref sets);
+                list.Add(new(new(Mod, "ExecutionStrikeTooltip" + i, textBundle[i]), 1));
             }
+            list.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionNumberName", "\n" + numberText)));
+            int y2 = SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, Color.DarkRed);
+            return base.PreDrawTooltip(lines, ref x, ref y);
         }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (!ZSword)

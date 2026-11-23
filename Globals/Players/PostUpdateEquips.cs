@@ -537,6 +537,32 @@ namespace LostbeltTraveler.Globals.Players
                 Player.GetKnockback(DamageClass.Summon) += 0.5f;
                 Player.pickSpeed += 0.15f;
             }
+            if (royalGel)
+            {
+                Player.npcTypeNoAggro[1] = true;
+                Player.npcTypeNoAggro[16] = true;
+                Player.npcTypeNoAggro[59] = true;
+                Player.npcTypeNoAggro[71] = true;
+                Player.npcTypeNoAggro[81] = true;
+                Player.npcTypeNoAggro[138] = true;
+                Player.npcTypeNoAggro[121] = true;
+                Player.npcTypeNoAggro[122] = true;
+                Player.npcTypeNoAggro[141] = true;
+                Player.npcTypeNoAggro[147] = true;
+                Player.npcTypeNoAggro[183] = true;
+                Player.npcTypeNoAggro[184] = true;
+                Player.npcTypeNoAggro[204] = true;
+                Player.npcTypeNoAggro[225] = true;
+                Player.npcTypeNoAggro[244] = true;
+                Player.npcTypeNoAggro[302] = true;
+                Player.npcTypeNoAggro[333] = true;
+                Player.npcTypeNoAggro[335] = true;
+                Player.npcTypeNoAggro[334] = true;
+                Player.npcTypeNoAggro[336] = true;
+                Player.npcTypeNoAggro[537] = true;
+                Player.npcTypeNoAggro[676] = true;
+                Player.npcTypeNoAggro[667] = true;
+            }
         }
 
         public void UpdateDrowingEffect()

@@ -71,14 +71,15 @@ TerraFlamethrowerBuff: {
 	DisplayName: 泰拉燃素
 	Description:
 		'''
-		泰拉喷火器命中时使目标滴落等量于其伤害的泰拉精华
+		[i:LostbeltTraveler/TerraFlamethrower]使[c/51EF02:泰拉喷火器]命中的目标
+		滴落等量于其接触伤害的泰拉精华
 		泰拉精华不会对该目标本身造成伤害
 		'''
 }
 
 BoneSlapBuff: {
-	// DisplayName: Bone Slap Buff
-	// Description: Mods.LostbeltTraveler.Buffs.BoneSlapBuff.Description
+	DisplayName: 耳光大侠
+	Description: 给对面来一巴掌！
 }
 
 StarofHopeBuff: {
@@ -86,9 +87,9 @@ StarofHopeBuff: {
 	Description: 这是一段充满了爱与希望的故事
 }
 
-StreamingProtocalBuff: {
-	// DisplayName: Streaming Protocal Buff
-	// Description: Mods.LostbeltTraveler.Buffs.StreamingProtocalBuff.Description
+StreamingProtocolBuff: {
+	DisplayName: 高速通信
+	Description: 电话对面的朋友你们好啊！
 }
 
 TearEyeBuff: {

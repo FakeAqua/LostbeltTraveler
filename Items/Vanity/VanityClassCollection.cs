@@ -1,12 +1,13 @@
 ﻿using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods.Textbox;
+using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using LostbeltTraveler.Globals.Players.VanitySets;
 using LostbeltTraveler.Items.Useables;
 using LostbeltTraveler.Rarity.RarityDrawHandler;
 using LostbeltTraveler.Rarity.RarityParticles;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -146,6 +147,25 @@ namespace LostbeltTraveler.Items.Vanity
         {
             player.GetModPlayer<ScarletVanityPlayer>().accVanityID = Type;
         }
+        public override bool PreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
+        {
+            if (HasFlavorTooltip)
+            {
+                string mainText = this.GetLocalizationKey("DetailTooltip").ToLangValue();
+                List<SideTextPanelData> data =
+                [
+                    //new(new TooltipLine(Mod,"DetailName",mainText) {OverrideColor = VanityData.MainColor},1)
+                ];
+                string[] textBundle = mainText.Split('\n');
+                for (int i = 0; i < textBundle.Length; i++)
+                {
+                    data.Add(new(new(Mod, "DetailTooltip" + i, textBundle[i]) { OverrideColor = VanityData.MainColor }, 1));
+                }
+                //data.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionNumberName", "\n"+numberText)));
+                SideTextPanelMethods.DrawSideTextEdgePanel(lines, data, x, y, VanityData.EdgeColor, true, 0.85f, Color.Lerp(VanityData.GlowColor, Color.Black, .4f) * .45f, Color.Transparent);
+            }
+            return base.PreDrawTooltip(lines, ref x, ref y);
+        }
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
         {
             return true;
@@ -155,7 +175,6 @@ namespace LostbeltTraveler.Items.Vanity
             //通常情况下，物品不可能没有名字，而物品名称通常都在第一行，所以可以用这个来记录第一行的坐标
             if (line.IsItemName())
             {
-                TextboxManager.FirstLineY = line.Y;
                 VanityEffectClass.DrawItemName(line, VanityData, ParticleColor1, ParticleColor2);
             }
             if (line.Name == "FlavorTooltipName" && line.Mod == Mod.Name)
@@ -166,19 +185,6 @@ namespace LostbeltTraveler.Items.Vanity
             {
                 if (Item.Lostbelt().ItemBelongTo != Globals.Database.Enums.EnumItemOwner.Donator)
                     VanityEffectClass.DrawMisc(line, VanityData, ParticleColor1, ParticleColor2);
-            }
-            if (HasFlavorTooltip)
-            {
-                TextboxSettings sets = new TextboxSettings()
-                {
-                    HasTitle = false,
-                    BackgroundColor = Color.Lerp(VanityData.GlowColor, Color.Black, .4f) * .45f,
-                    TextEdgeColor = VanityData.EdgeColor,
-                    MainText = this.GetLocalizationKey("DetailTooltip").ToLangValue(),
-                    TextColor = VanityData.MainColor,
-                    BoxSize = 1
-                };
-                TextboxMethods.DrawTextboxTooltipWithBackground(line, CacheTooltipList, ref sets);
             }
         }
         public override void AddRecipes()

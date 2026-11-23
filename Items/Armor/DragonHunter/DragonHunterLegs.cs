@@ -20,7 +20,7 @@ namespace LostbeltTraveler.Items.Armor.DragonHunter
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Purple);
-            Item.defense = 40;
+            Item.defense = 50;
         }
         public float MoveSpeed = .30f;
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(MoveSpeed.ToPercent());

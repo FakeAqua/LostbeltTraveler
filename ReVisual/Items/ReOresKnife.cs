@@ -23,7 +23,7 @@ namespace LostbeltTraveler.ReVisual.Items
         }
         public sealed override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualOreknife = !vp.reVisualOreknife;
+            vp.reOreknife = !vp.reOreknife;
         }
     }
     public class ReTinKnife : ReOreKnife

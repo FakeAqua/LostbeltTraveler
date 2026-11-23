@@ -9,7 +9,7 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<ChlorophyteKnife>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualChlorophyteKnife = !vp.reVisualChlorophyteKnife;
+            vp.reChlorophyteKnife = !vp.reChlorophyteKnife;
         }
     }
 }

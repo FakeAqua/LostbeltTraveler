@@ -1,5 +1,5 @@
 LostbeltConfigClient: {
-	DisplayName: 异闻旅者：客户端设置
+	DisplayName: 客户端设置
 
 	SpecialRarity: {
 		Label: 特殊稀有度绘制
@@ -119,7 +119,7 @@ LostbeltConfigClient: {
 }
 
 LostbeltConfigServer: {
-	DisplayName: 异闻旅者：服务器设置
+	DisplayName: 服务器设置
 
 	CrossModSupport: {
 		Label: 跨模组联动
@@ -149,6 +149,21 @@ LostbeltConfigServer: {
 			允许你调整模组内武器的伤害倍率，也就是武器的强度
 			范围为0~10倍。如果你觉得模组内武器实在是太强，可以考虑这个选项
 			默认为1倍
+			'''
+	}
+
+	AnomalousInfestation: {
+		Label: 异闻侵染
+		Tooltip:
+			'''
+			[c/EE0515:贯穿游戏流程，为异闻旅者模组的核心机制之一]
+			但为了考虑与其他模组多开的可能性，添加了这一个选项以选择性开关
+			异闻侵染机制会为异闻旅者添加如下内容：
+			[i:MusicBox]部分原版Boss的专属特殊音乐
+			[i:GoldBar]敌人的攻击部分视觉效果乃至贴图层面的修改
+			[i:NightsEdge]部分原版物品获得全新的属性
+			[i:Diamond]旅人归途联动专属：旅人归途内容物品的视效重置
+			默认开启
 			'''
 	}
 }

@@ -3,12 +3,13 @@ using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
-using LostbeltTraveler.Globals.Methods.Textbox;
+using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using LostbeltTraveler.Globals.Systems.Conditions;
 using LostbeltTraveler.Items.Armor.Reaper;
 using LostbeltTraveler.Projs.Executor.ColdSteel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -37,6 +38,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
             Item.Lostbelt().CanDrawIcon = false;
             Item.Lostbelt().CanDrawGhost = true;
             Item.Lostbelt().drawBuffIconAndDetail = true;
+            Item.Lostbelt().drawFlavorTooltip = true;
             Item.shootSpeed = 10;
             Item.shoot = ProjectileType<CrimsonScytheHeldProj>();
             Item.useStyle = ItemUseStyleID.Swing;
@@ -71,30 +73,12 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
         {
             if (DownedBossSystem.downedSunGod)
             {
-                bool traditionalMode = false;
-                bool isPressingLeftAlt = Main.keyState.PressingAlt();
-                int requirements = Math.Max(0, ExecutionProgress);
-                string progressText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionProgress").ToLangValue().ToFormatValue(requirements);
-                string executionText = traditionalMode && isPressingLeftAlt ? Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionDescriptionName").ToLangValue() : progressText;
-                Color executionColor = traditionalMode && isPressingLeftAlt ? Color.Lerp(Color.Red, Color.White, .4f) : Color.GreenYellow;
-
-                int executionProgressIndex = tooltips.FindIndex(line => line.Name == "Tooltip0" && line.Mod == "Terraria");
-                if (traditionalMode)
-                {
-                    var executionLine = new TooltipLine(Mod, "ExecutionTooltipName", executionText)
-                    {
-                        OverrideColor = executionColor
-                    };
-                    tooltips.Insert(executionProgressIndex, executionLine);
-                    if (traditionalMode && isPressingLeftAlt)
-                        tooltips.ReplaceAllTooltip(this.GetLocalizationKey("ExecutionStrike"));
-                }
+                int executionProgressIndex = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
 
                 string categoryText = Mod.GetLocalizationKey($"ExecutorDamageClass.WeaponType.{ExecutorWeaponType}").ToLangValue();
                 int executionLineIndex = tooltips.FindIndex(line => line.Name == "ExecutionTooltipName" && line.Mod == "LostbeltTraveler") - 1;
-                if (!traditionalMode)
-                    executionLineIndex = executionProgressIndex - 1;
-                var categoryLine = new TooltipLine(Mod, "ExecutorWeaponTypeName", "-" + categoryText + "-")
+                executionLineIndex = executionProgressIndex;
+                var categoryLine = new TooltipLine(Mod, "ExecutorWeaponTypeName", ">" + categoryText)
                 {
                     OverrideColor = Color.LightGoldenrodYellow
                 };
@@ -111,18 +95,16 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
             };
             string killerText = this.GetLocalizationKey("KillerType." + killName);
             tooltips.CreateTooltip(killerText, Color.SkyBlue, Mod, "KillerTypeName", killerType + 1);
-            CacheTooltipList = tooltips;
             ExModifyTooltips(tooltips);
         }
-
         public override void ExModifyTooltips(List<TooltipLine> tooltips)
         {
-            int flavorTooltipIndex2 = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
-            string value = this.GetLocalizedValue("FlavorTooltips").ToLangValue();
-            //实例化toolti并注册名字
-            TooltipLine flavorTooltips = new TooltipLine(Mod, "FlavorTooltipsName", value);
-            //植入Tooltip
-            tooltips.Insert(flavorTooltipIndex2 + 1, flavorTooltips);
+            //int flavorTooltipIndex2 = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
+            //string value = this.GetLocalizedValue("FlavorTooltips").ToLangValue();
+            ////实例化toolti并注册名字
+            //TooltipLine flavorTooltips = new TooltipLine(Mod, "FlavorTooltipsName", value);
+            ////植入Tooltip
+            //tooltips.Insert(flavorTooltipIndex2 + 1, flavorTooltips);
             if (!DownedBossSystem.downedSunGod)
             {
                 string mechanic = Mod.GetLocalizationKey("Weapons.Executor.CrimsonScythe.ConditionMechanic");
@@ -130,9 +112,36 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
                 tooltips.CreateTooltip(mechanic, Color.White, null, "TlipocaScytheCondition");
             }
         }
-        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
+        public override bool PrePreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
         {
-            return true;
+            if (!DownedBossSystem.downedSunGod)
+                return false;
+
+            string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
+            int requirements = Math.Max(0, ExecutionProgress);
+            int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
+            string numberText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionProgressRevampedMode").ToLangValue().ToFormatValue(curRequirement, requirements);
+            string titleText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionDescriptionName").ToLangValue();
+            List<SideTextPanelData> list = [];
+            list.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionTitleName", titleText), 1));
+            string[] textBundle = detailText.Split('\n');
+            for (int i = 0; i < textBundle.Length; i++)
+            {
+                list.Add(new(new(Mod, "ExecutionStrikeTooltip" + i, textBundle[i]), 1));
+            }
+            list.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionNumberName", numberText)));
+            titleText = Mod.GetLocalizationKey("ExecutorDamageClass.CompanionWeapon").ToLangValue();
+            detailText = this.GetLocalizationKey("ExtraMechanic").ToLangValue();
+            List<SideTextPanelData> list2 = [];
+            list2.Add(new SideTextPanelData(new TooltipLine(Mod, "CompanionTitle", titleText)));
+            string[] textBundle2 = detailText.Split('\n');
+            for (int i = 0; i < textBundle2.Length; i++)
+            {
+                list2.Add(new(new(Mod, "CompanionTooltip" + i, textBundle2[i]), 1));
+            }
+            IReadOnlyList<SideTextPanelData>[] array = [list, list2];
+            SideTextPanelMethods.DrawMultipleSideTextPanel(lines, array, x, y, Color.DarkRed);
+            return false;
         }
         public override void PostDrawTooltipLine(DrawableTooltipLine line)
         {
@@ -141,52 +150,6 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
                 ReaperHead.ModifyTooltipLine(line);
                 return;
             }
-            //记录起始点坐标。
-            //通常情况下，物品不可能没有名字，而物品名称通常都在第一行，所以可以用这个来记录第一行的坐标
-            if (line.IsItemName())
-            {
-                TextboxManager.FirstLineY = line.Y;
-            }
-            var settingList = new List<TextboxSettings>();
-            string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
-            int requirements = Math.Max(0, ExecutionProgress);
-            int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
-            string numberText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionProgressRevampedMode").ToLangValue().ToFormatValue(curRequirement, requirements);
-            detailText += "\n" + "\n" + numberText;
-            //一堆设置，巴拉巴拉。
-            TextboxSettings sets = new()
-            {
-                TitleText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionDescriptionName").ToLangValue(),
-                TitleTextColor = Color.Lerp(Color.Crimson, Color.WhiteSmoke, 1f) with { A = 255 },
-                TitleEdgeColor = Color.DarkRed,
-                HasTitle = true,
-                BackgroundColor = Color.Lerp(Color.WhiteSmoke, Color.Black, .9f) * .60f,
-                BackgroundEdgeColor = Color.Lerp(Color.White, Color.Red, 0.0f) * .78f,
-                MainText = detailText,
-                TextColor = Color.White,
-                TextEdgeColor = Color.Black,
-                TitleTextSize = 1.15f,
-                BoxSize = 1
-            };
-            settingList.Add(sets);
-            //最后传值。
-            detailText = this.GetLocalizationKey("ExtraMechanic").ToLangValue();
-            sets = new TextboxSettings()
-            {
-                TitleText = Mod.GetLocalizationKey("ExecutorDamageClass.CompanionWeapon").ToLangValue(),
-                TitleTextColor = Color.Lerp(Color.Crimson, Color.WhiteSmoke, 1f) with { A = 255 },
-                TitleEdgeColor = Color.DarkRed,
-                HasTitle = true,
-                BackgroundColor = Color.Lerp(Color.WhiteSmoke, Color.Black, .9f) * .60f,
-                BackgroundEdgeColor = Color.Lerp(Color.White, Color.Red, 0.0f) * .78f,
-                MainText = detailText,
-                TextColor = Color.White,
-                TextEdgeColor = Color.Black,
-                TitleTextSize = 1.15f,
-                BoxSize = 1
-            };
-            settingList.Add(sets);
-            TextboxMethods.DrawMultipleTextboxes(line, CacheTooltipList, settingList, 30);
         }
         public override void HoldItem(Player player)
         {

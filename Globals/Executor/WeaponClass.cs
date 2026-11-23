@@ -1,8 +1,9 @@
 ﻿using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
-using LostbeltTraveler.Globals.Methods.Textbox;
+using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -30,6 +31,7 @@ namespace LostbeltTraveler.Globals.Executor
         public virtual int ExecutionProgress => 10;
         public virtual float ExecutionStrikeDamageMult => 1.0f;
         public virtual float TextBoxSize => 1f;
+        public virtual int SupportWeaponBuff => -1;
         public virtual bool BlockTextboxDetail()
         {
             return false;
@@ -45,11 +47,9 @@ namespace LostbeltTraveler.Globals.Executor
                 ScarletItemIDSets.ForceToAutomaticExecute[Type] = true;
 
         }
-
         public virtual void ExSSD()
         {
         }
-
         public override void SetDefaults()
         {
             Item.width = Item.height = 16;
@@ -81,71 +81,62 @@ namespace LostbeltTraveler.Globals.Executor
             }
             return false;
         }
-        public int FirstLineY = -1;
-        public IReadOnlyList<TooltipLine> CacheTooltipList = null;
+        public virtual bool PrePreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
+        {
+            return true;
+        }
+        public override bool PreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
+        {
+            if (!PrePreDrawTooltip(lines, ref x, ref y))
+                return base.PreDrawTooltip(lines, ref x, ref y);
+            if (!BlockTextboxDetail())
+            {
+                string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
+                int requirements = Math.Max(0, ExecutionProgress);
+                int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
+                string numberText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionProgressRevampedMode").ToLangValue().ToFormatValue(curRequirement, requirements);
+                string titleText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionDescriptionName").ToLangValue();
+                Color c = Color.DarkRed;
+                if (SupportWeaponBuff != -1 && ExecutorWeaponType == ExecutorWeaponType.Assistance)
+                {
+                    titleText = Mod.GetLocalizationKey("Buffs." + Name + "Buff.DisplayName").ToLangValue();
+                    c = Color.DarkSlateBlue;
+                }
+                TooltipLine titleLine = new TooltipLine(Mod, "ExecutionTitleName", titleText);
+                List<SideTextPanelData> list =
+                    [
+                    new SideTextPanelData(titleLine,1,SupportWeaponBuff),
+                    ];
+                string[] textBundle = detailText.Split('\n');
+                for (int i = 0; i < textBundle.Length; i++)
+                {
+                    list.Add(new(new(Mod, "ExecutionStrikeTooltip" + i, textBundle[i]), 1));
+                }
+                list.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionNumberName", "\n" + numberText)));
+                SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, c);
+            }
+            return base.PreDrawTooltip(lines, ref x, ref y);
+        }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (!BlockTextboxDetail())
             {
-                int executionProgressIndex = tooltips.FindIndex(line => line.Name == "Tooltip0" && line.Mod == "Terraria");
+                int executionProgressIndex = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
+
                 string categoryText = Mod.GetLocalizationKey($"ExecutorDamageClass.WeaponType.{ExecutorWeaponType}").ToLangValue();
                 int executionLineIndex = tooltips.FindIndex(line => line.Name == "ExecutionTooltipName" && line.Mod == "LostbeltTraveler") - 1;
-                executionLineIndex = executionProgressIndex - 1;
-                var categoryLine = new TooltipLine(Mod, "ExecutorWeaponTypeName", $"-{categoryText}-")
+                executionLineIndex = executionProgressIndex;
+                var categoryLine = new TooltipLine(Mod, "ExecutorWeaponTypeName", ">" + categoryText)
                 {
                     OverrideColor = Color.LightGoldenrodYellow
                 };
                 tooltips.Insert(executionLineIndex + 1, categoryLine);
             }
-            CacheTooltipList = tooltips;
             ExModifyTooltips(tooltips);
         }
         public virtual void ExModifyTooltips(List<TooltipLine> tooltips)
         {
 
-        }
-        public override void PostDrawTooltipLine(DrawableTooltipLine line)
-        {
-            if (!BlockTextboxDetail())
-            {
-                //记录起始点坐标。
-                //通常情况下，物品不可能没有名字，而物品名称通常都在第一行，所以可以用这个来记录第一行的坐标
-                if (line.IsItemName())
-                {
-                    TextboxManager.FirstLineY = line.Y;
-                }
-                string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
-                if (ExecutionDetail.Length > 0)
-                    detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue().ToFormatValue(ExecutionDetail);
-                int requirements = Math.Max(0, ExecutionProgress);
-                int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
-                string numberText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionProgressRevampedMode").ToLangValue().ToFormatValue(curRequirement, requirements);
-                detailText += "\n" + "\n" + numberText;
-                //一堆设置，巴拉巴拉。
-                TextboxSettings sets = new TextboxSettings()
-                {
-                    TitleText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionDescriptionName").ToLangValue(),
-                    TitleTextColor = Color.Lerp(Color.Crimson, Color.WhiteSmoke, 1f) with { A = 255 },
-                    TitleEdgeColor = Color.DarkRed,
-                    HasTitle = true,
-                    BackgroundColor = Color.Lerp(Color.WhiteSmoke, Color.Black, .9f) * .60f,
-                    BackgroundEdgeColor = Color.Lerp(Color.White, Color.Red, 0.0f) * .78f,
-                    MainText = detailText,
-                    TextColor = Color.White,
-                    TextEdgeColor = Color.Black,
-                    TitleTextSize = 1.15f,
-                    BoxSize = TextBoxSize
-                };
-                //最后传值。
-                TextboxMethods.DrawTextboxTooltipWithBackground(line, CacheTooltipList, ref sets);
-            }
-            ExPostDrawTooltipLine(line);
-        }
-        public virtual void ExPostDrawTooltipLine(DrawableTooltipLine line) { }
-        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
-        {
-
-            return base.PreDrawTooltipLine(line, ref yOffset);
         }
         public virtual void ExSD() { }
     }

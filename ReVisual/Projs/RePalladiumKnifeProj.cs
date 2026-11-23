@@ -16,7 +16,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public List<float> RotList2 = [];
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualPalladiumKnife;
+            return proj.IsMe() && vp.rePalladiumKnife;
         }
         public override void RevisualUpdate(Projectile proj)
         {

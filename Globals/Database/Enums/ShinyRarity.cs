@@ -21,6 +21,7 @@
         Supporter,
         Developer,
         Hallowed,
-        Gunwitch
+        Gunwitch,
+        Final
     }
 }

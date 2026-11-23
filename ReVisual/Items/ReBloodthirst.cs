@@ -9,7 +9,7 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<Bloodthirst>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualBloodthirst = !vp.reVisualBloodthirst;
+            vp.reBloodthirst = !vp.reBloodthirst;
         }
     }
 }

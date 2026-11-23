@@ -15,7 +15,7 @@ CrownofSilveryLight: {
 		Resources obtained from enemies in the Hallow
 		Perhaps a sign of some Lostbelt's arrival
 		'''
-	FlavorTooltip:
+	FlavorTooltips:
 		'''
 		A crown brimming with the radiance of moonlight
 		Granted to those who dedicate themselves to serving the gods
@@ -25,7 +25,7 @@ CrownofSilveryLight: {
 UniversalCube: {
 	DisplayName: Universal Cube
 	Tooltip: One of the Ascension Material
-	FlavorTooltip:
+	FlavorTooltips:
 		'''
 		Semi-matter that can change into any form or material, 
 		according to the data entered into it.

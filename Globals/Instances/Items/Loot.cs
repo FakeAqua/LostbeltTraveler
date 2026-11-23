@@ -120,7 +120,6 @@ namespace LostbeltTraveler.Globals.Instances.Items
             if (crateType == ItemType<QuakyCrate>())
             {
                 loot.AddLoot(ItemType<FishingCoinEmerial>(), 5, 5, 15);
-
             }
             if (crateType == ItemType<SolarCrate>() || crateType == ItemType<ShinyCrate>())
             {

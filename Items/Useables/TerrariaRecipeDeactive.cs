@@ -31,7 +31,6 @@ namespace LostbeltTraveler.Items.Useables
         public override void RightClick(Player player)
         {
             player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TerrariaRecipe>());
-            //player.Lostbelt().terraRecipe = false;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

@@ -382,9 +382,24 @@ Vibrant: {
 	Tooltip: ""
 }
 
-GrandGemYoyo: {
-	DisplayName: Supreme Gem Yoyo
-	Tooltip: Contains the power of all gem yoyos
+SupremeGem: {
+	DisplayName: Supreme Gem
+	Tooltip:
+		'''
+		Provides[ScarletBuff/LostbeltTraveler/AntiKnockbackBuff] when held
+		Contains the essence of all gem yoyos
+		'''
+	GemTooltip:
+		'''
+		[i:Amethyst][c/DB45ED:Amethyst] increases its hitbox size
+		[i:Topaz][c/D1BA08:Topaz] allows it to pass through blocks
+		[i:Sapphire][c/4F57FF:Sapphire] greatly increases its attack rates
+		[i:Emerald][c/0DA129:Emerald] grants the player money, this can be toggled off by holding Shift and right-clicking
+		[i:ContinentOfJourney/Onyx][c/6C44DB:Onyx] spawns and explodes along its path. When the yoyo itself hits an enemy, the explosions will spawn [i:Diamond][c/E3E3E3:Diamonds]
+		[i:Diamond][c/E3E3E3:Diamond] will home in on enemies and spawns [i:Ruby][c/F22424:Rubies] on hit
+		[i:Ruby][c/F22424:Ruby] heals the player and spawns up to 5 [i:Amber][c/D17C0D:Ambers]
+		[i:Amber][c/D17C0D:Amber] provides up to 10% damage reduction based on the total number present, and reflects some incoming projectiles from behind
+		'''
 }
 
 OnyxYoyo: {

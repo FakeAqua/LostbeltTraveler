@@ -224,8 +224,7 @@ namespace LostbeltTraveler.Projs.ParryShield
                 Vector2 dir = ((Projectile.Center + offset).GetNormalVector2(target.Center)).ToSafeNormalize(Vector2.UnitX);
                 Vector2 finalDir = Owner.Center.GetNormalVector2(target.Center) - dir * ParryPower;
                 target.PunchTarget(dir, ParryPower);
-                target.Lostbelt().parryNoPassingWall = target.noTileCollide;
-                target.Lostbelt().parryTime = GetSeconds(5);
+                target.AddParry(Owner, GetSeconds(3));
                 new ParryParticle(target.Center, 1, 40).Spawn();
                 ScreenShakeSystem.AddScreenShakes(target.Center, 30, 30, RandRotTwoPi, RandRotTwoPi);
                 ScarletSound(LostbeltSoundAssets.Tlipoca_StoneBonk, target.Center, pitch: .24f, pitchVariance: .1f, variantType: 2);

@@ -31,6 +31,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
             Item.SetUpNoUseGraphicItem();
             Item.SetUpRarityPrice(ItemRarityID.LightRed);
             Item.Lostbelt().drawBuffIconAndDetail = true;
+            Item.Lostbelt().drawFlavorTooltip = true;
             Item.shoot = ProjectileType<DreamlessNightProj>();
             Item.UseSound = LostbeltSoundAssets.Misc_KnifeToss with { MaxInstances = 0, Pitch = -0.5f, Variants = [1] };
             Item.useStyle = ItemUseStyleID.Swing;
@@ -41,15 +42,6 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
         }
         public override void ExModifyTooltips(List<TooltipLine> tooltips)
         {
-            int flavorTooltipIndex2 = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
-            string value = this.GetLocalizedValue("FlavorTooltips").ToLangValue();
-            //实例化toolti并注册名字
-            TooltipLine flavorTooltips = new(Mod, "FlavorTooltipsName", "「" + value + "」")
-            {
-                OverrideColor = Color.Lerp(Color.MediumPurple, Color.LightPink, 0.3f)
-            };
-            //植入Tooltip
-            tooltips.Insert(flavorTooltipIndex2 + 1, flavorTooltips);
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

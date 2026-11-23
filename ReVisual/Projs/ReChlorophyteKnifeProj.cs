@@ -26,7 +26,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         }
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualChlorophyteKnife;
+            return proj.IsMe() && vp.reChlorophyteKnife;
         }
         public void TopStarShape(Vector2 drawPos, Texture2D starShape, Projectile projectile)
         {
@@ -37,7 +37,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         }
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
-            bool isEnable = IsMyPlayer(projectile, out ReVisualPlayer player) && player.reVisualChlorophyteKnife;
+            bool isEnable = IsMyPlayer(projectile, out ReVisualPlayer player) && player.reChlorophyteKnife;
             if (!isEnable)
                 return base.PreDraw(projectile, ref lightColor);
             if (PosList.Count < 1 && RotList.Count < 1)

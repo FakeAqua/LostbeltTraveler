@@ -11,12 +11,12 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<BloodScepter>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualBloodScepter = !vp.reVisualBloodScepter;
-            item.noUseGraphic = vp.reVisualBloodScepter;
+            vp.reBloodScepter = !vp.reBloodScepter;
+            item.noUseGraphic = vp.reBloodScepter;
         }
         public override void UpdateInventory(Item item, Player player)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualBloodScepter)
+            if (player.GetModPlayer<ReVisualPlayer>().reBloodScepter)
             {
                 item.noUseGraphic = true;
             }
@@ -24,7 +24,7 @@ namespace LostbeltTraveler.ReVisual.Items
         }
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualBloodScepter)
+            if (player.GetModPlayer<ReVisualPlayer>().reBloodScepter)
             {
                 for (int i = 0; i < 16; i++)
                 {

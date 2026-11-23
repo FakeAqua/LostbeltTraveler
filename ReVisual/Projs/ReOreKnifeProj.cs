@@ -39,7 +39,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int ApplyProj => ProjectileType<TinKnife>();
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualOreknife;
+            return proj.IsMe() && vp.reOreknife;
         }
         public override void OreParticle(Projectile proj, Vector2 velDir)
         {
@@ -59,7 +59,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int ApplyProj => ProjectileType<CopperKnife>();
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualOreknife;
+            return proj.IsMe() && vp.reOreknife;
         }
         public override void OreParticle(Projectile proj, Vector2 velDir)
         {
@@ -78,7 +78,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int ApplyProj => ProjectileType<IronKnife>();
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualOreknife;
+            return proj.IsMe() && vp.reOreknife;
         }
         public override void OreParticle(Projectile proj, Vector2 velDir)
         {
@@ -99,7 +99,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int ApplyProj => ProjectileType<LeadKnife>();
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualOreknife;
+            return proj.IsMe() && vp.reOreknife;
         }
         public override void OreParticle(Projectile proj, Vector2 velDir)
         {
@@ -117,7 +117,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int ApplyProj => ProjectileType<TungstenKnife>();
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualOreknife;
+            return proj.IsMe() && vp.reOreknife;
         }
         public override void OreParticle(Projectile proj, Vector2 velDir)
         {
@@ -139,7 +139,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int ApplyProj => ProjectileType<SilverKnife>();
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualOreknife;
+            return proj.IsMe() && vp.reOreknife;
         }
         public override void OreParticle(Projectile proj, Vector2 velDir)
         {
@@ -160,7 +160,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int ApplyProj => ProjectileType<GoldKnife>();
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualOreknife;
+            return proj.IsMe() && vp.reOreknife;
         }
         public override void OreParticle(Projectile proj, Vector2 velDir)
         {
@@ -181,7 +181,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int ApplyProj => ProjectileType<PlatinumKnife>();
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualOreknife;
+            return proj.IsMe() && vp.reOreknife;
         }
         public override void OreParticle(Projectile proj, Vector2 velDir)
         {

@@ -21,9 +21,9 @@ namespace LostbeltTraveler.Items.Armor.DragonHunter
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Purple);
-            Item.defense = 50;
+            Item.defense = 60;
         }
-        public int Crit = 50;
+        public int Crit = 30;
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(Crit + "%");
         public override void UpdateEquip(Player player)
         {

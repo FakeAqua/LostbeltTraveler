@@ -1,4 +1,5 @@
-﻿using LostbeltTraveler.Globals.Database.Localization;
+﻿using LostbeltTraveler.Globals.Configs;
+using LostbeltTraveler.Globals.Database.Localization;
 using LostbeltTraveler.Globals.Graphics.Particles;
 using LostbeltTraveler.Globals.Keybinds;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace LostbeltTraveler.ReVisual.Class
         public virtual int ApplyItem => -1;
         public sealed override bool AppliesToEntity(Item entity, bool lateInstantiation)
         {
-            return entity.type == ApplyItem;
+            return entity.type == ApplyItem && LostbeltConfigServer.Instance.AnomalousInfestation;
         }
         public sealed override bool InstancePerEntity => true;
         public sealed override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

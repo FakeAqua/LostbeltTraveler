@@ -4,6 +4,7 @@ using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
 using LostbeltTraveler.Items.Vanity;
 using LostbeltTraveler.Items.Vanity.Arceca;
+using System.Collections.ObjectModel;
 using Terraria.ID;
 using Terraria.ModLoader;
 

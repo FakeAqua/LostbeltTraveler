@@ -1,45 +1,31 @@
-﻿using ContinentOfJourney.Items.Material;
-using LostbeltTraveler.Core.ParticleECS;
+﻿using LostbeltTraveler.Core.ParticleECS;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
+using LostbeltTraveler.Items.Materials;
 using LostbeltTraveler.Projs.General;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Accessories
 {
-    public class FinalBarBalloon : LostbeltItemClass
+    public class Retribution : LostbeltItemClass
     {
         public override string AssetPath => AssetHandler.Equips;
-        public int LifeRegen = 4;
-        public int LifeStat = 300;
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(LifeStat, LifeRegen.ToLifeRegenFormat());
         public override void SetStaticDefaults()
         {
-            LostbeltList.ShinyRarityItemDictionary.Add(Type, Globals.Database.Enums.ShinyRarityType.Hallowed);
+            LostbeltList.ShinyRarityItemDictionary.Add(Type, Globals.Database.Enums.ShinyRarityType.Final);
         }
         public override void ExSD()
         {
-            Item.defense = 5;
             Item.accessory = true;
             Item.SetUpRarityPrice(ItemRarityID.Orange);
             Item.Lostbelt().drawBuffIcon = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.ApplyMaxLifeBonus(LifeStat);
-            player.Lostbelt().lifeRegenPool += LifeRegen;
-            //player.GetJumpState(ExtraJump.CloudInABottle).Enable();
-            //player.GetJumpState(ExtraJump.BlizzardInABottle).Enable();
-            //player.GetJumpState(ExtraJump.SandstormInABottle).Enable();
-            //player.GetJumpState(ExtraJump.TsunamiInABottle).Enable();
-            //player.GetJumpState(ExtraJump.FartInAJar).Enable();
-            //player.GetJumpState<SupremeBalloonJump>().Enable();
-            //player.GetJumpState<LifeBalloonExJump>().Enable();
             player.GetJumpState<FinalBarBalloonJump>().Enable();
             player.jumpBoost = true;
             player.autoJump = true;
@@ -50,7 +36,7 @@ namespace LostbeltTraveler.Items.Accessories
         {
             CreateRecipe().
                 AddIngredient<LifeBalloon>().
-                AddIngredient<FinalBar>(10).
+                AddIngredient<CrownofSilveryLight>(15).
                 AddTile(FinalAnvilTile).
                 Register();
         }

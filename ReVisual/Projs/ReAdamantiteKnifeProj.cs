@@ -16,7 +16,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public List<Vector2> PosList2 = [];
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualAdamantiteKnife;
+            return proj.IsMe() && vp.reAdamantiteKnife;
         }
         public override void RevisualUpdate(Projectile proj)
         {

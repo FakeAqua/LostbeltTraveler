@@ -75,6 +75,7 @@ Typeless: {
 	AutoSupremeStructureProj.DisplayName: Auto Supreme Structure Proj
 	FinalBarBalloonThunder.DisplayName: Final Bar Balloon Thunder
 	DesterrannachtCursedBullet.DisplayName: Desterrannacht Cursed Bullet
+	SupremeGemYoyoProjDiamond.DisplayName: Supreme Gem Yoyo Proj Diamond
 }
 
 Executor: {
@@ -429,6 +430,13 @@ Melee: {
 	RaceAgainstTimeProj.DisplayName: Race Against Time Proj
 	OnyxYoyoProj.DisplayName: Onyx Yoyo Proj
 	OnyxYoyoOnyx.DisplayName: Onyx Yoyo Onyx
+	SupremeGemYoyoProj.DisplayName: Supreme Gem Yoyo Proj
+	SupremeGemYoyoProjAmber.DisplayName: Supreme Gem Yoyo Proj Amber
+	SupremeGemYoyoProjOnyx.DisplayName: Supreme Gem Yoyo Proj Onyx
+	SupremeGemYoyoProjRuby.DisplayName: Supreme Gem Yoyo Proj Ruby
+	SupremeGemYoyoProjAmethystSmear.DisplayName: Supreme Gem Yoyo Proj Amethyst Smear
+	SupremeGemYoyoProjAmberMounted.DisplayName: Supreme Gem Yoyo Proj Amber Mounted
+	SupremeGemYoyoProjDiamond.DisplayName: Supreme Gem Yoyo Proj Diamond
 }
 
 Pets: {

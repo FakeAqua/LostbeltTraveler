@@ -4,8 +4,8 @@ using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods.Textbox;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -28,33 +28,11 @@ namespace LostbeltTraveler.Items.Useables
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Red);
-            Item.Lostbelt().drawBuffIconAndDetail = true;
+            Item.Lostbelt().drawFlavorTooltip = true;
+            Item.Lostbelt().drawBuffIcon = true;
+            Item.Lostbelt().noFancyFlavorTooltip = true;
             Item.value = Item.buyPrice(gold: 5, silver: 30);
             Item.DefaultToFood(32, 32, BuffType<FruitofEternityBuff>(), GetSeconds(60) * 5);
-        }
-        public IReadOnlyList<TooltipLine> CacheTooltipList = null;
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            CacheTooltipList = tooltips;
-        }
-
-        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
-        {
-            if (line.IsItemName())
-            {
-                TextboxManager.FirstLineY = line.Y;
-            }
-            string text = this.GetLocalizationKey("DetailTooltip").ToLangValue();
-            TextboxSettings sets = new TextboxSettings
-                (
-                backgroundColor: Color.White * .24f,
-                textColor: Color.White,
-                textEdgeColor: Color.Lerp(Color.HotPink, Color.Black, .74f),
-                mainText: text,
-                hasTitle: false
-                );
-            //TextboxMethods.DrawTextboxTooltipWithBackground(line, CacheTooltipList, ref sets);
-            return true;
         }
         public override void AddRecipes()
         {

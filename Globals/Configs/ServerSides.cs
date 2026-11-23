@@ -18,8 +18,8 @@ namespace LostbeltTraveler.Globals.Configs
         public bool CrossModSupport { get; set; }
         [BackgroundColor(211, 211, 211, 192)]
         [ReloadRequired]
-        [DefaultValue(false)]
-        public bool LostbeltJourneyTestAI { get; set; }
+        [DefaultValue(true)]
+        public bool AnomalousInfestation { get; set; }
         [BackgroundColor(211, 211, 211, 192)]
         [Range(0, 10f)]
         [DefaultValue(1f)]

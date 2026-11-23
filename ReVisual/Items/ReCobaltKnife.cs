@@ -9,7 +9,7 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<CobaltKnife>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualCobaltKnife = !vp.reVisualCobaltKnife;
+            vp.reCobaltKnife = !vp.reCobaltKnife;
         }
     }
 }

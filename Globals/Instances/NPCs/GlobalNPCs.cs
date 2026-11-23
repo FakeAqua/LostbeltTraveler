@@ -26,27 +26,20 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
         public bool theBleachingBuffEnemy = false;
         public int isUnderPreciousTargetCross = 2;
         public bool foreverNightBuff = false;
-        public bool isBeingParry = false;
-        public bool parryNoPassingWall = false;
-        public float parryTime = 0;
-        public float parryPrevSpeed = -1;
         public int badLifeRegenPool = 0;
         public int cursedHeavyStack = 0;
         public bool inHorror = false;
         public float horrorLerp = 0;
         public float cursedLerp = 0;
         public bool inCursedHeavy = false;
+        public float ParryProgress = 0;
         public override void ResetEffects(NPC npc)
         {
             if (cursedHeavyStack != 0 && !inHorror)
                 cursedHeavyStack = 0;
             if (cursedLerp != 0 && !inCursedHeavy)
                 cursedLerp = 0;
-            //没被格挡的时候，每时每刻都得查看这个nopassingwall的情况
-            if (!isBeingParry)
-            {
-                parryNoPassingWall = npc.noTileCollide;
-            }
+            ParryingTimerReset(npc);
             terraFlamethrowerDebuff = false;
             absoluteZeroBuffEnemy = false;
             theBleachingBuffEnemy = false;
@@ -97,32 +90,36 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
         {
             SmoothLerpingSelf(inHorror, ref horrorLerp);
             SmoothLerpingSelf(inCursedHeavy, ref cursedLerp);
-            if (parryTime > 0 && !npc.CountAsBoss())
-            {
-                parryTime--;
-                if (parryTime < 60)
-                {
-                    dizzedStarIconLerp = Lerp(dizzedStarIconLerp, 0f, parryTime / 30f);
 
-                }
-                else
-                {
-                    dizzedStarIconLerp = Lerp(dizzedStarIconLerp, 1.01f, .12f);
-                }
-                if (parryTime < 1)
-                {
-                    isBeingParry = false;
-                    npc.noTileCollide = parryNoPassingWall;
-                    return true;
-                }
-                isBeingParry = true;
-                npc.velocity.X *= .96f;
-                npc.velocity.Y += 0.85f;
-                if (npc.velocity.Y > 32f)
-                    npc.velocity.Y = 32f;
-                npc.noTileCollide = false;
-                return true;
-            }
+            //if (parryTime > 0 && !npc.CountAsBoss())
+            //{
+            //    parryTime--;
+            //    if (parryTime < 60)
+            //    {
+            //        dizzedStarIconLerp = Lerp(dizzedStarIconLerp, 0f, parryTime / 30f);
+
+            //    }
+            //    else
+            //    {
+            //        dizzedStarIconLerp = Lerp(dizzedStarIconLerp, 1.01f, .12f);
+            //    }
+            //    if (parryTime < 1)
+            //    {
+            //        isBeingParry = false;
+            //        npc.noTileCollide = parryNoPassingWall;
+            //        return true;
+            //    }
+            //    isBeingParry = true;
+            //    npc.velocity.X *= .96f;
+            //    npc.velocity.Y += 0.85f;
+            //    if (npc.velocity.Y > 32f)
+            //        npc.velocity.Y = 32f;
+            //    npc.noTileCollide = false;
+            //    return true;
+            //}
+            bool activeParry = UpdateParrying(npc);
+            if (!activeParry)
+                return false;
             return base.PreAI(npc);
         }
         public override void PostAI(NPC npc)
@@ -218,7 +215,7 @@ namespace LostbeltTraveler.Globals.Instances.NPCs
             Span<BuffIconVisual> icons = stackalloc BuffIconVisual[8];
             int n = 0;
 
-            if (parryTime > 0)
+            if (parryLength > 0)
             {
                 icons[n++] = new BuffIconVisual(BuffType<ParrySpin>(), dizzedStarIconLerp, 50, 1, 5);
 

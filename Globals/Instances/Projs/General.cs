@@ -13,6 +13,7 @@ namespace LostbeltTraveler.Globals.Instances.Projs
     public partial class LostbeltGlobalProjs : GlobalProjectile
     {
         public override bool InstancePerEntity => true;
+        public bool isBounceByAmber = false;
         public int GlobalTargetIndex = -1;
         public bool FirstFrame = false;
         public bool IsHitOnEnablFocusMechanicProj = false;

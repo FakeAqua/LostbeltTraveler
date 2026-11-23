@@ -399,11 +399,8 @@ RuShiWoWen: {
 	BanMinionList: 召唤物禁用列表({1}){0}
 	FlavorTooltips:
 		'''
-		南无如来，应供
-		正遍知，明行足
-		善逝，世间解
-		无上士，调御丈夫;
-		天人师，佛，世尊
+		南无如来，应供，正遍知，明行足，善逝
+		世间解，无上士，调御丈夫，天人师，佛，世尊
 		'''
 }
 
@@ -776,14 +773,12 @@ SupremeBundleBalloon: {
 		'''
 }
 
-FinalBarBalloon: {
+Retribution: {
 	DisplayName: 报应
 	Tooltip:
 		'''
-		增加{0}最大生命上限，{1}生命恢复速度
 		可让持有者无限连跳
 		增加跳跃高度，消除掉落伤害
-		最大生命上限在佩戴[i:ContinentOfJourney/WhaleBoneCharm]时失效
 		获得[i:ContinentOfJourney/DarkHorseshoeBalloon]与[ScarletBuff/Terraria/Honey]的效果
 		在进行连跳时，会向附近的敌人降下雷罚
 		“所以，你们将会看到报应。”
@@ -910,4 +905,67 @@ YoyoRopeSapphire: {
 YoyoRopeTopaz: {
 	DisplayName: 黄玉绳
 	Tooltip: "[i:LostbeltTraveler/TopazYoyo]充盈着黄玉的力量[i:Topaz]"
+}
+
+Extinction: {
+	DisplayName: 灭亡
+	Tooltip:
+		'''
+		增加{0}伤害，{1}暴击概率
+		增加{2}暴击伤害
+		攻击无视敌人{3}的护甲
+		“对人类而言尽是过错的，仍正疯狂执行的可能性。”
+		'''
+}
+
+Samsara: {
+	DisplayName: 轮回
+	Tooltip:
+		'''
+		使你[ScarletBuff/LostbeltTraveler/AntiKnockbackBuff]
+		增加{0}伤害减免，获得[i:HeroShield]的效果
+		根据损失的生命值与最大生命值的比率增加生命再生速度
+		最低+1HP/s生命再生，最大{1}生命再生
+		允许你冲刺撞穿敌人并获得无敌帧
+		“再来一次，或许会有所不同。”
+		'''
+}
+
+Fragment: {
+	DisplayName: 断章
+	Tooltip:
+		'''
+		增加{0}伤害减免，不可以与[i:WormScarf]叠加
+		几乎所有史莱姆，包括史莱姆王与史莱姆皇后在内对你友好
+		静止不动时大大提升生命再生速度
+		随着时间的推移在你附近生成追踪敌人的精华
+		有机会制造幻象并躲避攻击
+		躲避后暂时增加暴击率
+		可使附近被击中的敌人陷入混乱
+		“一篇残存的诗篇，隐藏着一个答案。”
+		'''
+}
+
+Tomorrow: {
+	DisplayName: 未来
+	Tooltip:
+		'''
+		增加{0}伤害与{1}暴击概率，敌人不太可能会攻击你
+		可爬墙、游泳、自动跳跃、奔跑并免疫摔落伤害
+		可进行猛冲，有机会避开攻击
+		猛冲时向上发射缓慢坠落的火星
+		“既然看到了未来，那么只需要到达那里。”
+		'''
+}
+
+Adjudication: {
+	DisplayName: 裁决
+	Tooltip:
+		'''
+		受到致命一击时，将你的状态回溯10秒
+		该效果有10分钟冷却
+		团队的治疗量提升14点
+		自身受到伤害时，将结算后的伤害均摊给队内的所有人员
+		“汝等并不纯洁，身负罪孽，但并非邪恶。”
+		'''
 }

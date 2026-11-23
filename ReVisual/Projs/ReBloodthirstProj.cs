@@ -15,7 +15,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override int TotalListCount => 6;
         public override bool ShouldApplyRevisual(Projectile proj, ReVisualPlayer vp)
         {
-            return proj.IsMe() && vp.reVisualBloodthirst;
+            return proj.IsMe() && vp.reBloodthirst;
         }
         public override bool PreKill(Projectile projectile, int timeLeft)
         {

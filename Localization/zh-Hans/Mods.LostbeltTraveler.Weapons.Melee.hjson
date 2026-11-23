@@ -384,9 +384,24 @@ Vibrant: {
 	Tooltip: 释放通天藤蔓缠绕敌人
 }
 
-GrandGemYoyo: {
+SupremeGem: {
 	DisplayName: 至臻宝石悠悠球
-	Tooltip: 蕴含了所有宝石悠悠球的精华
+	Tooltip:
+		'''
+		手持时提供[ScarletBuff/LostbeltTraveler/AntiKnockbackBuff]
+		蕴含了所有宝石悠悠球的精华
+		'''
+	GemTooltip:
+		'''
+		[i:Amethyst][c/DB45ED:紫水晶]扩大其碰撞体积
+		[i:Topaz][c/D1BA08:黄玉]使其无视物块
+		[i:Sapphire][c/4F57FF:蓝玉]大幅度提升其攻击频率
+		[i:Emerald][c/0DA129:绿宝石]会给予玩家金钱，可通过按住Shift时右键禁用这个功能
+		[i:ContinentOfJourney/Onyx][c/6C44DB:玛瑙]会沿途生成并爆炸，悠悠球本身命中时，爆炸将会生成[i:Diamond][c/E3E3E3:钻石]
+		[i:Diamond][c/E3E3E3:钻石]将会追踪敌人，并在命中时生成[i:Ruby][c/F22424:红玉]
+		[i:Ruby][c/F22424:红玉]会为玩家提供治疗，并为玩家生成最多5个[i:Amber][c/D17C0D:琥珀]
+		[i:Amber][c/D17C0D:琥珀]会依据在场的总个数，为玩家提供最大10%的伤害减免，并反弹后方来犯的部分弹幕
+		'''
 }
 
 OnyxYoyo: {

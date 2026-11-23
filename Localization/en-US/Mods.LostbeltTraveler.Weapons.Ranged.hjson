@@ -8,8 +8,8 @@ TerraFlamethrower: {
 	Tooltip:
 		'''
 		Bathe your enemies in the dazzling light of Terra
-		Press right-click to throw a phlogiston grenade that explodes, applying[ScarletDebuff/LostbeltTraveler/TerraFlamethrowerBuff]
-		80% chance to not consume gel
+		Right-click to throw a grenade that explodes, applying[ScarletDebuff/LostbeltTraveler/TerraFlamethrowerBuff]
+		Dose not consume gel
 		'''
 }
 

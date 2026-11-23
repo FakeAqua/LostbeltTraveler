@@ -2,7 +2,7 @@
 
 namespace LostbeltTraveler.Buffs.GoodBuffs
 {
-    public class StreamingProtocalBuff : ExecutorWhipBuff
+    public class StreamingProtocolBuff : ExecutorWhipBuff
     {
         public override void Update(NPC npc, ref int buffIndex)
         {

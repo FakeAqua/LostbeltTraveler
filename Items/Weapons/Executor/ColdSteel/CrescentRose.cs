@@ -32,6 +32,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
             Item.SetUpNoUseGraphicItem(true);
             Item.SetUpRarityPrice(ItemRarityID.Red);
             Item.Lostbelt().drawBuffIconAndDetail = true;
+            Item.Lostbelt().drawFlavorTooltip = true;
             Item.shootSpeed = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 5;
@@ -54,25 +55,17 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
         }
         public override void ExModifyTooltips(List<TooltipLine> tooltips)
         {
-            int flavorTooltipIndex2 = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
-            string value = this.GetLocalizedValue("FlavorTooltips").ToLangValue();
-            //实例化toolti并注册名字
-            TooltipLine flavorTooltips = new(Mod, "FlavorTooltipsName", value)
-            {
-                OverrideColor = Color.Lerp(Color.MediumPurple, Color.LightPink, 0.3f)
-            };
-            //植入Tooltip
-            tooltips.Insert(flavorTooltipIndex2 + 1, flavorTooltips);
         }
-        public override void ExPostDrawTooltipLine(DrawableTooltipLine line)
+        public override void PostDrawTooltipLine(DrawableTooltipLine line)
         {
             if (line.IsItemName())
                 DrawItemName(line);
             if (line.Mod == Mod.Name && line.Name == "FlavorTooltipsName")
             {
                 DrawFlavorName(line);
-
             }
+
+            base.PostDrawTooltipLine(line);
         }
         public void DrawFlavorName(DrawableTooltipLine line)
         {

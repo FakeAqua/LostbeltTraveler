@@ -26,6 +26,7 @@ namespace LostbeltTraveler.Items.Useables
                 AddTile(TileID.CrystalBall).
                 DisableDecraft().
                 Register();
+
             CreateRecipe().
                 AddIngredient(ItemID.TempleKey, 5).
                 AddTile(TileID.CrystalBall).

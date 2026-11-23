@@ -2,10 +2,8 @@
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Useables
 {
@@ -19,20 +17,13 @@ namespace LostbeltTraveler.Items.Useables
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Cyan);
+            Item.Lostbelt().drawFlavorTooltip = true;
             Item.healMana = 10;
             Item.consumable = false;
-        }
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            base.ModifyTooltips(tooltips);
         }
         public override void GetHealMana(Player player, bool quickHeal, ref int healValue)
         {
             healValue = player.Lostbelt().providenceHolyWaterHealMana + 10;
-        }
-        public override void UpdateAccessory(Player player, bool hideVisual)
-        {
-            base.UpdateAccessory(player, hideVisual);
         }
         public override void HoldItem(Player player)
         {

@@ -1,4 +1,4 @@
 displayName = 异闻旅者
 modReferences = ContinentOfJourney
-author = 对立
+author = KeyToKei
 version = 1.0

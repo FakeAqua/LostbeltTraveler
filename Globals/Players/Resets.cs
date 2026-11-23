@@ -12,6 +12,8 @@ namespace LostbeltTraveler.Globals.Players
             wingsType = -1;
             butterFlyInfiniteFlight = false;
             blackKeyExecutorCriticalChanceAdd = 0;
+            wormScarf = false;
+            royalGel = false;
             blackKeyExecutorDamageAdd = 0;
             preciousTargetLevel = 0;
             chargeWingsRestore = -1;

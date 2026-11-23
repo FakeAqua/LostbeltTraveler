@@ -1,4 +1,5 @@
-﻿using LostbeltTraveler.Globals.Executor;
+﻿using LostbeltTraveler.Buffs.GoodBuffs;
+using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Projs.Executor.Assistance;
 using Terraria;
 using Terraria.DataStructures;
@@ -10,11 +11,11 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Assistance
     {
         public override int ExecutionProgress => 20;
         public override ExecutorWeaponType ExecutorWeaponType => ExecutorWeaponType.Assistance;
+        public override int SupportWeaponBuff => BuffType<TearEyeBuff>();
         public override void ExSD()
         {
             Item.SetUpNoUseGraphicItem(true);
             Item.SetUpRarityPrice(ItemRarityID.Orange);
-            Item.Lostbelt().drawBuffIconAndDetail = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = Item.useAnimation = 36;
             Item.knockBack = 2;

@@ -1,9 +1,11 @@
 ﻿using LostbeltTraveler.Core.ScreenEffect;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
+using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using LostbeltTraveler.Projs.Magic;
 using LostbeltTraveler.Projs.Melee;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
@@ -34,6 +36,25 @@ namespace LostbeltTraveler.Items
         {
             AlterTooltip = tooltips;
             base.ModifyTooltips(tooltips);
+
+        }
+        public override bool PreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
+        {
+            List<SideTextPanelData> list =
+            [
+                new (new TooltipLine(Mod, "Test0","标题"),1),
+                new (new TooltipLine(Mod, "Test1", "To Test Something"),1),
+                new (new TooltipLine(Mod, "Test2", "然后这是插补字符串：[i:Diamond]"),1),
+                new (new TooltipLine(Mod, "Test3", "这是[c/8815A0:颜色代码]"),1),
+            ];
+
+            int y2 = SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, Color.DarkRed);
+            int y3 = SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, Color.DarkRed, extraY: y2 - y);
+            return base.PreDrawTooltip(lines, ref x, ref y);
+        }
+        public override void PostDrawTooltip(ReadOnlyCollection<DrawableTooltipLine> lines)
+        {
+            base.PostDrawTooltip(lines);
         }
         public override void HoldItem(Player player)
         {
@@ -59,19 +80,6 @@ namespace LostbeltTraveler.Items
             //// 更高精度输出
             //Main.NewText($"精确耗时: {sw.Elapsed.TotalMilliseconds:F4} ms");
             return false;
-            //Vector2 ownerMW = player.LocalMouseWorld();
-            //添加需要的攻击单位
         }
-    }
-
-}
-
-namespace LostbeltTraveler.Items.Weapons.Requirement
-{
-    // 根据你实际需要调整类名、成员和访问级别
-    public class WeaponRequirement
-    {
-        // 占位构造／方法
-        public WeaponRequirement() { }
     }
 }

@@ -15,7 +15,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         protected override int TrailLength => 12;
         public override bool PreAI(Projectile projectile)
         {
-            if (projectile.GetReVisualPlayer().reVisualLiquidBow)
+            if (projectile.GetReVisualPlayer().reLiquidBow)
             {
                 if (TrailLength > 0)
                 {
@@ -52,7 +52,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         }
         public override bool PreKill(Projectile projectile, int timeLeft)
         {
-            if (projectile.GetReVisualPlayer().reVisualLiquidBow)
+            if (projectile.GetReVisualPlayer().reLiquidBow)
             {
                 for (int i = 0; i < 6; i++)
                 {
@@ -69,7 +69,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         }
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
-            if (projectile.GetReVisualPlayer().reVisualLiquidBow)
+            if (projectile.GetReVisualPlayer().reLiquidBow)
             {
                 Texture2D starShape = LostbeltModAssets.Particle_SharpTear;
                 int length = OldPositionList.Count;
@@ -94,7 +94,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         protected override int TrailLength => 18;
         public override bool PreAI(Projectile projectile)
         {
-            if (projectile.GetReVisualPlayer().reVisualLiquidBow)
+            if (projectile.GetReVisualPlayer().reLiquidBow)
             {
                 if (TrailLength > 0)
                 {
@@ -148,7 +148,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         }
         public override bool PreKill(Projectile projectile, int timeLeft)
         {
-            if (projectile.GetReVisualPlayer().reVisualLiquidBow)
+            if (projectile.GetReVisualPlayer().reLiquidBow)
             {
                 for (int i = 0; i < 6; i++)
                 {
@@ -165,7 +165,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         }
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
-            if (projectile.GetReVisualPlayer().reVisualLiquidBow)
+            if (projectile.GetReVisualPlayer().reLiquidBow)
             {
                 PixelatedRenderManager.BeginDrawProj = true;
                 Texture2D line = LostbeltModAssets.Particle_SharpTear;

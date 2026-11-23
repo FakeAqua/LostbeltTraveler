@@ -78,14 +78,14 @@ DescriptionPaper: {
 		家养白毛小孩 - 主编程
 		Inoljw，名字，芙蕾雅 Freya - 贴图画师
 		[c/BAEE1B:支援人员：]
-		樱羽一花，Demon Lilies，世纪小花 Plantare、中学生
+		樱羽一花，Demon Lilies，世纪小花 Plantare、中学生、稻染狐
 		锯角 Serrat Antler，南鸢北笙，梦山之主，依琳 Yilyn，TIM
 		[c/B19CD9:测试人员：]
 		论时间的涟漪，Woodi Stigma，妩媚の5妹儿，步出夏门行，冰川咲
 		溯月 Shizuku
 		[c/FFC0CB:捐赠人员：]
 		巴雷难破长夜，初镜巡弱杂骸音，曦，丰川祥子，苏利，池堂爱吃糖
-		咕咕叶子，Kagura Kino，银九，林为简，星火，橘对莉，Eosia
+		咕咕叶子，Kagura Kino，银九，林为简，星火，橘对莉，Eosia、喵
 		[c/AACCCC:非常感谢各位让本模组得以顺利落地并推进]
 		'''
 }
@@ -98,6 +98,7 @@ PurePrismFate: {
 		最大同时复制100份，复制一次需消耗3份棱镜
 		“精炼度更高的玛纳结晶体”
 		'''
+	FlavorTooltips: 精炼度更高的玛纳结晶体
 }
 
 UnregisteredSpiritOrigin: {
@@ -106,8 +107,8 @@ UnregisteredSpiritOrigin: {
 		'''
 		手持时，对着背包内的武器/饰品/护甲/宝藏袋按下 互动键 即可消耗灵基进行复制
 		不可复制无记名灵基本身
-		“满溢而出的灵基的残渣”
 		'''
+	FlavorTooltips: 满溢而出的灵基的残渣
 }
 
 ArcaeaPack: {
@@ -139,7 +140,11 @@ ProvidenceHolyWater: {
 		'''
 		手持时，对着背包内的魔力药水按下 互动键 以继承该魔力药水的恢复量
 		使用时额外恢复10点魔力值，且不会被消耗
-		"不属于此世的超常之水，能够以零损耗率传导巨量的魔力。"
+		'''
+	FlavorTooltips:
+		'''
+		不属于此世的超常之水
+		能够以零损耗率传导巨量的魔力
 		'''
 }
 
@@ -158,11 +163,11 @@ FruitofEternity: {
 		受击时重置速度，以1/{3}的概率随机传送
 		你对神明类敌人造成的伤害减少{2}
 		'''
-	DetailTooltip:
+	FlavorTooltips:
 		'''
-		吃下这果实之人的肉体将会抗拒所有变化，
-		成为等同于不老不死的存在，
-		但这也意味着成为众神永远的奴仆。
+		吃下这果实之人的肉体将会抗拒所有变化
+		成为等同于不老不死的存在
+		但这也意味着成为众神永远的奴仆
 		'''
 }
 
@@ -223,11 +228,11 @@ CrystallizedLore: {
 		对饰品使用可赋予其最高级饰品词缀
 		对传承结晶按住 Shift + 右键 可切换饰品词缀的可选项
 		'''
-	DetailTooltip:
+	FlavorTooltips:
 		'''
-		从人类史与玛纳洪流的交错中，
-		产生的高纯度魔力结晶。
-		也可以称之为物质化的英灵素材。
+		从人类史与玛纳洪流的交错中
+		产生的高纯度魔力结晶
+		也可以称之为物质化的英灵素材
 		'''
 	PrefixLine: 当前选中的饰品词缀：{0}
 }

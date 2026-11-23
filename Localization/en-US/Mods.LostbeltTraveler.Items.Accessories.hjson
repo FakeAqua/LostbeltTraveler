@@ -660,7 +660,7 @@ SupremeBundleBalloon: {
 	Tooltip: ""
 }
 
-FinalBarBalloon: {
+Retribution: {
 	DisplayName: Retribution
 	Tooltip:
 		'''
@@ -768,5 +768,30 @@ YoyoRopeSapphire: {
 
 YoyoRopeTopaz: {
 	DisplayName: Yoyo Rope Topaz
+	Tooltip: ""
+}
+
+Extinction: {
+	DisplayName: Extinction
+	Tooltip: ""
+}
+
+Samsara: {
+	DisplayName: Samsara
+	Tooltip: ""
+}
+
+Fragment: {
+	DisplayName: Fragment
+	Tooltip: ""
+}
+
+Tomorrow: {
+	DisplayName: Tomorrow
+	Tooltip: ""
+}
+
+Adjudication: {
+	DisplayName: Adjudication
 	Tooltip: ""
 }

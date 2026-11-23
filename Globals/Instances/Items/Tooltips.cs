@@ -28,6 +28,9 @@ namespace LostbeltTraveler.Globals.Instances.Items
         public IReadOnlyList<TooltipLine> CacheTooltipLine;
         public bool drawBuffIconAndDetail = false;
         public bool drawBuffIcon = false;
+        public bool drawFlavorTooltip = false;
+        public Color drawFlavorTooltipColor = Color.White;
+        public bool noFancyFlavorTooltip = false;
         public string OwnerName = string.Empty;
         public override void SetDefaults(Item entity)
         {
@@ -37,23 +40,35 @@ namespace LostbeltTraveler.Globals.Instances.Items
                 case ItemID.TrueNightsEdge:
                     entity.Lostbelt().drawBuffIconAndDetail = true;
                     break;
-
             }
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            switch (item.type)
-            {
-                case ItemID.NightsEdge:
-                case ItemID.TrueNightsEdge:
-                    tooltips.CreateTooltipDirect(
-                        ScarletTextSets.GenericText.CombineModName(
-                            ScarletTextSets.GenericText.ApplyDoT.ToFormatValue("[ScarletDebuff/LostbeltTraveler/ForeverNightBuff]")),
-                        Color.LightGray, Mod, "ApplyDoTName");
-                    break;
-            }
             ItemOwnerName(item, ref tooltips);
-
+            if (drawFlavorTooltip && !borderlandWeapon)
+            {
+                if (item.type > VanillaMaxItem)
+                {
+                    if (item.ModItem is not null && item.ModItem.Mod == Mod)
+                    {
+                        string path = item.ModItem.GetLocalizationKey("FlavorTooltips");
+                        int index = tooltips.FindLineIndexLast("Tooltip") + 1;
+                        LocalizedText register = Language.GetOrRegister(path);
+                        string[] v = register.Value.Split('\n');
+                        if (v.Length == 1)
+                        {
+                        tooltips.CreateTooltipDirect(">" + register.Value, Color.WhiteSmoke, Mod, "FlavorTooltipsName", index);
+                        }
+                        else
+                        {
+                            for (int i = v.Length - 1; i >= 0; i--)
+                            {
+                                tooltips.Insert(index, new TooltipLine(Mod, "FlavorTooltipsName" + i, "|" + v[i]) { OverrideColor = Color.LightBlue*.9f});
+                            }
+                        }
+                    }
+                }
+            }
             if (LostbeltPlayer.AllWeaponSwapValue.Contains(item.type))
             {
                 string pre = ScarletTextSets.GenericText.ModNamePrefix;
@@ -98,12 +113,7 @@ namespace LostbeltTraveler.Globals.Instances.Items
                 int index = tooltips.FindLineIndex("Tooltip0");
                 tooltips.CreateTooltip(path, Color.Lerp(Color.DarkRed, Color.Crimson, 0.82f), LineName: "BorderlandRedLineName", index: index);
             }
-            if (item.type == ItemID.PocketMirror)
-            {
-                int index = tooltips.FindLineIndexLast("Tooltip");
-                string path = Mod.GetLocalizationKey($"Database.PocketMirrorModiflication");
-                tooltips.CreateTooltip(path, LineName: "PocketMirrorModiflication", color: Color.SkyBlue, index: index + 2, args: Main.LocalPlayer.Lostbelt().pocketMirror.ToString());
-            }
+
             ModifyParryShieldTooltip(item, tooltips);
             InsertIconInTooltipLine(item, tooltips);
             CacheTooltipLine = tooltips;
@@ -159,23 +169,24 @@ namespace LostbeltTraveler.Globals.Instances.Items
             {
                 if (ScarletItemIDSets.ForceToAutomaticExecute[item.type])
                 {
-                    int index = tooltips.FindLineIndex("ExecutorWeaponTypeName", Mod.Name);
+                    int index = tooltips.FindLineIndex("Tooltip0");
                     string path = Mod.GetLocalizationKey($"ExecutorDamageClass.ForceAutomaticExecution").ToLangValue();
-                    TooltipLine line = new TooltipLine(Mod, "ForceAutomaticExecution", path)
+                    TooltipLine line = new TooltipLine(Mod, "ForceAutomaticExecution", ">" + path)
                     {
                         OverrideColor = Color.Pink
                     };
-                    tooltips.Insert(index + 1, line);
+                    tooltips.Insert(index, line);
                 }
                 else if (ScarletItemIDSets.ForceToTacticalExecute[item.type])
                 {
-                    int index = tooltips.FindLineIndex("ExecutorWeaponTypeName", Mod.Name);
+                    //int index = tooltips.FindLineIndex("ExecutorWeaponTypeName", Mod.Name);
+                    int index = tooltips.FindLineIndex("Tooltip0");
                     string path = Mod.GetLocalizationKey($"ExecutorDamageClass.ForceTacticalExecution").ToLangValue();
-                    TooltipLine line = new TooltipLine(Mod, "ForceTacticalExecutionLine", path)
+                    TooltipLine line = new TooltipLine(Mod, "ForceTacticalExecutionLine", ">" + path)
                     {
                         OverrideColor = Color.Pink
                     };
-                    tooltips.Insert(index + 1, line);
+                    tooltips.Insert(index, line);
                 }
             }
         }
@@ -406,7 +417,7 @@ namespace LostbeltTraveler.Globals.Instances.Items
                 return;
             if (line.IsItemName())
             {
-                if (VanillaRarityModiflication.TryGetValue(item.type, out ShinyRarityType value2))
+                if (VanillaRarityModiflication.TryGetValue(item.type, out ShinyRarityType value2) && LostbeltConfigServer.Instance.AnomalousInfestation)
                 {
                     RarityDrawHelper.UpdateItemNameParticle(line, value2);
                     RarityDrawHelper.UpdateItemNameDraw(line, value2);
@@ -418,7 +429,7 @@ namespace LostbeltTraveler.Globals.Instances.Items
                     RarityDrawHelper.UpdateItemNameDraw(line, value);
                 }
             }
-            if (line.Mod == Mod.Name && line.Name == "FlavorTooltipsName")
+            if (line.Mod == Mod.Name && line.Name == "FlavorTooltipsName" && !noFancyFlavorTooltip)
             {
                 if (LostbeltList.ShinyRarityItemDictionary.TryGetValue(item.type, out ShinyRarityType value))
                 {

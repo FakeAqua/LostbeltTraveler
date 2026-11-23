@@ -12,7 +12,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         protected override int TrailLength => 45;
         public override bool PreAI(Projectile projectile)
         {
-            if (projectile.GetReVisualPlayer().reVisualBloodScepter)
+            if (projectile.GetReVisualPlayer().reBloodScepter)
             {
                 if (TrailLength > 0)
                 {
@@ -46,7 +46,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         }
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
-            if (projectile.GetReVisualPlayer().reVisualBloodScepter)
+            if (projectile.GetReVisualPlayer().reBloodScepter)
             {
                 Texture2D line = LostbeltModAssets.Particle_SharpTear;
                 int count = OldPositionList.Count;
@@ -88,7 +88,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         protected override int TrailLength => 45;
         public override bool PreAI(Projectile projectile)
         {
-            if (projectile.GetReVisualPlayer().reVisualBloodScepter)
+            if (projectile.GetReVisualPlayer().reBloodScepter)
             {
                 if (TrailLength > 0)
                 {
@@ -121,7 +121,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         }
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
-            if (projectile.GetReVisualPlayer().reVisualBloodScepter)
+            if (projectile.GetReVisualPlayer().reBloodScepter)
             {
                 Texture2D line = LostbeltModAssets.Particle_SharpTear;
                 int count = OldPositionList.Count;

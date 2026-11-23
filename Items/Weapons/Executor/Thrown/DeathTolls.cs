@@ -23,6 +23,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
         {
             Item.SetUpNoUseGraphicItem();
             Item.SetUpRarityPrice(ItemRarityID.Purple);
+            Item.Lostbelt().drawFlavorTooltip = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.UseSound = SoundID.Item1;
             Item.shoot = ProjectileType<DeathTollsProj>();
@@ -64,17 +65,6 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
 
         public override void ExModifyTooltips(List<TooltipLine> tooltips)
         {
-            int flavorTooltipIndex = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
-            //通过本地化路径搜索需要的特殊文本
-            string value = this.GetLocalizedValue("FlavorTooltips").ToLangValue();
-            //实例化toolti并注册名字
-            TooltipLine flavorTooltips = new(Mod, "FlavorTooltipsName", "「" + value + "」")
-            {
-                OverrideColor = Color.Lerp(Color.MediumPurple, Color.LightPink, 0.3f)
-            };
-
-            //植入Tooltip
-            tooltips.Insert(flavorTooltipIndex + 1, flavorTooltips);
         }
     }
 }

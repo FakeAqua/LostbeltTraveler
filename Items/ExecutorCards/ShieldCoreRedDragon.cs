@@ -3,7 +3,6 @@ using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods.Textbox;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -74,50 +73,50 @@ namespace LostbeltTraveler.Items.ExecutorCards
 
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
         {
-            //记录起始点坐标。
-            //通常情况下，物品不可能没有名字，而物品名称通常都在第一行，所以可以用这个来记录第一行的坐标
-            if (line.IsItemName())
-            {
-                TextboxManager.FirstLineY = line.Y;
-            }
-            //line.Index如果不等于最后一行我们都不会绘制，以确保其绘制一次。
-            //CacheTooltipList是事先在modifyTooltipline里缓存的列表。
-            if (CacheTooltipList is null || line.Index != CacheTooltipList.Count - 1)
-                return true;
+            ////记录起始点坐标。
+            ////通常情况下，物品不可能没有名字，而物品名称通常都在第一行，所以可以用这个来记录第一行的坐标
+            //if (line.IsItemName())
+            //{
+            //    TextboxManager.FirstLineY = line.Y;
+            //}
+            ////line.Index如果不等于最后一行我们都不会绘制，以确保其绘制一次。
+            ////CacheTooltipList是事先在modifyTooltipline里缓存的列表。
+            //if (CacheTooltipList is null || line.Index != CacheTooltipList.Count - 1)
+            //    return true;
 
-            var setsList = new List<TextboxSettings>();
-            for (int j = 1; j <= 3; j++)
-            {
-                string titleText = Mod.GetLocalizationKey(LocalizationCategory + ".GenericData.LevelName").ToLangValue().ToFormatValue(j);
-                //实际文本描述，这里都是一行作结
-                string detailPath = $"CoreLevel" + j;
-                string detailText = this.GetLocalizationKey(detailPath).ToLangValue();
-                detailText += "\n";
+            //var setsList = new List<TextboxSettings>();
+            //for (int j = 1; j <= 3; j++)
+            //{
+            //    string titleText = Mod.GetLocalizationKey(LocalizationCategory + ".GenericData.LevelName").ToLangValue().ToFormatValue(j);
+            //    //实际文本描述，这里都是一行作结
+            //    string detailPath = $"CoreLevel" + j;
+            //    string detailText = this.GetLocalizationKey(detailPath).ToLangValue();
+            //    detailText += "\n";
 
-                //最后，我们再画需要的文本内容。
-                var edgeColor = j switch
-                {
-                    1 => Color.Black,
-                    2 => Color.DarkBlue,
-                    _ => Color.Purple,
-                };
-                TextboxSettings sets = new TextboxSettings()
-                {
-                    TitleText = titleText,
-                    TitleTextColor = Color.White,
-                    TitleEdgeColor = edgeColor,
-                    HasTitle = true,
-                    BackgroundColor = Color.Black * .35f,
-                    BackgroundEdgeColor = Color.Transparent,
-                    TitleTextSize = 1.15f,
-                    MainText = detailText,
-                    TextColor = Color.White,
-                    TextEdgeColor = Color.Black,
-                    MultboxSpacing = 0
-                };
-                setsList.Add(sets);
-            }
-            TextboxMethods.DrawMultipleTextboxes(line, CacheTooltipList, setsList, 30);
+            //    //最后，我们再画需要的文本内容。
+            //    var edgeColor = j switch
+            //    {
+            //        1 => Color.Black,
+            //        2 => Color.DarkBlue,
+            //        _ => Color.Purple,
+            //    };
+            //    TextboxSettings sets = new TextboxSettings()
+            //    {
+            //        TitleText = titleText,
+            //        TitleTextColor = Color.White,
+            //        TitleEdgeColor = edgeColor,
+            //        HasTitle = true,
+            //        BackgroundColor = Color.Black * .35f,
+            //        BackgroundEdgeColor = Color.Transparent,
+            //        TitleTextSize = 1.15f,
+            //        MainText = detailText,
+            //        TextColor = Color.White,
+            //        TextEdgeColor = Color.Black,
+            //        MultboxSpacing = 0
+            //    };
+            //    setsList.Add(sets);
+            //}
+            //TextboxMethods.DrawMultipleTextboxes(line, CacheTooltipList, setsList, 30);
             return true;
         }
     }

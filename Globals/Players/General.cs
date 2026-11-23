@@ -77,6 +77,7 @@ namespace LostbeltTraveler.Globals.Players
         public bool protectorShiver = false;
         public bool raincoatExecutor = false;
         public bool redDragonKnight = false;
+        public bool royalGel = false;
         public bool sacarbWings = false;
         public bool theDragonBallSwordMode = false;
         public bool petNone = false;
@@ -94,6 +95,7 @@ namespace LostbeltTraveler.Globals.Players
         public bool theGreatDipperBuff = false;
         public bool titaniumHeadExecutor = false;
         public bool weaponUpgradePostSon = false;
+        public bool wormScarf = false;
 
         // int 字段
         public int adamantiteHeadExecutorThunderTimer = 0;

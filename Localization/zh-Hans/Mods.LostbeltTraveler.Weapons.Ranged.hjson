@@ -8,7 +8,7 @@ TerraFlamethrower: {
 	Tooltip:
 		'''
 		使你的敌人沐浴于璀璨夺目的泰拉之光
-		按下右键投掷燃素手雷，命中敌人时爆炸，造成[ScarletDebuff/LostbeltTraveler/TerraFlamethrowerBuff]
+		右键投掷燃素手雷，命中时爆炸，造成[ScarletDebuff/LostbeltTraveler/TerraFlamethrowerBuff]
 		不消耗凝胶
 		'''
 }

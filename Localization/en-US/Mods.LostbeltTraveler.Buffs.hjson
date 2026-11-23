@@ -71,8 +71,9 @@ TerraFlamethrowerBuff: {
 	DisplayName: Terra Phlogiston
 	Description:
 		'''
-		Causes enemies drip terra essence, dealing damage equal to enemy's contact damage
-		Terra essence does not damage enemies affected by this
+		Causes enemies attacked by [i:LostbeltTraveler/TerraFlamethrower][c/51EF02:Terra Flamethrower] 
+		drip terra essence, dealing damage equal to contact damage
+		Terra essence does not damage enemies drip from 
 		'''
 }
 
@@ -86,9 +87,9 @@ StarofHopeBuff: {
 	Description: This is a story full of love and hope
 }
 
-StreamingProtocalBuff: {
+StreamingProtocolBuff: {
 	DisplayName: Streaming Protocal Buff
-	Description: Mods.LostbeltTraveler.Buffs.StreamingProtocalBuff.Description
+	Description: Mods.LostbeltTraveler.Buffs.StreamingProtocolBuff.Description
 }
 
 TearEyeBuff: {

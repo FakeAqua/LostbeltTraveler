@@ -9,7 +9,7 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<Hellfire>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualHellfire = !vp.reVisualHellfire;
+            vp.reHellfire = !vp.reHellfire;
         }
     }
 }

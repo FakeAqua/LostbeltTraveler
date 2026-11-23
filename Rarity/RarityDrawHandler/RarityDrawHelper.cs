@@ -159,6 +159,9 @@ namespace LostbeltTraveler.Rarity.RarityDrawHandler
             switch (type)
             {
 
+                case ShinyRarityType.Final:
+                    FinalFancyText.UpdateItemNameParticle(tooltipLine, ref RaritySparklesList);
+                    break;
                 case ShinyRarityType.Gunwitch:
                     GunwitchFancyText.UpdateItemNameParticle(tooltipLine, ref RaritySparklesList);
                     break;
@@ -230,6 +233,9 @@ namespace LostbeltTraveler.Rarity.RarityDrawHandler
         {
             switch (type)
             {
+                case ShinyRarityType.Final:
+                    FinalFancyText.DrawItemName(tooltipLine);
+                    break;
                 case ShinyRarityType.Gunwitch:
                     GunwitchFancyText.DrawItemName(tooltipLine);
                     break;

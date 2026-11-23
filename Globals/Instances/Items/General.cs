@@ -1,13 +1,11 @@
 ﻿using ContinentOfJourney.Items;
 using ContinentOfJourney.Items.Whips;
-using LostbeltTraveler.Buffs.Debuffs;
 using LostbeltTraveler.Buffs.Status;
 using LostbeltTraveler.Globals.Configs;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Items.Accessories;
-using LostbeltTraveler.Items.Armor.DragonHunter;
 using LostbeltTraveler.Items.Weapons.Executor.Thrown;
 using Terraria;
 using Terraria.ID;
@@ -127,13 +125,6 @@ namespace LostbeltTraveler.Globals.Instances.Items
         }
         public override void OnHitNPC(Item item, Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            switch (item.type)
-            {
-                case ItemID.NightsEdge:
-                case ItemID.TrueNightsEdge:
-                    target.AddBuff(BuffType<ForeverNightBuff>(), 60);
-                    break;
-            }
             base.OnHitNPC(item, player, target, hit, damageDone);
         }
         public override void OnConsumeItem(Item item, Player player)
@@ -167,10 +158,6 @@ namespace LostbeltTraveler.Globals.Instances.Items
                 usPlayer.critDamageAll += CritsDamageBonus;
             }
             isShivering = usPlayer.protectorShiver;
-            if (item.IsWeapon() && player.Lostbelt().dragonHunter)
-            {
-                usPlayer.critDamageAll += DragonHunterHead.FixedDamage;
-            }
         }
     }
 }

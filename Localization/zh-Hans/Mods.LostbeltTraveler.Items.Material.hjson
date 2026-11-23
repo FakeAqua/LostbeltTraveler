@@ -15,20 +15,20 @@ CrownofSilveryLight: {
 		超越三名至尊后，于神圣之地上的敌人中获得的资源
 		或许是一些异闻的先兆
 		'''
-	FlavorTooltip:
+	FlavorTooltips:
 		'''
-		如月光般凝聚光辉的冠冕。
-		被赐予向诸神献身之人。
+		如月光般凝聚光辉的冠冕
+		被赐予向诸神献身之人
 		'''
 }
 
 UniversalCube: {
 	DisplayName: 宇宙立方体
 	Tooltip: 强化素材之一
-	FlavorTooltip:
+	FlavorTooltips:
 		'''
-		通过输入任意数据，
-		来变化成各种形态、材质的半物质。
-		在重置状态下就会成为立方体状。
+		通过输入任意数据
+		来变化成各种形态、材质的半物质
+		在重置状态下就会成为立方体状
 		'''
 }

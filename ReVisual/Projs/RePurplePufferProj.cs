@@ -62,7 +62,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override bool PreAI(Projectile projectile)
         {
             Player player = Main.player[projectile.owner];
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualPurplePuffer)
+            if (player.GetModPlayer<ReVisualPlayer>().rePurplePuffer)
             {
                 projectile.rotation = projectile.velocity.ToRotation();
                 if (TrailLength > 0)
@@ -89,7 +89,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
             Player player = projectile.GetPlayer();
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualPurplePuffer)
+            if (player.GetModPlayer<ReVisualPlayer>().rePurplePuffer)
             {
                 Texture2D fireball = LostbeltModAssets.Texture_FireBall.Value;
                 Texture2D fireballPixel = LostbeltModAssets.Texture_FireBallPixel.Value;

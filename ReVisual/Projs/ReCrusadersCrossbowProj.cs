@@ -33,7 +33,7 @@ namespace LostbeltTraveler.ReVisual.Projs
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
             ReVisualPlayer reVisualPlayer = projectile.GetReVisualPlayer();
-            if (reVisualPlayer.reVisualCrusadersCrossbow)
+            if (reVisualPlayer.reCrusadersCrossbow)
             {
                 int count = OldPositionList.Count;
                 Texture2D tex = LostbeltModAssets.Particle_SharpTear;

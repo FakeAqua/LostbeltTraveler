@@ -1,5 +1,4 @@
 ﻿using ContinentOfJourney.Items.Material;
-using ContinentOfJourney.Tiles;
 using LostbeltTraveler.Core;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
@@ -71,7 +70,7 @@ namespace LostbeltTraveler.Items.Accessories
                 AddIngredient<HeartoftheDistantArk>().
                 AddIngredient(ItemID.FrozenShield).
                 AddIngredient<EssenceofMatter>(15).
-                AddTile<FountainofMatter>().
+                AddIngredient(FinalAnvilTile).
                 Register();
         }
     }

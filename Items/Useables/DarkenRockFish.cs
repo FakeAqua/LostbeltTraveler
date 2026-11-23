@@ -30,14 +30,6 @@ namespace LostbeltTraveler.Items.Useables
             Item.attackSpeedOnlyAffectsWeaponAnimation = true;
             Item.hammer = 200;
         }
-        public override void MeleeEffects(Player player, Rectangle hitbox)
-        {
-            base.MeleeEffects(player, hitbox);
-        }
-        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            base.OnHitNPC(player, target, hit, damageDone);
-        }
         public override void AddRecipes()
         {
             CreateRecipe().

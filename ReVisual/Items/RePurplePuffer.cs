@@ -11,12 +11,12 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<PurplePuffer>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualPurplePuffer = !vp.reVisualPurplePuffer;
-            item.noUseGraphic = vp.reVisualPurplePuffer;
+            vp.rePurplePuffer = !vp.rePurplePuffer;
+            item.noUseGraphic = vp.rePurplePuffer;
         }
         public override void UpdateInventory(Item item, Player player)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualPurplePuffer)
+            if (player.GetModPlayer<ReVisualPlayer>().rePurplePuffer)
             {
                 item.noUseGraphic = true;
             }
@@ -24,7 +24,7 @@ namespace LostbeltTraveler.ReVisual.Items
         }
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualPurplePuffer)
+            if (player.GetModPlayer<ReVisualPlayer>().rePurplePuffer)
             {
                 for (int i = 0; i < 16; i++)
                 {

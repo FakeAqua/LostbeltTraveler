@@ -11,12 +11,12 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<CrusadersCrossbow>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualCrusadersCrossbow = !vp.reVisualCrusadersCrossbow;
-            item.noUseGraphic = vp.reVisualCrusadersCrossbow;
+            vp.reCrusadersCrossbow = !vp.reCrusadersCrossbow;
+            item.noUseGraphic = vp.reCrusadersCrossbow;
         }
         public override void UpdateInventory(Item item, Player player)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualCrusadersCrossbow)
+            if (player.GetModPlayer<ReVisualPlayer>().reCrusadersCrossbow)
             {
                 item.noUseGraphic = true;
             }
@@ -24,7 +24,7 @@ namespace LostbeltTraveler.ReVisual.Items
         }
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualCrusadersCrossbow)
+            if (player.GetModPlayer<ReVisualPlayer>().reCrusadersCrossbow)
             {
                 for (int i = 0; i < 16; i++)
                 {

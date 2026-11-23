@@ -10,9 +10,6 @@ namespace LostbeltTraveler.Items.Useables
     public class DescriptionPaper : LostbeltItemClass
     {
         public override string AssetPath => AssetHandler.Useables;
-        public override void SetStaticDefaults()
-        {
-        }
         public override void ExSD()
         {
             Item.SetUpRarityPrice(ItemRarityID.Blue);

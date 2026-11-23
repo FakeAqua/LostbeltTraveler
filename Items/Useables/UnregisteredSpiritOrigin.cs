@@ -17,6 +17,7 @@ namespace LostbeltTraveler.Items.Useables
         public override void ExSD()
         {
             Item.rare = ItemRarityID.Orange;
+            Item.Lostbelt().drawFlavorTooltip = true;
             Item.maxStack = 9999;
             Item.master = true;
         }

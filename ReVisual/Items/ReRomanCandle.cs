@@ -11,12 +11,12 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<RomanCandle>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualRomanCandle = !vp.reVisualRomanCandle;
-            item.noUseGraphic = vp.reVisualRomanCandle;
+            vp.reRomanCandle = !vp.reRomanCandle;
+            item.noUseGraphic = vp.reRomanCandle;
         }
         public override void UpdateInventory(Item item, Player player)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualRomanCandle)
+            if (player.GetModPlayer<ReVisualPlayer>().reRomanCandle)
             {
                 item.noUseGraphic = true;
             }
@@ -24,7 +24,7 @@ namespace LostbeltTraveler.ReVisual.Items
         }
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.GetModPlayer<ReVisualPlayer>().reVisualRomanCandle)
+            if (player.GetModPlayer<ReVisualPlayer>().reRomanCandle)
             {
                 for (int i = 0; i < 16; i++)
                 {

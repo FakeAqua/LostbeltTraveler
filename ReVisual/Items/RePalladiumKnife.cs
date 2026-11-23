@@ -9,7 +9,7 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<PalladiumKnife>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualPalladiumKnife = !vp.reVisualPalladiumKnife;
+            vp.rePalladiumKnife = !vp.rePalladiumKnife;
         }
     }
 }

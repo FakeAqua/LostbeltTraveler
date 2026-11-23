@@ -72,26 +72,26 @@ namespace LostbeltTraveler.Projs.Melee
         public void DrawTrails(Asset<Texture2D> useTex, Color drawColor, float multipleSize = 1f, float alphaValue = 1f, float offsetHeight = 1f)
         {
             float laserLength = 50;
-            LostbeltShaderAssets.TerrarRayLaser.Parameters["LaserTextureSize"].SetValue(useTex.Size());
-            LostbeltShaderAssets.TerrarRayLaser.Parameters["targetSize"].SetValue(new Vector2(laserLength, useTex.Height()));
-            LostbeltShaderAssets.TerrarRayLaser.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * -0f);
-            LostbeltShaderAssets.TerrarRayLaser.Parameters["uColor"].SetValue(drawColor.ToVector4() * .995f);
-            LostbeltShaderAssets.TerrarRayLaser.Parameters["uFadeoutLength"].SetValue(0.8f);
-            LostbeltShaderAssets.TerrarRayLaser.Parameters["uFadeinLength"].SetValue(0.05f);
-            LostbeltShaderAssets.TerrarRayLaser.CurrentTechnique.Passes[0].Apply();
+            Effect shader = LostbeltShaderAssets.TerrarRayLaser;
+            shader.Parameters["LaserTextureSize"].SetValue(useTex.Size());
+            shader.Parameters["targetSize"].SetValue(new Vector2(laserLength, useTex.Height()));
+            shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * -0f);
+            shader.Parameters["uColor"].SetValue(drawColor.ToVector4() * .995f);
+            shader.Parameters["uFadeoutLength"].SetValue(0.8f);
+            shader.Parameters["uFadeinLength"].SetValue(0.05f);
+            shader.CurrentTechnique.Passes[0].Apply();
             if (Projectile.oldPos.Length < 3)
                 return;
             //做掉可能存在的零向量
-            Projectile.ClearInvaidData(out List<Vector2> validPosition, out List<float> validRot, Projectile.oldPos, Projectile.oldRot);
             DrawSetting drawSetting = new DrawSetting(useTex.Value, true);
             List<TrailDrawDate> trailDrawDates = [];
-            int posCount = validPosition.Count;
+            int posCount = Projectile.oldPos.Length;
             for (int j = 0; j < posCount - 1; j++)
             {
-                float rot = (validPosition[j + 1] - validPosition[j]).ToRotation();
+                float rot = (Projectile.oldPos[j + 1] - Projectile.oldPos[j]).ToRotation();
                 float ratio = j / (posCount - 1);
                 Vector2 posOffset = Main.rand.NextVector2Circular(1.5f, 1.5f);
-                trailDrawDates.Add(new(validPosition[j] + Projectile.Size / 2 + posOffset, drawColor, new Vector2(0, 10 * multipleSize * Projectile.scale), rot));
+                trailDrawDates.Add(new(Projectile.oldPos[j] + Projectile.Size / 2 + posOffset, drawColor, new Vector2(0, 10 * multipleSize * Projectile.scale), rot));
             }
             TrailRender.DrawTrail([.. trailDrawDates], drawSetting);
         }

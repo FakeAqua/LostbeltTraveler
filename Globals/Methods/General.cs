@@ -1,4 +1,5 @@
-﻿using LostbeltTraveler.Globals.Instances.Items;
+﻿using LostbeltTraveler.Globals.Database.IDSets;
+using LostbeltTraveler.Globals.Instances.Items;
 using LostbeltTraveler.Globals.Instances.NPCs;
 using LostbeltTraveler.Globals.Instances.Projs;
 using LostbeltTraveler.Globals.Players;
@@ -375,6 +376,14 @@ namespace LostbeltTraveler.Globals.Methods
             CombatText.NewText(new Rectangle((int)Owner.position.X, (int)Owner.position.Y, Owner.width, Owner.height), c, healAmt);
             if (broadcast && Main.netMode == NetmodeID.MultiplayerClient && Owner.whoAmI == Main.myPlayer)
                 NetMessage.SendData(MessageID.PlayerHeal, -1, -1, null, Owner.whoAmI, healAmt);
+        }
+        public static bool CanBeParry(this NPC npc)
+        {
+            if (ScarletNPCIDSets.CanParry[npc.type])
+                return true;
+            if (!npc.CountAsBoss())
+                return true;
+            return false;
         }
         public static bool CountAsBoss(this NPC npc)
         {

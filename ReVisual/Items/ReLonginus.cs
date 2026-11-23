@@ -9,7 +9,7 @@ namespace LostbeltTraveler.ReVisual.Items
         public override int ApplyItem => ItemType<Longinus>();
         public override void ExHoldItem(Item item, Player player, ReVisualPlayer vp)
         {
-            vp.reVisualLonginus = !vp.reVisualLonginus;
+            vp.reLonginus = !vp.reLonginus;
         }
     }
 }
