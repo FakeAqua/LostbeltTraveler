@@ -44,7 +44,7 @@ namespace LostbeltTraveler.Items.Weapons.Ranged
                 new SideTextPanelData(new TooltipLine(Mod, "PanelTitle",title) {OverrideColor = Color.GreenYellow}, 1, BuffType<TerraFlamethrowerBuff>()),
                 new SideTextPanelData(new TooltipLine(Mod, "PanelDescription",description)),
                 ];
-            SideTextPanelMethods.DrawSideTextPanelWithTitle(lines, list, x, y, edgeC: Color.GreenYellow.ToAddColor() * .5f);
+            SideTextPanelMethods.DrawSideTextPanelWithTitle(lines, list, x, y, bgC:Color.DarkGreen,edgeC: Color.Lime* .85f,useShinyBorder:true);
             return base.PreDrawTooltip(lines, ref x, ref y);
         }
         public override bool CanUseItem(Player player)

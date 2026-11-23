@@ -140,7 +140,10 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
                 list2.Add(new(new(Mod, "CompanionTooltip" + i, textBundle2[i]), 1));
             }
             IReadOnlyList<SideTextPanelData>[] array = [list, list2];
-            SideTextPanelMethods.DrawMultipleSideTextPanel(lines, array, x, y, Color.DarkRed);
+            if(Item.IsBestPrefix())
+            SideTextPanelMethods.DrawMultipleSideTextPanel(lines, array, x, y, Color.DarkRed,bgC:Color.Lerp( Color.DarkRed,Color.Black,.6f),edgeC:Color.Lerp(Color.DarkRed,Color.Crimson,5f),useShinyBorder:true);
+            else
+            SideTextPanelMethods.DrawMultipleSideTextPanel(lines, array, x, y, Color.DarkRed,edgeC:Color.DarkRed,useShinyBorder:false);
             return false;
         }
         public override void PostDrawTooltipLine(DrawableTooltipLine line)

@@ -130,9 +130,9 @@ CrimsonScythe: {
 	FlavorTooltips: Beneath the blood moon, none can escape her harvest
 	ExtraMechanic:
 		'''
-		When combined with the Front Desk Reaper set, gain the following effects:
-		Increase executor damage, critical strike chance, and critical strike damage by 15%
-		+30 defense, allows unlimited flight time and grants a dash ability
+		[i:LostbeltTraveler/ReaperHead]With [c/E50015:Front Desk Reaper] equipping, gain the following effects
+		[i:LostbeltTraveler/ReaperBody]+30 defense and 15% increased executor damage, crit and crit damage
+		[i:LostbeltTraveler/ReaperLegs]Allows infinite flight time and grants a dash ability
 		'''
 	ConditionMechanic:
 		'''

@@ -63,11 +63,12 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
             }
             return y;
         }
-        public static void DrawSideTextPanelBox(Rectangle rec, bool drawBorder = true, Color bgC = default, Color edgeC = default, int widthOffset = 10, int heightOffset = 10)
+        public static void DrawSideTextPanelBox(Rectangle rec, bool drawBorder = true, Color bgC = default, Color edgeC = default, int widthOffset = 10, int heightOffset = 10,bool useShinyBorder = false)
         {
-            DrawSideTextPanelBox(rec.X, rec.Y, widthOffset, heightOffset, rec.Width, rec.Height, drawBorder, bgC, edgeC);
+            DrawSideTextPanelBox(rec.X, rec.Y, widthOffset, heightOffset, rec.Width, rec.Height, drawBorder, bgC, edgeC,useShinyBorder);
         }
-        public static void DrawSideTextPanelBox(int x, int y, int widthOffset, int heightOffset, float lengthX, float lengthY, bool drawBorder = true, Color bgC = default, Color edgeC = default)
+        public static void DrawSideTextPanelBox(int x, int y, int widthOffset, int heightOffset, float lengthX,
+            float lengthY, bool drawBorder = true, Color bgC = default, Color edgeC = default, bool useShinyBorder = false)
         {
             //侧边栏是否画背景，跟随原版的系统
             bool useBackground = Main.SettingsEnabled_OpaqueBoxBehindTooltips;
@@ -80,19 +81,36 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
                 (int)lengthX + widthOffset * 2,
                 (int)lengthY + heightOffset + heightOffset / 2);
 
-
             if (bgC == default)
                 bgC = Color.Black * .5f;
-            if (drawBorder)
+            if (useShinyBorder)
             {
-                if (edgeC == default)
-                    edgeC = Color.White;
-                DrawPanelBackground(Main.spriteBatch, LostbeltModAssets.Hud_GlowEdgeAlt.Value, rec, edgeC);
+                Main.spriteBatch.EnterHudArea(BlendState.AlphaBlend);
+                Color c = bgC;
+                bgC = Color.White;
+                LostbeltMethods.ApplyAlphaCut(new Vector4(0, 0, 0, 1.5f), Vector2.Zero, new Vector2(1), c);
+                DrawPanelBackground(Main.spriteBatch, LostbeltModAssets.Hud_GlowNoEdge.Value, rec, bgC);
+                LostbeltMethods.ApplyAlphaCut(new Vector4(0, 0, .8f, 0f), Vector2.Zero, new Vector2(1), Color.Black);
+                DrawPanelBackground(Main.spriteBatch, LostbeltModAssets.Hud_GlowNoEdge.Value, rec, bgC * .35f);
+                Main.spriteBatch.EndHudArea();
+
+                if (drawBorder)
+                {
+                    if (edgeC == default)
+                        edgeC = Color.White;
+                    DrawPanelBackground(Main.spriteBatch, LostbeltModAssets.Hud_GlowEdge.Value, rec, edgeC);
+                }
             }
-
-            DrawPanelBackground(Main.spriteBatch, LostbeltModAssets.Hud_GlowNoEdgeAlt.Value, rec, bgC);
-
-
+            else
+            {
+                if (drawBorder)
+                {
+                    if (edgeC == default)
+                        edgeC = Color.White;
+                    DrawPanelBackground(Main.spriteBatch, LostbeltModAssets.Hud_GlowEdgeAlt.Value, rec, edgeC);
+                }
+                DrawPanelBackground(Main.spriteBatch, LostbeltModAssets.Hud_GlowNoEdgeAlt.Value, rec, bgC);
+            }
         }
         /// <summary>
         /// 获取这个侧边栏的背景长度与宽度

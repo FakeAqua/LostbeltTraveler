@@ -1,6 +1,6 @@
 HikariItem: {
 	DisplayName: 精致玫瑰
-	FlavorTooltip: 「-Fracture-」
+	FlavorTooltip: Fracture
 	Tooltip: ""
 	DetailTooltip:
 		'''
@@ -16,7 +16,7 @@ HikariItem: {
 
 TairitsuItem: {
 	DisplayName: 黑色阳伞
-	FlavorTooltip: 「-Grievous Lady-」
+	FlavorTooltip: Grievous Lady
 	Tooltip: ""
 	DetailTooltip:
 		'''
@@ -52,7 +52,7 @@ RedDragonItem: {
 
 LacrimosaItem: {
 	DisplayName: 番茄百分百果冻盒
-	FlavorTooltip: 「-Tomato 100%-」
+	FlavorTooltip: Tomato 100%
 	Tooltip: ""
 	DetailTooltip:
 		'''

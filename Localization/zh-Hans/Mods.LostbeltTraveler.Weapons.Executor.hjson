@@ -256,13 +256,13 @@ FrostoftheStorm: {
 	DisplayName: 寒霜风暴
 	Tooltip:
 		'''
-		挥舞时生成无限穿透的寒风
+		挥砍时释放无限穿透的寒风
 		所有的攻击都会施加[ScarletDebuff/LostbeltTraveler/AbsoluteZeroBuff]
 		'''
 	ExecutionStrike:
 		'''
-		将会以快慢的节奏进行连续多下的挥砍
-		挥砍横扫的面积更大，寒风的覆盖范围也更广
+		以快慢的节奏进行连续挥砍
+		大幅度提升挥砍与寒风体积
 		'''
 }
 
@@ -527,8 +527,8 @@ PureDagger: {
 	Tooltip: 命中时施加[ScarletBuff/LostbeltTraveler/AntiKnockbackBuff]
 	ExecutionStrike:
 		'''
-		加快劈砍速度，劈砍命中时会追加纯净白星
-		同时，增加6点防御力
+		增加6点防御力
+		强化劈砍的速度
 		'''
 }
 
@@ -558,8 +558,7 @@ ArcticGuanDao: {
 		'''
 	ExecutionStrike:
 		'''
-		向光标位置发送一块雪云
-		雪云会滞留在场上，落下冰锥
+		向光标发射落下冰锥的雪云
 		'''
 }
 
@@ -574,7 +573,7 @@ ConferenceCall: {
 	ExecutionStrike:
 		'''
 		强化接下来5秒内的攻击
-		所有的子弹都会在墙体上进行弹射，并可穿透一次敌人
+		所有子弹都会遇墙反弹，并穿透一次敌人
 		'''
 	FlavorTooltip: 干脆一次性呼叫所有人算了。
 }
@@ -672,7 +671,7 @@ StormSaber: {
 		以残断剑身与残余风暴之力粗暴重组的异构产物
 		虽非正统，仍可对巨人发挥些旧日之力
 		'''
-	ExecutionStrike: 拥有更大的挥舞范围，发射的剑气也更大
+	ExecutionStrike: 增强武器挥舞速度
 }
 
 TheGreatDipper: {
@@ -698,17 +697,18 @@ BambooBow: {
 	ExecutionStrike:
 		'''
 		强化接下来的12次攻击
-		提高攻击速度，箭矢飞行的速度，并且箭矢将穿透一名敌人
+		提高攻击速度，箭矢飞行的速度
+		箭矢将穿透一名敌人
 		'''
 }
 
 BambooSword: {
 	DisplayName: 习武竹刀
-	Tooltip: 伤害较低，但击中小型敌人时会短暂制停并击飞
+	Tooltip: 强制击飞敌人
 	ExecutionStrike:
 		'''
-		将习武竹刀直接掷出，并在命中第一个敌人后滞停
-		竹刀将会短暂停留，旋转自身打击靠近的敌人
+		将竹刀直接掷出
+		竹刀会不断旋转并打击靠近的敌人
 		打击时总会制停对方
 		'''
 }

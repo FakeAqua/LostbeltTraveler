@@ -121,18 +121,6 @@ namespace LostbeltTraveler.Items.Vanity
         public static int FlavorTooltipIndex = -1;
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if (!HasFlavorTooltip)
-                return;
-            //遍历一遍寻找需要绘制的特殊台词位置的索引
-            //这里需要把对应的原罪名与原罪文本直接植入到物品名的下方，让其看起来比较协调
-            FlavorTooltipIndex = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
-            //通过本地化路径获取相应的内容，一个是原罪名，第二个为原罪文本
-            string value = this.GetLocalizedValue("FlavorTooltip").ToLangValue();
-            //实例化TooltipLine，这里的名字不能乱写，需要作为后面绘制特殊效果用的一个索引
-            TooltipLine flavorTooltip = new TooltipLine(Mod, "FlavorTooltipName", value);
-            //植入Tooltip。
-            tooltips.Insert(FlavorTooltipIndex + 1, flavorTooltip);
-            CacheTooltipList = tooltips;
             ExModifyTooltip(tooltips);
         }
         public virtual void ExModifyTooltip(List<TooltipLine> tooltips) { }
@@ -151,18 +139,19 @@ namespace LostbeltTraveler.Items.Vanity
         {
             if (HasFlavorTooltip)
             {
-                string mainText = this.GetLocalizationKey("DetailTooltip").ToLangValue();
-                List<SideTextPanelData> data =
+                string mainText = this.GetLocalizationKey("FlavorTooltip").ToLangValue();
+                List<SideTextPanelData> data = 
                 [
-                    //new(new TooltipLine(Mod,"DetailName",mainText) {OverrideColor = VanityData.MainColor},1)
+                    new(new TooltipLine(Mod, "DetailName", mainText) { OverrideColor = VanityData.MainColor }, 1),
                 ];
+                mainText = this.GetLocalizationKey("DetailTooltip").ToLangValue();
                 string[] textBundle = mainText.Split('\n');
                 for (int i = 0; i < textBundle.Length; i++)
                 {
                     data.Add(new(new(Mod, "DetailTooltip" + i, textBundle[i]) { OverrideColor = VanityData.MainColor }, 1));
                 }
-                //data.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionNumberName", "\n"+numberText)));
-                SideTextPanelMethods.DrawSideTextEdgePanel(lines, data, x, y, VanityData.EdgeColor, true, 0.85f, Color.Lerp(VanityData.GlowColor, Color.Black, .4f) * .45f, Color.Transparent);
+                SideTextPanelMethods.DrawSideTextEdgePanelWithTitleEdge(lines, data, x, y,VanityData.EdgeColor, VanityData.EdgeColor, true, 0.85f, 
+                    Color.Lerp(VanityData.GlowColor, Color.Black, .4f) * 1f, Color.Lerp(VanityData.EdgeColor,Color.White,.3f) ,useShinyBorder:true);
             }
             return base.PreDrawTooltip(lines, ref x, ref y);
         }
@@ -176,10 +165,6 @@ namespace LostbeltTraveler.Items.Vanity
             if (line.IsItemName())
             {
                 VanityEffectClass.DrawItemName(line, VanityData, ParticleColor1, ParticleColor2);
-            }
-            if (line.Name == "FlavorTooltipName" && line.Mod == Mod.Name)
-            {
-                VanityEffectClass.DrawFlavorTooltipName(line, VanityData, ParticleColor1, ParticleColor2);
             }
             if ((line.Name == "Vanity" || line.Name == "Equipable") && line.Mod == "Terraria")
             {

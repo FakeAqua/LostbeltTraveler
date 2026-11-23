@@ -36,12 +36,25 @@ namespace LostbeltTraveler.Globals.Methods
             SB.End();
             SB.Begin(SpriteSortMode.Immediate, blendState, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
-
-
         public static void EndShaderArea(this SpriteBatch SB)
         {
             SB.End();
             SB.BeginDefault();
+        }
+        public static void EnterHudArea(this SpriteBatch SB, BlendState blendState)
+        {
+            SB.End();
+            SB.Begin(SpriteSortMode.Immediate, blendState, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+          public static void EnterHudArea(this SpriteBatch SB, BlendState blendState, SamplerState samplerState)
+        {
+            SB.End();
+            SB.Begin(SpriteSortMode.Immediate, blendState, samplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void EndHudArea(this SpriteBatch SB)
+        {
+            SB.End();
+            SB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
         }
         public static RasterizerState ShowTriangleShapeForVertex(this SpriteBatch SB)
         {
