@@ -2,7 +2,6 @@
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Projs.Executor.Assistance;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Weapons.Executor.Assistance
 {

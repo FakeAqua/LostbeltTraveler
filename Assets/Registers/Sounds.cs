@@ -11,6 +11,12 @@ namespace LostbeltTraveler.Assets.Registers
         public static SoundStyle ASMD_Fire => new SoundStyle($"{SoundsPath}{nameof(ASMD_Fire)}");
         public static SoundStyle ASMD_IceBlockSplit => new SoundStyle($"{SoundsPath}{nameof(ASMD_IceBlockSplit)}");
         public static SoundStyle Atom_Strike => new SoundStyle($"{SoundsPath}{nameof(Atom_Strike)}", numVariants: 3);
+        public static SoundStyle AX_Attack => new SoundStyle($"{SoundsPath}{nameof(AX_Attack)}");
+        public static SoundStyle AX_FullCharge => new SoundStyle($"{SoundsPath}{nameof(AX_FullCharge)}");
+        public static SoundStyle AX_FullChargeAttack => new SoundStyle($"{SoundsPath}{nameof(AX_FullChargeAttack)}");
+        public static SoundStyle AX_FullChargeIdle => new SoundStyle($"{SoundsPath}{nameof(AX_FullChargeIdle)}");
+        public static SoundStyle AX_HalfCharge => new SoundStyle($"{SoundsPath}{nameof(AX_HalfCharge)}");
+        public static SoundStyle AX_HalfChargeAttack => new SoundStyle($"{SoundsPath}{nameof(AX_HalfChargeAttack)}");
 
         public static SoundStyle Blunt_Swing => new($"{SoundsPath}{nameof(Blunt_Swing)}", numVariants: 5);
         public static SoundStyle Buzz => new($"{SoundsPath}{nameof(Buzz)}");

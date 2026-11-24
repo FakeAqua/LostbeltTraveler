@@ -57,13 +57,13 @@ namespace LostbeltTraveler.Globals.Instances.Items
                         string[] v = register.Value.Split('\n');
                         if (v.Length == 1)
                         {
-                        tooltips.CreateTooltipDirect(">" + register.Value, Color.WhiteSmoke, Mod, "FlavorTooltipsName", index);
+                            tooltips.CreateTooltipDirect(">" + register.Value, Color.WhiteSmoke, Mod, "FlavorTooltipsName", index);
                         }
                         else
                         {
                             for (int i = v.Length - 1; i >= 0; i--)
                             {
-                                tooltips.Insert(index, new TooltipLine(Mod, "FlavorTooltipsName" + i, "|" + v[i]) { OverrideColor = Color.LightBlue*.9f});
+                                tooltips.Insert(index, new TooltipLine(Mod, "FlavorTooltipsName" + i, "|" + v[i]) { OverrideColor = Color.LightBlue * .9f });
                             }
                         }
                     }

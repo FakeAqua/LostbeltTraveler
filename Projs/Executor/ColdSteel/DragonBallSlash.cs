@@ -153,10 +153,6 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
                 return false;
             if (Projectile.IsOutScreen())
                 return false;
-            SB.EnterShaderArea();
-            SB.EndShaderArea();
-            SB.EndShaderArea();
-
             PixelatedRenderManager.BeginDrawProj = true;
 
             return false;

@@ -140,7 +140,7 @@ namespace LostbeltTraveler.Items.Vanity
             if (HasFlavorTooltip)
             {
                 string mainText = this.GetLocalizationKey("FlavorTooltip").ToLangValue();
-                List<SideTextPanelData> data = 
+                List<SideTextPanelData> data =
                 [
                     new(new TooltipLine(Mod, "DetailName", mainText) { OverrideColor = VanityData.MainColor }, 1),
                 ];
@@ -150,8 +150,8 @@ namespace LostbeltTraveler.Items.Vanity
                 {
                     data.Add(new(new(Mod, "DetailTooltip" + i, textBundle[i]) { OverrideColor = VanityData.MainColor }, 1));
                 }
-                SideTextPanelMethods.DrawSideTextEdgePanelWithTitleEdge(lines, data, x, y,VanityData.EdgeColor, VanityData.EdgeColor, true, 0.85f, 
-                    Color.Lerp(VanityData.GlowColor, Color.Black, .4f) * 1f, Color.Lerp(VanityData.EdgeColor,Color.White,.3f) ,useShinyBorder:true);
+                SideTextPanelMethods.DrawSideTextEdgePanelWithTitleEdge(lines, data, x, y, VanityData.EdgeColor, VanityData.EdgeColor, true, 0.85f,
+                    Color.Lerp(VanityData.GlowColor, Color.Black, .4f) * 1f, Color.Lerp(VanityData.EdgeColor, Color.White, .3f), useShinyBorder: true);
             }
             return base.PreDrawTooltip(lines, ref x, ref y);
         }

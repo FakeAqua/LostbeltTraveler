@@ -215,8 +215,7 @@ namespace LostbeltTraveler.Globals.Classes
             Projectile.GetRangedWeaponHeldProjData(out Texture2D tex, out Vector2 drawPos, out Vector2 rotPoint, out float _, out SpriteEffects se);
             Vector2 offset = HoldoutOffset * new Vector2(Owner.direction, 1);
             float drawRot = Projectile.rotation + (Projectile.spriteDirection == -1 ? Pi : 0);
-            drawPos += offset.BetterRotatedBy(drawRot);
-
+            drawPos += offset.RotatedBy(drawRot);
             float scale = Projectile.scale * HoldoutDrawScale;
             if (HoldoutEdgeEnable)
             {

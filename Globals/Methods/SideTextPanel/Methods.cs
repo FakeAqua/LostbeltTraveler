@@ -27,7 +27,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
         /// <param name="extraY">额外的y坐标</param>
         /// <param name="useShinyBorder">是否启用绚丽渐变</param>
         public static void DrawMultipleSideTextPanel(ReadOnlyCollection<TooltipLine> lines, IReadOnlyList<SideTextPanelData>[] array, int x, int y,
-            Color titleEdgeColor, bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, Color titleMainColor = default, int extraY = 0,bool useShinyBorder = false)
+            Color titleEdgeColor, bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, Color titleMainColor = default, int extraY = 0, bool useShinyBorder = false)
         {
             var font = FontAssets.MouseText.Value;
             int widthOffset = 10;
@@ -63,7 +63,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
             {
                 int boxY = (int)GetSideTextPanelBoxData(array[i], font, globalScale, true).Y;
                 Rectangle rec = new Rectangle(x, y, (int)lengthX, (int)boxY);
-                DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset,useShinyBorder);
+                DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset, useShinyBorder);
                 y = DrawSideTextPanelTextWithTitle(array[i], font, x, y, globalScale, lerpV, titleMainColor, titleEdgeColor, lengthX) + 24;
             }
         }
@@ -81,8 +81,8 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
         /// <param name="edgeC">侧边栏的描边颜色</param>
         /// <param name="titleMainColor">侧边栏标题文本的文本颜色</param>
         /// <param name="extraY">额外的y坐标</param>
-        public static int DrawSideTextEdgePanelWithTitleEdge(ReadOnlyCollection<TooltipLine> lines, IReadOnlyList<SideTextPanelData> list, int x, int y,Color textEdgeColor, Color titleEdgeColor,
-            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, Color titleMainColor = default, int extraY = 0,bool useShinyBorder = false)
+        public static int DrawSideTextEdgePanelWithTitleEdge(ReadOnlyCollection<TooltipLine> lines, IReadOnlyList<SideTextPanelData> list, int x, int y, Color textEdgeColor, Color titleEdgeColor,
+            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, Color titleMainColor = default, int extraY = 0, bool useShinyBorder = false)
         {
             var font = FontAssets.MouseText.Value;
             int widthOffset = 10;
@@ -109,8 +109,8 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
             Vector2 s = GetSideTextPanelBoxData(list, font, globalScale, true);
             lengthX = s.X;
             float lengthY = s.Y;
-            DrawSideTextPanelBox(x, y, widthOffset, heightOffset, lengthX, lengthY, drawBorder, bgC * lerpV, edgeC * lerpV,useShinyBorder);
-                        //最后我们开始画tooltip
+            DrawSideTextPanelBox(x, y, widthOffset, heightOffset, lengthX, lengthY, drawBorder, bgC * lerpV, edgeC * lerpV, useShinyBorder);
+            //最后我们开始画tooltip
             for (int i = 0; i < list.Count; i++)
             {
                 SideTextPanelData line = list[i];
@@ -145,7 +145,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
                         Color c = line.Line.OverrideColor ?? Color.White;
                         c *= lerpV * lerpV;
                         //ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, font, line.Line.Text, new Vector2(x * Lerp(1.025f, 1f, lerpV), y), c, 0, Vector2.Zero, Vector2.One * globalScale * line.Size);
-//我滴个码
+                        //我滴个码
                         for (int j = 0; j < 8; j++)
                             ChatManager.DrawColorCodedString(Main.spriteBatch, font, lineText, new Vector2(x * Lerp(1.025f, 1f, lerpV), y) + (TwoPi / 8f * j).ToRotationVector2() * 1.1f, textEdgeColor, 0, Vector2.Zero, Vector2.One * globalScale * line.Size);
                         ChatManager.DrawColorCodedString(Main.spriteBatch, font, lineText, new Vector2(x * Lerp(1.025f, 1f, lerpV), y), c, 0, Vector2.Zero, Vector2.One * globalScale * line.Size);
@@ -174,7 +174,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
         /// <param name="titleMainColor">侧边栏标题文本的文本颜色</param>
         /// <param name="extraY">额外的y坐标</param>
         public static int DrawSideTextPanelWithTitleEdge(ReadOnlyCollection<TooltipLine> lines, IReadOnlyList<SideTextPanelData> list, int x, int y, Color titleEdgeColor,
-            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, Color titleMainColor = default, int extraY = 0,bool useShinyBorder = false)
+            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, Color titleMainColor = default, int extraY = 0, bool useShinyBorder = false)
         {
             var font = FontAssets.MouseText.Value;
             int widthOffset = 10;
@@ -201,7 +201,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
             Vector2 s = GetSideTextPanelBoxData(list, font, globalScale, true);
             lengthX = s.X;
             float lengthY = s.Y;
-            DrawSideTextPanelBox(x, y, widthOffset, heightOffset, lengthX, lengthY, drawBorder, bgC * lerpV, edgeC * lerpV,useShinyBorder);
+            DrawSideTextPanelBox(x, y, widthOffset, heightOffset, lengthX, lengthY, drawBorder, bgC * lerpV, edgeC * lerpV, useShinyBorder);
             y = DrawSideTextPanelTextWithTitle(list, font, x, y, globalScale, lerpV, titleMainColor, titleEdgeColor, lengthX) + 24;
             return y - (int)lerpingPosY;
         }
@@ -222,7 +222,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
         /// 返回该侧边栏底部的Y坐标
         /// </returns>
         public static int DrawSideTextPanelWithTitle(ReadOnlyCollection<TooltipLine> lines, IReadOnlyList<SideTextPanelData> list, int x, int y,
-            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, int extraY = 0,bool useShinyBorder = false)
+            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, int extraY = 0, bool useShinyBorder = false)
         {
             var font = FontAssets.MouseText.Value;
             int widthOffset = 10;
@@ -250,7 +250,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
             float lengthY = s.Y;
             //侧边栏是否画背景，跟随原版的系统
             Rectangle rec = new Rectangle(x, y, (int)lengthX, (int)lengthY);
-            DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset,useShinyBorder);
+            DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset, useShinyBorder);
             //最后我们开始画tooltip
             for (int i = 0; i < list.Count; i++)
             {
@@ -304,7 +304,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
         /// </returns>
 
         public static int DrawSideTextPanel(ReadOnlyCollection<TooltipLine> lines, IReadOnlyList<SideTextPanelData> list, int x, int y,
-            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, int extraY = 0,bool useShinyBorder = false)
+            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, int extraY = 0, bool useShinyBorder = false)
         {
             var font = FontAssets.MouseText.Value;
             int widthOffset = 10;
@@ -332,7 +332,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
             float lengthY = s.Y;
             //侧边栏是否画背景，跟随原版的系统
             Rectangle rec = new Rectangle(x, y, (int)lengthX, (int)lengthY);
-            DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset,useShinyBorder);
+            DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset, useShinyBorder);
             //最后我们开始画tooltip
             for (int i = 0; i < list.Count; i++)
             {
@@ -382,7 +382,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
         /// </returns>
 
         public static int DrawSideTextEdgePanel(ReadOnlyCollection<TooltipLine> lines, IReadOnlyList<SideTextPanelData> list, int x, int y, Color edgeTextColor,
-            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, int extraY = 0,bool useShinyBorder = false)
+            bool drawBorder = true, float globalScale = .85f, Color bgC = default, Color edgeC = default, int extraY = 0, bool useShinyBorder = false)
         {
             var font = FontAssets.MouseText.Value;
             int widthOffset = 10;
@@ -410,7 +410,7 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
             float lengthY = s.Y;
             //侧边栏是否画背景，跟随原版的系统
             Rectangle rec = new Rectangle(x, y, (int)lengthX, (int)lengthY);
-            DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset,useShinyBorder);
+            DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset, useShinyBorder);
             //最后我们开始画tooltip
             for (int i = 0; i < list.Count; i++)
             {

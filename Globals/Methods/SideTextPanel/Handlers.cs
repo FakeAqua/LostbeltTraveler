@@ -63,9 +63,9 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
             }
             return y;
         }
-        public static void DrawSideTextPanelBox(Rectangle rec, bool drawBorder = true, Color bgC = default, Color edgeC = default, int widthOffset = 10, int heightOffset = 10,bool useShinyBorder = false)
+        public static void DrawSideTextPanelBox(Rectangle rec, bool drawBorder = true, Color bgC = default, Color edgeC = default, int widthOffset = 10, int heightOffset = 10, bool useShinyBorder = false)
         {
-            DrawSideTextPanelBox(rec.X, rec.Y, widthOffset, heightOffset, rec.Width, rec.Height, drawBorder, bgC, edgeC,useShinyBorder);
+            DrawSideTextPanelBox(rec.X, rec.Y, widthOffset, heightOffset, rec.Width, rec.Height, drawBorder, bgC, edgeC, useShinyBorder);
         }
         public static void DrawSideTextPanelBox(int x, int y, int widthOffset, int heightOffset, float lengthX,
             float lengthY, bool drawBorder = true, Color bgC = default, Color edgeC = default, bool useShinyBorder = false)

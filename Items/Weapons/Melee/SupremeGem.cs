@@ -2,11 +2,9 @@
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
-using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using LostbeltTraveler.Projs.Melee;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection.Metadata;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

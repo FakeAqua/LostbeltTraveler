@@ -501,6 +501,19 @@ namespace LostbeltTraveler.Globals.Methods
                 proj.frame = 0;
             }
         }
+        public static void AddFrames(this Projectile proj, int frameCounts = 3)
+        {
+            proj.frameCounter += 1;
+            if (proj.frameCounter > frameCounts)
+            {
+                proj.frame++;
+                proj.frameCounter = 0;
+            }
+            if (proj.frame >= Main.projFrames[proj.type])
+            {
+                proj.frame = 0;
+            }
+        }
         public static void KillCertainProj(this Player player, int type, bool extraCondition = true, bool force = false)
         {
             foreach (var proj in Main.ActiveProjectiles)
@@ -613,6 +626,7 @@ namespace LostbeltTraveler.Globals.Methods
         }
         public static Vector2 SwapVector2Data(this Vector2 vec) => new Vector2(vec.Y, vec.X);
         public static int GetHorizonDirection(this Projectile proj) => (proj.velocity.X > 0).ToDirectionInt();
+        public static int XSignValue(this Projectile proj, Vector2 targetVec) => ((targetVec.X - proj.Center.X) > 0).ToDirectionInt();
         public static void FastDrawCube(this SpriteBatch sb, Vector2 pos, float scale = 1)
         {
             Texture2D cube = LostbeltModAssets.Texture_WhiteCube.Value;

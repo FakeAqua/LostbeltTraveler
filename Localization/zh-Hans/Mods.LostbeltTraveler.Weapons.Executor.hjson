@@ -556,10 +556,7 @@ ArcticGuanDao: {
 		挥舞关刀击退附近的敌人
 		命中时施加[ScarletDebuff/Terraria/Frostburn]
 		'''
-	ExecutionStrike:
-		'''
-		向光标发射落下冰锥的雪云
-		'''
+	ExecutionStrike: 向光标发射落下冰锥的雪云
 }
 
 ConferenceCall: {

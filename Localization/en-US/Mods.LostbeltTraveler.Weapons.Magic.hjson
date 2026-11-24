@@ -69,3 +69,8 @@ LivingBoomerangMagic: {
 		"A proof that another world truly existed"
 		'''
 }
+
+AXCannon: {
+	DisplayName: A X Cannon
+	Tooltip: ""
+}

@@ -46,7 +46,7 @@ namespace LostbeltTraveler.Globals.Methods
             SB.End();
             SB.Begin(SpriteSortMode.Immediate, blendState, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
         }
-          public static void EnterHudArea(this SpriteBatch SB, BlendState blendState, SamplerState samplerState)
+        public static void EnterHudArea(this SpriteBatch SB, BlendState blendState, SamplerState samplerState)
         {
             SB.End();
             SB.Begin(SpriteSortMode.Immediate, blendState, samplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);

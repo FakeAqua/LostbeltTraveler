@@ -3,7 +3,6 @@ using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using LostbeltTraveler.Projs.Magic;
-using LostbeltTraveler.Projs.Melee;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -70,8 +69,8 @@ namespace LostbeltTraveler.Items
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity.ToSafeNormalize() * 16f,
-                ProjectileType<OnyxYoyoOnyx>(), damage, 1);
+            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity.ToSafeNormalize() * 8f,
+                ProjectileType<AXCannonFullCharge>(), damage, 1);
             Stopwatch.StartNew();
             Stopwatch sw = Stopwatch.StartNew();
             sw.Stop();

@@ -2,12 +2,8 @@
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
-using LostbeltTraveler.Globals.Methods.SideTextPanel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Materials
 {

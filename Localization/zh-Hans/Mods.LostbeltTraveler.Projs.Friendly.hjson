@@ -76,6 +76,7 @@ Typeless: {
 	// FinalBarBalloonThunder.DisplayName: Final Bar Balloon Thunder
 	// DesterrannachtCursedBullet.DisplayName: Desterrannacht Cursed Bullet
 	// SupremeGemYoyoProjDiamond.DisplayName: Supreme Gem Yoyo Proj Diamond
+	// AXCannonHeldProj.DisplayName: A X Cannon Held Proj
 }
 
 Executor: {
@@ -335,6 +336,9 @@ Magic: {
 	// LivingBoomerangMagicHeldProj.DisplayName: Living Boomerang Magic Held Proj
 	// LivingBoomerangMagicPetal.DisplayName: Living Boomerang Magic Petal
 	// LivingBoomerangMagicLeaf.DisplayName: Living Boomerang Magic Leaf
+	// AXCannonFullCharge.DisplayName: A X Cannon Full Charge
+	// AXCannonHalfCharge.DisplayName: A X Cannon Half Charge
+	// AXCannonNoCharge.DisplayName: A X Cannon No Charge
 }
 
 Melee: {
