@@ -22,7 +22,7 @@ namespace LostbeltTraveler.Globals.Instances.Items
             string prefix = "Upgrade.ParryShield.";
             string genericText = Mod.GetLocalizationKey(prefix + "GeneralText").ToLangValue();
             int index = tooltips.FindLineIndexLast("Tooltip");
-            string combinedValue = ScarletTextSets.GenericText.ModNamePrefix + "\n" + genericText;
+            string combinedValue = ScarletLocalText.GenericText.ModNamePrefix + "\n" + genericText;
             TooltipLine line = new TooltipLine(Mod, "ParryShieldTooltipName", combinedValue) { OverrideColor = Color.LightGoldenrodYellow };
             tooltips.Add(line);
             //tooltips.Insert(index, line);

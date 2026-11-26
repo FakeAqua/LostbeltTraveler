@@ -9,7 +9,7 @@ PrefixData: {
 PocketMirrorModiflication:
 	'''
 	异闻旅者：
-	佩戴时，按下 互动键 以传送回出生点
+	佩戴时，按下 <SCARLETMOD:MODKEY> 以传送回出生点
 	你可以通过饰品可见性以启用或关闭这个功能
 	置于时装栏内默认生效
 	'''
@@ -22,8 +22,8 @@ GenericText: {
 	ApplyDoT: 允许施加{0}
 
 	SwitchWeapon: {
-		Tooltip: 手持按下 互动键 以切换形态
-		Visual: 手持按下 互动键 以更换视觉效果
+		Tooltip: 手持按下 <SCARLETMOD:MODKEY> 以切换形态
+		Visual: 手持按下 <SCARLETMOD:MODKEY> 以更换视觉效果
 		AllFix: 同时作用于：{0}
 		Condition: 切换前置：击败<{0}>
 	}
@@ -45,3 +45,34 @@ ItemBelongTo: {
 }
 
 CustomDeathReason.Suicide: 你死了。
+
+ExecutorDamageClass: {
+	DisplayName: 代行者伤害
+	Progress: 处决进程：{0} / {1}
+	StrikeTitle: 处决攻击
+	ForceTacticleExecution: 处决攻击需按下<SCARLETMOD:MODKEY>执行
+	ForceAutomaticExecution: 处决攻击自动执行
+	Companion: 伴生
+
+	WeaponType: {
+		Throw: 投掷品
+		ColdSteel: 不脱手冷兵器
+		Firearm: 热武器
+		Caster: 魔术载体
+		Assistance: 支援道具
+		Misc: 特殊
+	}
+
+	Prefix: {
+		Alterego.DisplayName: 他人格
+		Digital.DisplayName: 电子
+		Evolutional.DisplayName: 变革
+		Fake.DisplayName: 赝品
+		Foreigner.DisplayName: 降临
+		Mysterious.DisplayName: 神秘
+		Phantasmic.DisplayName: 空想
+		ExecutionDamageLine: "{0}%处决伤害"
+		CritDamageLine: "{0}暴击伤害"
+		DefenseReduceLine: "{0}防御力"
+	}
+}

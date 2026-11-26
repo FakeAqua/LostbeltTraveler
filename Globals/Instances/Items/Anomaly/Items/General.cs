@@ -51,8 +51,8 @@ namespace LostbeltTraveler.Globals.Instances.Items.Anomaly.Items
                 case ItemID.NightsEdge:
                 case ItemID.TrueNightsEdge:
                     tooltips.CreateTooltipDirect(
-                        ScarletTextSets.GenericText.CombineModName(
-                            ScarletTextSets.GenericText.ApplyDoT.ToFormatValue("[ScarletDebuff/LostbeltTraveler/ForeverNightBuff]")),
+                        ScarletLocalText.GenericText.CombineModName(
+                            ScarletLocalText.GenericText.ApplyDoT.ToFormatValue("[ScarletDebuff/LostbeltTraveler/ForeverNightBuff]")),
                         Color.LightGray, Mod, "ApplyDoTName");
                     break;
             }

@@ -417,7 +417,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             if (target.friendly && target.townNPC)
             {
                 new ScytheBlood(target.Center, Main.rand.NextFloat(.4f, .6f) * .6f).Spawn();
-                ScreenDarknessSystem.AddScreenDarkness(.85f, 2, 1, 12, EaseInCubic, EaseInCubic);
+                ScreenDarknessSystem.AddScreenDarkness(.85f, 2, 1, 12, Owner,EaseInCubic, EaseInCubic);
                 ApplyKilledNPCSpecialDrop(target);
                 return;
             }
@@ -642,7 +642,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             }
             else
             {
-                ScreenDarknessSystem.AddScreenDarkness(.85f, 2, 1, 12, EaseInCubic, EaseInCubic);
+                ScreenDarknessSystem.AddScreenDarkness(.85f, 2, 1, 12,Owner, EaseInCubic, EaseInCubic);
                 if (Projectile.numHits < 12)
                     HitSparkleHeavy(target, hit, damageDone);
             }

@@ -392,8 +392,8 @@ RuShiWoWen: {
 		首次装备时立刻清除已召唤的仆从
 		每{0}秒清除已召唤的仆从，并从全部仆从种类中随机召唤1名仆从直至仆从上限
 		同批次召唤的全部仆从，面板伤害取本批次中面板伤害最低的仆从的原始数值，受召唤伤害加成
-		手持该饰品，对着背包内的仆从召唤杖按下互动键以禁用对应的仆从生成
-		至多禁用{1}种仆从，对着该饰品按下互动键则可以移除最后一个加入列表的仆从
+		手持该饰品，对着背包内的仆从召唤杖按下<SCARLETMOD:MODKEY>以禁用对应的仆从生成
+		至多禁用{1}种仆从，对着该饰品按下<SCARLETMOD:MODKEY>则可以移除最后一个加入列表的仆从
 		按住左Alt以查看禁用列表
 		'''
 	BanMinionList: 召唤物禁用列表({1}){0}
@@ -439,7 +439,7 @@ EmblemGalaxy: {
 	DisplayName: 群星之证
 	Tooltip:
 		'''
-		佩戴后，对背包内的[i:LostbeltTraveler/TheSevenStar]七星按下互动键，以转化为[i:LostbeltTraveler/TheGreatDipper]极星
+		佩戴后，对背包内的[i:LostbeltTraveler/TheSevenStar]七星按下<SCARLETMOD:MODKEY>，以转化为[i:LostbeltTraveler/TheGreatDipper]极星
 		极星只有在佩戴群星之证时才能正常使用
 		'''
 }
@@ -966,6 +966,7 @@ Adjudication: {
 		该效果有10分钟冷却
 		团队的治疗量提升14点
 		自身受到伤害时，将结算后的伤害均摊给队内的所有人员
+		若处于单人模式或没有队友，则只减少5%的结算后伤害
 		“汝等并不纯洁，身负罪孽，但并非邪恶。”
 		'''
 }

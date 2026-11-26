@@ -1,9 +1,13 @@
 ﻿using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Keybinds;
+using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using LostbeltTraveler.Globals.Systems.Conditions;
 using LostbeltTraveler.Projs.Executor.Thrown;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -57,6 +61,36 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
         public override bool CanShoot(Player player)
         {
             return !player.HasProj<GaiaStrikerHeldProj>();
+        }
+        public override bool PrePreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
+        {
+                        string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
+            detailText = detailText.Replace("<SCARLETMOD:MODKEY>", LostbeltKeybinds.GeneralActionKeybind.GetHotKeyString());
+            int requirements = Math.Max(0, ExecutionProgress);
+            int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
+            string progressText = ExecutorDamageClass.Instance.GetLocalizationKey("Progress").ToLangValue().ToFormatValue(curRequirement, requirements);
+            string titleText = ExecutorDamageClass.Instance.GetLocalizationKey("StrikeTitle").ToLangValue();
+            Color c = Color.DarkRed;
+            TooltipLine titleLine = new TooltipLine(Mod, "StrikeTitle", titleText);
+            List<SideTextPanelData> list =
+                [
+                new SideTextPanelData(titleLine,1,SupportWeaponBuff),
+                    ];
+            string[] textBundle = detailText.Split('\n');
+            for (int i = 0; i < textBundle.Length; i++)
+            {
+                list.Add(new(new(Mod, "StrikeTooltip" + i, textBundle[i]), 1));
+            }
+            list.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionNumberName", "\n" + progressText)));
+            if (Item.IsBestPrefix())
+                SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, c, true, .85f, Color.Lerp(Color.DarkRed, Color.Black, .6f), Color.Lerp(Color.DarkRed, Color.Crimson, 5f), default, 0, true);
+            else
+                SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, c);
+            return false;
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            base.ModifyTooltips(tooltips);
         }
         public override void ExModifyTooltips(List<TooltipLine> tooltips)
         {

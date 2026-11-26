@@ -4,6 +4,7 @@ namespace LostbeltTraveler.Globals.Keybinds
 {
     public partial class LostbeltKeybinds : ModSystem
     {
+        
         /// <summary>
         /// 模组互动键，绝大部分交互内容都会经过这个键位
         /// </summary>

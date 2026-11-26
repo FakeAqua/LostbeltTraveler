@@ -5,6 +5,7 @@ namespace LostbeltTraveler.Globals.Executor
 {
     public class ExecutorDamageClass : DamageClass, ILocalizedModType
     {
+        public override string LocalizationCategory => "Database";
         internal static ExecutorDamageClass Instance;
         public override void Load()
         {

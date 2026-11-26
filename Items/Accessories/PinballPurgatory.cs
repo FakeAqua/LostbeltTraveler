@@ -32,7 +32,7 @@ namespace LostbeltTraveler.Items.Accessories
             if (Main.keyState.PressingAlt())
                 tooltips.ReplaceAllTooltip(value, Color.White);
             else
-                tooltips.CreateTooltipDirect(ScarletTextSets.GeneralText_BuffShow.ToLangValue(), Color.LightGray, Mod, "DetailLineName");
+                tooltips.CreateTooltipDirect(ScarletLocalText.GeneralText_BuffShow.ToLangValue(), Color.LightGray, Mod, "DetailLineName");
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

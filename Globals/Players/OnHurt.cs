@@ -286,7 +286,7 @@ namespace LostbeltTraveler.Globals.Players
                 bloodThornCrownHit += GetSeconds(5);
                 if (bloodThornCrownHit >= GetSeconds(5) * BloodThornCrown.MaxHitCounter)
                 {
-                    NetworkText text = Mod.GetLocalization(ScarletTextSets.CustomDeath.SuicidePath).ToNetworkText();
+                    NetworkText text = Mod.GetLocalization(ScarletLocalText.CustomDeath.SuicidePath).ToNetworkText();
                     Player.Suicide(PlayerDeathReason.ByCustomReason(text), 99999, 0, false, true);
                 }
             }

@@ -20,7 +20,7 @@ namespace LostbeltTraveler.ReVisual.Class
         public sealed override bool InstancePerEntity => true;
         public sealed override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            tooltips.CreateTooltipDirect(ScarletTextSets.GenericText.ModNamePrefix + "\n" + ScarletTextSets.GenericText.SwitchVisual, Color.LightGray);
+            tooltips.CreateTooltipDirect(ScarletLocalText.GenericText.ModNamePrefix + "\n" + ScarletLocalText.GenericText.SwitchVisual, Color.LightGray);
             ExModifyTooltips(item, tooltips);
         }
         public virtual void ExModifyTooltips(Item item, List<TooltipLine> tooltips) { }

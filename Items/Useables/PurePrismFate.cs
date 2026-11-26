@@ -3,9 +3,12 @@ using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Handlers;
+using LostbeltTraveler.Globals.Keybinds;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Useables
 {
@@ -54,6 +57,10 @@ namespace LostbeltTraveler.Items.Useables
             Item.maxStack = 9999;
             Item.Lostbelt().drawFlavorTooltip = true;
             Item.rare = ItemRarityID.Orange;
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            tooltips.FindReplaceWithHotkeyString(LostbeltKeybinds.GeneralActionKeybind);
         }
         public override void HoldItem(Player player)
         {

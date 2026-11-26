@@ -4,9 +4,14 @@ using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
 using LostbeltTraveler.Globals.Instances.Items;
+using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using LostbeltTraveler.Projs.Executor.Firearm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Weapons.Executor.Firearm
 {

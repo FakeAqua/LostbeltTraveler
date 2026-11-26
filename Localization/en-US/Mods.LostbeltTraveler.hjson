@@ -1,36 +1,4 @@
-SwitchWeaponTooltip: Lostbelt Journey: Press Intersect while holding the weapon to switch
-SwitchWeaponVisual: Lostbelt Journey: Press Intersect while holding the weapon to change its visual effect
-SwitchWeaponConditionTooltip: Switch condition: Defeated<{0}>
 NotFinished: -Not Finished-
-
-SwitchWeaponConditionList: {
-	DownedGolem: Golem
-	DownedLifeGods: The Lifebringer
-	DownedEvilBoss: Any Evil Boss
-	DownedPlantera: Plantera
-}
-
-ItemBelongTo: {
-	Donator: Donator Item
-	Developer: Developer Item
-	Supporter: Supporter Item
-}
-
-SwitchWeapon: {
-	Tooltip:
-		'''
-		Lostbelt Journey:
-		Press Intersect key while holding the weapon to switch
-		'''
-	Visual:
-		'''
-		Lostbelt Journey:
-		Press Intersect key while holding the weapon to change its visual effect
-		'''
-	AllFix: Also can apply to: {0}
-}
-
-CrossModSupport.Calamity: ""
 
 Keybinds: {
 	GeneralActionKeybind.DisplayName: Interact Key
@@ -70,8 +38,6 @@ ExecutorDamageClass: {
 		DefenseReduceValue: "{0} Defense"
 	}
 }
-
-DamageClasses.ExecutorDamageClass.DisplayName: Executor Damage Class
 
 Projs: {
 	Enemy.SuicideKnifeInvisProj.DisplayName: Suicide Knife Invis Proj

@@ -127,7 +127,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             }
             //处死时释放
             SoundEngine.PlaySound(LostbeltSoundAssets.Misc_AngelBlast with { Pitch = -0.075f }, Projectile.Center);
-            ScreenDarknessSystem.AddScreenDarkness(0.85f, 6, 1, 45, easeOut: EaseInCubic);
+            ScreenDarknessSystem.AddScreenDarkness(0.85f, 6, 1, 45,Owner, easeOut: EaseInCubic);
             for (int i = 0; i < 4; i++)
             {
                 //666我还要存他们的数组信息来着

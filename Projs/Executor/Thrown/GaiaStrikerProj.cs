@@ -177,7 +177,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
                 }
                 if (Projectile.Lostbelt().ExecutionStrike && !Owner.HasProj<GaiaStrikerHeldProj>() && !Owner.HasProj<GaiaStrikerMountedProj>())
                 {
-                    ScreenDarknessSystem.AddScreenDarkness(0.95f, 5, 20, 30, easeOut: EaseInCubic);
+                    ScreenDarknessSystem.AddScreenDarkness(0.95f, 5, 20, 30, Owner,easeOut: EaseInCubic);
                     ScreenShakeSystem.AddScreenShakes(Projectile.Center, 12, 20, Projectile.rotation, 0.15f, easingFunc: EaseOutBack);
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center.ToRandCirclePos(6), Vector2.Zero, ProjectileType<GaiaStrikerMountedProj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                     proj.rotation = Projectile.rotation;

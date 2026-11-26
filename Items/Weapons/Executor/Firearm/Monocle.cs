@@ -3,11 +3,16 @@ using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using LostbeltTraveler.Items.Materials;
 using LostbeltTraveler.Projs.Executor.Firearm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Weapons.Executor.Firearm
 {
@@ -46,6 +51,36 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Firearm
             spriteBatch.Draw(tex, drawPos, frame, lightColor, rotation, ori, scale, 0, 0);
             return false;
         }
+        public override void ApplyExecutionTooltips(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y, params object[] args)
+        {
+            string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
+            if (args.Length > 0)
+            {
+                detailText = detailText.ToFormatValue(args);
+            }
+            int requirements = Math.Max(0, ExecutionProgress);
+            int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
+            string progressText = ExecutorDamageClass.Instance.GetLocalizationKey("Progress").ToLangValue().ToFormatValue(curRequirement, requirements);
+            string titleText = ExecutorDamageClass.Instance.GetLocalizationKey("StrikeTitle").ToLangValue();
+            Color c = Color.DarkRed;
+            TooltipLine titleLine = new TooltipLine(Mod, "StrikeTitle", titleText);
+            List<SideTextPanelData> list =
+                [
+                new SideTextPanelData(titleLine,1,SupportWeaponBuff),
+                    ];
+            string[] textBundle = detailText.Split('\n');
+            for (int i = 0; i < textBundle.Length; i++)
+            {
+                list.Add(new(new(Mod, "StrikeTooltip" + i, textBundle[i]), 1));
+            }
+            list.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionNumberName", "\n" + progressText)));
+            if(Item.IsBestPrefix())
+                SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, Color.DarkGoldenrod, bgC: Color.Lerp(Color.DarkGoldenrod,Color.Black,.6f), edgeC: Color.LightGoldenrodYellow, useShinyBorder: true);
+            else
+                SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, c);
+        }
+
+
         public override bool CanShoot(Player player)
         {
             return !player.HasProj(Item.shoot);

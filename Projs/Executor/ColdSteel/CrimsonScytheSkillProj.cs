@@ -114,7 +114,7 @@ namespace LostbeltTraveler.Projs.Executor.ColdSteel
             ScarletSound(LostbeltSoundAssets.Tlipoca_StoneShatter, Projectile.Center, 0.475f, 1, -0.5f);
             Vector2 pos = Owner.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, ArmRotation - PiOver2).ToRandCirclePos(4) + ArmRotation.ToRotationVector2() * 20f;
             ScreenShakeSystem.AddScreenShakes(Owner.Center, 3, 50, 0, RandRotTwoPi, easingFunc: EaseInOutQuad);
-            ScreenDarknessSystem.AddScreenDarkness(.85f, 4, 1, 42, EaseInCubic, EaseInCubic);
+            ScreenDarknessSystem.AddScreenDarkness(.85f, 4, 1, 42, Owner,EaseInCubic, EaseInCubic);
             ECSParticle.CrossGlow(pos, Color.White, 45, 1, 0.94f, 0.2f);
 
             for (int i = 0; i < 46; i++)

@@ -2,18 +2,19 @@
 using LostbeltTraveler.Core.Primitives.Trail;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Items.Weapons.Executor.Assistance;
+using LostbeltTraveler.Items.Weapons.Magic;
+using LostbeltTraveler.Projs.Executor.Assistance;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 
-namespace LostbeltTraveler.Projs.Executor.Assistance
+namespace LostbeltTraveler.Projs.Magic
 {
     public class GhostKnifeProj : LostbeltProjs
     {
         public override string Texture => GetInstance<GhostKnife>().Texture;
-        public override EnumDamageClass Category => EnumDamageClass.Executor;
+        public override EnumDamageClass Category => EnumDamageClass.Magic;
         public override void SetStaticDefaults()
         {
             Projectile.ToTrailSetting(12);
@@ -74,8 +75,6 @@ namespace LostbeltTraveler.Projs.Executor.Assistance
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             SetGeneralParticle(Projectile.oldPosition);
-            if (!Owner.HasProj<GhostKnifeMark>())
-                Projectile.AddExecutionTimeImmediate<GhostKnife>();
             if (!SetHoming)
             {
                 ScarletSound(SoundID.Item109, Projectile.Center, volume: .65f, pitch: 0.6f, pitchVariance: 0.3f);

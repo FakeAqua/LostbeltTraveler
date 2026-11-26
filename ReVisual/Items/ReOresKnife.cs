@@ -11,7 +11,7 @@ namespace LostbeltTraveler.ReVisual.Items
     {
         public override void ExModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            tooltips.CreateTooltipDirect(ScarletTextSets.GenericText.SwitchAllFix, Color.LightGray, Mod, "Lostbelt", -1,
+            tooltips.CreateTooltipDirect(ScarletLocalText.GenericText.SwitchAllFix, Color.LightGray, Mod, "Lostbelt", -1,
                 GetValue(nameof(TinKnife)) + GetValue(nameof(CopperKnife)) +
                 GetValue(nameof(IronKnife)) + GetValue(nameof(LeadKnife)) +
                 GetValue(nameof(TungstenKnife)) + GetValue(nameof(SilverKnife)) +

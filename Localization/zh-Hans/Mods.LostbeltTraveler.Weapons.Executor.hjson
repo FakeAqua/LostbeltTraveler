@@ -14,15 +14,11 @@ Exsanguination: {
 
 MantleLayer: {
 	DisplayName: 地幔
-	Tooltip:
-		'''
-		命中时弹起，而后进行一次重击
-		在返程的时候不会发起这个效果
-		'''
+	Tooltip: 命中时将对敌人进行重击
 	ExecutionStrike:
 		'''
-		地幔将在敌人上挂载，持续造成伤害
-		一定时间后，将会执行两次较大力度的重击
+		掷出的{0}会尝试挂载距离其最近的敌人
+		造成总共12次伤害后，再进行两次力度的更大重击
 		'''
 }
 
@@ -37,24 +33,23 @@ DungeonBreaker: {
 	ExecutionStrike:
 		'''
 		高速掷出且允许无限穿透
-		在砸入墙体时，强制震开附近所有小型敌人
-		其将会不断向后释放可以在墙体上反弹的小型水箭
+		砸入墙体后将持续释放遇墙反弹的水箭
 		'''
 }
 
 FleshGrinder: {
 	DisplayName: 碾肉机
-	Tooltip: 命中时，碾压敌人的血肉使其爆开
+	Tooltip: 命中将碾压敌人的血肉使其爆开
 	ExecutionStrike:
 		'''
-		搜索多个敌人，并分别造成6次伤害
-		最大可攻击4名敌人
+		追踪多名敌人，分别造成6次伤害
+		最多可追踪4名敌人
 		'''
 }
 
 JungleMadness: {
 	DisplayName: 丛林狂怒
-	Tooltip: 命中时，追加短暂飞行的穿墙树叶
+	Tooltip: 命中释放短暂的穿墙树叶
 	ExecutionStrike:
 		'''
 		返程后回击，并挂载在敌人上造成12次伤害
@@ -82,11 +77,11 @@ DreamlessNight: {
 
 TheDefiler: {
 	DisplayName: 玷污者
-	Tooltip: 命中时，感染敌人的血肉使其糜烂
+	Tooltip: 命中将感染敌人的血肉使其糜烂
 	ExecutionStrike:
 		'''
-		搜索多个敌人，并分别造成4次伤害
-		最大可攻击7名敌人
+		追踪多名敌人，分别造成4次伤害
+		最多可追踪7名敌人
 		'''
 }
 
@@ -99,8 +94,8 @@ AetherfireSmasher: {
 		'''
 	ExecutionStrike:
 		'''
-		天炎破将挂载在目标上持续造成伤害
-		同时释放火柱与追踪火球
+		掷出的[i:LostbeltTraveler/AetherfireSmasher]天炎破将挂载在目标上
+		持续造成伤害，并释放火柱与追踪火球
 		'''
 }
 
@@ -109,9 +104,8 @@ BinaryStars: {
 	Tooltip: 命中时，追击迅捷的星云之矢
 	ExecutionStrike:
 		'''
-		同时掷出两把星系之锤，返程时回击敌人
-		撞击敌人后分裂成两个子锤，并挂载在敌人上造成持续伤害
-		挂载结束后，子锤将会返程至玩家手中并再进行一次回击
+		同时掷出强大双子锤
+		双子锤将持续重创你的敌人
 		'''
 }
 
@@ -273,7 +267,7 @@ FrostHammer: {
 		'''
 		掷出一个雪花，追杀你的敌人
 		接下来释放的冰锥都会集中攻击雪花追杀的目标
-		你可以对敌人右键从而为雪花重新锁定一个目标
+		对光标附近的敌人右键，会使雪花重新锁定这名目标
 		'''
 }
 
@@ -295,15 +289,12 @@ DualWraithStaff: {
 
 PrunusMume: {
 	DisplayName: 红梅
-	Tooltip:
-		'''
-		命中时向上抛掷一朵红梅花
-		红梅花将会在一定时间后分散开来，且可以在墙体上反弹一次
-		'''
+	Tooltip: 沿途滞留一定时间后四散开来的红梅花
 	ExecutionStrike:
 		'''
-		向上抛掷一朵红梅花，滞留在场上一段时间
-		红梅花将会持续不断地释放旋转的花瓣
+		抛掷一朵红梅花仆从，
+		靠近敌人并发射红梅花瓣
+		可以同时存在3个红梅花仆从
 		'''
 }
 
@@ -318,7 +309,7 @@ GaiaStriker: {
 	ExecutionStrike:
 		'''
 		盖亚重锤爆开后转变为仆从锤
-		按下互动键在射线模式与自动模式之间切换
+		按下<SCARLETMOD:MODKEY>在射线模式与自动模式之间切换
 		自动模式自动攻击附近敌人
 		射线模式释放猩红射线，手持时占用普攻增强射线
 		射线模式下每次攻击回复少量存续时间
@@ -357,8 +348,8 @@ PureYinyo: {
 		'''
 	ExecutionStrike:
 		'''
-		至纯阴阳掷出后锁定距离玩家指针的敌人进行攻击
-		攻击结束时，将会从敌人身上弹开，并迸发大量的碎块
+		至纯阴阳掷出后持续攻击附近的敌人
+		在攻击结束时，将迸发大量的碎块
 		'''
 }
 
@@ -371,8 +362,9 @@ LavaFlow: {
 		'''
 	ExecutionStrike:
 		'''
-		命中时扎在敌人身上造成持续伤害
-		后续进行追击时，都会从敌人身上向上抛射火球
+		命中时刺入敌人
+		[i:LostbeltTraveler/LavaFlow][c/EF9A05:熔岩流]后续追击该名
+		敌人时都会向上迸发火球
 		'''
 }
 
@@ -424,11 +416,15 @@ StreamingProtocol: {
 
 AngryBomb: {
 	DisplayName: 愤怒炸弹
-	Tooltip: 掷出一定时间后锁定距离最近的目标
+	Tooltip:
+		'''
+		掷出后追踪附近的敌人
+		飞行过程中有概率自爆
+		'''
 	ExecutionStrike:
 		'''
-		这枚炸弹将变得更加愤怒
-		拥有更广的索敌范围，会多次修复自身进行回击
+		这枚炸弹将更加愤怒
+		飞行时不再自爆，追踪范围也更广
 		'''
 }
 
@@ -436,7 +432,7 @@ TearEye: {
 	DisplayName: 克苏鲁的眼泪
 	Tooltip:
 		'''
-		攻击速度更慢，但是伤害衰减力度更低的鞭子
+		伤害衰减力度非常低
 		执行处决时，给予支援增益60秒
 		'''
 	ExecutionStrike:
@@ -470,7 +466,7 @@ EndlessWar: {
 		'''
 		无尽战争将在命中后变化为特殊性质仆从锤
 		悬挂的仆从锤将自动攻击附近的敌人，同时会以其为中心在周围降下多道闪电
-		仆从锤在场期间再次按下互动键，或即将消失时，将朝向你攻击的方向进行三次大范围的重击
+		仆从锤在场期间再次按下<SCARLETMOD:MODKEY>，或即将消失时，将朝向你攻击的方向进行三次大范围的重击
 		重击无视防御力，挥击过程中也会持续释放闪电，且每次命中时都会震慑敌人
 		'''
 	FlavorTooltips: ""
@@ -482,7 +478,7 @@ SplendidofTerra: {
 	ExecutionStrike:
 		'''
 		璀璨大地将在命中后变化为特殊性质仆从锤
-		仆从锤在场时，可通过按下互动键以在射线模式与自动模式切换
+		仆从锤在场时，可通过按下<SCARLETMOD:MODKEY>以在射线模式与自动模式切换
 		自动模式下仆从锤会自动攻击附近的敌人
 		射线模式下将会释放生命光线，手持璀璨大地时占用其普通攻击以增强射线功能
 		射线模式下，手持璀璨大地每次进行攻击时，会为仆从锤回复少量存续时间
@@ -501,9 +497,11 @@ ASMD: {
 		'''
 	ExecutionStrike:
 		'''
-		植入受害者体内，造成多段爆炸伤害
-		最后一发爆炸将从其体内迸裂出多个冰块
-		后续追击炮弹时，使一枚冰块追击该名敌人，并叠加处决进程
+		短暂提升[i:LostbeltTraveler/ASMD][c/1E90FF:A.S.M.D]的攻击速度
+		植入受害者体内并多次爆炸
+		最后爆炸将迸裂出多个冰块
+		冰块会在[i:LostbeltTraveler/ASMD][c/1E90FF:A.S.M.D]命中时追击，
+		并为[i:LostbeltTraveler/ASMD][c/1E90FF:A.S.M.D]叠加处决进程
 		'''
 	// AlterDisplayName: ""
 }
@@ -512,8 +510,8 @@ SickleAndTorch: {
 	DisplayName: 刀耕火种
 	Tooltip:
 		'''
-		镰刀命中时施加[ScarletDebuff/Terraria/Oiled]
-		第三下攻击时投掷火把，施加[ScarletDebuff/Terraria/OnFire3]
+		镰刀命中施加[ScarletDebuff/Terraria/Oiled]
+		第三下攻击投掷火把，施加[ScarletDebuff/Terraria/OnFire3]
 		'''
 	ExecutionStrike:
 		'''
@@ -563,13 +561,12 @@ ConferenceCall: {
 	DisplayName: 电话会议
 	Tooltip:
 		'''
-		一次发射5枚子弹
-		每一枚子弹在飞行一小段距离或击中敌人时会横向分裂两颗分裂弹
-		分裂弹会在墙体上进行弹射
+		子弹在飞行一段时间或命中敌人时横向分裂
+		分裂弹会在墙体上反弹
 		'''
 	ExecutionStrike:
 		'''
-		强化接下来5秒内的攻击
+		强化[i:LostbeltTraveler/ConferenceCall]电话会议的攻击5秒
 		所有子弹都会遇墙反弹，并穿透一次敌人
 		'''
 	FlavorTooltip: 干脆一次性呼叫所有人算了。
@@ -675,15 +672,15 @@ TheGreatDipper: {
 	DisplayName: 极星
 	Tooltip:
 		'''
-		向光标位置发射两枚星星
+		向光标位置发射两枚追踪亮星
 		在身后点亮北斗七星
 		该模式下处决手动执行
 		'''
 	ExecutionStrike:
 		'''
-		每轮挥舞发射七枚追踪亮星，并点亮背后北斗七星
-		北斗七星全亮后触发处决，在光标处展开持续伤害银河
-		该模式下处决自动执行
+		每次挥舞发射7枚追踪亮星，并逐步点亮背后的北斗七星
+		北斗七星在完全点亮后自动释放处决攻击
+		释放后切换回初始模式，同时在光标位置展开银河
 		'''
 	Special: ""
 }
@@ -714,10 +711,14 @@ ClimaticHawstring: {
 	DisplayName: 气候钓弦
 	Tooltip:
 		'''
-		手持时两位小飞棍从天而降，并协助攻击敌人
+		手持时小飞棍从天而降，协助攻击敌人
 		“以天竿为弓，以气候为弦”
 		'''
-	ExecutionStrike: 在接下来的5秒内连续发射热能激光
+	ExecutionStrike:
+		'''
+		使[i:LostbeltTraveler/ClimaticHawstring][c/EAEA00:气候钓弦]在接下来
+		5秒内连续发射热能激光
+		'''
 }
 
 WeHaveBookshelf: {
@@ -727,7 +728,11 @@ WeHaveBookshelf: {
 		震撼敌人
 		“我们有大书架！”
 		'''
-	ExecutionStrike: 接下来的15次挥舞，每次释放的书本会更多
+	ExecutionStrike:
+		'''
+		强化[i:LostbeltTraveler/WeHaveBookshelf]力拔书架气盖世的攻击
+		接下来的15次挥舞将释放更多书本
+		'''
 }
 
 Stella: {
@@ -763,12 +768,12 @@ Moonfire: {
 	Tooltip:
 		'''
 		精度极高的左轮手枪
-		可随时按下互动键进行处决
+		可随时按下<SCARLETMOD:MODKEY>进行处决
 		'''
 	ExecutionStrike:
 		'''
-		立刻发射一枚强化子弹，在多个敌人之间跃迁
-		强化子弹跃迁的次数与消耗的处决次数成正比
+		发射一枚强化子弹，在多个敌人间跃迁
+		其跃迁的次数与消耗的处决次数成正比
 		'''
 	FlavorTooltip: 接受命运的安排……
 }
@@ -817,11 +822,12 @@ CobaltYoyo: {
 	Tooltip:
 		'''
 		命中时造成钴蓝爆炸
-		可以被悠悠球袋增强，但只有主悠悠球才会叠加处决进程
+		不可被[i:YoyoBag][i:YoYoGlove]增强
 		'''
 	ExecutionStrike:
 		'''
-		再次命中时会对被命中的敌人造成多次钴蓝爆炸
+		强化[i:LostbeltTraveler/CobaltYoyo]钴蓝悠悠球的攻击10秒
+		每次命中都会造成钴蓝爆炸
 		具备高额护甲穿透
 		'''
 }
@@ -904,7 +910,7 @@ DragonBallSword: {
 		掷出界王神剑同时切换为勇者之剑
 		此后以勇者之剑为默认形态
 		界王神剑会在空中旋转一定时间
-		你可以再次按下互动键，传送到界王神剑的位置进行斩切
+		你可以再次按下<SCARLETMOD:MODKEY>，传送到界王神剑的位置进行斩切
 		'''
 }
 

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LostbeltTraveler.Globals.Database;
+using LostbeltTraveler.Globals.Database.Localization;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -116,7 +118,7 @@ namespace LostbeltTraveler.Globals.Executor
 
     public abstract class ExecutorPrefixs : ModPrefix, ILocalizedModType
     {
-        public new string LocalizationCategory => $"ExecutorDamageClass.Prefixs";
+        public override string LocalizationCategory => "Database.ExecutorDamageClass.Prefix";
         /// <summary>
         /// 伤害加成
         /// </summary>
@@ -143,12 +145,6 @@ namespace LostbeltTraveler.Globals.Executor
         public virtual float CritDamageAdd => 0;
         public virtual float PrefixLevel => 1;
         public override PrefixCategory Category => PrefixCategory.AnyWeapon;
-        /// <summary>
-        /// 使用CountAsClass会导致射手也能roll代行者的词缀
-        /// 这里需要直接等于，反正我们也只有一个代行者伤害类型
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
         public override bool CanRoll(Item item) => item.DamageType.CountsAsClass<ExecutorDamageClass>();
         public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
         {
@@ -172,9 +168,9 @@ namespace LostbeltTraveler.Globals.Executor
         internal const string FocusDamageNameID = "LostbeltTraveler:PrefixExecutionDamage";
         internal const string ArmorPenetrationNameID = "LostbeltTraveler:PrefixArmorPenetration";
         internal const string CritDamageID = "LostbeltTraveler:PrefixCritDamage";
-        public string ExecutionDamageValue => Mod.GetLocalizationKey("ExecutorDamageClass.Prefixs.ExecutionDamageLine").ToLangValue();
-        public string DefenseReduceValue => Mod.GetLocalizationKey("ExecutorDamageClass.Prefixs.DefenseReduceLine").ToLangValue();
-        public string CritDamageValue => Mod.GetLocalizationKey("ExecutorDamageClass.Prefixs.CritDamageLine").ToLangValue();
+        public string ExecutionDamageValue => ScarletLocalText.GetLocalizationKey("ExecutorDamageClass.Prefix.ExecutionDamageLine").ToLangValue();
+        public string DefenseReduceValue => ScarletLocalText.GetLocalizationKey("ExecutorDamageClass.Prefix.DefenseReduceLine").ToLangValue();
+        public string CritDamageValue => ScarletLocalText.GetLocalizationKey("ExecutorDamageClass.Prefix.CritDamageLine").ToLangValue();
         public override IEnumerable<TooltipLine> GetTooltipLines(Item item)
         {
             if (ExecutionDamageMult != 1f)

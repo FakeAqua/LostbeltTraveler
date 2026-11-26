@@ -344,7 +344,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             }
             new CrossGlow(Projectile.Center, Color.Red, 40, 1, 0.30f).Spawn();
             new CrossGlow(Projectile.Center, Color.DarkRed, 40, 1, 0.28f).Spawn();
-            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, easeOut: EaseInOutQuad);
+            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, Owner, easeOut: EaseInOutQuad);
             ScreenShakeSystem.AddScreenShakes(Projectile.Center, 60, 80, Projectile.rotation, 0.15f, easingFunc: EaseOutBack);
             SoundEngine.PlaySound(LostbeltSoundAssets.Gaia_Explosion with { MaxInstances = 0, Pitch = -0.4f, Volume = .477f }, Projectile.Center);
             SoundEngine.PlaySound(LostbeltSoundAssets.Gaia_Toss with { MaxInstances = 0, Pitch = -0.64f, Volume = .577f }, Projectile.Center);
@@ -550,7 +550,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             }
             ECSParticle.CrossGlow(Projectile.Center, Color.Red, 40, 1, 0.30f, .4f, BlendState.Additive);
             ECSParticle.CrossGlow(Projectile.Center, Color.DarkRed, 40, 1, 0.30f, .4f, BlendState.Additive);
-            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, easeOut: EaseInOutQuad);
+            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, Owner, easeOut: EaseInOutQuad);
             ScreenShakeSystem.AddScreenShakes(Projectile.Center, 60, 80, Projectile.rotation, 0.15f, easingFunc: EaseOutBack);
             ScarletSound(LostbeltSoundAssets.Gaia_Toss, Projectile.Center, .75f, 0, -.64f, .1f, 2);
             ScarletSound(LostbeltSoundAssets.Gaia_Explosion, Projectile.Center, .477f, 0, -.4f, .1f);

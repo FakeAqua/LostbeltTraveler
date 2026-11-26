@@ -2,8 +2,9 @@
 
 namespace LostbeltTraveler.Globals.Database.Localization
 {
-    public static partial class ScarletTextSets
+    public static partial class ScarletLocalText
     {
+        public static string GetLocalizationKey(string suffix) => LostbeltTraveler.Instance.GetLocalizationKey("Database" + "." + suffix);
         public static string DatabasePrefix = "Mods.LostbeltTraveler.Database";
         public static string GeneralText_BuffShow => $"{DatabasePrefix}.GenericText.BuffDetail";
         public static Color GeneralText_BuffShowColor => Color.LightGray;
@@ -22,6 +23,7 @@ namespace LostbeltTraveler.Globals.Database.Localization
             public static string SwitchCondition => Language.GetTextValue(Prefix + "SwitchWeapon.Condition");
             public static string ModNamePrefix => Language.GetTextValue(Prefix + "LostbeltJourneyText");
             public static string ApplyDoT => Language.GetTextValue(Prefix + "ApplyDoT");
+            public static string NotFinished => Language.GetTextValue(Prefix + "NotFinished");
             public static string CombineModName(string actualText) => ModNamePrefix + actualText;
         }
     }

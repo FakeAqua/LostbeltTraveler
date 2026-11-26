@@ -1,5 +1,6 @@
 ﻿using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
+using LostbeltTraveler.Globals.Database.Localization;
 using LostbeltTraveler.Globals.Methods.SideTextPanel;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,17 @@ using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Globals.Executor
 {
+    
     public abstract class ExecutorWeaponClass : ModItem, ILocalizedModType
     {
+        protected struct ColorStructe(bool useShinyBorder = false, Color bgC = default, Color titleC = default, Color egC = default)
+        {
+
+            public bool UseShinyBorder = useShinyBorder;
+            public Color BgC = bgC;
+            public Color EgC = egC;
+            public Color TitleC = titleC;
+        }
         public override string Texture => $"LostbeltTraveler/Assets/Texture/Items/Weapons/{GetType().Name}";
         /// <summary>
         /// 该武器处决攻击时的射弹
@@ -25,13 +35,12 @@ namespace LostbeltTraveler.Globals.Executor
         /// 划分为五种：投掷品、不脱手冷兵器、热武器、魔术载体和仆从
         /// </summary>
         public virtual ExecutorWeaponType ExecutorWeaponType => ExecutorWeaponType.Misc;
-        public object[] ExecutionDetail = [];
         public override bool WeaponPrefix() => true;
         public override bool RangedPrefix() => false;
         public virtual int ExecutionProgress => 10;
         public virtual float ExecutionStrikeDamageMult => 1.0f;
-        public virtual float TextBoxSize => 1f;
         public virtual int SupportWeaponBuff => -1;
+        protected virtual ColorStructe ShinyColorStruct =>new ColorStructe();
         public virtual bool BlockTextboxDetail()
         {
             return false;
@@ -91,31 +100,52 @@ namespace LostbeltTraveler.Globals.Executor
                 return base.PreDrawTooltip(lines, ref x, ref y);
             if (!BlockTextboxDetail())
             {
-                string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
-                int requirements = Math.Max(0, ExecutionProgress);
-                int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
-                string numberText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionProgressRevampedMode").ToLangValue().ToFormatValue(curRequirement, requirements);
-                string titleText = Mod.GetLocalizationKey("ExecutorDamageClass.ExecutionDescriptionName").ToLangValue();
-                Color c = Color.DarkRed;
-                if (SupportWeaponBuff != -1 && ExecutorWeaponType == ExecutorWeaponType.Assistance)
-                {
-                    titleText = Mod.GetLocalizationKey("Buffs." + Name + "Buff.DisplayName").ToLangValue();
-                    c = Color.DarkSlateBlue;
-                }
-                TooltipLine titleLine = new TooltipLine(Mod, "ExecutionTitleName", titleText);
-                List<SideTextPanelData> list =
-                    [
-                    new SideTextPanelData(titleLine,1,SupportWeaponBuff),
-                    ];
-                string[] textBundle = detailText.Split('\n');
-                for (int i = 0; i < textBundle.Length; i++)
-                {
-                    list.Add(new(new(Mod, "ExecutionStrikeTooltip" + i, textBundle[i]), 1));
-                }
-                list.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionNumberName", "\n" + numberText)));
-                SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, c);
+                ApplyExecutionTooltips(lines, ref x, ref y);
+                //SetStrikeTooltips(lines, ref x, ref y);
             }
             return base.PreDrawTooltip(lines, ref x, ref y);
+        }
+        public virtual void ApplyExecutionTooltips(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y, params object[] args)
+        {
+            SetStrikeTooltips(lines, ref x, ref y, args);
+        }
+        public void SetStrikeTooltips(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y, params object[] args)
+        {
+            string detailText = this.GetLocalizationKey("ExecutionStrike").ToLangValue();
+            if (args.Length > 0)
+            {
+                detailText = detailText.ToFormatValue(args);
+            }
+            int requirements = Math.Max(0, ExecutionProgress);
+            int curRequirement = Main.LocalPlayer.Lostbelt().ExecutionListStored.TryGetValue(Type, out int value) ? value : 0;
+            string progressText = ExecutorDamageClass.Instance.GetLocalizationKey("Progress").ToLangValue().ToFormatValue(curRequirement, requirements);
+            string titleText = ExecutorDamageClass.Instance.GetLocalizationKey("StrikeTitle").ToLangValue();
+            Color c = Color.DarkRed;
+            if (SupportWeaponBuff != -1 && ExecutorWeaponType == ExecutorWeaponType.Assistance)
+            {
+                titleText = Mod.GetLocalizationKey("Buffs." + Name + "Buff.DisplayName").ToLangValue();
+                c = Color.DarkSlateBlue;
+            }
+            TooltipLine titleLine = new TooltipLine(Mod, "StrikeTitle", titleText);
+            List<SideTextPanelData> list =
+                [
+                new SideTextPanelData(titleLine,1,SupportWeaponBuff),
+                    ];
+            string[] textBundle = detailText.Split('\n');
+            for (int i = 0; i < textBundle.Length; i++)
+            {
+                list.Add(new(new(Mod, "StrikeTooltip" + i, textBundle[i]), 1));
+            }
+            list.Add(new SideTextPanelData(new TooltipLine(Mod, "ExecutionNumberName", "\n" + progressText)));
+            if (ShinyColorStruct.UseShinyBorder)
+            {
+                if (Item.IsBestPrefix())
+                    SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, ShinyColorStruct.TitleC, bgC: ShinyColorStruct.BgC, edgeC: ShinyColorStruct.EgC, useShinyBorder: true);
+                else
+                    SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, c);
+            }
+            else
+                SideTextPanelMethods.DrawSideTextPanelWithTitleEdge(lines, list, x, y, c);
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
@@ -123,14 +153,12 @@ namespace LostbeltTraveler.Globals.Executor
             {
                 int executionProgressIndex = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
 
-                string categoryText = Mod.GetLocalizationKey($"ExecutorDamageClass.WeaponType.{ExecutorWeaponType}").ToLangValue();
-                int executionLineIndex = tooltips.FindIndex(line => line.Name == "ExecutionTooltipName" && line.Mod == "LostbeltTraveler") - 1;
-                executionLineIndex = executionProgressIndex;
-                var categoryLine = new TooltipLine(Mod, "ExecutorWeaponTypeName", ">" + categoryText)
+                string categoryText = ExecutorDamageClass.Instance.GetLocalizationKey($"WeaponType.{ExecutorWeaponType}").ToLangValue();
+                var categoryLine = new TooltipLine(Mod, "ExecutorWeaponType", ">" + categoryText)
                 {
                     OverrideColor = Color.LightGoldenrodYellow
                 };
-                tooltips.Insert(executionLineIndex + 1, categoryLine);
+                tooltips.Insert(executionProgressIndex+ 1, categoryLine);
             }
             ExModifyTooltips(tooltips);
         }

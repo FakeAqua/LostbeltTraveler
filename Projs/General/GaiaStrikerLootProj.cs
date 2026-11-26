@@ -77,7 +77,7 @@ namespace LostbeltTraveler.Projs.General
                 {
                     Projectile.netUpdate = true;
                     LostbeltMethods.ScarletSpawnItem(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.Hitbox, ItemType<GaiaStriker>());
-                    ScreenDarknessSystem.AddScreenDarkness(0.95f, 5, 20, 30, easeOut: EaseInCubic);
+                    ScreenDarknessSystem.AddScreenDarkness(0.95f, 5, 20, 30,Owner, easeOut: EaseInCubic);
                     CreateBloodyExplosion();
                     Projectile.Kill();
                 }

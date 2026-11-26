@@ -99,12 +99,6 @@ namespace LostbeltTraveler.Items.Weapons.Executor.ColdSteel
         }
         public override void ExModifyTooltips(List<TooltipLine> tooltips)
         {
-            //int flavorTooltipIndex2 = tooltips.FindIndex(line => line.Name == "ItemName" && line.Mod == "Terraria");
-            //string value = this.GetLocalizedValue("FlavorTooltips").ToLangValue();
-            ////实例化toolti并注册名字
-            //TooltipLine flavorTooltips = new TooltipLine(Mod, "FlavorTooltipsName", value);
-            ////植入Tooltip
-            //tooltips.Insert(flavorTooltipIndex2 + 1, flavorTooltips);
             if (!DownedBossSystem.downedSunGod)
             {
                 string mechanic = Mod.GetLocalizationKey("Weapons.Executor.CrimsonScythe.ConditionMechanic");

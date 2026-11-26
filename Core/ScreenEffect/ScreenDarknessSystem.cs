@@ -1,6 +1,7 @@
 ﻿using LostbeltTraveler.Globals.Configs;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -96,6 +97,7 @@ namespace LostbeltTraveler.Core.ScreenEffect
     {
         public static readonly List<ScreenDarknessInfo> ActiveDarkness = [];
         public static int HoldoutDarknessIndex = -1;
+        public static float CurDarkRatios = 0;
         public override void OnWorldUnload()
         {
             ClearWorld();
@@ -104,17 +106,22 @@ namespace LostbeltTraveler.Core.ScreenEffect
         {
             ClearWorld();
         }
-        public static void DrawScreenDarkness(On_Main.orig_DrawBackground orig, Main self)
+        public override void PostUpdatePlayers()
         {
-            orig(self);
+            if (Main.dedServ)
+                return;
+
+
             if (ActiveDarkness.Count < 1)
                 return;
-            if (Main.dedServ)
+            if (LostbeltConfigClient.Instance.ScreenDarkStrength == 0)
                 return;
             float darkRatio = 0f;
             for (int i = ActiveDarkness.Count - 1; i >= 0; i--)
             {
                 ScreenDarknessInfo info = ActiveDarkness[i];
+                if (info.WhoAmI != Main.myPlayer)
+                    continue;
                 float ratio = info.Update() * info.DarkStrength;
                 //多个暗化效果取当前的最大值
                 if (ratio > darkRatio)
@@ -122,22 +129,34 @@ namespace LostbeltTraveler.Core.ScreenEffect
                 if (info.IsDone)
                     ActiveDarkness.RemoveAt(i);
             }
+            CurDarkRatios = darkRatio;
+        }
+        public static void DrawScreenDarkness(On_Main.orig_DrawBackground orig, Main self)
+        {
+            orig(self);
+            if (Main.dedServ)
+                return;
+
+            if (LostbeltConfigClient.Instance.ScreenDarkStrength == 0)
+                return;
+            if (ActiveDarkness.Count < 1)
+                return;
+            float darkRatio = CurDarkRatios;
+            //将工作交给gpu
+            Main.tileBatch.End();
+            Main.tileBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+            LostbeltMethods.ApplyAlphaCut(new Vector4(0) * (1-darkRatio), Vector2.Zero, Vector2.One, Color.Black);
             //最后画出来
             Vector2 pos = new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f);
             Rectangle rec = Utils.CenteredRectangle(pos, new Vector2(Main.screenWidth, Main.screenHeight));
-            Texture2D tex = TextureAssets.MagicPixel.Value;
+            Texture2D tex = LostbeltModAssets.Texture_WhiteCube.Value;
             darkRatio *= LostbeltConfigClient.Instance.ScreenDarkStrength;
-            Main.spriteBatch.Draw(tex, pos, rec, Color.Lerp(Color.DarkGray, Color.Black, 0.95f) with { A = 250 } * darkRatio, 0, tex.Size() / 2, new Vector2(Main.screenWidth, Main.screenHeight / 2), 0, 0);
+            Main.spriteBatch.Draw(tex, pos, rec, Color.Lerp(Color.DarkGray, Color.Black, 0.95f) with { A = 250 } * darkRatio, 0, tex.Size() / 2, new Vector2(Main.screenWidth/2, Main.screenHeight/2), 0, 0);
+            Main.tileBatch.End();
+            Main.tileBatch.Begin();
+
         }
-        //public static ScreenDarknessInfo AddScreenDarkness(float maxStrength, int inTime, int holdTime, int outTime, Func<float, float> easeIn = null, Func<float, float> easeOut = null, Func<bool> holdCondition = null)
-        //{
-        //    var info = new ScreenDarknessInfo(maxStrength, inTime, holdTime, outTime, ActiveDarkness.Count, easeIn, easeOut)
-        //    {
-        //        HoldCondition = holdCondition
-        //    };
-        //    ActiveDarkness.Add(info);
-        //    return info;
-        //}
         /// <summary>
         /// 强制设置某个暗化效果的维持状态。
         /// </summary>
@@ -148,23 +167,21 @@ namespace LostbeltTraveler.Core.ScreenEffect
         }
 
         /// <summary>
-        /// 清除全部暗化效果（例如进入新世界时）。
+        /// 清除全部暗化效果
         /// </summary>
         public override void ClearWorld()
         {
             ActiveDarkness.Clear();
         }
         /// <summary>
-        /// 添加一个屏幕暗化效果，返回其信息对象以便外部后续控制（例如维持）。
+        /// 添加一个屏幕暗化效果，返回其信息对象以便外部后续控制
         /// </summary>
-
-        public static ScreenDarknessInfo AddScreenDarkness(float maxStrength, int inTime, int holdTime, int outTime, Func<float, float> easeIn = null, Func<float, float> easeOut = null, Func<bool> holdCondition = null)
+        public static ScreenDarknessInfo AddScreenDarkness(float maxStrength, int inTime, int holdTime, int outTime,Player player, Func<float, float> easeIn = null, Func<float, float> easeOut = null, Func<bool> holdCondition = null)
         {
-            var info = new ScreenDarknessInfo(maxStrength, inTime, holdTime, outTime, ActiveDarkness.Count, easeIn, easeOut)
+            var info = new ScreenDarknessInfo(maxStrength, inTime, holdTime, outTime, player.whoAmI, easeIn, easeOut)
             {
                 HoldCondition = holdCondition
             };
-
             ActiveDarkness.Add(info);
             return info;
         }

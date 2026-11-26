@@ -1,9 +1,12 @@
+using ContinentOfJourney.Items.Material;
 using LostbeltTraveler.Globals.Configs;
+using LostbeltTraveler.Globals.Database;
 using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Database.Localization;
 using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Keybinds;
 using LostbeltTraveler.Globals.Players;
 using LostbeltTraveler.Items.Armor.Monk;
 using LostbeltTraveler.Items.Armor.Shinobi;
@@ -32,6 +35,14 @@ namespace LostbeltTraveler.Globals.Instances.Items
         public Color drawFlavorTooltipColor = Color.White;
         public bool noFancyFlavorTooltip = false;
         public string OwnerName = string.Empty;
+        /// <summary>
+        /// 这个物品使用了什么键位，用于自动查找并替换本地化文件内输入的键值
+        /// <br><see langword="1"/>表示<see cref="LostbeltKeybinds.GeneralActionKeybind"/>互动键</br>
+        /// <br><see langword="2"/>表示<see cref="LostbeltKeybinds.GeneralSkillKeybind"/>技能键</br>
+        /// <br><see langword="3"/>表示<see cref="LostbeltKeybinds.ParryActionKeybind"/>格挡键</br>
+        /// <br><see langword="4"/>表示<see cref="LostbeltKeybinds.DashKeybind"/>冲刺键</br>
+        /// </summary>
+        public int modKeyUsed = 0;
         public override void SetDefaults(Item entity)
         {
             switch (entity.type)
@@ -71,8 +82,8 @@ namespace LostbeltTraveler.Globals.Instances.Items
             }
             if (LostbeltPlayer.AllWeaponSwapValue.Contains(item.type))
             {
-                string pre = ScarletTextSets.GenericText.ModNamePrefix;
-                string value = pre + "\n" + ScarletTextSets.GenericText.SwitchTooltip;
+                string pre = ScarletLocalText.GenericText.ModNamePrefix;
+                string value = pre + "\n" + ScarletLocalText.GenericText.SwitchTooltip;
                 tooltips.CreateTooltipDirect(value, Color.Lerp(Color.LawnGreen, Color.LightGreen, 0.5f));
             }
 
@@ -104,7 +115,7 @@ namespace LostbeltTraveler.Globals.Instances.Items
             //标记物品未完成
             if (item.Lostbelt().NotFinished)
             {
-                tooltips.CreateTooltip(Mod.GetLocalizationKey("NotFinished"), Color.IndianRed);
+                tooltips.CreateTooltip("-"+ScarletLocalText.GenericText.NotFinished+"-", Color.IndianRed);
             }
             //无主之地系列的武器，红字文本。
             if (item.Lostbelt().borderlandWeapon)
@@ -122,7 +133,7 @@ namespace LostbeltTraveler.Globals.Instances.Items
         {
             if (ItemBelongTo != EnumItemOwner.None)
             {
-                string keyPath = Language.GetTextValue(ScarletTextSets.DatabasePrefix + ".ItemBelongTo." + ItemBelongTo);
+                string keyPath = Language.GetTextValue(ScarletLocalText.DatabasePrefix + ".ItemBelongTo." + ItemBelongTo);
                 Color color = Color.White;
                 switch (ItemBelongTo)
                 {
@@ -170,8 +181,8 @@ namespace LostbeltTraveler.Globals.Instances.Items
                 if (ScarletItemIDSets.ForceToAutomaticExecute[item.type])
                 {
                     int index = tooltips.FindLineIndex("Tooltip0");
-                    string path = Mod.GetLocalizationKey($"ExecutorDamageClass.ForceAutomaticExecution").ToLangValue();
-                    TooltipLine line = new TooltipLine(Mod, "ForceAutomaticExecution", ">" + path)
+                    string path = ExecutorDamageClass.Instance.GetLocalizationKey($"ForceAutomaticExecution").ToLangValue();
+                    TooltipLine line = new(Mod, "ExecutionTriggerType", ">" + path)
                     {
                         OverrideColor = Color.Pink
                     };
@@ -179,14 +190,14 @@ namespace LostbeltTraveler.Globals.Instances.Items
                 }
                 else if (ScarletItemIDSets.ForceToTacticalExecute[item.type])
                 {
-                    //int index = tooltips.FindLineIndex("ExecutorWeaponTypeName", Mod.Name);
                     int index = tooltips.FindLineIndex("Tooltip0");
-                    string path = Mod.GetLocalizationKey($"ExecutorDamageClass.ForceTacticalExecution").ToLangValue();
-                    TooltipLine line = new TooltipLine(Mod, "ForceTacticalExecutionLine", ">" + path)
+                    string path = ExecutorDamageClass.Instance.GetLocalizationKey($"ForceTacticleExecution").ToLangValue();
+                    TooltipLine line = new(Mod, "ExecutionTriggerType", ">" + path)
                     {
                         OverrideColor = Color.Pink
                     };
                     tooltips.Insert(index, line);
+                        tooltips.FindReplaceWithHotkeyString(LostbeltKeybinds.GeneralActionKeybind);
                 }
             }
         }
@@ -203,7 +214,7 @@ namespace LostbeltTraveler.Globals.Instances.Items
         {
             //先画出buff转化的提示文本
             if (drawBuffIconAndDetail)
-                tooltips.CreateTooltip(ScarletTextSets.GeneralText_BuffShow, ScarletTextSets.GeneralText_BuffShowColor);
+                tooltips.CreateTooltip(ScarletLocalText.GeneralText_BuffShow, ScarletLocalText.GeneralText_BuffShowColor);
             buffs.Clear();
             //遍历tooltip行，我们开始找匹配的正则表达式
             for (int i = 0; i < tooltips.Count; i++)
@@ -391,8 +402,12 @@ namespace LostbeltTraveler.Globals.Instances.Items
             { ItemID.SolarEruption, ShinyRarityType.Solar},
             { ItemID.WingsSolar, ShinyRarityType.Solar},
             { ItemID.FragmentSolar, ShinyRarityType.Solar},
-
         };
+        public Dictionary<int, ShinyRarityType> HomewardJourneyRarityModiflication = new()
+        {
+            { ItemType<FinalBar>() , ShinyRarityType.Final }
+        };
+
         public override void PostDrawTooltipLine(Item item, DrawableTooltipLine line)
         {
             if (LocalPlayer.Lostbelt().cycleMadnessCrit > 0 && LocalPlayer.Lostbelt().cycleMadnessLevel > 0)
@@ -421,6 +436,11 @@ namespace LostbeltTraveler.Globals.Instances.Items
                 {
                     RarityDrawHelper.UpdateItemNameParticle(line, value2);
                     RarityDrawHelper.UpdateItemNameDraw(line, value2);
+                }
+                if (HomewardJourneyRarityModiflication.TryGetValue(item.type, out ShinyRarityType value1) && LostbeltConfigServer.Instance.AnomalousInfestation)
+                {
+                    RarityDrawHelper.UpdateItemNameParticle(line, value1);
+                    RarityDrawHelper.UpdateItemNameDraw(line, value1);
                 }
 
                 if (LostbeltList.ShinyRarityItemDictionary.TryGetValue(item.type, out ShinyRarityType value))

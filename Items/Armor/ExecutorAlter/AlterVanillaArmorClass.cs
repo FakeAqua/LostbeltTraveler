@@ -86,7 +86,7 @@ namespace LostbeltTraveler.Items.Armor.ExecutorAlter
         {
             if (item.type != ApplyArmor)
                 return;
-            string switchValue = ScarletTextSets.GenericText.ModNamePrefix + "\n" + ScarletTextSets.GenericText.SwitchTooltip;
+            string switchValue = ScarletLocalText.GenericText.ModNamePrefix + "\n" + ScarletLocalText.GenericText.SwitchTooltip;
             tooltips.CreateTooltipDirect(switchValue, Color.Lerp(Color.LawnGreen, Color.LightGreen, 0.5f));
             if (item.Lostbelt().EnableExecutorVersion)
             {

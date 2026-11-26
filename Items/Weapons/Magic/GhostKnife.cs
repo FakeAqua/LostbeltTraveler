@@ -1,23 +1,18 @@
-﻿using LostbeltTraveler.Globals.Executor;
+﻿using LostbeltTraveler.Globals.Classes;
+using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Projs.Executor.Assistance;
+using LostbeltTraveler.Projs.Magic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace LostbeltTraveler.Items.Weapons.Executor.Assistance
+namespace LostbeltTraveler.Items.Weapons.Magic
 {
-    public class GhostKnife : ExecutorWeaponClass
+    public class GhostKnife : LostbeltWeapon
     {
+        public override EnumDamageClass Category => EnumDamageClass.Magic;
         public static int MarkGhostKnifeAttackSpeed = 30;
         public static int MarkGhostKnifeAttackDamage = 28;
-        public static int LastTime = 30;
-        public static int CritBonus = 10;
-        public override int ExecutionProgress => 20;
-        public override ExecutorWeaponType ExecutorWeaponType => ExecutorWeaponType.Assistance;
-        public override void ExSSD()
-        {
-            ExecutionDetail = [CritBonus + "%", LastTime];
-        }
         public override void ExSD()
         {
             Item.shootSpeed = 16;
@@ -25,9 +20,9 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Assistance
             Item.useTime = Item.useAnimation = MarkGhostKnifeAttackSpeed / 2;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.shoot = ProjectileType<GhostKnifeProj>();
+            Item.mana = 10;
+            Item.crit = 16;
             Item.knockBack = 2;
-            Item.Lostbelt().ExecutionProj = ProjectileType<GhostKnifeMark>();
-            Item.Lostbelt().ForceAutomaticExecution = true;
             Item.SetUpRarityPrice(ItemRarityID.LightPurple);
             Item.SetUpNoUseGraphicItem();
         }
@@ -35,7 +30,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Assistance
         {
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
             proj.Lostbelt().HasExecutionMechanic = true;
-            QuickSpawnMark(Type, Item.Lostbelt().ExecutionProj, player, source, position);
+            //QuickSpawnMark(Type, Item.Lostbelt().ExecutionProj, player, source, position);
             return false;
         }
         public static void QuickSpawnMark(int weaponID, int markID, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position)

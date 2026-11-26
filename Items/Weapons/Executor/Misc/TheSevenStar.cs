@@ -2,10 +2,14 @@ using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Keybinds;
 using LostbeltTraveler.Projs.Executor.Misc;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Weapons.Executor.Misc
 {
@@ -34,6 +38,15 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Misc
             Item.Lostbelt().ItemBelongTo = EnumItemOwner.Donator;
             Item.master = true;
 
+        }
+        protected override ColorStructe ShinyColorStruct => new(true, Color.Lerp(Color.Purple,Color.LightPink,.75f), Color.HotPink, Color.Pink);
+        public override void ApplyExecutionTooltips(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y, params object[] args)
+        {
+            SetStrikeTooltips(lines, ref x, ref y, LostbeltKeybinds.GeneralActionKeybind.GetHotKeyString());
+        }
+        public override void ExModifyTooltips(List<TooltipLine> tooltips)
+        {
+            base.ExModifyTooltips(tooltips);
         }
         public override bool CanShoot(Player player)
         {

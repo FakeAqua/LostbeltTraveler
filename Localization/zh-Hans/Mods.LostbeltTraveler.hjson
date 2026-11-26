@@ -1,36 +1,4 @@
-SwitchWeaponTooltip: 异闻旅者：手持该物品，按下 互动键 以切换形态
-SwitchWeaponVisual: 异闻旅者：手持该武器，按下鼠标中键以更改视觉效果
-SwitchWeaponConditionTooltip: 转化前置条件：击败<{0}>
-NotFinished: 未完成
-
-SwitchWeaponConditionList: {
-	DownedGolem: 石巨人
-	DownedLifeGods: 万籁携生
-	DownedEvilBoss: 任意邪恶Boss
-	DownedPlantera: 世纪之花
-}
-
-ItemBelongTo: {
-	Donator: 捐赠者物品
-	Developer: 开发者物品
-	Supporter: 支援者物品
-}
-
-SwitchWeapon: {
-	Tooltip:
-		'''
-		异闻旅者：
-		手持该物品，按下 互动键 以切换形态
-		'''
-	Visual:
-		'''
-		异闻旅者：
-		手持该武器，按下 互动键 以更改视觉效果
-		'''
-	AllFix: 同样应用于: {0}
-}
-
-CrossModSupport.Calamity: 灾厄联动适配
+// NotFinished: -Not Finished-
 
 Keybinds: {
 	GeneralActionKeybind.DisplayName: 互动键
@@ -70,8 +38,6 @@ ExecutorDamageClass: {
 		DefenseReduceValue: "{0}防御力"
 	}
 }
-
-DamageClasses.ExecutorDamageClass.DisplayName: 代行者伤害
 
 Projs: {
 	Enemy.SuicideKnifeInvisProj.DisplayName: ...自杀

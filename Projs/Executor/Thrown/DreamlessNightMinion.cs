@@ -153,7 +153,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
         {
 
             ScarletSound(LostbeltSoundAssets.Misc_MagicStaffFire, Projectile.Center, .5f, 2, -.4f);
-            ScreenDarknessSystem.AddScreenDarkness(.85f, 6, 1, 36, easeOut: EaseInCubic);
+            ScreenDarknessSystem.AddScreenDarkness(.85f, 6, 1, 36, Owner, easeOut: EaseInCubic);
             for (int i = 0; i < 16; i++)
             {
                 Vector2 vel = (Projectile.velocity).ToRandVelocity(ToRadians(12f), 1f, 8f);

@@ -38,7 +38,7 @@ namespace LostbeltTraveler.Items.Useables
         {
             if (!PsychoMode)
             {
-                NetworkText local = Mod.GetLocalization(ScarletTextSets.CustomDeath.SuicidePath).ToNetworkText();
+                NetworkText local = Mod.GetLocalization(ScarletLocalText.CustomDeath.SuicidePath).ToNetworkText();
                 player.Suicide(PlayerDeathReason.ByCustomReason(local), 99999, 0, true, true);
                 SoundEngine.PlaySound(SoundID.PlayerKilled, position);
             }
@@ -77,7 +77,7 @@ namespace LostbeltTraveler.Items.Useables
                 return;
             if (player.itemAnimation == 1)
             {
-                NetworkText local = Mod.GetLocalization(ScarletTextSets.CustomDeath.SuicidePath).ToNetworkText();
+                NetworkText local = Mod.GetLocalization(ScarletLocalText.CustomDeath.SuicidePath).ToNetworkText();
                 player.Suicide(PlayerDeathReason.ByCustomReason(local), 99999, 0, true, true);
 
             }
@@ -116,7 +116,7 @@ namespace LostbeltTraveler.Items.Useables
         {
             if (PsychoMode)
             {
-                NetworkText local = Mod.GetLocalization(ScarletTextSets.CustomDeath.SuicidePath).ToNetworkText();
+                NetworkText local = Mod.GetLocalization(ScarletLocalText.CustomDeath.SuicidePath).ToNetworkText();
                 target.KillMe(PlayerDeathReason.ByCustomReason(local), 99999, 0, true);
             }
         }

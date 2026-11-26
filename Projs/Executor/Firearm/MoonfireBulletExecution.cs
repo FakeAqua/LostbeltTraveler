@@ -168,7 +168,7 @@ namespace LostbeltTraveler.Projs.Executor.Firearm
                     else
                         ScreenShakeSystem.AddScreenShakes(Projectile.Center, 16f, 16, RandRotTwoPi);
                     if (Projectile.penetrate > 8)
-                        ScreenDarknessSystem.AddScreenDarkness(0.90f, 5, 20, 30, easeOut: EaseInCubic);
+                        ScreenDarknessSystem.AddScreenDarkness(0.90f, 5, 20, 30, Owner,easeOut: EaseInCubic);
                 }
             }
         }

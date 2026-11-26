@@ -117,7 +117,7 @@ namespace LostbeltTraveler.Projs.Melee
                         ECSParticle.HighResolutionThunder(Projectile.Center.ToRandCirclePos(300), Vector2.Zero, RandLerpColor(Color.LightGoldenrodYellow, Color.DarkGoldenrod), 45, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .34f, 2);
                     }
                     ScreenShakeSystem.AddScreenShakes(Projectile.Center, 32f, 32, RandRotTwoPi);
-                    ScreenDarknessSystem.AddScreenDarkness(0.95f, 2, 10, 25, easeOut: EaseInCubic);
+                    ScreenDarknessSystem.AddScreenDarkness(0.95f, 2, 10, 25,Owner, easeOut: EaseInCubic);
                     HashSet<NPC> legalTargetList = [];
                     float searchDistance = 1800f;
                     int count = 0;

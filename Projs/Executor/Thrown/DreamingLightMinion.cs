@@ -223,7 +223,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
             Projectile.extraUpdates = 3;
 
             SoundEngine.PlaySound(LostbeltSoundAssets.Misc_MagicStaffFire with { MaxInstances = 2, Pitch = -0.4f, Volume = 0.5f }, Projectile.Center);
-            ScreenDarknessSystem.AddScreenDarkness(.85f, 6, 1, 36, easeOut: EaseInCubic);
+            ScreenDarknessSystem.AddScreenDarkness(.85f, 6, 1, 36, Owner, easeOut: EaseInCubic);
             //ScreenShakeSystem.AddScreenShakes(Owner.Center, 60f, 180, Projectile.velocity.ToRotation(), ToRadians(0f));
 
         }

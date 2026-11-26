@@ -1,5 +1,6 @@
 ﻿using LostbeltTraveler.Buffs.GoodBuffs;
 using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Items.Weapons.Magic;
 using LostbeltTraveler.Projs.Executor.Assistance;
 using Terraria;
 using Terraria.DataStructures;

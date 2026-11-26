@@ -125,7 +125,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
                 proj.ai[2] = mode;
                 proj.Lostbelt().HasExecutionMechanic = false;
             }
-            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, easeOut: EaseInOutExpo);
+            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, Owner,easeOut: EaseInOutExpo);
             ECSParticle.CrossGlow(Projectile.Center, Color.Red, 40, 1, 0.30f, .4f, BlendState.Additive);
             ECSParticle.CrossGlow(Projectile.Center, Color.DarkRed, 40, 1, 0.30f, .4f, BlendState.Additive);
             ScreenShakeSystem.AddScreenShakes(Projectile.Center, 60, 80, Projectile.rotation, 0.15f, easingFunc: EaseOutBack);
@@ -271,7 +271,7 @@ namespace LostbeltTraveler.Projs.Executor.Thrown
         public void CreateBloodyExplosion()
         {
             //爆开
-            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, easeOut: EaseInOutExpo);
+            ScreenDarknessSystem.AddScreenDarkness(0.85f, 5, 10, 20, Owner, easeOut: EaseInOutExpo);
             for (int i = 0; i < 36; i++)
             {
                 Vector2 pos = Projectile.Center.ToRandCirclePos(3.6f);

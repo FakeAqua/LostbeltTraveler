@@ -48,7 +48,7 @@ namespace LostbeltTraveler.Items.Weapons.Melee
         public override void HoldItem(Player player)
         {
             player.longInvince = true;
-            ScreenDarknessSystem.AddScreenDarkness(0.80f, 10, 2, 5, easeOut: EaseInCubic, holdCondition: () => Main.LocalPlayer.IsHolding(Type));
+            ScreenDarknessSystem.AddScreenDarkness(0.80f, 10, 2, 5,player, easeOut: EaseInCubic, holdCondition: () => Main.LocalPlayer.IsHolding(Type));
             if (!player.IsOwnerSide())
                 return;
             if (player.HasProj(Item.shoot) || player.HasProj<RitualofReposeRest>())

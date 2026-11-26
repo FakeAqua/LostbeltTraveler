@@ -46,8 +46,11 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
                 if (size.X > lengthX)
                     lengthX = size.X;
             }
+            //临时存一下这个tooltip的文本长度，我们需要用来修正tooltip框的位置
+            float cacheX = lengthX+30;
             //x已经是Tooltip的左起点了。算出最大的长度之后需要再补上30个像素
-            x += (int)lengthX + 30;
+            x += (int)cacheX;
+
             //在这里再重新设置字体为我们需要实际绘制的版本
             font = ApplyFont();
             //开始算我们实际的侧边栏文本大小，这里得获取的是这个X的东西。
@@ -58,6 +61,12 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
                 if (cache > lengthX)
                     lengthX = cache;
             }
+            //计算一下是否越界。如果越界了需要切换至左方
+            float borderDefense = lengthX + x;
+            //越界了，则舍去这些坐标值
+            if (borderDefense > Main.screenWidth)
+                x -= (int)(cacheX + 30 + lengthX);
+
             //然后我们再将其依次尝试画出来……
             for (int i = 0; i < array.Length; i++)
             {
@@ -101,8 +110,11 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
                 if (size.X > lengthX)
                     lengthX = size.X;
             }
+            //临时存一下这个tooltip的文本长度，我们需要用来修正tooltip框的位置
+            float cacheX = lengthX+30;
             //x已经是Tooltip的左起点了。算出最大的长度之后需要再补上30个像素
-            x += (int)lengthX + 30;
+            x += (int)cacheX;
+
             //在这里再重新设置字体为我们需要实际绘制的版本
             font = ApplyFont();
             //开始算我们实际的侧边栏文本的大小
@@ -110,6 +122,11 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
             lengthX = s.X;
             float lengthY = s.Y;
             DrawSideTextPanelBox(x, y, widthOffset, heightOffset, lengthX, lengthY, drawBorder, bgC * lerpV, edgeC * lerpV, useShinyBorder);
+            //计算一下是否越界。如果越界了需要切换至左方
+            float borderDefense = lengthX + x;
+            //越界了，则舍去这些坐标值
+            if (borderDefense > Main.screenWidth)
+                x -= (int)(cacheX + 30 + lengthX);
             //最后我们开始画tooltip
             for (int i = 0; i < list.Count; i++)
             {
@@ -193,14 +210,22 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
                 if (size.X > lengthX)
                     lengthX = size.X;
             }
+            //临时存一下这个tooltip的文本长度，我们需要用来修正tooltip框的位置
+            float cacheX = lengthX+30;
             //x已经是Tooltip的左起点了。算出最大的长度之后需要再补上30个像素
-            x += (int)lengthX + 30;
+            x += (int)cacheX;
             //在这里再重新设置字体为我们需要实际绘制的版本
             font = ApplyFont();
+
             //开始算我们实际的侧边栏文本的大小
             Vector2 s = GetSideTextPanelBoxData(list, font, globalScale, true);
             lengthX = s.X;
             float lengthY = s.Y;
+            //计算一下是否越界。如果越界了需要切换至左方
+            float borderDefense = lengthX + x;
+            //越界了，则舍去这些坐标值
+            if (borderDefense > Main.screenWidth)
+                x -= ((int)(cacheX + 30 + lengthX));
             DrawSideTextPanelBox(x, y, widthOffset, heightOffset, lengthX, lengthY, drawBorder, bgC * lerpV, edgeC * lerpV, useShinyBorder);
             y = DrawSideTextPanelTextWithTitle(list, font, x, y, globalScale, lerpV, titleMainColor, titleEdgeColor, lengthX) + 24;
             return y - (int)lerpingPosY;
@@ -240,14 +265,21 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
                 if (size.X > lengthX)
                     lengthX = size.X;
             }
+            //临时存一下这个tooltip的文本长度，我们需要用来修正tooltip框的位置
+            float cacheX = lengthX+30;
             //x已经是Tooltip的左起点了。算出最大的长度之后需要再补上30个像素
-            x += (int)lengthX + 30;
+            x += (int)cacheX;
             //在这里再重新设置字体为我们需要实际绘制的版本
             font = ApplyFont();
             //开始算我们实际的侧边栏文本的大小
             Vector2 s = GetSideTextPanelBoxData(list, font, globalScale, true);
             lengthX = s.X;
             float lengthY = s.Y;
+            //计算一下是否越界。如果越界了需要切换至左方
+            float borderDefense = lengthX + x;
+            //越界了，则舍去这些坐标值
+            if (borderDefense > Main.screenWidth)
+                x -= ((int)(cacheX + 30 + lengthX));
             //侧边栏是否画背景，跟随原版的系统
             Rectangle rec = new Rectangle(x, y, (int)lengthX, (int)lengthY);
             DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset, useShinyBorder);
@@ -322,17 +354,25 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
                 if (size.X > lengthX)
                     lengthX = size.X;
             }
+            float cacheX = lengthX + 30;
             //x已经是Tooltip的左起点了。算出最大的长度之后需要再补上30个像素
-            x += (int)lengthX + 30;
+            x += (int)cacheX;
             //在这里再重新设置字体为我们需要实际绘制的版本
             font = ApplyFont();
             //开始算我们实际的侧边栏文本的大小
             Vector2 s = GetSideTextPanelBoxData(list, font, globalScale, true);
             lengthX = s.X;
             float lengthY = s.Y;
+            //计算一下是否越界。如果越界了需要切换至左方
+            float borderDefense = lengthX + x;
+            //越界了，则舍去这些坐标值
+            if (borderDefense > Main.screenWidth)
+                x -= ((int)(cacheX + 30 + lengthX));
+
             //侧边栏是否画背景，跟随原版的系统
             Rectangle rec = new Rectangle(x, y, (int)lengthX, (int)lengthY);
             DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset, useShinyBorder);
+
             //最后我们开始画tooltip
             for (int i = 0; i < list.Count; i++)
             {
@@ -400,14 +440,21 @@ namespace LostbeltTraveler.Globals.Methods.SideTextPanel
                 if (size.X > lengthX)
                     lengthX = size.X;
             }
+            //临时存一下这个tooltip的文本长度，我们需要用来修正tooltip框的位置
+            float cacheX = lengthX+30;
             //x已经是Tooltip的左起点了。算出最大的长度之后需要再补上30个像素
-            x += (int)lengthX + 30;
+            x += (int)cacheX;
             //在这里再重新设置字体为我们需要实际绘制的版本
             font = ApplyFont();
             //开始算我们实际的侧边栏文本的大小
             Vector2 s = GetSideTextPanelBoxData(list, font, globalScale, true);
             lengthX = s.X;
             float lengthY = s.Y;
+            //计算一下是否越界。如果越界了需要切换至左方
+            float borderDefense = lengthX + x;
+            //越界了，则舍去这些坐标值
+            if (borderDefense > Main.screenWidth)
+                x -= ((int)(cacheX + 30 + lengthX));
             //侧边栏是否画背景，跟随原版的系统
             Rectangle rec = new Rectangle(x, y, (int)lengthX, (int)lengthY);
             DrawSideTextPanelBox(rec, drawBorder, bgC, edgeC, widthOffset, heightOffset, useShinyBorder);

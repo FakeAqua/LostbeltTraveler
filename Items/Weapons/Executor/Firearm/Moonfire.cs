@@ -3,10 +3,14 @@ using LostbeltTraveler.Globals.Database.Enums;
 using LostbeltTraveler.Globals.Database.IDSets;
 using LostbeltTraveler.Globals.Database.List;
 using LostbeltTraveler.Globals.Executor;
+using LostbeltTraveler.Globals.Keybinds;
 using LostbeltTraveler.Items.Materials;
 using LostbeltTraveler.Projs.Executor.Firearm;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace LostbeltTraveler.Items.Weapons.Executor.Firearm
 {
@@ -36,6 +40,10 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Firearm
         public override bool CanShoot(Player player)
         {
             return false;
+        }
+        public override void ExModifyTooltips(List<TooltipLine> tooltips)
+        {
+            tooltips.FindReplaceAll("<SCARLETMOD:MODKEY>", LostbeltKeybinds.GeneralActionKeybind.GetHotKeyString());
         }
         public override void HoldItem(Player player)
         {

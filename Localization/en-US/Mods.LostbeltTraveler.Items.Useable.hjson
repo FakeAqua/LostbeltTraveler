@@ -357,3 +357,8 @@ InstaSupremeTime: {
 	DisplayName: Insta Supreme Time
 	Tooltip: ""
 }
+
+Interlude: {
+	DisplayName: Interlude
+	Tooltip: ""
+}

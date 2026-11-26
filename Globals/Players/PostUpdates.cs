@@ -229,7 +229,7 @@ namespace LostbeltTraveler.Globals.Players
             }
             for (int i = 0; i < 50; i++)
                 ECSParticle.TurbulenceShinyOrb(spawnPos.ToRandCirclePosEdge(60), Main.rand.NextFloat(1.2f, 2.4f) * 2, RandLerpColor(Color.Pink, Color.LightPink), 120, 1, Main.rand.NextFloat(.9f, 1.15f) * .13f);
-            ScreenDarknessSystem.AddScreenDarkness(0.75f, 10, 5, 30, easeOut: EaseInCubic);
+            ScreenDarknessSystem.AddScreenDarkness(0.75f, 10, 5, 30,player:Player, easeOut: EaseInCubic);
         }
 
         public int AddMinionToList(ref List<Item> items)

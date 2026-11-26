@@ -19,6 +19,7 @@ namespace LostbeltTraveler.Items.Weapons.Executor.Thrown
             LostbeltList.ShinyRarityItemDictionary.Add(Type, ShinyRarityType.Nebula);
             ScarletItemIDSets.GrantsBoosterAfterSon[Type] = true;
         }
+        protected override ColorStructe ShinyColorStruct => new(true, Color.Lerp(Color.Purple,Color.Black,.575f), Color.Lerp(Color.MediumPurple, Color.HotPink, 0.2f), Color.Lerp(Color.Purple,Color.White,.5f));
         public override void ExSD()
         {
             Item.DamageType = ExecutorDamageClass.Instance;

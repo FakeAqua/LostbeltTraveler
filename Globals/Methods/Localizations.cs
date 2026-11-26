@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
+using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace LostbeltTraveler.Globals.Methods
@@ -80,9 +82,9 @@ namespace LostbeltTraveler.Globals.Methods
                 tooltips.Insert(count, newLine);
             }
         }
-        public static void CreateTooltipDirect(this List<TooltipLine> tooltips, string textPath, Color? color = null, Mod mod = null, string LineName = "Lostbelt", int index = -1)
+        public static void CreateTooltipDirect(this List<TooltipLine> tooltips, string textValue, Color? color = null, Mod mod = null, string LineName = "Lostbelt", int index = -1)
         {
-            string text = textPath;
+            string text = textValue;
             Mod tooltipMod = mod ?? LostbeltTraveler.Instance;
             Color overrideColor = color ?? Color.White;
             var newLine = new TooltipLine(tooltipMod, LineName, text)
@@ -121,11 +123,11 @@ namespace LostbeltTraveler.Globals.Methods
         }
         public static void CreateHoldShiftRightClickTooltip(this List<TooltipLine> tooltips)
         {
-            tooltips.CreateTooltip(ScarletTextSets.GeneralText_HoldShiftRightClick, ScarletTextSets.GeneralText_BuffShowColor, LostbeltTraveler.Instance, "HoldShiftAndRightClickTooltipLine");
+            tooltips.CreateTooltip(ScarletLocalText.GeneralText_HoldShiftRightClick, ScarletLocalText.GeneralText_BuffShowColor, LostbeltTraveler.Instance, "HoldShiftAndRightClickTooltipLine");
         }
         public static void CreateHoldAltTooltip(this List<TooltipLine> tooltips)
         {
-            tooltips.CreateTooltip(ScarletTextSets.GeneralText_BuffShow, ScarletTextSets.GeneralText_BuffShowColor, LostbeltTraveler.Instance, "HoldAltTooltipLine");
+            tooltips.CreateTooltip(ScarletLocalText.GeneralText_BuffShow, ScarletLocalText.GeneralText_BuffShowColor, LostbeltTraveler.Instance, "HoldAltTooltipLine");
 
         }
         public static int FindLineIndex(this List<TooltipLine> tooltips, string lineName, string lineMod = "Terraria") => tooltips.FindIndex(t => t.Name == lineName && t.Mod == lineMod);
@@ -134,7 +136,7 @@ namespace LostbeltTraveler.Globals.Methods
         public static void AddSwapTooltipValueBossCondition(this List<TooltipLine> tooltips, int downedNPCID, Color? color = null)
         {
             string listPath = "Mods.LostbeltTraveler.Database.DownedConditionList";
-            string downedConditionPath = ScarletTextSets.GenericText.SwitchCondition;
+            string downedConditionPath = ScarletLocalText.GenericText.SwitchCondition;
             string bossValue = string.Empty;
             if (LostbeltList.DownedBossConditionList.TryGetValue(downedNPCID, out string keyValue))
                 bossValue = keyValue;
@@ -158,6 +160,42 @@ namespace LostbeltTraveler.Globals.Methods
             }
         }
         public static bool PressingAlt(this KeyboardState keyboardState) => keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt);
+        public static string GetHotKeyString(this ModKeybind modKeybind)
+        {
+            if (Main.dedServ || modKeybind is null)
+                return string.Empty;
+            List<string> assignKeys = modKeybind.GetAssignedKeys();
+            if (assignKeys.Count == 0)
+                return "<No Keybind>";
+            StringBuilder sb = new StringBuilder(16);
+            sb.Append(assignKeys[0]);
+            //for (int i = 0; i < assignKeys.Count; i++)
+            //{
+            //    sb.Append(assignKeys[i]);
+            //}
+            return sb.ToString();
+        }
+        public static void FindReplace(this List<TooltipLine> lines, string replacedKey, string targetKey)
+        {
+            TooltipLine tooltipLine = lines.FirstOrDefault((TooltipLine x) => x.Text.Contains(replacedKey));
+            if (tooltipLine != null)
+            {
+                tooltipLine.Text = tooltipLine.Text.Replace(replacedKey, targetKey);
+            }
+        }
+        public static void FindReplaceAll(this List<TooltipLine> lines, string replacedKey, string targetKey)
+        {
+            foreach (var tooltipLine in lines)
+            {
+                tooltipLine.Text = tooltipLine.Text.Replace(replacedKey, targetKey);
+            }
+        }
+
+        public static void FindReplaceWithHotkeyString(this List<TooltipLine> lines, ModKeybind key)
+        {
+            string target= key.GetHotKeyString();
+            lines.FindReplace("<SCARLETMOD:MODKEY>", target);
+        }
         /// <summary>
         /// 反射缓存的原版构造函数。
         /// <br>编译为委托，所以不需要太过于在乎反射的开销问题</br>

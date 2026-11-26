@@ -44,3 +44,34 @@ ItemBelongTo: {
 }
 
 CustomDeathReason.Suicide: Someone's dead.
+
+ExecutorDamageClass: {
+	DisplayName: Executor Damage Class
+	Progress: ""
+	StrikeTitle: ""
+	ForceTacticleExecution: ""
+	ForceAutomaticExecution: ""
+	Companion: ""
+
+	WeaponType: {
+		Throw: ""
+		ColdSteel: ""
+		Firearm: ""
+		Caster: ""
+		Assistance: ""
+		Misc: ""
+	}
+
+	Prefix: {
+		Alterego.DisplayName: Alterego
+		Digital.DisplayName: Digital
+		Evolutional.DisplayName: Evolutional
+		Fake.DisplayName: Fake
+		Foreigner.DisplayName: Foreigner
+		Mysterious.DisplayName: Mysterious
+		Phantasmic.DisplayName: Phantasmic
+		ExecutionDamageLine: "{0}% Execution Damage"
+		CritDamageLine: "{0}Critical Strike Damage"
+		DefenseReduceLine: "{0} Defense"
+	}
+}

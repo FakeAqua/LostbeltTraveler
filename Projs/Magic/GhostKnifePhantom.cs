@@ -2,14 +2,14 @@
 using LostbeltTraveler.Core.PixelatedRender;
 using LostbeltTraveler.Globals.Classes;
 using LostbeltTraveler.Globals.Database.Enums;
-using LostbeltTraveler.Items.Weapons.Executor.Assistance;
+using LostbeltTraveler.Items.Weapons.Magic;
 using Terraria;
 
-namespace LostbeltTraveler.Projs.Executor.Assistance
+namespace LostbeltTraveler.Projs.Magic
 {
     public class GhostKnifePhantom : LostbeltProjs
     {
-        public override EnumDamageClass Category => EnumDamageClass.Executor;
+        public override EnumDamageClass Category => EnumDamageClass.Magic;
         public override string Texture => GetInstance<GhostKnife>().Texture;
         public ref float Timer => ref Projectile.ai[0];
         public float CurRatios = 0;
@@ -50,7 +50,6 @@ namespace LostbeltTraveler.Projs.Executor.Assistance
                 return;
             if (Main.rand.NextBool(4))
                 ECSParticle.LightntingGlow(Projectile.Center.ToRandCirclePosEdge(6f) - offset, Projectile.velocity / 16f, RandLerpColor(Color.White, Color.LightSkyBlue), 40, 1, 0.34f, 4);
-            //ECSParticle.StarShape(Projectile.Center.ToRandCirclePos(6) - offset, Projectile.velocity / 16f, RandLerpColor(Color.White, Color.LightSkyBlue), 40, 1, 0.65f * (1-CurRatios));
         }
         public override void OnKill(int timeLeft)
         {
